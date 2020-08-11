@@ -19,16 +19,15 @@ CREATE TABLE usuarios
 
 
 
--- DROP TABLE IF EXISTS perfil CASCADE;
+DROP TABLE IF EXISTS perfil CASCADE;
 
--- CREATE TABLE perfil (
---      id           bigserial      PRIMARY KEY 
---    , foto_perfil  varchar(255)
---    , bibliografia varchar(255)
---    , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
---    , valoracion   varchar(255) 
---    , usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
--- );
+CREATE TABLE perfil (
+     id           bigserial      PRIMARY KEY 
+   , foto_perfil  varchar(255)
+   , bibliografia varchar(255)
+   , valoracion   bigint 
+   , usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
+);
 
 -- DROP TABLE IF EXISTS blogs CASCADE;
 
@@ -124,4 +123,8 @@ CREATE TABLE usuarios
 
 
 INSERT INTO usuarios (username, nombre, apellidos, email, rol, created_at, contrasena, poblacion, provincia, pais)
-VALUES ('admin', 'admin', 'admin', 'adventure@gmail.com', 'administrador', '01/01/2000', crypt('admin', gen_salt('bf', 10)), 'Sanlúcar de Barrameda', 'Cádiz' , 'España');
+VALUES ('admin', 'admin', 'admin', 'adventure@gmail.com', 'administrador', '11/08/2020', crypt('admin', gen_salt('bf', 10)), 'Sanlúcar de Barrameda', 'Cádiz' , 'España');
+
+
+INSERT INTO perfil (foto_perfil, bibliografia, valoracion, usuario_id)
+VALUES ('foto.jpg', 'Soy un administrador de Adventure', 5, 1);
