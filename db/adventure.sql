@@ -2,21 +2,19 @@ DROP TABLE IF EXISTS usuarios CASCADE;
 
 CREATE TABLE usuarios
  (
-   id bigserial PRIMARY KEY,
-   username varchar(25) NOT NULL UNIQUE,
-   nombre varchar(255) NOT NULL,
-   apellidos varchar(255) NOT NULL,
-   email varchar(255) NOT NULL UNIQUE,
-   rol VARCHAR(30) NOT NULL DEFAULT 'usuario',
-   created_at timestamp(0) NOT NULL DEFAULT current_timestamp,
-   contrasena varchar(255),
-   auth_key varchar(255),
-   poblacion varchar(255),
-   provincia varchar(255),
-   pais varchar(255)
+    id bigserial PRIMARY KEY
+  , username varchar(25) NOT NULL UNIQUE
+  , nombre varchar(255) NOT NULL
+  , apellidos varchar(255) NOT NULL
+  , email varchar(255) NOT NULL UNIQUE
+  , rol VARCHAR(30) NOT NULL DEFAULT 'usuario'
+  , created_at timestamp(0) NOT NULL DEFAULT current_timestamp
+  , contrasena varchar(255)
+  , auth_key varchar(255)
+  , poblacion varchar(255)
+  , provincia varchar(255)
+  , pais varchar(255)
 );
-
-
 
 
 DROP TABLE IF EXISTS perfil CASCADE;
@@ -29,16 +27,15 @@ CREATE TABLE perfil (
    , usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
 );
 
--- DROP TABLE IF EXISTS blogs CASCADE;
+DROP TABLE IF EXISTS blogs CASCADE;
 
--- CREATE TABLE blogs (
---      id          bigserial      PRIMARY KEY 
---    , titulo      varchar(255)   NOT NULL UNIQUE
---    , descripcion varchar(255)
---    , cuerpo      text   
---    , created_at  timestamp(0)   NOT NULL DEFAULT current_timestamp
-    
--- );
+CREATE TABLE blogs (
+     id          bigserial      PRIMARY KEY 
+   , titulo      varchar(255)   NOT NULL UNIQUE
+   , descripcion varchar(255)
+   , cuerpo      text   
+   , created_at  timestamp(0)   NOT NULL DEFAULT current_timestamp
+);
 
 -- DROP TABLE IF EXISTS noticias CASCADE;
 
@@ -128,3 +125,13 @@ VALUES ('admin', 'admin', 'admin', 'adventure@gmail.com', 'administrador', '11/0
 
 INSERT INTO perfil (foto_perfil, bibliografia, valoracion, usuario_id)
 VALUES ('foto.jpg', 'Soy un administrador de Adventure', 5, 1);
+
+
+INSERT INTO blogs (titulo, descripcion, created_at, cuerpo)
+VALUES ('Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whiliam Shakespeare', '13/08/2020', 
+        'Lo mejor que me he leído hasta ahora de Shakespeare: 
+        conciso, sorprendente y para nada denso como muchas otras obras del escritor. 
+        La historia tiene su miga: un duque de Milán desterrado de sus posesiones por su propio hermano condenado a vagar sin rumbo por el mar. 
+        Pero haciendo servir sus dotes aprendidas en la corte como mago, logra dominar los elementos de la isla a la que llega y se convierte en una especie de Dios. 
+        A diferencia de muchos otros personajes del autor, este logra perdonar a sus adversarios en su venganza. 
+        Un cuento fantástico con espíritus de la naturaleza muy entretenido.');
