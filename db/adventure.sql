@@ -32,20 +32,22 @@ DROP TABLE IF EXISTS blogs CASCADE;
 CREATE TABLE blogs (
      id          bigserial      PRIMARY KEY 
    , titulo      varchar(255)   NOT NULL UNIQUE
+-- , imagen      text
    , descripcion varchar(255)
    , cuerpo      text   
    , created_at  timestamp(0)   NOT NULL DEFAULT current_timestamp
 );
 
--- DROP TABLE IF EXISTS noticias CASCADE;
+DROP TABLE IF EXISTS blogs_destacados CASCADE;
 
--- CREATE TABLE noticias (
---      id         bigserial      PRIMARY KEY
---    , titulo     varchar(255)  
---    , cuerpo     text
---    , entradilla varchar(255)
---    , created_at timestamp(0)   NOT NULL DEFAULT current_timestamp
--- );
+CREATE TABLE blogs_destacados (
+     id           bigserial      PRIMARY KEY
+   , titulo       varchar(255)   
+ --, miniatura    text
+   , likes        bigint
+   , comments     bigint
+   , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
+);
 
 
 
@@ -135,3 +137,9 @@ VALUES ('Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whili
         Pero haciendo servir sus dotes aprendidas en la corte como mago, logra dominar los elementos de la isla a la que llega y se convierte en una especie de Dios. 
         A diferencia de muchos otros personajes del autor, este logra perdonar a sus adversarios en su venganza. 
         Un cuento fantástico con espíritus de la naturaleza muy entretenido.');
+
+
+
+INSERT INTO blogs_destacados (titulo, likes, comments, created_at)
+VALUES ('Una obra de arte, Whiliam Shakespeare...', 503, 1274,'13/08/2020'); 
+        
