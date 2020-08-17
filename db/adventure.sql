@@ -51,16 +51,15 @@ CREATE TABLE blogs_destacados (
 
 
 
--- DROP TABLE IF EXISTS comentarios CASCADE;
+DROP TABLE IF EXISTS comentarios CASCADE;
 
--- CREATE TABLE comentarios (
---      id                 bigserial      PRIMARY KEY, 
---    , user_id_comment    bigint         NOT NULL REFERENCES usuarios (id)
---    , id_comment_blog    bigint         NOT NULL REFERENCES blogs (id)
---    , id_comment_noticia bigint         NOT NULL REFERENCES noticias (id)
---    , texto              varchar(255)  
---    , created_at         timestamp(0)   NOT NULL DEFAULT current_timestamp
--- );
+CREATE TABLE comentarios (
+     id                 bigserial      PRIMARY KEY 
+   , user_id_comment    bigint         NOT NULL REFERENCES usuarios (id)
+   , id_comment_blog    bigint         NOT NULL REFERENCES blogs (id)
+   , texto              varchar(255)  
+   , created_at         timestamp(0)   NOT NULL DEFAULT current_timestamp
+);
 
 
 
@@ -142,4 +141,8 @@ VALUES ('Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whili
 
 INSERT INTO blogs_destacados (titulo, likes, comments, created_at)
 VALUES ('Una obra de arte, Whiliam Shakespeare...', 503, 1274,'13/08/2020'); 
+        
+
+INSERT INTO comentarios (user_id_comment, id_comment_blog, texto, created_at)
+VALUES (1, 1, 'Es una maravilla, me encanta', '13/08/2020'); 
         
