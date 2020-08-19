@@ -62,15 +62,6 @@ CREATE TABLE comentarios (
 );
 
 
-
--- DROP TABLE IF EXISTS tablones CASCADE;
-
--- CREATE TABLE tablones (
---      id                 bigserial PRIMARY KEY 
---    , blog_id            bigint    NOT NULL REFERENCES blog (id)
---    , noticias_id        bigint    NOT NULL REFERENCES noticias (id)
--- );
-
 -- DROP TABLE IF EXISTS chats CASCADE;
 
 -- CREATE TABLE chats (
@@ -80,12 +71,25 @@ CREATE TABLE comentarios (
 --    , receptor_response text  
 -- );
 
--- DROP TABLE IF EXISTS galerias CASCADE;
+DROP TABLE IF EXISTS galerias CASCADE;
 
--- CREATE TABLE galerias (
---       id              bigserial PRIMARY KEY
---     , fotos
--- );
+CREATE TABLE galerias (
+      id              bigserial PRIMARY KEY
+    , fotos           text      
+);
+
+
+DROP TABLE IF EXISTS tablones CASCADE;
+
+CREATE TABLE tablones ( 
+     id                    bigserial  PRIMARY KEY 
+   , blogs_id              bigint     NOT NULL REFERENCES blogs (id)
+   , blogs_destacados_id   bigint     NOT NULL REFERENCES blogs_destacados (id)
+ --  , chat_id               bigint     NOT NULL REFERENCES chats (id)  
+   , galerias_id            bigint     NOT NULL REFERENCES galerias (id) 
+);
+
+
 
 -- DROP TABLE IF EXISTS comunidades CASCADE;
 
@@ -97,8 +101,7 @@ CREATE TABLE comentarios (
 --    , categoria       varchar(15)
 --    , tablon_id       bigint         NOT NULL REFERENCES tablones (id)   
 --    , participante_id bigint         NOT NULL REFERENCES usuarios (id)
---    , chat_id         bigint         NOT NULL REFERENCES chats (id)  
---    , galeria_id      bigint         NOT NULL REFERENCES galerias (id) 
+--    
 -- );
 
 -- DROP TABLE IF EXISTS creadores CASCADE;
@@ -146,3 +149,17 @@ VALUES ('Una obra de arte, Whiliam Shakespeare...', 503, 1274,'13/08/2020');
 INSERT INTO comentarios (user_id_comment, id_comment_blog, texto, created_at)
 VALUES (1, 1, 'Es una maravilla, me encanta', '13/08/2020'); 
         
+
+INSERT INTO galerias (fotos)  VALUES ('foto.png');
+
+
+INSERT INTO tablones (blogs_id, blogs_destacados_id, galerias_id)
+VALUES (1, 1, 1);         
+
+
+
+
+
+-- INSERT INTO chats (user_id_chat, emisor_response, receptor_response)
+-- VALUES (1, "Hola, Soy el administrador", "Hola, soy un usuario")
+
