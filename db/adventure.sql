@@ -1,3 +1,32 @@
+DROP TABLE IF EXISTS galerias CASCADE;
+
+CREATE TABLE galerias (
+      id              bigserial PRIMARY KEY
+    , fotos           text      
+);
+
+DROP TABLE IF EXISTS tablones CASCADE;
+
+CREATE TABLE tablones ( 
+    id                    bigserial  PRIMARY KEY 
+  , blogs_id              bigint     NOT NULL REFERENCES blogs (id)
+  , blogs_destacados_id   bigint     REFERENCES blogs_destacados (id)
+--  , chat_id             bigint     NOT NULL REFERENCES chats (id)  
+  , galerias_id           bigint     REFERENCES galerias (id) 
+);
+
+
+DROP TABLE IF EXISTS comunidades CASCADE;
+
+CREATE TABLE comunidades (
+    id              bigserial      PRIMARY KEY 
+  , nombre          varchar(255)    NOT NULL UNIQUE    
+  , descripcion     text  
+  , created_at      timestamp(0)   NOT NULL DEFAULT current_timestamp
+  , tablon_id       bigint         NOT NULL REFERENCES tablones (id)   
+);
+
+
 DROP TABLE IF EXISTS usuarios CASCADE;
 
 CREATE TABLE usuarios
@@ -15,7 +44,6 @@ CREATE TABLE usuarios
   , provincia varchar(255)
   , pais varchar(255)
 );
-
 
 DROP TABLE IF EXISTS perfil CASCADE;
 
@@ -62,6 +90,17 @@ CREATE TABLE comentarios (
 );
 
 
+DROP TABLE IF EXISTS usuario_comunidad CASCADE;
+
+CREATE TABLE usuario_comunidad (
+     id           bigserial      PRIMARY KEY 
+   , usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
+   , creador      boolean        NOT NULL
+   , comunidad_id bigint         NOT NULL REFERENCES comunidades (id)
+);
+
+
+
 -- DROP TABLE IF EXISTS chats CASCADE;
 
 -- CREATE TABLE chats (
@@ -69,47 +108,6 @@ CREATE TABLE comentarios (
 --    , user_id_chat      bigint    NOT NULL REFERENCES noticias (id)
 --    , emisor_response   text
 --    , receptor_response text  
--- );
-
-DROP TABLE IF EXISTS galerias CASCADE;
-
-CREATE TABLE galerias (
-      id              bigserial PRIMARY KEY
-    , fotos           text      
-);
-
-
-DROP TABLE IF EXISTS tablones CASCADE;
-
-CREATE TABLE tablones ( 
-     id                    bigserial  PRIMARY KEY 
-   , blogs_id              bigint     NOT NULL REFERENCES blogs (id)
-   , blogs_destacados_id   bigint     NOT NULL REFERENCES blogs_destacados (id)
- --  , chat_id               bigint     NOT NULL REFERENCES chats (id)  
-   , galerias_id            bigint     NOT NULL REFERENCES galerias (id) 
-);
-
-
-
--- DROP TABLE IF EXISTS comunidades CASCADE;
-
--- CREATE TABLE comunidades (
---      id              bigserial      PRIMARY KEY 
---    , nombre          varchar(10)    NOT NULL UNIQUE    
---    , descripcion     text,  
---    , created_at      timestamp(0)   NOT NULL DEFAULT current_timestamp
---    , categoria       varchar(15)
---    , tablon_id       bigint         NOT NULL REFERENCES tablones (id)   
---    , participante_id bigint         NOT NULL REFERENCES usuarios (id)
---    
--- );
-
--- DROP TABLE IF EXISTS creadores CASCADE;
-
--- CREATE TABLE creadores (
---     id              bigserial      PRIMARY KEY
---   , comunidad_id    bigint         NOT NULL REFERENCES comunidades (id)
---   , usuario_id      bigint         NOT NULL REFERENCES usuarios (id)
 -- );
 
 
@@ -120,6 +118,9 @@ CREATE TABLE tablones (
 --    , user_id_response bigint        NOT NULL REFERENCES usuarios (id)
 --    , texto            varchar(255)    
 -- );
+
+
+
 
 
 
@@ -144,18 +145,23 @@ VALUES ('Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whili
 
 INSERT INTO blogs_destacados (titulo, likes, comments, created_at)
 VALUES ('Una obra de arte, Whiliam Shakespeare...', 503, 1274,'13/08/2020'); 
-        
 
 INSERT INTO comentarios (user_id_comment, id_comment_blog, texto, created_at)
 VALUES (1, 1, 'Es una maravilla, me encanta', '13/08/2020'); 
-        
 
-INSERT INTO galerias (fotos)  VALUES ('foto.png');
-
+INSERT INTO galerias (fotos)  
+VALUES ('foto.png');
 
 INSERT INTO tablones (blogs_id, blogs_destacados_id, galerias_id)
 VALUES (1, 1, 1);         
 
+INSERT INTO comunidades (id, nombre, descripcion, created_at, tablon_id)
+VALUES (1, 'Escribir es para todos', 
+           'Estaís todos invitados formar parte de la comunidad para escritores animaté 
+            y comparte tus ideas a con todos nosotros', '13/08/2020', 1);
+
+INSERT INTO usuario_comunidad (id, usuario_id, creador, comunidad_id)
+VALUES (1, 1, '1', 1);         
 
 
 
