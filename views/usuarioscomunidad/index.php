@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\UsuarioComunidadSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Usuario Comunidads';
+$this->title = 'Usuario Comunidades';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="usuario-comunidad-index">

@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\PerfilSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Perfils';
+$this->title = 'Perfil';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="perfil-index">
