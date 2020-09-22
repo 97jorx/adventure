@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace app\controllers;
 
 use Yii;
 use app\models\Galerias;
@@ -21,7 +21,7 @@ class GaleriasController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],

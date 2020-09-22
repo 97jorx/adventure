@@ -16,7 +16,6 @@ class LoginForm extends Model
     public $username;
     public $password;
     public $rememberMe = true;
-
     private $_user = false;
 
 
@@ -73,7 +72,7 @@ class LoginForm extends Model
     public function getUser()
     {
         if ($this->_user === false) {
-            $this->_user = User::findByUsername($this->username);
+            $this->_user = Usuarios::findPorNombre($this->username);
         }
 
         return $this->_user;
