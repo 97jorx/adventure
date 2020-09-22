@@ -31,9 +31,13 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['nombre', 'password'], 'required'],
-            [['nombre', 'auth_key', 'telefono', 'poblacion'], 'string', 'max' => 255],
-            [['password'], 'string', 'max' => 60],
+            [['username', 'nombre', 'apellidos', 'email'], 'required'],
+            [['created_at'], 'safe'],
+            [['username'], 'string', 'max' => 25],
+            [['nombre', 'apellidos', 'email', 'contrasena', 'auth_key', 'poblacion', 'provincia', 'pais'], 'string', 'max' => 255],
+            [['rol'], 'string', 'max' => 30],
+            [['email'], 'unique'],
+            [['username'], 'unique'],
         ];
     }
 
@@ -44,12 +48,48 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             'id' => 'ID',
+            'username' => 'Username',
             'nombre' => 'Nombre',
-            'password' => 'Password',
+            'apellidos' => 'Apellidos',
+            'email' => 'Email',
+            'rol' => 'Rol',
+            'created_at' => 'Created At',
+            'contrasena' => 'Contrasena',
             'auth_key' => 'Auth Key',
-            'telefono' => 'Teléfono',
-            'poblacion' => 'Población',
+            'poblacion' => 'Poblacion',
+            'provincia' => 'Provincia',
+            'pais' => 'Pais',
         ];
+    }
+
+    /**
+     * Gets query for [[Comentarios]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getComentarios()
+    {
+        return $this->hasMany(Comentarios::class, ['user_id_comment' => 'id'])->inverseOf('userIdComment');
+    }
+
+    /**
+     * Gets query for [[Perfils]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPerfiles()
+    {
+        return $this->hasMany(Perfil::class, ['usuario_id' => 'id'])->inverseOf('usuario');
+    }
+
+    /**
+     * Gets query for [[UsuarioComunidads]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUsuarioComunidades()
+    {
+        return $this->hasMany(UsuarioComunidad::class, ['usuario_id' => 'id'])->inverseOf('usuario');
     }
 
 
@@ -82,9 +122,9 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         return static::findOne(['nombre' => $nombre]);
     }
 
-    public function validatePassword($password)
+    public function validateContrasena($contrasena)
     {
-        return Yii::$app->security->validatePassword($password, $this->password);
+        return Yii::$app->security->validatePassword($contrasena, $this->contrasena);
     }
 
 }
