@@ -60,7 +60,6 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav'],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'Perfil', 'url' => ['perfil/index']],
             ['label' => 'Comunidades', 'url' => ['comunidades/index']],
             ['label' => 'Galerias', 'url' => ['galerias/index']],
             ['label' => 'Tablones', 'url' => ['tablones/index']],
