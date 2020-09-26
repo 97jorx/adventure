@@ -41,8 +41,8 @@ class PerfilSearch extends Perfil
      */
     public function search($params)
     {
-        $query = Perfil::find();
-        
+        $query = Perfil::find()
+        ->andWhere(['usuario_id' => Yii::$app->user->id]);
 
         // add conditions that should always apply here
 
