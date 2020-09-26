@@ -3,6 +3,24 @@
 /* @var $this yii\web\View */
 
 $this->title = 'My Yii Application';
+
+$username = !Yii::$app->user->isGuest ?
+(Yii::$app->user->identity->username) : ("");
+
+$this->registerJsFile("@web/js/cookie.js");
+$js = <<< EOF
+$('.site-index').onload(function() {
+    var user = getCookie("username");
+    if (user != "") {
+        $('#myModal').modal("show");
+    } else {
+    user = '$username';
+    if (user != "" && user != null) {
+        setCookie("username", '$username', 30);
+    }
+});
+EOF;
+$this->registerJs($js);
 ?>
 <div class="site-index">
 
@@ -64,10 +82,4 @@ $this->title = 'My Yii Application';
         </div>
    </div>
 </div>
-  <script>
-        window.onload = function(){
-            $('#myModal').modal('show');
-        }
-     
-  </script>
 </div>
