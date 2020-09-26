@@ -50,4 +50,24 @@ $this->title = 'My Yii Application';
         </div>
 
     </div>
+
+            <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p>Bienvenido a ADVENTURE.</p>
+                </div>
+            </div>
+            </div>
+        </div>
+   </div>
+</div>
+  <script>
+        window.onload = function(){
+            $('#myModal').modal('show');
+        }
+     
+  </script>
 </div>
