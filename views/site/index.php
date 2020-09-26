@@ -9,18 +9,21 @@ $username = !Yii::$app->user->isGuest ?
 
 $this->registerJsFile("@web/js/cookie.js");
 $js = <<< EOF
-$('.site-index').onload(function() {
-    var user = getCookie("username");
-    if (user != "") {
-        $('#myModal').modal("show");
-    } else {
-    user = '$username';
-    if (user != "" && user != null) {
-        setCookie("username", '$username', 30);
-    }
-});
+  window.onload = function () {
+        var user =  getCookie('username');
+        if (user == "") {
+            setCookie("username", '$username');
+            $('#myModal').modal("show");
+        } else  {
+            $('#myModal').modal("hide");
+            if(user != '$username'){
+                setCookie("username", '$username');
+            }
+        }
+    };      
 EOF;
 $this->registerJs($js);
+
 ?>
 <div class="site-index">
 
@@ -31,7 +34,7 @@ $this->registerJs($js);
 
         <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
     </div>
-
+    <button type="button" id="boton" class="btn btn-primary">Primary</button>
     <div class="body-content">
 
         <div class="row">
