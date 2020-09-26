@@ -38,6 +38,24 @@ AppAsset::register($this);
             'class' => 'justify-content-end',
         ],
     ]);
+    
+    $items = [];
+    if(Yii::$app->user->isGuest) {
+        $items = [
+            ['label' => 'Login', 'url' => ['/site/login']],
+            ['label' => 'Registrarse', 'url' => ['usuarios/registrar']]
+        ];
+    } else  {
+        $items = [
+            Html::beginForm(['/site/logout'], 'post').Html::submitButton(
+            'Logout (' . Yii::$app->user->identity->username . ')',
+            ['class' => 'dropdown-item'],).Html::endForm(),
+            ['label' => 'Perfil', 'url' => ['perfil/index']]
+        ];
+        
+    }
+
+    
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
         'items' => [
@@ -50,19 +68,7 @@ AppAsset::register($this);
             ['label' => 'Usuarios', 'url' => ['usuarios/index']],
             [
                 'label'=> 'Usuarios',
-                'items' => [
-                    Yii::$app->user->isGuest ? (
-                        ['label' => 'Login', 'url' => ['/site/login']]
-                    ) : (
-                        Html::beginForm(['/site/logout'], 'post')
-                        . Html::submitButton(
-                            'Logout (' . Yii::$app->user->identity->username . ')',
-                            ['class' => 'dropdown-item'],
-                        )
-                        . Html::endForm()
-                        ),
-                    ['label' => 'Registrarse', 'url' => ['usuarios/registrar']],
-                ],
+                'items' => $items,
             ],
         ],
     ]);

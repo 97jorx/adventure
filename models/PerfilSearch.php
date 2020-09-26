@@ -5,6 +5,7 @@ namespace app\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Perfil;
+use Yii;
 
 /**
  * PerfilSearch represents the model behind the search form of `app\models\Perfil`.
@@ -41,6 +42,7 @@ class PerfilSearch extends Perfil
     public function search($params)
     {
         $query = Perfil::find();
+        
 
         // add conditions that should always apply here
 
