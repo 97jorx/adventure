@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+$this->title = "ADVENTURE";
 
 $username = !Yii::$app->user->isGuest ?
 (Yii::$app->user->identity->username) : ("");
@@ -34,7 +34,6 @@ $this->registerJs($js);
 
         <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
     </div>
-    <button type="button" id="boton" class="btn btn-primary">Primary</button>
     <div class="body-content">
 
         <div class="row">
