@@ -8,26 +8,43 @@ use app\models\UsuariosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * UsuariosController implements the CRUD actions for Usuarios model.
  */
 class UsuariosController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
     public function behaviors()
     {
         return [
-            'verbs' => [
-                'class' => VerbFilter::class,
-                'actions' => [
-                    'delete' => ['POST'],
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['registrar'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
                 ],
             ],
         ];
     }
+
+    public function actionRegistrar()
+    {
+        $model = new Usuarios(['scenario' => Usuarios::SCENARIO_CREAR]);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', 'Se ha creado el usuario.');
+            return $this->redirect(['site/login']);
+        }
+
+        return $this->render('registrar', [
+            'model' => $model,
+        ]);
+    }
+
 
     /**
      * Lists all Usuarios models.
