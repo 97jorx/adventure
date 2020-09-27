@@ -17,6 +17,12 @@ use yii\web\IdentityInterface;
  */
 class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
 {
+
+    const SCENARIO_CREAR = 'crear';
+
+    public $password_repeat;
+
+
     /**
      * {@inheritdoc}
      */
@@ -38,6 +44,8 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
             [['rol'], 'string', 'max' => 30],
             [['email'], 'unique'],
             [['username'], 'unique'],
+            [['password_repeat'], 'required', 'on' => self::SCENARIO_CREAR],
+            [['password_repeat'], 'compare', 'compareAttribute' => 'contrasena'],
         ];
     }
 
@@ -55,6 +63,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
             'rol' => 'Rol',
             'created_at' => 'Created At',
             'contrasena' => 'Contrasena',
+            'password_repeat' => 'Repetir contraseña',
             'auth_key' => 'Auth Key',
             'poblacion' => 'Poblacion',
             'provincia' => 'Provincia',
@@ -126,5 +135,24 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return Yii::$app->security->validatePassword($contrasena, $this->contrasena);
     }
+
+    public function beforeSave($insert)
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        if ($insert) {
+            if ($this->scenario === self::SCENARIO_CREAR) {
+                $security = Yii::$app->security;
+                $this->auth_key = $security->generateRandomString();
+                $this->contrasena = $security->generatePasswordHash($this->contrasena);
+                
+            }
+        }
+
+        return true;
+    }
+
 
 }
