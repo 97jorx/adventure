@@ -32,7 +32,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= $form->field($model, 'poblacion')->textInput() ?>
         <?= $form->field($model, 'provincia')->textInput() ?>
         <?= $form->field($model, 'pais')->textInput() ?>
-
         <div class="form-group">
             <div class="offset-sm-2">
                 <?= Html::submitButton('Registrar', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
