@@ -51,14 +51,14 @@ $config = [
         'formatter' => [
             'timeZone' => 'Europe/Madrid',
         ],
-        /*
+        
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
             ],
         ],
-        */
+        
     ],
     'container' => [
         'definitions' => [
@@ -70,6 +70,8 @@ $config = [
     ],
     'params' => $params,
 ];
+
+
 
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment

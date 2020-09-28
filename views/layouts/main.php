@@ -72,6 +72,8 @@ AppAsset::register($this);
         ],
     ]);
     NavBar::end();
+
+
     ?>
 
     <div class="container">

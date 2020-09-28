@@ -6,6 +6,8 @@ use yii\bootstrap4\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\Usuarios */
 /* @var $form yii\bootstrap4\ActiveForm */
+
+
 ?>
 
 <div class="usuarios-form">
@@ -38,6 +40,10 @@ use yii\bootstrap4\ActiveForm;
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
 
+
+
+
     <?php ActiveForm::end(); ?>
 
 </div>
+

@@ -155,12 +155,16 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     }
 
 
+    public function afterSave($insert, $changedAttributes)
+    {
+        if ($this->scenario === self::SCENARIO_CREAR) {
+            parent::afterSave($insert, $changedAttributes);
+            $perfil = new Perfil;
+            $perfil->usuario_id = $this->id;
+            return $perfil->save();
+        }
+            return false;
+    }
 
-        
-    
-    
-
-
-    
 
 }

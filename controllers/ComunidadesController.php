@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Comunidades;
 use app\models\ComunidadesSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -24,6 +25,28 @@ class ComunidadesController extends Controller
                 'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['index'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'create', 'update', 'delete'],
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rules, $action) {
+                            return Yii::$app->user->identity->username === 'admin';
+                        },
+                    ],
+                    // [
+                    //     'allow' => true,
+                    //     'actions' => ['view', 'delete'],
+                    //     'roles' => ['@'],
+                    //     'matchCallback' => function ($rules, $action) {
+                    //         return Yii::$app->user->identity->username === 'pepe';
+                    //     },
+                    // ],
                 ],
             ],
         ];
