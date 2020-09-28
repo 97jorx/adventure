@@ -25,7 +25,9 @@
         "yiisoft/yii2": "~2.0.17",
         "yiisoft/yii2-bootstrap4": "^2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.1.0",
-        "rmrevin/yii2-fontawesome": "^3.4"
+        "rmrevin/yii2-fontawesome": "^3.4",
+        "johnsnook/yii2-bootstrap4-card": "*"
+        
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
@@ -48,7 +50,8 @@
         "phpoffice/phpspreadsheet": "^1.1",
         "symfony/dotenv": "^4.0",
         "knplabs/github-api": "^2.11",
-        "php-http/guzzle6-adapter": "^1.1"
+        "php-http/guzzle6-adapter": "^1.1",
+        "johnsnook/yii2-bootstrap4-card": "*"
     },
     "config": {
         "process-timeout": 1800,

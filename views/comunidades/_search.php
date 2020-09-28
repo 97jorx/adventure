@@ -15,15 +15,15 @@ use yii\bootstrap4\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+    <!-- <?= $form->field($model, 'id') ?> -->
 
     <?= $form->field($model, 'nombre') ?>
 
-    <?= $form->field($model, 'descripcion') ?>
+    <!-- <?= $form->field($model, 'descripcion') ?> -->
 
-    <?= $form->field($model, 'created_at') ?>
+    <?= $form->field($model, 'created_at') ?> 
 
-    <?= $form->field($model, 'tablon_id') ?>
+    <!-- <?= $form->field($model, 'tablon_id') ?> -->
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
