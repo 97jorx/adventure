@@ -5,6 +5,7 @@ use yii\bootstrap4\Html;
 use yii\grid\GridView;
 use yii\widgets\ListView;
 use kartik\detail\DetailView;
+use yii\grid\ActionColumn;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ComunidadesSearch */
@@ -32,35 +33,41 @@ $this->params['breadcrumbs'][] = $this->title;
     ]);
     ?>
 
-
-
-        <!--  GridView::widget([
-            'dataProvider' => $libros,
-            'columns' => [
-                'titulo',
-                [
-                    'class' => ActionColumn::class,
-                    'controller' => 'libros',
-                    'template' => '{view}',
-                ],
-            ],
-        ])  -->
-
-      <?= DetailView::widget([
-        'model'=>$model,    
-        'condensed'=>true,
-        'hover'=>true,
-        'mode'=>DetailView::MODE_VIEW,
-        'panel'=>[
-            'heading'=>'Book # ' . $model->id,
-            'type'=>DetailView::TYPE_INFO,
-        ],
-        'attributes'=>[
+<?php foreach ( $comunidades as $elem) : ?>
+<div class="container">
+    <div class="row-fluid ">
+        <div class="col-sm-4 ">
+            <div class="card-columns-fluid">
+                <div class="card  bg-light" style = "width: 22rem; " >
+                    <img class="card-img-top"  src="web/uploads/test.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title"><b><?=  $elem->nombre  ?></b></h5>
+                        <p class="card-text"><b>  <?=  $elem->descripcion ?></b></p>
+                        <p class="card-text"><b>  <?=  $elem->created_at ?></p>
+                        <a href="#" class="btn btn-secondary">Full Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endforeach; ?>
+    <!-- GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
             'nombre',
             'descripcion',
-        ['attribute'=>'created_at', 'type'=>DetailView::INPUT_DATE],
-    ]
-]); ?>
+            [
+            'class' => ActionColumn::class,
+            'controller' => 'comunidades',
+            'template' => '{view}',
+            ],
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+    ]); -->
+
 
     
 </div>

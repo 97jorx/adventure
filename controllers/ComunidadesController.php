@@ -59,13 +59,12 @@ class ComunidadesController extends Controller
     public function actionIndex()
     {
         $searchModel = new ComunidadesSearch();
-        $model = new Comunidades();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $comunidades = Comunidades::find()->all();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'model' => $model
+            'comunidades' => $comunidades,
         ]);
     }
 
