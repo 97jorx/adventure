@@ -1,9 +1,6 @@
 <?php
 
-use Github\Api\Project\Cards;
 use yii\bootstrap4\Html;
-use yii\grid\GridView;
-use yii\widgets\DetailView;
 use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
@@ -23,53 +20,43 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <!-- <?= ListView::widget([
+    <?php ListView::widget([
         'dataProvider' => $dataProvider,
         'itemOptions' => ['class' => 'item'],
         'itemView' => function ($model, $key, $index, $widget) {
             return Html::a(Html::encode($model->id), ['view', 'id' => $model->id]);
         },
-    ]) ?> -->
-    
-<?php GridView::widget([
-    'dataProvider' => $dataProvider,
-    'filterModel' => $searchModel,
-    'columns' => [
-        ['class' => 'yii\grid\SerialColumn'],
-        [
-            'attribute' => 'yuor_attibute',
-            'label' => 'your label',
-            'format' => 'raw',
-            'value' => function ($model) {                      
-                return "<a href='./yourPath/view?id=". $model->your_column ."'  class = 'btn  btn-success glyphicon glyphicon-user ' > </a>";
-            },
-            'contentOptions' => ['style' => 'width:80px; text-align: center;'],
-            'headerOptions' => ['style' => 'text-align: center;'],
-        ],
-    ],
-    [
-        'attribute' => 'yuor_attibute',
-        'label' => 'your  2 label',
-        'format' => 'raw',
-        'value' => function ($model) {                      
-            return "<img src='./yourPath/image.jpg>";
-        },
-        'contentOptions' => ['style' => 'width:400; height 400 px;'],
-        'headerOptions' => ['style' => 'text-align: center;'],
-    ],
-    [
-        'attribute' => 'yuor_attibute', 
-        'label' => 'your  3 label',
-        'format' => 'raw',
-        'value' => function ($model) {                      
-            return '';
-        },
-        'contentOptions' => ['style' => 'width:400; height 400 px;'],
-        'headerOptions' => ['style' => 'text-align: center;'],
-    ],
-]);
+    ]);
+    ?>
+
+
+<!-- <div class="col-xs-12 col-sm-6 col-md-4">
+    <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
+        <div class="mainflip">
+            <div class="frontside">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <p><img class="img-fluid" src="@web/uploads/test.jpg" alt="card image"></p>
+                        <h4 class="card-title">Prueba de card</h4>
+                        <p class="card-text">Esto es una prueba de card en Boostrap</p>
+                        </div>            
+                 </div>
+            </div>
+        </div>
+    </div>    
+</div> -->
+
+
+<?= Card::widget([
+
+'type' => 'cardBorder',
+'label' => 'Label',
+'sLabel' => '1000',
+'icon' => 'fas fa-calendar',
+'options' => [
+    'colSizeClass' => 'col-md-3',
+    'borderColor' => 'primary',
+]
+]); 
 ?>
-        
-        
 </div>
-       
