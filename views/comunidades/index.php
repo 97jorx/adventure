@@ -13,6 +13,7 @@ use yii\grid\ActionColumn;
 
 $this->title = 'Comunidades';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="comunidades-index">
 
@@ -39,12 +40,12 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-sm-4 ">
             <div class="card-columns-fluid">
                 <div class="card  bg-light" style = "width: 22rem; " >
-                    <img class="card-img-top"  src="web/uploads/test.jpg" alt="Card image cap">
+                    <img class="card-img-top"  src="<?php echo Yii::$app->request->baseUrl.'/uploads/test.jpg'?>" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title"><b><?=  $elem->nombre  ?></b></h5>
                         <p class="card-text"><b>  <?=  $elem->descripcion ?></b></p>
-                        <p class="card-text"><b>  <?=  $elem->created_at ?></p>
-                        <a href="#" class="btn btn-secondary">Full Details</a>
+                        <p class="card-text"><b>  <?= date("jS F, Y", strtotime($elem->created_at))  ?></p>
+                        <a href="#" class="btn btn-secondary">Unirse</a>
                     </div>
                 </div>
             </div>
