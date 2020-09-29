@@ -1,7 +1,10 @@
 <?php
 
+use hoaaah\sbadmin2\widgets\Card;
 use yii\bootstrap4\Html;
+use yii\grid\GridView;
 use yii\widgets\ListView;
+use kartik\detail\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ComunidadesSearch */
@@ -30,33 +33,34 @@ $this->params['breadcrumbs'][] = $this->title;
     ?>
 
 
-<!-- <div class="col-xs-12 col-sm-6 col-md-4">
-    <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
-        <div class="mainflip">
-            <div class="frontside">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <p><img class="img-fluid" src="@web/uploads/test.jpg" alt="card image"></p>
-                        <h4 class="card-title">Prueba de card</h4>
-                        <p class="card-text">Esto es una prueba de card en Boostrap</p>
-                        </div>            
-                 </div>
-            </div>
-        </div>
-    </div>    
-</div> -->
 
+        <!--  GridView::widget([
+            'dataProvider' => $libros,
+            'columns' => [
+                'titulo',
+                [
+                    'class' => ActionColumn::class,
+                    'controller' => 'libros',
+                    'template' => '{view}',
+                ],
+            ],
+        ])  -->
 
-<?= Card::widget([
+      <?= DetailView::widget([
+        'model'=>$model,    
+        'condensed'=>true,
+        'hover'=>true,
+        'mode'=>DetailView::MODE_VIEW,
+        'panel'=>[
+            'heading'=>'Book # ' . $model->id,
+            'type'=>DetailView::TYPE_INFO,
+        ],
+        'attributes'=>[
+            'nombre',
+            'descripcion',
+        ['attribute'=>'created_at', 'type'=>DetailView::INPUT_DATE],
+    ]
+]); ?>
 
-'type' => 'cardBorder',
-'label' => 'Label',
-'sLabel' => '1000',
-'icon' => 'fas fa-calendar',
-'options' => [
-    'colSizeClass' => 'col-md-3',
-    'borderColor' => 'primary',
-]
-]); 
-?>
+    
 </div>

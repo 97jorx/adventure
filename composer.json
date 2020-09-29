@@ -26,7 +26,9 @@
         "yiisoft/yii2-bootstrap4": "^2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.1.0",
         "rmrevin/yii2-fontawesome": "^3.4",
-        "hoaaah/yii2-startbootstrap-sb-admin-2-asset": "dev-master"
+        "hoaaah/yii2-startbootstrap-sb-admin-2-asset": "dev-master",
+        "kartik-v/yii2-detail-view": "dev-master",
+        "kartik-v/yii2-widgets": "@dev"
         
     },
     "require-dev": {
