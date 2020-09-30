@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ]);
     ?>
 
-<?php foreach ( $comunidades as $elem) : ?>
+<?php foreach ($comunidades as $elem) : ?>
 <div class="container">
     <div class="row-fluid ">
         <div class="col-sm-4 ">
@@ -53,22 +53,4 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </div>
 <?php endforeach; ?>
-    <!-- GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-            'nombre',
-            'descripcion',
-            [
-            'class' => ActionColumn::class,
-            'controller' => 'comunidades',
-            'template' => '{view}',
-            ],
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); -->
-
-
-    
 </div>

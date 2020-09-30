@@ -28,7 +28,8 @@
         "rmrevin/yii2-fontawesome": "^3.4",
         "hoaaah/yii2-startbootstrap-sb-admin-2-asset": "dev-master",
         "kartik-v/yii2-detail-view": "dev-master",
-        "kartik-v/yii2-widgets": "@dev"
+        "kartik-v/yii2-widgets": "@dev",
+        "dmstr/yii2-cookie-consent": "^1.4"
         
     },
     "require-dev": {

@@ -14,6 +14,20 @@ $config = [
     ],
     'language' => 'es-ES',
     'components' => [
+        'cookieConsentHelper' => [
+            'class' => dmstr\cookieconsent\components\CookieConsentHelper::class
+        ],
+
+        'i18n' => [
+            'translations' => [
+                'cookie-consent' => [
+                    'class'          => \yii\i18n\PhpMessageSource::class,
+                    'basePath'       => '@app/messages',
+                    'sourceLanguage' => 'es',
+                ],
+            ],
+        ],
+
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'UnqFVoGaH1mtVlhPrgZqrkfnVZum37N7',

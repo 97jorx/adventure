@@ -1,28 +1,35 @@
+
 <?php
 
 /* @var $this yii\web\View */
+use dmstr\cookieconsent\widgets\CookieConsent;
 
 $this->title = "ADVENTURE";
 
-$username = !Yii::$app->user->isGuest ?
-(Yii::$app->user->identity->username) : ("");
+// $username = !Yii::$app->user->isGuest ?
+// (Yii::$app->user->identity->username) : ("");
 
-$this->registerJsFile("@web/js/cookie.js");
-$js = <<< EOF
-  window.onload = function () {
-        var user =  getCookie('username');
-        if (user == "") {
-            setCookie("username", '$username');
-            $('#myModal').modal("show");
-        } else  {
-            $('#myModal').modal("hide");
-            if(user != '$username'){
-                setCookie("username", '$username');
-            }
-        }
-    };      
-EOF;
-$this->registerJs($js);
+// $this->registerJsFile("@web/js/cookie.js");
+// $js = <<< EOF
+//   window.onload = function () {
+//         var user =  getCookie('username');
+//         if (user == "") {
+//             setCookie("username", '$username');
+//             $('#myModal').modal("show");
+//         } else  {
+//             $('#myModal').modal("hide");
+//             if(user != '$username'){
+//                 setCookie("username", '$username');
+//             }
+//         }
+//     };      
+// EOF;
+// $this->registerJs($js);
+
+
+
+
+
 
 ?>
 <div class="site-index">
@@ -85,3 +92,48 @@ $this->registerJs($js);
    </div>
 </div>
 </div>
+
+    <?= CookieConsent::widget([
+    'name' => 'cookie_consent_status',
+    'path' => '/',
+    'domain' => '',
+    'expiryDays' => 365,
+    'message' => Yii::t('cookie-consent', 'We use cookies to ensure the proper functioning of our website. For an improved visit experience we use analysis products. These are used when you agree with "Statistics".'),
+    'save' => Yii::t('cookie-consent', 'Save'),
+    'acceptAll' => Yii::t('cookie-consent', 'Accept all'),
+    'controlsOpen' => Yii::t('cookie-consent', 'Change'),
+    'detailsOpen' => Yii::t('cookie-consent', 'Cookie Details'),
+    'learnMore' => Yii::t('cookie-consent', 'Privacy statement'),
+    'visibleControls' => true,
+    'visibleDetails' => false,
+    'link' => '#',
+    'consent' => [
+        'necessary' => [
+            'label' => Yii::t('cookie-consent', 'Necessary'),
+            'checked' => true,
+            'disabled' => true
+        ],
+        'statistics' => [
+            'label' => Yii::t('cookie-consent', 'Statistics'),
+            'cookies' => [
+                ['name' => '_ga'],
+                ['name' => '_gat', 'domain' => '', 'path' => '/'],
+                ['name' => '_gid', 'domain' => '', 'path' => '/']
+            ],
+            'details' => [
+                [
+                    'title' => Yii::t('cookie-consent', 'Google Analytics'),
+                    'description' => Yii::t('cookie-consent', 'Create statistics data')
+
+                ],
+                [
+                    'title' => Yii::t('cookie-consent', 'Goal'),
+                    'description' => Yii::t('cookie-consent', '_ga, _gat, _gid, _gali')
+
+                ]
+            ]
+        ]
+    ]
+]) ?>
+    
+
