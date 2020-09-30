@@ -98,23 +98,23 @@ $this->title = "ADVENTURE";
     'path' => '/',
     'domain' => '',
     'expiryDays' => 365,
-    'message' => Yii::t('cookie-consent', 'We use cookies to ensure the proper functioning of our website. For an improved visit experience we use analysis products. These are used when you agree with "Statistics".'),
-    'save' => Yii::t('cookie-consent', 'Save'),
-    'acceptAll' => Yii::t('cookie-consent', 'Accept all'),
-    'controlsOpen' => Yii::t('cookie-consent', 'Change'),
-    'detailsOpen' => Yii::t('cookie-consent', 'Cookie Details'),
-    'learnMore' => Yii::t('cookie-consent', 'Privacy statement'),
+    'message' => Yii::t('cookie-consent', 'Utilizamos cookies para asegurar el correcto funcionamiento de nuestro sitio web. Para una mejor experiencia de visita utilizamos productos de análisis. Se utilizan cuando está de acuerdo con "Estadísticas"..'),
+    'save' => Yii::t('cookie-consent', 'Guardar'),
+    'acceptAll' => Yii::t('cookie-consent', 'Aceptar'),
+    'controlsOpen' => Yii::t('cookie-consent', 'Cambiar'),
+    'detailsOpen' => Yii::t('cookie-consent', 'Cookie Detalles'),
+    'learnMore' => Yii::t('cookie-consent', 'Declaracion de privacidad'),
     'visibleControls' => true,
     'visibleDetails' => false,
     'link' => '#',
     'consent' => [
         'necessary' => [
-            'label' => Yii::t('cookie-consent', 'Necessary'),
+            'label' => Yii::t('cookie-consent', 'Necesario'),
             'checked' => true,
             'disabled' => true
         ],
         'statistics' => [
-            'label' => Yii::t('cookie-consent', 'Statistics'),
+            'label' => Yii::t('cookie-consent', 'Estadísticas'),
             'cookies' => [
                 ['name' => '_ga'],
                 ['name' => '_gat', 'domain' => '', 'path' => '/'],
@@ -123,7 +123,7 @@ $this->title = "ADVENTURE";
             'details' => [
                 [
                     'title' => Yii::t('cookie-consent', 'Google Analytics'),
-                    'description' => Yii::t('cookie-consent', 'Create statistics data')
+                    'description' => Yii::t('cookie-consent', 'Crear datos de estadísticas')
 
                 ],
                 [
