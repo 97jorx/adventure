@@ -124,16 +124,16 @@ CREATE TABLE usuario_comunidad (
 
 
 
-INSERT INTO usuarios (username, nombre, apellidos, email, rol, created_at, contrasena, poblacion, provincia, pais)
-VALUES ('admin', 'admin', 'admin', 'adventure@gmail.com', 'administrador', '11/08/2020', crypt('admin', gen_salt('bf', 10)), 'Sanlúcar de Barrameda', 'Cádiz' , 'España');
+INSERT INTO usuarios (username, nombre, apellidos, email, rol, contrasena, poblacion, provincia, pais)
+VALUES ('admin', 'admin', 'admin', 'adventure@gmail.com', 'administrador', crypt('admin', gen_salt('bf', 10)), 'Sanlúcar de Barrameda', 'Cádiz' , 'España');
 
 
 INSERT INTO perfil (foto_perfil, bibliografia, valoracion, usuario_id)
 VALUES ('foto.jpg', 'Soy un administrador de Adventure', 5, 1);
 
 
-INSERT INTO blogs (titulo, descripcion, created_at, cuerpo)
-VALUES ('Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whiliam Shakespeare', '13/08/2020', 
+INSERT INTO blogs (titulo, descripcion, cuerpo)
+VALUES ('Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whiliam Shakespeare',  
         'Lo mejor que me he leído hasta ahora de Shakespeare: 
         conciso, sorprendente y para nada denso como muchas otras obras del escritor. 
         La historia tiene su miga: un duque de Milán desterrado de sus posesiones por su propio hermano condenado a vagar sin rumbo por el mar. 
@@ -143,11 +143,11 @@ VALUES ('Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whili
 
 
 
-INSERT INTO blogs_destacados (titulo, likes, comments, created_at)
-VALUES ('Una obra de arte, Whiliam Shakespeare...', 503, 1274,'13/08/2020'); 
+INSERT INTO blogs_destacados (titulo, likes, comments)
+VALUES ('Una obra de arte, Whiliam Shakespeare...', 503, 1274); 
 
-INSERT INTO comentarios (user_id_comment, id_comment_blog, texto, created_at)
-VALUES (1, 1, 'Es una maravilla, me encanta', '13/08/2020'); 
+INSERT INTO comentarios (user_id_comment, id_comment_blog, texto)
+VALUES (1, 1, 'Es una maravilla, me encanta'); 
 
 INSERT INTO galerias (fotos)  
 VALUES ('foto.png');
@@ -155,10 +155,10 @@ VALUES ('foto.png');
 INSERT INTO tablones (blogs_id, blogs_destacados_id, galerias_id)
 VALUES (1, 1, 1);         
 
-INSERT INTO comunidades (id, nombre, descripcion, created_at, tablon_id)
+INSERT INTO comunidades (id, nombre, descripcion, tablon_id)
 VALUES (1, 'Escribir es para todos', 
            'Estaís todos invitados formar parte de la comunidad para escritores animaté 
-            y comparte tus ideas a con todos nosotros', '13/08/2020', 1);
+            y comparte tus ideas a con todos nosotros', 1);
 
 INSERT INTO usuario_comunidad (id, usuario_id, creador, comunidad_id)
 VALUES (1, 1, '1', 1);         
