@@ -125,4 +125,23 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+
+
+    public function actionCrearCookie() {
+        $cookies = Yii::$app->response->cookies;
+        $cookies->add(new \yii\web\Cookie([
+            'name' => '',
+            'value' => '',
+            'expire' => time() + 86400 * 365,
+        ]));
+    
+    }
+
+    public function actionRecogerCookie() {
+        $cookie = Yii::$app->request->cookies;
+        if ($cookie->has(''))
+            $cookieValue = $cookie->getValue('');
+        return 'value : '.$cookieValue;
+    }
+
 }

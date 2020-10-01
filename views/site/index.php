@@ -9,29 +9,27 @@ $this->title = "ADVENTURE";
 $username = !Yii::$app->user->isGuest ?
 (Yii::$app->user->identity->username) : ("");
 
+//$this->registerJsFile("@web/js/js.cookie.js");
 $this->registerJsFile("@web/js/cookie.js");
 $js = <<< EOF
   window.onload = function () {
         var user =  getCookie('username');
         if (user == '' && '$username' !== '') {
-            setCookie("username", '$username');
+           setCookie("username", "$username");
             $('#myModal').modal("show");
         } else  {
             $('#myModal').modal("hide");
             if(user != '$username' && user != ''){
-                setCookie("username", '$username');
+                setCookie('username', '$username');
             }
         }
     };      
 EOF;
 $this->registerJs($js);
 
-
-
-
-
-
 ?>
+
+
 <div class="site-index">
 
     <div class="jumbotron">
@@ -92,6 +90,12 @@ $this->registerJs($js);
    </div>
 </div>
 </div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+
 
     <?= CookieConsent::widget([
     'name' => 'cookie_consent_status',
