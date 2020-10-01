@@ -20,12 +20,24 @@ class UsuariosController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['registrar'],
+                'only' => ['index'],
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['?'],
+                        'actions' => ['index', 'create', 'update', 'delete'],
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rules, $action) {
+                            return Yii::$app->user->identity->username === 'admin';
+                        },
                     ],
+                    // [
+                    //     'allow' => true,
+                    //     'actions' => ['view', 'delete'],
+                    //     'roles' => ['@'],
+                    //     'matchCallback' => function ($rules, $action) {
+                    //         return Yii::$app->user->identity->username === 'pepe';
+                    //     },
+                    // ],
                 ],
             ],
         ];
