@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Perfil;
 use Yii;
 use app\models\Usuarios;
 use app\models\UsuariosSearch;
@@ -132,8 +133,18 @@ class UsuariosController extends Controller
      */
     public function actionDelete($id)
     {
+        $model = $this->findModel($id);
+        
+        if ($model->getPerfiles()->exists()) {
+            Perfil::find()
+            ->where(['id' => $id])
+            ->one()
+            ->delete();
+            Yii::$app->session->setFlash('success', 'Se ha borrado el usuario.');
+        } else {
+            Yii::$app->session->setFlash('success', 'No se ha borrado el usuario.');
+        }
         $this->findModel($id)->delete();
-
         return $this->redirect(['index']);
     }
 
