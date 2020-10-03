@@ -16,7 +16,6 @@ use yii\bootstrap4\ActiveForm;
 
     <?= $form->field($model, 'descripcion')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'created_at')->textInput() ?>
 
     <?= $form->field($model, 'tablon_id')->textInput() ?>
 

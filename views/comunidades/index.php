@@ -28,7 +28,7 @@ $(document).ready(function() {
 EOF;
 $this->registerJs($js);
 
-
+Yii::$app->formatter->locale = 'es-ES';
 
 ?>
 <div class="comunidades-index">
@@ -60,7 +60,7 @@ $this->registerJs($js);
                     <div class="card-body">
                         <h5 class="card-title"><b><?=  $elem->nombre  ?></b></h5>
                         <p class="card-text"><b>  <?=  $elem->descripcion ?></b></p>
-                        <p class="card-text"><b>  <?= date("jS F, Y", strtotime($elem->created_at))  ?></p>
+                        <p class="card-text"><b>  <?= Yii::$app->formatter->asDate($elem->created_at)  ?></p>
                         <a href="#" class="btn btn-secondary">Unirse</a>
                     </div>
                 </div>

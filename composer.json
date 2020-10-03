@@ -29,7 +29,9 @@
         "hoaaah/yii2-startbootstrap-sb-admin-2-asset": "dev-master",
         "kartik-v/yii2-detail-view": "dev-master",
         "kartik-v/yii2-widgets": "@dev",
-        "dmstr/yii2-cookie-consent": "^1.4"
+        "dmstr/yii2-cookie-consent": "^1.4",
+        "kartik-v/yii2-widget-datepicker": "dev-master",
+        "yiisoft/yii2-jui": "^2.0"
         
     },
     "require-dev": {

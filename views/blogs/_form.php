@@ -2,11 +2,17 @@
 
 use yii\bootstrap4\Html;
 use yii\bootstrap4\ActiveForm;
+use yii\jui\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Blogs */
 /* @var $form yii\bootstrap4\ActiveForm */
+
+
 ?>
+
+
+
 
 <div class="blogs-form">
 
@@ -18,7 +24,6 @@ use yii\bootstrap4\ActiveForm;
 
     <?= $form->field($model, 'cuerpo')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'created_at')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
@@ -27,3 +32,4 @@ use yii\bootstrap4\ActiveForm;
     <?php ActiveForm::end(); ?>
 
 </div>
+

@@ -5,15 +5,6 @@ CREATE TABLE galerias (
     , fotos           text      
 );
 
-DROP TABLE IF EXISTS tablones CASCADE;
-
-CREATE TABLE tablones ( 
-    id                    bigserial  PRIMARY KEY 
-  , blogs_id              bigint     NOT NULL REFERENCES blogs (id)
-  , blogs_destacados_id   bigint     REFERENCES blogs_destacados (id)
---  , chat_id             bigint     NOT NULL REFERENCES chats (id)  
-  , galerias_id           bigint     REFERENCES galerias (id) 
-);
 
 
 DROP TABLE IF EXISTS comunidades CASCADE;
@@ -58,24 +49,25 @@ CREATE TABLE perfil (
 DROP TABLE IF EXISTS blogs CASCADE;
 
 CREATE TABLE blogs (
-     id          bigserial      PRIMARY KEY 
-   , titulo      varchar(255)   NOT NULL UNIQUE
--- , imagen      text
-   , descripcion varchar(255)
-   , cuerpo      text   
-   , created_at  timestamp(0)   NOT NULL DEFAULT current_timestamp
-);
-
-DROP TABLE IF EXISTS blogs_destacados CASCADE;
-
-CREATE TABLE blogs_destacados (
-     id           bigserial      PRIMARY KEY
-   , titulo       varchar(255)   
- --, miniatura    text
-   , likes        bigint
-   , comments     bigint
+     id           bigserial      PRIMARY KEY 
+   , titulo       varchar(255)   NOT NULL UNIQUE
+-- , imagen       text
+   , descripcion  varchar(255)
+   , cuerpo       text   
+   , comunidad_id bigint         NOT NULL REFERENCES comunidades (id)
    , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
 );
+
+-- DROP TABLE IF EXISTS blogs_destacados CASCADE;
+
+-- CREATE TABLE blogs_destacados (
+--      id           bigserial      PRIMARY KEY
+--    , titulo       varchar(255)   
+--  --, miniatura    text
+--    , likes        bigint
+--    , comments     bigint
+--    , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
+-- );
 
 
 
@@ -132,7 +124,7 @@ INSERT INTO perfil (foto_perfil, bibliografia, valoracion, usuario_id)
 VALUES ('foto.jpg', 'Soy un administrador de Adventure', 5, 1);
 
 
-INSERT INTO blogs (titulo, descripcion, cuerpo)
+INSERT INTO blogs (titulo, descripcion, cuerpo, comunidad_id)
 VALUES ('Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whiliam Shakespeare',  
         'Lo mejor que me he leído hasta ahora de Shakespeare: 
         conciso, sorprendente y para nada denso como muchas otras obras del escritor. 
@@ -143,8 +135,7 @@ VALUES ('Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whili
 
 
 
-INSERT INTO blogs_destacados (titulo, likes, comments)
-VALUES ('Una obra de arte, Whiliam Shakespeare...', 503, 1274); 
+
 
 INSERT INTO comentarios (user_id_comment, id_comment_blog, texto)
 VALUES (1, 1, 'Es una maravilla, me encanta'); 
@@ -152,13 +143,11 @@ VALUES (1, 1, 'Es una maravilla, me encanta');
 INSERT INTO galerias (fotos)  
 VALUES ('foto.png');
 
-INSERT INTO tablones (blogs_id, blogs_destacados_id, galerias_id)
-VALUES (1, 1, 1);         
 
-INSERT INTO comunidades (id, nombre, descripcion, tablon_id)
+INSERT INTO comunidades (id, nombre, descripcion, galeria_id)
 VALUES (1, 'Escribir es para todos', 
            'Estaís todos invitados formar parte de la comunidad para escritores animaté 
-            y comparte tus ideas a con todos nosotros', 1);
+            y comparte tus ideas a con todos nosotros');
 
 INSERT INTO usuario_comunidad (id, usuario_id, creador, comunidad_id)
 VALUES (1, 1, '1', 1);         
