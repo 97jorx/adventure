@@ -29,15 +29,15 @@ class ComunidadesController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['index'],
+                //'only' => ['index'],
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'create', 'update', 'delete'],
+                  //      'actions' => ['create', 'update', 'delete'],
                         'roles' => ['@'],
-                        'matchCallback' => function ($rules, $action) {
-                            return Yii::$app->user->identity->username === 'admin';
-                        },
+                        // 'matchCallback' => function ($rules, $action) {
+                        //     return Yii::$app->user->identity->username === 'admin';
+                        // },
                     ],
                     // [
                     //     'allow' => true,

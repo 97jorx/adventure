@@ -70,3 +70,14 @@ $this->registerJs($js);
 </div>
 <?php endforeach; ?>
 </div>
+
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Bienvenido a ADVENTURE.</p>
+            </div>
+        </div>
+    </div>
+</div>

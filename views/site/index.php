@@ -52,23 +52,9 @@ use dmstr\cookieconsent\widgets\CookieConsent;
                 <p><a class="btn btn-outline-info" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
             </div>
         </div>
-
     </div>
-
-            <div id="myModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-body">
-                    <p>Bienvenido a ADVENTURE.</p>
-                </div>
-            </div>
-            </div>
-        </div>
-   </div>
 </div>
-</div>
+
 
 
 
