@@ -4,28 +4,7 @@
 /* @var $this yii\web\View */
 use dmstr\cookieconsent\widgets\CookieConsent;
 
-$this->title = "ADVENTURE";
 
-$username = !Yii::$app->user->isGuest ?
-(Yii::$app->user->identity->username) : ("");
-
-//$this->registerJsFile("@web/js/js.cookie.js");
-$this->registerJsFile("@web/js/cookie.js");
-$js = <<< EOF
-  window.onload = function () {
-        var user =  getCookie('username');
-        if (user == '' && '$username' !== '') {
-           setCookie("username", "$username");
-            $('#myModal').modal("show");
-        } else  {
-            $('#myModal').modal("hide");
-            if(user != '$username' && user != ''){
-                setCookie('username', '$username');
-            }
-        }
-    };      
-EOF;
-$this->registerJs($js);
 
 ?>
 

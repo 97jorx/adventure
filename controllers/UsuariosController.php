@@ -136,13 +136,10 @@ class UsuariosController extends Controller
         $model = $this->findModel($id);
         
         if ($model->getPerfiles()->exists()) {
-            Perfil::find()
-            ->where(['id' => $id])
-            ->one()
-            ->delete();
+            Perfil::find()->where(['id' => $id])->one()->delete();
             Yii::$app->session->setFlash('success', 'Se ha borrado el usuario.');
         } else {
-            Yii::$app->session->setFlash('success', 'No se ha borrado el usuario.');
+            Yii::$app->session->setFlash('danger', 'No se ha borrado el usuario.');
         }
         $this->findModel($id)->delete();
         return $this->redirect(['index']);
