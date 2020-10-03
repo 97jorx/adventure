@@ -11,9 +11,10 @@ use Yii;
  * @property string $nombre
  * @property string|null $descripcion
  * @property string $created_at
- * @property int $tablon_id
+ * @property int $galeria_id
  *
- * @property Tablones $tablon
+ * @property Blogs[] $blogs
+ * @property Galerias $galeria
  * @property UsuarioComunidad[] $usuarioComunidads
  */
 class Comunidades extends \yii\db\ActiveRecord
@@ -32,14 +33,14 @@ class Comunidades extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre', 'tablon_id'], 'required'],
+            [['nombre', 'galeria_id'], 'required'],
             [['descripcion'], 'string'],
             [['created_at'], 'safe'],
-            [['tablon_id'], 'default', 'value' => null],
-            [['tablon_id'], 'integer'],
+            [['galeria_id'], 'default', 'value' => null],
+            [['galeria_id'], 'integer'],
             [['nombre'], 'string', 'max' => 255],
             [['nombre'], 'unique'],
-            [['tablon_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tablones::class, 'targetAttribute' => ['tablon_id' => 'id']],
+            [['galeria_id'], 'exist', 'skipOnError' => true, 'targetClass' => Galerias::class, 'targetAttribute' => ['galeria_id' => 'id']],
         ];
     }
 
@@ -53,18 +54,28 @@ class Comunidades extends \yii\db\ActiveRecord
             'nombre' => 'Nombre',
             'descripcion' => 'Descripcion',
             'created_at' => 'Created At',
-            'tablon_id' => 'Tablon ID',
+            'galeria_id' => 'Galeria ID',
         ];
     }
 
     /**
-     * Gets query for [[Tablon]].
+     * Gets query for [[Blogs]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getTablon()
+    public function getBlogs()
     {
-        return $this->hasOne(Tablones::class, ['id' => 'tablon_id'])->inverseOf('comunidades');
+        return $this->hasMany(Blogs::class, ['comunidad_id' => 'id'])->inverseOf('comunidad');
+    }
+
+    /**
+     * Gets query for [[Galeria]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGaleria()
+    {
+        return $this->hasOne(Galerias::class, ['id' => 'galeria_id'])->inverseOf('comunidades');
     }
 
     /**

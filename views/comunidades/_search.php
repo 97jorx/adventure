@@ -23,7 +23,7 @@ use yii\bootstrap4\ActiveForm;
 
     <?= $form->field($model, 'created_at') ?> 
 
-    <!-- <?= $form->field($model, 'tablon_id') ?> -->
+    
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

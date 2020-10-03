@@ -17,7 +17,7 @@ class BlogsSearch extends Blogs
     public function rules()
     {
         return [
-            [['id'], 'integer'],
+            [['id', 'comunidad_id'], 'integer'],
             [['titulo', 'descripcion', 'cuerpo', 'created_at'], 'safe'],
         ];
     }
@@ -60,6 +60,7 @@ class BlogsSearch extends Blogs
         $query->andFilterWhere([
             'id' => $this->id,
             'created_at' => $this->created_at,
+            'comunidad_id' => $this->comunidad_id, 
         ]);
 
         $query->andFilterWhere(['ilike', 'titulo', $this->titulo])
