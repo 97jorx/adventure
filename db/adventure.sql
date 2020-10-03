@@ -14,7 +14,7 @@ CREATE TABLE comunidades (
   , nombre          varchar(255)    NOT NULL UNIQUE    
   , descripcion     text  
   , created_at      timestamp(0)   NOT NULL DEFAULT current_timestamp
-  , tablon_id       bigint         NOT NULL REFERENCES tablones (id)   
+  , galeria_id      bigint         NOT NULL REFERENCES galerias (id)
 );
 
 
@@ -58,7 +58,7 @@ CREATE TABLE blogs (
    , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
 );
 
--- DROP TABLE IF EXISTS blogs_destacados CASCADE;
+ -- DROP TABLE IF EXISTS blogs_destacados CASCADE;
 
 -- CREATE TABLE blogs_destacados (
 --      id           bigserial      PRIMARY KEY
@@ -124,6 +124,16 @@ INSERT INTO perfil (foto_perfil, bibliografia, valoracion, usuario_id)
 VALUES ('foto.jpg', 'Soy un administrador de Adventure', 5, 1);
 
 
+
+INSERT INTO galerias (fotos)  
+VALUES ('foto.png');
+
+
+INSERT INTO comunidades (nombre, descripcion, galeria_id)
+VALUES ('Escribir es para todos', 
+           'Estaís todos invitados formar parte de la comunidad para escritores animaté 
+            y comparte tus ideas a con todos nosotros', 1);
+
 INSERT INTO blogs (titulo, descripcion, cuerpo, comunidad_id)
 VALUES ('Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whiliam Shakespeare',  
         'Lo mejor que me he leído hasta ahora de Shakespeare: 
@@ -131,26 +141,13 @@ VALUES ('Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whili
         La historia tiene su miga: un duque de Milán desterrado de sus posesiones por su propio hermano condenado a vagar sin rumbo por el mar. 
         Pero haciendo servir sus dotes aprendidas en la corte como mago, logra dominar los elementos de la isla a la que llega y se convierte en una especie de Dios. 
         A diferencia de muchos otros personajes del autor, este logra perdonar a sus adversarios en su venganza. 
-        Un cuento fantástico con espíritus de la naturaleza muy entretenido.');
-
-
-
-
+        Un cuento fantástico con espíritus de la naturaleza muy entretenido.', 1);
 
 INSERT INTO comentarios (user_id_comment, id_comment_blog, texto)
 VALUES (1, 1, 'Es una maravilla, me encanta'); 
 
-INSERT INTO galerias (fotos)  
-VALUES ('foto.png');
-
-
-INSERT INTO comunidades (id, nombre, descripcion, galeria_id)
-VALUES (1, 'Escribir es para todos', 
-           'Estaís todos invitados formar parte de la comunidad para escritores animaté 
-            y comparte tus ideas a con todos nosotros');
-
-INSERT INTO usuario_comunidad (id, usuario_id, creador, comunidad_id)
-VALUES (1, 1, '1', 1);         
+INSERT INTO usuario_comunidad (usuario_id, creador, comunidad_id)
+VALUES (1, '1', 1);         
 
 
 
