@@ -60,6 +60,7 @@ CREATE TABLE blogs (
    , descripcion  varchar(255)
    , cuerpo       text   
    , comunidad_id bigint         NOT NULL REFERENCES comunidades (id)
+   , usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
    , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
 );
 
@@ -141,43 +142,43 @@ VALUES ('Escribir es para todos',
         'Estaís todos invitados formar parte de la comunidad para escritores animaté 
          y comparte tus ideas a con todos nosotros');
 
-INSERT INTO blogs (titulo, descripcion, cuerpo, comunidad_id)
+INSERT INTO blogs (titulo, descripcion, cuerpo, comunidad_id, usuario_id)
 VALUES ('Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whiliam Shakespeare',  
         'Lo mejor que me he leído hasta ahora de Shakespeare: 
         conciso, sorprendente y para nada denso como muchas otras obras del escritor. 
         La historia tiene su miga: un duque de Milán desterrado de sus posesiones por su propio hermano condenado a vagar sin rumbo por el mar. 
         Pero haciendo servir sus dotes aprendidas en la corte como mago, logra dominar los elementos de la isla a la que llega y se convierte en una especie de Dios. 
         A diferencia de muchos otros personajes del autor, este logra perdonar a sus adversarios en su venganza. 
-        Un cuento fantástico con espíritus de la naturaleza muy entretenido.', 1);
+        Un cuento fantástico con espíritus de la naturaleza muy entretenido.', 1, 1);
 
 
-INSERT INTO blogs (titulo, descripcion, cuerpo, comunidad_id)
+INSERT INTO blogs (titulo, descripcion, cuerpo, comunidad_id, usuario_id )
 VALUES ('1Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whiliam Shakespeare',  
         'Lo mejor que me he leído hasta ahora de Shakespeare: 
         conciso, sorprendente y para nada denso como muchas otras obras del escritor. 
         La historia tiene su miga: un duque de Milán desterrado de sus posesiones por su propio hermano condenado a vagar sin rumbo por el mar. 
         Pero haciendo servir sus dotes aprendidas en la corte como mago, logra dominar los elementos de la isla a la que llega y se convierte en una especie de Dios. 
         A diferencia de muchos otros personajes del autor, este logra perdonar a sus adversarios en su venganza. 
-        Un cuento fantástico con espíritus de la naturaleza muy entretenido.', 1);
+        Un cuento fantástico con espíritus de la naturaleza muy entretenido.', 1, 1);
 
-INSERT INTO blogs (titulo, descripcion, cuerpo, comunidad_id)
+INSERT INTO blogs (titulo, descripcion, cuerpo, comunidad_id, usuario_id)
 VALUES ('2Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whiliam Shakespeare',  
         'Lo mejor que me he leído hasta ahora de Shakespeare: 
         conciso, sorprendente y para nada denso como muchas otras obras del escritor. 
         La historia tiene su miga: un duque de Milán desterrado de sus posesiones por su propio hermano condenado a vagar sin rumbo por el mar. 
         Pero haciendo servir sus dotes aprendidas en la corte como mago, logra dominar los elementos de la isla a la que llega y se convierte en una especie de Dios. 
         A diferencia de muchos otros personajes del autor, este logra perdonar a sus adversarios en su venganza. 
-        Un cuento fantástico con espíritus de la naturaleza muy entretenido.', 1);
+        Un cuento fantástico con espíritus de la naturaleza muy entretenido.', 1, 1);
 
 
-INSERT INTO blogs (titulo, descripcion, cuerpo, comunidad_id)
+INSERT INTO blogs (titulo, descripcion, cuerpo, comunidad_id,  usuario_id)
 VALUES ('3Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whiliam Shakespeare',  
         'Lo mejor que me he leído hasta ahora de Shakespeare: 
         conciso, sorprendente y para nada denso como muchas otras obras del escritor. 
         La historia tiene su miga: un duque de Milán desterrado de sus posesiones por su propio hermano condenado a vagar sin rumbo por el mar. 
         Pero haciendo servir sus dotes aprendidas en la corte como mago, logra dominar los elementos de la isla a la que llega y se convierte en una especie de Dios. 
         A diferencia de muchos otros personajes del autor, este logra perdonar a sus adversarios en su venganza. 
-        Un cuento fantástico con espíritus de la naturaleza muy entretenido.', 1);
+        Un cuento fantástico con espíritus de la naturaleza muy entretenido.', 1, 1);
 
 
 
