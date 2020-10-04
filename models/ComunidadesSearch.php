@@ -17,7 +17,7 @@ class ComunidadesSearch extends Comunidades
     public function rules()
     {
         return [
-            [['id', 'galeria_id'], 'integer'],
+            [['id'], 'integer'],
             [['nombre', 'descripcion', 'created_at'], 'safe'],
         ];
     }
@@ -60,7 +60,7 @@ class ComunidadesSearch extends Comunidades
         $query->andFilterWhere([
             'id' => $this->id,
             'created_at' => $this->created_at,
-            'galeria_id' => $this->galeria_id,
+            // 'galeria_id' => $this->galeria_id,
         ]);
 
         $query->andFilterWhere(['ilike', 'nombre', $this->nombre])

@@ -40,7 +40,7 @@ class Comunidades extends \yii\db\ActiveRecord
             [['galeria_id'], 'integer'],
             [['nombre'], 'string', 'max' => 255],
             [['nombre'], 'unique'],
-            [['galeria_id'], 'exist', 'skipOnError' => true, 'targetClass' => Galerias::class, 'targetAttribute' => ['galeria_id' => 'id']],
+          //  [['galeria_id'], 'exist', 'skipOnError' => true, 'targetClass' => Galerias::class, 'targetAttribute' => ['galeria_id' => 'id']],
         ];
     }
 
@@ -54,7 +54,7 @@ class Comunidades extends \yii\db\ActiveRecord
             'nombre' => 'Nombre',
             'descripcion' => 'Descripcion',
             'created_at' => 'Created At',
-            'galeria_id' => 'Galeria ID',
+           // 'galeria_id' => 'Galeria ID',
         ];
     }
 
