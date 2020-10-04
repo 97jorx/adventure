@@ -1,10 +1,15 @@
-DROP TABLE IF EXISTS galerias CASCADE;
 
-CREATE TABLE galerias (
-      id              bigserial PRIMARY KEY
-    , fotos           text      
-);
 
+-- CREATE TABLE imagenes (
+--       id              bigserial PRIMARY KEY
+--     , fotos           text      
+-- );
+-- DROP TABLE IF EXISTS galerias CASCADE;
+
+-- CREATE TABLE galerias (
+--       id              bigserial PRIMARY KEY
+--     , fotos           text      
+-- );
 
 
 DROP TABLE IF EXISTS comunidades CASCADE;
@@ -14,7 +19,7 @@ CREATE TABLE comunidades (
   , nombre          varchar(255)    NOT NULL UNIQUE    
   , descripcion     text  
   , created_at      timestamp(0)   NOT NULL DEFAULT current_timestamp
-  , galeria_id      bigint         NOT NULL REFERENCES galerias (id)
+ -- , galeria_id      bigint         REFERENCES galerias (id)
 );
 
 
@@ -27,7 +32,7 @@ CREATE TABLE usuarios
   , nombre varchar(255) NOT NULL
   , apellidos varchar(255) NOT NULL
   , email varchar(255) NOT NULL UNIQUE
-  , rol VARCHAR(30) NOT NULL DEFAULT 'usuario'
+  , rol varchar(30) NOT NULL DEFAULT 'estandar'
   , created_at timestamp(0) NOT NULL DEFAULT current_timestamp
   , contrasena varchar(255)
   , auth_key varchar(255)
@@ -81,6 +86,15 @@ CREATE TABLE comentarios (
    , created_at         timestamp(0)   NOT NULL DEFAULT current_timestamp
 );
 
+-- DROP TABLE IF EXISTS respuestas CASCADE;
+
+-- CREATE TABLE respuestas (
+--      id               bigserial     PRIMARY KEY
+--    , user_id_response bigint        NOT NULL REFERENCES usuarios (id)
+--    , texto            varchar(255)    
+-- );
+
+
 
 DROP TABLE IF EXISTS usuario_comunidad CASCADE;
 
@@ -103,13 +117,6 @@ CREATE TABLE usuario_comunidad (
 -- );
 
 
--- DROP TABLE IF EXISTS respuestas CASCADE;
-
--- CREATE TABLE respuestas (
---      id               bigserial     PRIMARY KEY
---    , user_id_response bigint        NOT NULL REFERENCES usuarios (id)
---    , texto            varchar(255)    
--- );
 
 
 
@@ -125,14 +132,14 @@ VALUES ('foto.jpg', 'Soy un administrador de Adventure', 5, 1);
 
 
 
-INSERT INTO galerias (fotos)  
-VALUES ('foto.png');
+-- INSERT INTO galerias (fotos)  
+-- VALUES ('foto.png');
 
 
-INSERT INTO comunidades (nombre, descripcion, galeria_id)
+INSERT INTO comunidades (nombre, descripcion)
 VALUES ('Escribir es para todos', 
-           'Estaís todos invitados formar parte de la comunidad para escritores animaté 
-            y comparte tus ideas a con todos nosotros', 1);
+        'Estaís todos invitados formar parte de la comunidad para escritores animaté 
+         y comparte tus ideas a con todos nosotros');
 
 INSERT INTO blogs (titulo, descripcion, cuerpo, comunidad_id)
 VALUES ('Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whiliam Shakespeare',  
@@ -142,6 +149,38 @@ VALUES ('Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whili
         Pero haciendo servir sus dotes aprendidas en la corte como mago, logra dominar los elementos de la isla a la que llega y se convierte en una especie de Dios. 
         A diferencia de muchos otros personajes del autor, este logra perdonar a sus adversarios en su venganza. 
         Un cuento fantástico con espíritus de la naturaleza muy entretenido.', 1);
+
+
+INSERT INTO blogs (titulo, descripcion, cuerpo, comunidad_id)
+VALUES ('1Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whiliam Shakespeare',  
+        'Lo mejor que me he leído hasta ahora de Shakespeare: 
+        conciso, sorprendente y para nada denso como muchas otras obras del escritor. 
+        La historia tiene su miga: un duque de Milán desterrado de sus posesiones por su propio hermano condenado a vagar sin rumbo por el mar. 
+        Pero haciendo servir sus dotes aprendidas en la corte como mago, logra dominar los elementos de la isla a la que llega y se convierte en una especie de Dios. 
+        A diferencia de muchos otros personajes del autor, este logra perdonar a sus adversarios en su venganza. 
+        Un cuento fantástico con espíritus de la naturaleza muy entretenido.', 1);
+
+INSERT INTO blogs (titulo, descripcion, cuerpo, comunidad_id)
+VALUES ('2Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whiliam Shakespeare',  
+        'Lo mejor que me he leído hasta ahora de Shakespeare: 
+        conciso, sorprendente y para nada denso como muchas otras obras del escritor. 
+        La historia tiene su miga: un duque de Milán desterrado de sus posesiones por su propio hermano condenado a vagar sin rumbo por el mar. 
+        Pero haciendo servir sus dotes aprendidas en la corte como mago, logra dominar los elementos de la isla a la que llega y se convierte en una especie de Dios. 
+        A diferencia de muchos otros personajes del autor, este logra perdonar a sus adversarios en su venganza. 
+        Un cuento fantástico con espíritus de la naturaleza muy entretenido.', 1);
+
+
+INSERT INTO blogs (titulo, descripcion, cuerpo, comunidad_id)
+VALUES ('3Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whiliam Shakespeare',  
+        'Lo mejor que me he leído hasta ahora de Shakespeare: 
+        conciso, sorprendente y para nada denso como muchas otras obras del escritor. 
+        La historia tiene su miga: un duque de Milán desterrado de sus posesiones por su propio hermano condenado a vagar sin rumbo por el mar. 
+        Pero haciendo servir sus dotes aprendidas en la corte como mago, logra dominar los elementos de la isla a la que llega y se convierte en una especie de Dios. 
+        A diferencia de muchos otros personajes del autor, este logra perdonar a sus adversarios en su venganza. 
+        Un cuento fantástico con espíritus de la naturaleza muy entretenido.', 1);
+
+
+
 
 INSERT INTO comentarios (user_id_comment, id_comment_blog, texto)
 VALUES (1, 1, 'Es una maravilla, me encanta'); 
