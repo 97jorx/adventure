@@ -17,7 +17,7 @@ class BlogsSearch extends Blogs
     public function rules()
     {
         return [
-            [['id', 'comunidad_id'], 'integer'],
+            [['id', 'comunidad_id', 'usuario_id'], 'integer'],
             [['titulo', 'descripcion', 'cuerpo', 'created_at'], 'safe'],
         ];
     }
@@ -59,8 +59,9 @@ class BlogsSearch extends Blogs
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'comunidad_id' => $this->comunidad_id,
+            'usuario_id' => $this->usuario_id,
             'created_at' => $this->created_at,
-            'comunidad_id' => $this->comunidad_id, 
         ]);
 
         $query->andFilterWhere(['ilike', 'titulo', $this->titulo])

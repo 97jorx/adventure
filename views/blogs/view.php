@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <h1 class="mt-4"><?= $model->titulo?></h1>
         <p class="lead">
           por
-            <a href="#">Usuario</a>
+            <a href="#"><?= $model->usuario_id?></a>
         </p>
         <hr>
         <p>Posteado <?= $model->created_at?></p>
