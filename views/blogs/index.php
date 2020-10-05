@@ -4,15 +4,15 @@
 
     $this->title = 'Blogs';
     $this->params['breadcrumbs'][] = $this->title;
-
+    $blogs = $dataProvider->models;
 ?>
 </head>
 <body>
   <div class="container">
     <div class="row">
       <div class="col-md-8">
-        <h1 class="my-4">Page Heading
-          <small>Secondary Text</small>
+        <h1 class="my-4"><?= $this->title?>
+          <small><?= $blogs[0]->comunidad_id; ?></small>
         </h1>
         <?php
         foreach($dataProvider->models as $model) { ?> 

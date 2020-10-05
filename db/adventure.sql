@@ -16,7 +16,7 @@ DROP TABLE IF EXISTS comunidades CASCADE;
 
 CREATE TABLE comunidades (
     id              bigserial      PRIMARY KEY 
-  , nombre          varchar(255)    NOT NULL UNIQUE    
+  , nombre          varchar(255)   NOT NULL UNIQUE    
   , descripcion     text  
   , created_at      timestamp(0)   NOT NULL DEFAULT current_timestamp
  -- , galeria_id      bigint         REFERENCES galerias (id)

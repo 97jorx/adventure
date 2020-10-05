@@ -19,6 +19,7 @@ class BlogsSearch extends Blogs
         return [
             [['id', 'comunidad_id', 'usuario_id'], 'integer'],
             [['titulo', 'descripcion', 'cuerpo', 'created_at'], 'safe'],
+            [['usuario.nombre', 'comunidad.nombre'], 'safe']
         ];
     }
 
@@ -31,6 +32,12 @@ class BlogsSearch extends Blogs
         return Model::scenarios();
     }
 
+
+    public function attributes()
+    {
+        return array_merge(parent::attributes(), ['usuario.nombre', 'comunidad.nombre']);
+    }
+
     /**
      * Creates data provider instance with search query applied
      *
@@ -40,13 +47,24 @@ class BlogsSearch extends Blogs
      */
     public function search($params)
     {
-        $query = Blogs::find();
+        $query = Blogs::blogsName();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        $dataProvider->sort->attributes['usuario.nombre'] = [
+            'asc' => ['u.nombre' => SORT_ASC],
+            'desc' => ['u.nombre' => SORT_DESC],
+        ];
+
+        $dataProvider->sort->attributes['comunidad.nombre'] = [
+            'asc' => ['c.nombre' => SORT_ASC],
+            'desc' => ['c.nombre' => SORT_DESC],
+        ];
+
 
         $this->load($params);
 
@@ -66,8 +84,9 @@ class BlogsSearch extends Blogs
 
         $query->andFilterWhere(['ilike', 'titulo', $this->titulo])
             ->andFilterWhere(['ilike', 'descripcion', $this->descripcion])
-            ->andFilterWhere(['ilike', 'cuerpo', $this->cuerpo]);
-
+            ->andFilterWhere(['ilike', 'cuerpo', $this->cuerpo])
+            ->andFilterWhere(['ilike', 'u.nombre', $this->getAttribute('usuario.nombre')])
+            ->andFilterWhere(['ilike', 'c.nombre', $this->getAttribute('comunidad.nombre')]);
         return $dataProvider;
     }
 }

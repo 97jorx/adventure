@@ -92,4 +92,20 @@ class Blogs extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Comentarios::class, ['id_comment_blog' => 'id'])->inverseOf('commentBlog');
     }
+
+    /**
+     * Consulta para mostrar Comunidad por su nombre 
+     * y el Usuario por su nombre en Blogs
+     *
+     * @return query
+     */
+    public static function blogsName()
+    {
+        return static::find()
+            ->select(['blogs.*'])
+            ->leftJoin('comunidades c', 'blogs.comunidad_id = c.id')
+            ->leftJoin('usuarios u', 'blogs.usuario_id = u.id')
+            ->groupBy('blogs.id, u.nombre, c.nombre');
+    }
+
 }
