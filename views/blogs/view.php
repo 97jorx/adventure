@@ -3,7 +3,9 @@
 /* @var $this yii\web\View */
 /* @var $model app\models\Blogs */
 
-$this->title = $model->id;
+use yii\helpers\Html;
+
+$this->title = $model->titulo;
 $this->params['breadcrumbs'][] = ['label' => 'Blogs', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -26,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
   <div class="container">
     <div class="row">
       <div class="col-lg-8">
-        <h1 class="mt-4"><?= $model->titulo?></h1>
+        <h1 class="mt-4"><?= $model->titulo ?></h1>
         <p class="lead">
           por
             <a href="#"><?= $model->usuario_id?></a>
