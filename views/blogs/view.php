@@ -23,15 +23,13 @@ $this->params['breadcrumbs'][] = $this->title;
 </head>
 
 <body>
-
-  <!-- Page Content -->
   <div class="container">
     <div class="row">
       <div class="col-lg-8">
         <h1 class="mt-4"><?= $model->titulo ?></h1>
         <p class="lead">
           por
-            <a href="#"><?= $model->usuario_id?></a>
+            <a href="#"><?= $model->usuario_id ?></a>
         </p>
         <hr>
         <p>Posteado <?= $model->created_at?></p>
@@ -39,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <img class="img-fluid rounded" src="<?php echo Yii::$app->request->baseUrl.'/uploads/test.jpg'?>" alt="">
         <hr>
         <p class="lead"><?= $model->descripcion?></p>
-        <p class="lead"><?= $model->cuerpo?></p>
+        <p class="lead"><?= $model->cuerpo ?></p>
         <hr>
         <div class="card my-4">
           <h5 class="card-header">Dejar comentario:</h5>

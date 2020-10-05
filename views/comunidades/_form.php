@@ -12,7 +12,7 @@ use yii\bootstrap4\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'denom')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'descripcion')->textarea(['rows' => 6]) ?>
 

@@ -18,7 +18,7 @@ class ComunidadesSearch extends Comunidades
     {
         return [
             [['id'], 'integer'],
-            [['nombre', 'descripcion', 'created_at'], 'safe'],
+            [['denom', 'descripcion', 'created_at'], 'safe'],
         ];
     }
 
@@ -63,7 +63,7 @@ class ComunidadesSearch extends Comunidades
             // 'galeria_id' => $this->galeria_id,
         ]);
 
-        $query->andFilterWhere(['ilike', 'nombre', $this->nombre])
+        $query->andFilterWhere(['ilike', 'denom', $this->denom])
             ->andFilterWhere(['ilike', 'descripcion', $this->descripcion]);
 
         return $dataProvider;

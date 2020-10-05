@@ -58,7 +58,7 @@ Yii::$app->formatter->locale = 'es-ES';
                 <div class="card  bg-light" style = "width: 22rem; " >
                     <img class="card-img-top"  src="<?php echo Yii::$app->request->baseUrl.'/uploads/test.jpg'?>" alt="Card image cap">
                     <div class="card-body">
-                        <h5 class="card-title"><b><?=  $elem->nombre  ?></b></h5>
+                        <h5 class="card-title"><b><?=  $elem->denom  ?></b></h5>
                         <p class="card-text"><b>  <?=  $elem->descripcion ?></b></p>
                         <p class="card-text"><b>  <?= Yii::$app->formatter->asDate($elem->created_at)  ?></p>
                         <a href="#" class="btn btn-secondary">Unirse</a>

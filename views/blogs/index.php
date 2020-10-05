@@ -5,6 +5,8 @@
     $this->title = 'Blogs';
     $this->params['breadcrumbs'][] = $this->title;
     $blogs = $dataProvider->models;
+    var_dump($blogs);
+    die();
 ?>
 </head>
 <body>
@@ -17,7 +19,7 @@
         <?php
         foreach($dataProvider->models as $model) { ?> 
         <div class="card mb-4">
-          <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
+          <img class="card-img-top" src="<?php echo Yii::$app->request->baseUrl.'/uploads/test.jpg'?>" alt="Card image cap">
           <div class="card-body">
             <h2 class="card-title"><?= Html::encode($model->titulo); ?></h2>
             <p class="card-text"></p>

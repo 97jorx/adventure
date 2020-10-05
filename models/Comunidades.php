@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "comunidades".
  *
  * @property int $id
- * @property string $nombre
+ * @property string $denom
  * @property string|null $descripcion
  * @property string $created_at
  * @property int $galeria_id
@@ -33,13 +33,13 @@ class Comunidades extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre', 'galeria_id'], 'required'],
+            [['denom', 'galeria_id'], 'required'],
             [['descripcion'], 'string'],
             [['created_at'], 'safe'],
             [['galeria_id'], 'default', 'value' => null],
             [['galeria_id'], 'integer'],
-            [['nombre'], 'string', 'max' => 255],
-            [['nombre'], 'unique'],
+            [['denom'], 'string', 'max' => 255],
+            [['denom'], 'unique'],
           //  [['galeria_id'], 'exist', 'skipOnError' => true, 'targetClass' => Galerias::class, 'targetAttribute' => ['galeria_id' => 'id']],
         ];
     }
@@ -51,7 +51,7 @@ class Comunidades extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'nombre' => 'Nombre',
+            'denom' => 'denom',
             'descripcion' => 'Descripcion',
             'created_at' => 'Created At',
            // 'galeria_id' => 'Galeria ID',
