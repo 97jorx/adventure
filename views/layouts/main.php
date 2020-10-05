@@ -50,7 +50,7 @@ AppAsset::register($this);
             Html::beginForm(['/site/logout'], 'post').Html::submitButton(
             'Logout (' . Yii::$app->user->identity->username . ')',
             ['class' => 'dropdown-item'],).Html::endForm(),
-            ['label' => 'Perfil', 'url' => ['perfil/index']]
+            ['label' => 'Perfiles', 'url' => ['perfiles/index']]
         ];
         
     }

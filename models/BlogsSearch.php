@@ -19,7 +19,7 @@ class BlogsSearch extends Blogs
         return [
             [['id', 'comunidad_id', 'usuario_id'], 'integer'],
             [['titulo', 'descripcion', 'cuerpo', 'created_at'], 'safe'],
-            [['usuario.nombre', 'comunidad.nombre'], 'safe']
+            [['usuario.nombre', 'comunidad.denom'], 'safe']
         ];
     }
 
@@ -35,7 +35,7 @@ class BlogsSearch extends Blogs
 
     public function attributes()
     {
-        return array_merge(parent::attributes(), ['usuario.nombre', 'comunidad.nombre']);
+        return array_merge(parent::attributes(), ['usuario.nombre', 'comunidad.denom']);
     }
 
     /**
@@ -60,9 +60,9 @@ class BlogsSearch extends Blogs
             'desc' => ['u.nombre' => SORT_DESC],
         ];
 
-        $dataProvider->sort->attributes['comunidad.nombre'] = [
-            'asc' => ['c.nombre' => SORT_ASC],
-            'desc' => ['c.nombre' => SORT_DESC],
+        $dataProvider->sort->attributes['comunidad.denom'] = [
+            'asc' => ['c.denom' => SORT_ASC],
+            'desc' => ['c.denom' => SORT_DESC],
         ];
 
 
@@ -86,7 +86,7 @@ class BlogsSearch extends Blogs
             ->andFilterWhere(['ilike', 'descripcion', $this->descripcion])
             ->andFilterWhere(['ilike', 'cuerpo', $this->cuerpo])
             ->andFilterWhere(['ilike', 'u.nombre', $this->getAttribute('usuario.nombre')])
-            ->andFilterWhere(['ilike', 'c.nombre', $this->getAttribute('comunidad.nombre')]);
+            ->andFilterWhere(['ilike', 'c.denom', $this->getAttribute('comunidad.denom')]);
         return $dataProvider;
     }
 }

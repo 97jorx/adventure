@@ -4,15 +4,15 @@ use yii\bootstrap4\Html;
 use yii\bootstrap4\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Perfil */
+/* @var $model app\models\Perfiles */
 /* @var $form yii\bootstrap4\ActiveForm */
 ?>
 
-<div class="perfil-form">
+<div class="perfiles-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'foto_perfil')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'foto_perfiles')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'bibliografia')->textInput(['maxlength' => true]) ?>
 

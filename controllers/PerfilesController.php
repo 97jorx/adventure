@@ -45,7 +45,7 @@ class PerfilesController extends Controller
     }
 
     /**
-     * Displays a single Perfil model.
+     * Displays a single Perfiles model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -58,7 +58,7 @@ class PerfilesController extends Controller
     }
 
     /**
-     * Creates a new Perfil model.
+     * Creates a new Perfiles model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
@@ -76,7 +76,7 @@ class PerfilesController extends Controller
     }
 
     /**
-     * Updates an existing Perfil model.
+     * Updates an existing Perfiles model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -96,7 +96,7 @@ class PerfilesController extends Controller
     }
 
     /**
-     * Deletes an existing Perfil model.
+     * Deletes an existing Perfiles model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -110,10 +110,10 @@ class PerfilesController extends Controller
     }
 
     /**
-     * Finds the Perfil model based on its primary key value.
+     * Finds the Perfiles model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Perfil the loaded model
+     * @return Perfiles the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)

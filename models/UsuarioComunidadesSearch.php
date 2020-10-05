@@ -9,7 +9,7 @@ use app\models\UsuarioComunidad;
 /**
  * UsuarioComunidadSearch represents the model behind the search form of `app\models\UsuarioComunidad`.
  */
-class UsuarioComunidadSearch extends UsuarioComunidad
+class UsuarioComunidadesSearch extends UsuarioComunidades
 {
     /**
      * {@inheritdoc}

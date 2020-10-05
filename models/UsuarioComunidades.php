@@ -15,7 +15,7 @@ use Yii;
  * @property Comunidades $comunidad
  * @property Usuarios $usuario
  */
-class UsuarioComunidad extends \yii\db\ActiveRecord
+class UsuarioComunidades extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -60,7 +60,7 @@ class UsuarioComunidad extends \yii\db\ActiveRecord
      */
     public function getComunidad()
     {
-        return $this->hasOne(Comunidades::class, ['id' => 'comunidad_id'])->inverseOf('usuarioComunidads');
+        return $this->hasOne(Comunidades::class, ['id' => 'comunidad_id'])->inverseOf('usuarioComunidades');
     }
 
     /**
@@ -70,6 +70,6 @@ class UsuarioComunidad extends \yii\db\ActiveRecord
      */
     public function getUsuario()
     {
-        return $this->hasOne(Usuarios::class, ['id' => 'usuario_id'])->inverseOf('usuarioComunidads');
+        return $this->hasOne(Usuarios::class, ['id' => 'usuario_id'])->inverseOf('usuarioComunidades');
     }
 }

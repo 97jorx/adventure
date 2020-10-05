@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "perfil".
+ * This is the model class for table "perfiles".
  *
  * @property int $id
  * @property string|null $foto_perfil
@@ -15,14 +15,14 @@ use Yii;
  *
  * @property Usuarios $usuario
  */
-class Perfil extends \yii\db\ActiveRecord
+class Perfiles extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'perfil';
+        return 'perfiles';
     }
 
     /**
@@ -60,6 +60,6 @@ class Perfil extends \yii\db\ActiveRecord
      */
     public function getUsuario()
     {
-        return $this->hasOne(Usuarios::className(), ['id' => 'usuario_id'])->inverseOf('perfils');
+        return $this->hasOne(Usuarios::class, ['id' => 'usuario_id'])->inverseOf('perfiles');
     }
 }

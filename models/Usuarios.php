@@ -9,11 +9,22 @@ use yii\web\IdentityInterface;
  * This is the model class for table "usuarios".
  *
  * @property int $id
+ * @property string $username
  * @property string $nombre
- * @property string $password
- * @property string $auth_key
- * @property string $telefono
- * @property string $poblacion
+ * @property string $apellidos
+ * @property string $email
+ * @property string $rol
+ * @property string $created_at
+ * @property string|null $contrasena
+ * @property string|null $auth_key
+ * @property string|null $poblacion
+ * @property string|null $provincia
+ * @property string|null $pais
+ *
+ * @property Blogs[] $blogs
+ * @property Comentarios[] $comentarios
+ * @property Perfiles[] $perfiles
+ * @property UsuarioComunidad[] $usuarioComunidads
  */
 class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
 {
@@ -91,6 +102,18 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->hasMany(Perfil::class, ['usuario_id' => 'id'])->inverseOf('usuario');
     }
 
+
+/**    
+     * Gets query for [[Blogs]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBlogs()
+    {
+        return $this->hasMany(Blogs::class, ['usuario_id' => 'id'])->inverseOf('usuario');
+    }
+
+
     /**
      * Gets query for [[UsuarioComunidads]].
      *
@@ -98,7 +121,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function getUsuarioComunidades()
     {
-        return $this->hasMany(UsuarioComunidad::class, ['usuario_id' => 'id'])->inverseOf('usuario');
+        return $this->hasMany(UsuarioComunidades::class, ['usuario_id' => 'id'])->inverseOf('usuario');
     }
 
 
@@ -159,9 +182,9 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     {
         if ($this->scenario === self::SCENARIO_CREAR) {
             parent::afterSave($insert, $changedAttributes);
-            $perfil = new Perfil;
-            $perfil->usuario_id = $this->id;
-            return $perfil->save();
+            $perfiles = new Perfiles;
+            $perfiles->usuario_id = $this->id;
+            return $perfiles->save();
         }
             return false;
     }

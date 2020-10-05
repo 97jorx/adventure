@@ -41,9 +41,10 @@ CREATE TABLE usuarios
   , pais varchar(255)
 );
 
+DROP TABLE IF EXISTS perfiles CASCADE;
 DROP TABLE IF EXISTS perfil CASCADE;
 
-CREATE TABLE perfil (
+CREATE TABLE perfiles (
      id           bigserial      PRIMARY KEY 
    , foto_perfil  varchar(255)
    , bibliografia varchar(255)
@@ -99,7 +100,7 @@ CREATE TABLE comentarios (
 
 DROP TABLE IF EXISTS usuario_comunidad CASCADE;
 
-CREATE TABLE usuario_comunidad (
+CREATE TABLE usuario_comunidades (
      id           bigserial      PRIMARY KEY 
    , usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
    , creador      boolean        NOT NULL
@@ -128,7 +129,7 @@ INSERT INTO usuarios (username, nombre, apellidos, email, rol, contrasena, pobla
 VALUES ('admin', 'admin', 'admin', 'adventure@gmail.com', 'administrador', crypt('admin', gen_salt('bf', 10)), 'Sanlúcar de Barrameda', 'Cádiz' , 'España');
 
 
-INSERT INTO perfil (foto_perfil, bibliografia, valoracion, usuario_id)
+INSERT INTO perfiles (foto_perfil, bibliografia, valoracion, usuario_id)
 VALUES ('foto.jpg', 'Soy un administrador de Adventure', 5, 1);
 
 
@@ -186,7 +187,7 @@ VALUES ('3Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whil
 INSERT INTO comentarios (user_id_comment, id_comment_blog, texto)
 VALUES (1, 1, 'Es una maravilla, me encanta'); 
 
-INSERT INTO usuario_comunidad (usuario_id, creador, comunidad_id)
+INSERT INTO usuario_comunidades (usuario_id, creador, comunidad_id)
 VALUES (1, '1', 1);         
 
 

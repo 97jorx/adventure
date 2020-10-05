@@ -3,10 +3,10 @@
 use yii\bootstrap4\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Perfil */
+/* @var $model app\models\Perfiles */
 
-$this->title = 'Update Perfil: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Perfils', 'url' => ['index']];
+$this->title = 'Update Perfiles: ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Perfiles', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>

@@ -6,10 +6,10 @@ use yii\bootstrap4\Html;
 /* @var $model app\models\Perfil */
 
 $this->title = 'Create Perfil';
-$this->params['breadcrumbs'][] = ['label' => 'Perfils', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Perfiles', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="perfil-create">
+<div class="perfiles-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

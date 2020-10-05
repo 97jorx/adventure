@@ -4,13 +4,13 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Perfil;
+use app\models\Perfiles;
 use Yii;
 
 /**
- * PerfilSearch represents the model behind the search form of `app\models\Perfil`.
+ * PerfilesSearch represents the model behind the search form of `app\models\Perfiles`.
  */
-class PerfilSearch extends Perfil
+class PerfilesSearch extends Perfiles
 {
     /**
      * {@inheritdoc}
@@ -41,13 +41,13 @@ class PerfilSearch extends Perfil
      */
     public function search($params)
     {
-        $query = Perfil::find()
+        $query = Perfiles::find()
         ->andWhere(['usuario_id' => Yii::$app->user->id]);
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
-            'query' => $query,
+            'query' => $query
         ]);
 
         $this->load($params);
