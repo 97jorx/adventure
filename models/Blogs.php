@@ -78,7 +78,7 @@ class Blogs extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUsuario()
+    public function getUsuari()
     {
         return $this->hasOne(Usuarios::class, ['id' => 'usuario_id'])->inverseOf('blogs');
     }

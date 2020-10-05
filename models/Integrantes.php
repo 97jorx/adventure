@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "usuario_comunidad".
+ * This is the model class for table "integrantes".
  *
  * @property int $id
  * @property int $usuario_id
@@ -15,14 +15,14 @@ use Yii;
  * @property Comunidades $comunidad
  * @property Usuarios $usuario
  */
-class UsuarioComunidades extends \yii\db\ActiveRecord
+class Integrantes extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'usuario_comunidad';
+        return 'integrantes';
     }
 
     /**
@@ -60,7 +60,7 @@ class UsuarioComunidades extends \yii\db\ActiveRecord
      */
     public function getComunidad()
     {
-        return $this->hasOne(Comunidades::class, ['id' => 'comunidad_id'])->inverseOf('usuarioComunidades');
+        return $this->hasOne(Comunidades::class, ['id' => 'comunidad_id'])->inverseOf('integrantes');
     }
 
     /**
@@ -70,6 +70,6 @@ class UsuarioComunidades extends \yii\db\ActiveRecord
      */
     public function getUsuario()
     {
-        return $this->hasOne(Usuarios::class, ['id' => 'usuario_id'])->inverseOf('usuarioComunidades');
+        return $this->hasOne(Usuarios::class, ['id' => 'usuario_id'])->inverseOf('integrantes');
     }
 }

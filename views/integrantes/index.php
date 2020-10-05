@@ -4,18 +4,18 @@ use yii\bootstrap4\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\UsuarioComunidadSearch */
+/* @var $searchModel app\models\IntegrantesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Usuario Comunidades';
+$this->title = 'Integrantes';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="usuario-comunidad-index">
+<div class="integrantes-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Usuario Comunidad', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Integrantes', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>

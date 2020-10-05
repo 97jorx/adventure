@@ -63,6 +63,7 @@ AppAsset::register($this);
             ['label' => 'Comunidades', 'url' => ['comunidades/index']],
             ['label' => 'Galerias', 'url' => ['galerias/index']],
             ['label' => 'Blogs', 'url' => ['blogs/index']],
+            ['label' => 'Integrantes y Creadores', 'url' => ['integrantes/index']],
             ['label' => 'Usuarios', 'url' => ['usuarios/index']],
             [
                 'label'=> 'Usuarios',

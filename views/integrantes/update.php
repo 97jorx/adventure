@@ -3,14 +3,14 @@
 use yii\bootstrap4\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\UsuarioComunidad */
+/* @var $model app\models\Integrantes */
 
-$this->title = 'Update Usuario Comunidad: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Usuario Comunidads', 'url' => ['index']];
+$this->title = 'Update Integrantes: ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Integrantes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
-<div class="usuario-comunidad-update">
+<div class="integrantes-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

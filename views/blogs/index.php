@@ -5,8 +5,8 @@
     $this->title = 'Blogs';
     $this->params['breadcrumbs'][] = $this->title;
     $blogs = $dataProvider->models;
-    var_dump($blogs);
-    die();
+    // var_dump($blogs);
+    // die();
 ?>
 </head>
 <body>

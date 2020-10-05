@@ -98,9 +98,10 @@ CREATE TABLE comentarios (
 
 
 
-DROP TABLE IF EXISTS usuario_comunidad CASCADE;
+DROP TABLE IF EXISTS integrantes CASCADE;
 
-CREATE TABLE usuario_comunidades (
+
+CREATE TABLE integrantes (
      id           bigserial      PRIMARY KEY 
    , usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
    , creador      boolean        NOT NULL
@@ -187,7 +188,7 @@ VALUES ('3Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whil
 INSERT INTO comentarios (user_id_comment, id_comment_blog, texto)
 VALUES (1, 1, 'Es una maravilla, me encanta'); 
 
-INSERT INTO usuario_comunidades (usuario_id, creador, comunidad_id)
+INSERT INTO integrantes (usuario_id, creador, comunidad_id)
 VALUES (1, '1', 1);         
 
 

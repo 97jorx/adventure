@@ -3,16 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Perfiles;
-use app\models\PerfilesSearch;
+use app\models\Integrantes;
+use app\models\IntegrantesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * PerfilesController implements the CRUD actions for Perfiles model.
+ * IntegrantesController implements the CRUD actions for Integrantes model.
  */
-class PerfilesController extends Controller
+class IntegrantesController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -30,12 +30,12 @@ class PerfilesController extends Controller
     }
 
     /**
-     * Lists all Perfiles models.
+     * Lists all Integrantes models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new PerfilesSearch();
+        $searchModel = new IntegrantesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class PerfilesController extends Controller
     }
 
     /**
-     * Displays a single Perfil model.
+     * Displays a single Integrantes model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -58,13 +58,13 @@ class PerfilesController extends Controller
     }
 
     /**
-     * Creates a new Perfil model.
+     * Creates a new Integrantes model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Perfiles();
+        $model = new Integrantes();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -76,7 +76,7 @@ class PerfilesController extends Controller
     }
 
     /**
-     * Updates an existing Perfil model.
+     * Updates an existing Integrantes model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -96,7 +96,7 @@ class PerfilesController extends Controller
     }
 
     /**
-     * Deletes an existing Perfil model.
+     * Deletes an existing Integrantes model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -110,15 +110,15 @@ class PerfilesController extends Controller
     }
 
     /**
-     * Finds the Perfil model based on its primary key value.
+     * Finds the Integrantes model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Perfil the loaded model
+     * @return Integrantes the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Perfiles::findOne($id)) !== null) {
+        if (($model = Integrantes::findOne($id)) !== null) {
             return $model;
         }
 

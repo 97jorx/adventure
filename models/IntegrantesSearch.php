@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\UsuarioComunidad;
+use app\models\Integrantes;
 
 /**
- * UsuarioComunidadSearch represents the model behind the search form of `app\models\UsuarioComunidad`.
+ * IntegrantesSearch represents the model behind the search form of `app\models\Integrantes`.
  */
-class UsuarioComunidadesSearch extends UsuarioComunidades
+class IntegrantesSearch extends Integrantes
 {
     /**
      * {@inheritdoc}
@@ -40,7 +40,7 @@ class UsuarioComunidadesSearch extends UsuarioComunidades
      */
     public function search($params)
     {
-        $query = UsuarioComunidad::find();
+        $query = Integrantes::find();
 
         // add conditions that should always apply here
 

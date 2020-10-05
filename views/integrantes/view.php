@@ -4,14 +4,14 @@ use yii\bootstrap4\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Perfiles */
+/* @var $model app\models\Integrantes */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Perfiles', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Integrantes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="perfiles-view">
+<div class="integrantes-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -30,10 +30,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'foto_perfil',
-            'bibliografia',
-            'valoracion',
             'usuario_id',
+            'creador:boolean',
+            'comunidad_id',
         ],
     ]) ?>
 

@@ -4,11 +4,11 @@ use yii\bootstrap4\Html;
 use yii\bootstrap4\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\UsuarioComunidad */
+/* @var $model app\models\Integrantes */
 /* @var $form yii\bootstrap4\ActiveForm */
 ?>
 
-<div class="usuario-comunidad-form">
+<div class="integrantes-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
