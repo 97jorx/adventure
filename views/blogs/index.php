@@ -1,33 +1,33 @@
 <?php
 
     use yii\helpers\Html;
+    use yii\helpers\Url;
 
+    $blogs = $dataProvider->models;
     $this->title = 'Blogs';
     $this->params['breadcrumbs'][] = $this->title;
-    $blogs = $dataProvider->models;
-    // var_dump($blogs);
-    // die();
+    $this->params['breadcrumbs'][] = $blogs[0]->comunidad->denom;
+    
 ?>
 </head>
 <body>
   <div class="container">
     <div class="row">
       <div class="col-md-8">
-        <h1 class="my-4"><?= $this->title?>
-          <small><?= $blogs[0]->comunidad_id; ?></small>
-        </h1>
+        <h1 class="my-4"><?= $this->title?></h1>
+        <h2><small><?= $blogs[0]->comunidad->denom; ?></small></h2>
         <?php
         foreach($dataProvider->models as $model) { ?> 
         <div class="card mb-4">
-          <img class="card-img-top" src="<?php echo Yii::$app->request->baseUrl.'/uploads/test.jpg'?>" alt="Card image cap">
+          <img class="card-img-top img-thumbnail" src="<?php echo Yii::$app->request->baseUrl.'/uploads/test.jpg'?>" alt="Card image cap">
           <div class="card-body">
             <h2 class="card-title"><?= Html::encode($model->titulo); ?></h2>
             <p class="card-text"></p>
-            <a href="#" class="btn btn-primary">Leer más &rarr;</a>
+            <?= Html::a('Continuar leyendo...', ['blogs/view', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
           </div>
           <div class="card-footer text-muted">
             Creado <?= $model->created_at ?> por
-            <a href="#"><?= $model->usuario_id ?></a>
+            <a href="#"><?= $model->usuario->nombre ?></a>
           </div>
         </div>
         <?php } ?>
