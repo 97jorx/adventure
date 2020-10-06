@@ -53,6 +53,15 @@ class BlogsSearch extends Blogs
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'created_at' => SORT_DESC,
+                    'id' => SORT_DESC,
+                ]
+            ],
         ]);
 
         $dataProvider->sort->attributes['usuario.nombre'] = [
