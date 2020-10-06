@@ -21,7 +21,7 @@ $blogs = $dataProvider->models;
         <?php
         foreach($dataProvider->models as $model) { ?> 
         <div class="card mb-4">
-          <img class="card-img-top img-thumbnail" src="" alt="Card image cap">
+          <img class="card-img-top img-thumbnail" src="<?= Yii::$app->request->baseUrl.'/uploads/test.jpg'?>" alt="Card image cap">
           <div class="card-body">
             <h2 class="card-title"><?= Html::encode($model->titulo); ?></h2>
             <p class="card-text"></p>
