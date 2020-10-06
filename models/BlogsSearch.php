@@ -54,7 +54,7 @@ class BlogsSearch extends Blogs
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'pageSize' => 10,
+                'pageSize' => 3,
             ],
             'sort' => [
                 'defaultOrder' => [
@@ -96,6 +96,7 @@ class BlogsSearch extends Blogs
             ->andFilterWhere(['ilike', 'cuerpo', $this->cuerpo])
             ->andFilterWhere(['ilike', 'u.nombre', $this->getAttribute('usuario.nombre')])
             ->andFilterWhere(['ilike', 'c.denom', $this->getAttribute('comunidad.denom')]);
+
         return $dataProvider;
     }
 }

@@ -1,9 +1,11 @@
 <?php
 
-    use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
     use yii\helpers\Url;
+use yii\widgets\LinkPager;
 
-    $blogs = $dataProvider->models;
+$blogs = $dataProvider->models;
     $this->title = 'Blogs';
     $this->params['breadcrumbs'][] = $this->title;
     $this->params['breadcrumbs'][] = $blogs[0]->comunidad->denom;
@@ -31,15 +33,20 @@
           </div>
         </div>
         <?php } ?>
-        <ul class="pagination justify-content-center mb-4">
-          <li class="page-item">
-            <a class="page-link" href="#">&larr; Older</a>
-          </li>
-          <li class="page-item disabled">
-            <a class="page-link" href="#">Newer &rarr;</a>
-          </li>
-        </ul>
+        <?= LinkPager::widget([
+            'pagination' => $dataProvider->pagination,
+        ]);?>
       </div>
+
+      <!-- <div class="col-md-2">
+        <div class="col">
+          1 of 2
+        </div>
+        <div class="col-6">
+          2 of 2
+        </div>
+      </div> -->
+
       <div class="col-md-4">
         <div class="card my-4">
           <h5 class="card-header">Search</h5>
@@ -53,32 +60,26 @@
           </div>
         </div>
         <div class="card my-4">
-          <h5 class="card-header">Categories</h5>
+          <h5 class="card-header">Ordenar por... </h5>
           <div class="card-body">
             <div class="row">
               <div class="col-lg-6">
                 <ul class="list-unstyled mb-0">
-                  <li>
-                    <a href="#">Web Design</a>
+                <li>
+                  <?= $dataProvider->sort->link('titulo', 
+                    [
+                     'class'     => 'sort',
+                     'label'     => 'Título',
+                     'direction' =>  SORT_ASC
+                    ]) ?>
                   </li>
                   <li>
-                    <a href="#">HTML</a>
-                  </li>
-                  <li>
-                    <a href="#">Freebies</a>
-                  </li>
-                </ul>
-              </div>
-              <div class="col-lg-6">
-                <ul class="list-unstyled mb-0">
-                  <li>
-                    <a href="#">JavaScript</a>
-                  </li>
-                  <li>
-                    <a href="#">CSS</a>
-                  </li>
-                  <li>
-                    <a href="#">Tutorials</a>
+                  <?= $dataProvider->sort->link('created_at', 
+                    [
+                     'class'     => 'sort',
+                     'label'     => 'Fecha de creación',
+                     'direction' =>  SORT_ASC
+                    ]) ?>
                   </li>
                 </ul>
               </div>
