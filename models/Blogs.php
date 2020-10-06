@@ -42,8 +42,8 @@ class Blogs extends \yii\db\ActiveRecord
             [['created_at'], 'safe'],
             [['titulo', 'descripcion'], 'string', 'max' => 255],
             [['titulo'], 'unique'],
-            [['comunidad_id'], 'exist', 'skipOnError' => true, 'targetClass' => Comunidades::class, 'targetAttribute' => ['comunidad_id' => 'id']],
-            [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['usuario_id' => 'id']],
+            [['comunidad_id'], 'exist', 'skipOnError' => true, 'targetClass' => Comunidades::className(), 'targetAttribute' => ['comunidad_id' => 'id']],
+            [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['usuario_id' => 'id']],
         ];
     }
 
@@ -70,7 +70,7 @@ class Blogs extends \yii\db\ActiveRecord
      */
     public function getComunidad()
     {
-        return $this->hasOne(Comunidades::class, ['id' => 'comunidad_id'])->inverseOf('blogs');
+        return $this->hasOne(Comunidades::className(), ['id' => 'comunidad_id'])->inverseOf('blogs');
     }
 
     /**
@@ -78,9 +78,9 @@ class Blogs extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUsuari()
+    public function getUsuario()
     {
-        return $this->hasOne(Usuarios::class, ['id' => 'usuario_id'])->inverseOf('blogs');
+        return $this->hasOne(Usuarios::className(), ['id' => 'usuario_id'])->inverseOf('blogs');
     }
 
     /**
@@ -90,8 +90,9 @@ class Blogs extends \yii\db\ActiveRecord
      */
     public function getComentarios()
     {
-        return $this->hasMany(Comentarios::class, ['id_comment_blog' => 'id'])->inverseOf('commentBlog');
+        return $this->hasMany(Comentarios::className(), ['id_comment_blog' => 'id'])->inverseOf('commentBlog');
     }
+
 
     /**
      * Consulta para mostrar Comunidad por su nombre 
@@ -104,10 +105,21 @@ class Blogs extends \yii\db\ActiveRecord
         return static::find()
             ->select(['blogs.*, "u".nombre, "c".denom'])
             ->joinWith('comunidad c')
-            ->joinWith('usuari u')
+            ->joinWith('usuario u')
             ->groupBy('blogs.id, u.nombre, c.denom');
 
             
     }
 
+
 }
+
+
+
+
+
+
+
+
+
+
