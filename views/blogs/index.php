@@ -21,7 +21,7 @@ $blogs = $dataProvider->models;
         <?php
         foreach($dataProvider->models as $model) { ?> 
         <div class="card mb-4">
-          <img class="card-img-top img-thumbnail" src="<?php echo Yii::$app->request->baseUrl.'/uploads/test.jpg'?>" alt="Card image cap">
+          <img class="card-img-top img-thumbnail" src="" alt="Card image cap">
           <div class="card-body">
             <h2 class="card-title"><?= Html::encode($model->titulo); ?></h2>
             <p class="card-text"></p>
@@ -37,16 +37,6 @@ $blogs = $dataProvider->models;
             'pagination' => $dataProvider->pagination,
         ]);?>
       </div>
-
-      <!-- <div class="col-md-2">
-        <div class="col">
-          1 of 2
-        </div>
-        <div class="col-6">
-          2 of 2
-        </div>
-      </div> -->
-
       <div class="col-md-4">
         <div class="card my-4">
           <h5 class="card-header">Search</h5>
