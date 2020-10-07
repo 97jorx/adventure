@@ -41,14 +41,7 @@ Yii::$app->formatter->locale = 'es-ES';
 
     <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <?php ListView::widget([
-        'dataProvider' => $dataProvider,
-        'itemOptions' => ['class' => 'item'],
-        'itemView' => function ($model, $key, $index, $widget) {
-            return Html::a(Html::encode($model->id), ['view', 'id' => $model->id]);
-        },
-    ]);
-    ?>
+   
 
 <?php foreach($dataProvider->models as $model) { ?> 
 <div class="container">
