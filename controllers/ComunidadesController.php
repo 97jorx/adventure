@@ -135,6 +135,7 @@ class ComunidadesController extends Controller
 
     /**
      * Permite al usuario logueado unirse a la comunidad elegida mediante un botón.
+     * @param id se le pasa el id de la comunidad a la que se quiere unir
      * @return Comunidades the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -166,8 +167,9 @@ class ComunidadesController extends Controller
 
     /**
      * Permite al usuario logueado salir a la comunidad elegida mediante un botón.
-     * @return Comunidades the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
+     * @param id se le pasa el id a la comunidad que se quiere salir.
+     * @return Comunidades the loaded model.
+     * @throws NotFoundHttpException if the model cannot be found.
      */
     public function actionSalir($id)
     {
