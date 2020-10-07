@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Comunidades;
 use app\models\ComunidadesSearch;
+use app\models\Integrantes;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -60,11 +61,9 @@ class ComunidadesController extends Controller
     {
         $searchModel = new ComunidadesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $comunidades = Comunidades::find()->all();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'comunidades' => $comunidades,
         ]);
     }
 
@@ -133,6 +132,40 @@ class ComunidadesController extends Controller
         return $this->redirect(['index']);
     }
 
+
+    /**
+     * Permite al usuario logueado unirse a la comunidad elegida mediante un botón.
+     * @return Comunidades the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionUnirse($id)
+    {
+        $username = !Yii::$app->user->isGuest;
+        
+        if ($username) {
+            $integrantes = new Integrantes();
+            $uid = Yii::$app->user->id;
+            $integrantes->usuario_id = $uid;
+            $integrantes->comunidad_id = $id;
+            $integrantes->creador = false;
+            $integrantes->save();
+            return $this->redirect(['comunidades/index']);
+        }
+    }
+
+
+    /**
+     * Permite al usuario logueado salir a la comunidad elegida mediante un botón.
+     * @return Comunidades the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionSalir()
+    {
+        $username = !Yii::$app->user->isGuest;
+        
+    }
+
+
     /**
      * Finds the Comunidades model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -148,4 +181,8 @@ class ComunidadesController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+
+
+
 }

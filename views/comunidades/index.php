@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->title = "ADVENTURE";
 
 $username = !Yii::$app->user->isGuest;
-$user = $username ? (Yii::$app->user->identity->username) : (null) ;
+$user = $username ? (Yii::$app->user->identity->username) : (null);
 $js = <<< EOF
 $(document).ready(function() {
     if (localStorage.getItem('$user') === null && Boolean($username)) {
@@ -50,25 +50,25 @@ Yii::$app->formatter->locale = 'es-ES';
     ]);
     ?>
 
-<?php foreach ($comunidades as $elem) : ?>
+<?php foreach($dataProvider->models as $model) { ?> 
 <div class="container">
     <div class="row-fluid ">
         <div class="col-sm-4 ">
             <div class="card-columns-fluid">
                 <div class="card  bg-light" style = "width: 22rem; " >
-                    <img class="card-img-top"  src="<?php echo Yii::$app->request->baseUrl.'/uploads/test.jpg'?>" alt="Card image cap">
+                    <img class="card-img-top"  src="<?php echo Yii::$app->request->baseUrl . '/uploads/test.jpg'?>" alt="Card image cap">
                     <div class="card-body">
-                        <h5 class="card-title"><b><?=  $elem->denom  ?></b></h5>
-                        <p class="card-text"><b>  <?=  $elem->descripcion ?></b></p>
-                        <p class="card-text"><b>  <?= Yii::$app->formatter->asDate($elem->created_at)  ?></p>
-                        <a href="#" class="btn btn-secondary">Unirse</a>
+                        <h5 class="card-title"><b><?=  $model->denom  ?></b></h5>
+                        <p class="card-text"><b>  <?=  $model->descripcion ?></b></p>
+                        <p class="card-text"><b>  <?= Yii::$app->formatter->asDate($model->created_at)  ?></p>
+                        <?= Html::a('Unirse', ['comunidades/unirse', 'id' => $model->id], ['class' => 'btn btn-success']); ?>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<?php endforeach; ?>
+<?php } ?>
 </div>
 
 

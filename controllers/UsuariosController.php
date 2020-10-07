@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Perfil;
+use app\models\Perfiles;
 use Yii;
 use app\models\Usuarios;
 use app\models\UsuariosSearch;
@@ -136,7 +137,7 @@ class UsuariosController extends Controller
         $model = $this->findModel($id);
         
         if ($model->getPerfiles()->exists()) {
-            Perfil::find()->where(['id' => $id])->one()->delete();
+            Perfiles::find()->where(['id' => $id])->one()->delete();
             Yii::$app->session->setFlash('success', 'Se ha borrado el usuario.');
         } else {
             Yii::$app->session->setFlash('danger', 'No se ha borrado el usuario.');
