@@ -175,7 +175,7 @@ class ComunidadesController extends Controller
     {
         $username = !Yii::$app->user->isGuest;
         $idexist = Integrantes::find()
-        ->where(['id' => $id]);
+        ->where(['comunidad_id' => $id]);
         
         if($idexist->exists()){
             if($username) {
