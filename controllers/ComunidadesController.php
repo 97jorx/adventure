@@ -179,7 +179,7 @@ class ComunidadesController extends Controller
         
         if($idexist->exists()){
             if($username) {
-                $idexist->delete();
+                $idexist->one()->delete();
                 Yii::$app->session->setFlash('success', "Has salido correctamente");
                 return $this->redirect(['comunidades/index']);
             } else {
