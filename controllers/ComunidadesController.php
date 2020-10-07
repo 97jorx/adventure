@@ -143,7 +143,7 @@ class ComunidadesController extends Controller
         $username = !Yii::$app->user->isGuest;
         $idexist = Integrantes::find()->where(['id' => $id])->exists();
         
-        if($idexist){
+        if(!$idexist){
             if($username) {
                 $integrantes = new Integrantes();
                 $uid = Yii::$app->user->id;
