@@ -141,7 +141,9 @@ class ComunidadesController extends Controller
     public function actionUnirse($id)
     {
         $username = !Yii::$app->user->isGuest;
-        $idexist = Integrantes::find()->where(['id' => $id])->exists();
+        $idexist = Integrantes::find()
+        ->where(['id' => $id])
+        ->exists();
         
         if(!$idexist){
             if($username) {
@@ -167,9 +169,22 @@ class ComunidadesController extends Controller
      * @return Comunidades the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionSalir()
+    public function actionSalir($id)
     {
         $username = !Yii::$app->user->isGuest;
+        $idexist = Integrantes::find()
+        ->where(['id' => $id]);
+        
+        if($idexist->exists()){
+            if($username) {
+                $idexist->delete();
+                Yii::$app->session->setFlash('success', "Has salido correctamente");
+                return $this->redirect(['comunidades/index']);
+            } else {
+                Yii::$app->session->setFlash('error', "Tienes que estar logueado.");
+            }    
+        }
+        return $this->redirect(['comunidades/index']);
         
     }
 
