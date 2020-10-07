@@ -141,16 +141,24 @@ class ComunidadesController extends Controller
     public function actionUnirse($id)
     {
         $username = !Yii::$app->user->isGuest;
+        $idexist = Integrantes::find()->where(['id' => $id])->exists();
         
-        if ($username) {
-            $integrantes = new Integrantes();
-            $uid = Yii::$app->user->id;
-            $integrantes->usuario_id = $uid;
-            $integrantes->comunidad_id = $id;
-            $integrantes->creador = false;
-            $integrantes->save();
-            return $this->redirect(['comunidades/index']);
+        if($idexist){
+            if($username) {
+                $integrantes = new Integrantes();
+                $uid = Yii::$app->user->id;
+                $integrantes->usuario_id = $uid;
+                $integrantes->comunidad_id = $id;
+                $integrantes->creador = false;
+                $integrantes->save();
+                Yii::$app->session->setFlash('success', "Te has unido correctamente");
+                return $this->redirect(['comunidades/index']);
+            } else {
+                Yii::$app->session->setFlash('error', "Tienes que estar logueado.");
+            }    
         }
+            Yii::$app->session->setFlash('error', "Ya te has unido a esta comunidad.");
+            return $this->redirect(['comunidades/index']);
     }
 
 
