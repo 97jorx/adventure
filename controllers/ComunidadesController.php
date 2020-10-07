@@ -135,33 +135,58 @@ class ComunidadesController extends Controller
 
     /**
      * Permite al usuario logueado unirse a la comunidad elegida mediante un botón.
+     * @param id se le pasa el id de la comunidad a la que se quiere unir
      * @return Comunidades the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUnirse($id)
     {
         $username = !Yii::$app->user->isGuest;
+        $idexist = Integrantes::find()
+        ->where(['id' => $id])
+        ->exists();
         
-        if ($username) {
-            $integrantes = new Integrantes();
-            $uid = Yii::$app->user->id;
-            $integrantes->usuario_id = $uid;
-            $integrantes->comunidad_id = $id;
-            $integrantes->creador = false;
-            $integrantes->save();
-            return $this->redirect(['comunidades/index']);
+        if(!$idexist){
+            if($username) {
+                $integrantes = new Integrantes();
+                $uid = Yii::$app->user->id;
+                $integrantes->usuario_id = $uid;
+                $integrantes->comunidad_id = $id;
+                $integrantes->creador = false;
+                $integrantes->save();
+                Yii::$app->session->setFlash('success', "Te has unido correctamente");
+                return $this->redirect(['comunidades/index']);
+            } else {
+                Yii::$app->session->setFlash('error', "Tienes que estar logueado.");
+            }    
         }
+            Yii::$app->session->setFlash('error', "Ya te has unido a esta comunidad.");
+            return $this->redirect(['comunidades/index']);
     }
 
 
     /**
      * Permite al usuario logueado salir a la comunidad elegida mediante un botón.
-     * @return Comunidades the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
+     * @param id se le pasa el id a la comunidad que se quiere salir.
+     * @return Comunidades the loaded model.
+     * @throws NotFoundHttpException if the model cannot be found.
      */
-    public function actionSalir()
+    public function actionSalir($id)
     {
         $username = !Yii::$app->user->isGuest;
+        $idexist = Integrantes::find()
+        ->where(['comunidad_id' => $id]);
+        
+        if($idexist->exists()){
+            if($username) {
+                $idexist->one()->delete();
+                Yii::$app->session->setFlash('success', "Has salido correctamente");
+                return $this->redirect(['comunidades/index']);
+            } else {
+                Yii::$app->session->setFlash('error', "Tienes que estar logueado.");
+            }    
+        }
+        return $this->redirect(['comunidades/index']);
         
     }
 

@@ -59,9 +59,10 @@ Yii::$app->formatter->locale = 'es-ES';
                     <img class="card-img-top"  src="<?php echo Yii::$app->request->baseUrl . '/uploads/test.jpg'?>" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title"><b><?=  $model->denom  ?></b></h5>
-                        <p class="card-text"><b>  <?=  $model->descripcion ?></b></p>
-                        <p class="card-text"><b>  <?= Yii::$app->formatter->asDate($model->created_at)  ?></p>
-                        <?= Html::a('Unirse', ['comunidades/unirse', 'id' => $model->id], ['class' => 'btn btn-success']); ?>
+                        <p class="card-text"><b><?=  $model->descripcion ?></b></p>
+                        <p class="card-text"><b><?= Yii::$app->formatter->asDate($model->created_at)?></p>
+                        <?= (!$model->getIntegrantes()->exists()) ? (Html::a('Unirse', ['comunidades/unirse', 'id' => $model->id], ['class' => 'btn btn-success'])) 
+                            : (Html::a('Salir', ['comunidades/salir', 'id' => $model->id], ['class' => 'btn btn-danger']))?>
                     </div>
                 </div>
             </div>

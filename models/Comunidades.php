@@ -11,11 +11,9 @@ use Yii;
  * @property string $denom
  * @property string|null $descripcion
  * @property string $created_at
- * @property int $galeria_id
  *
  * @property Blogs[] $blogs
- * @property Galerias $galeria
- * @property UsuarioComunidad[] $usuarioComunidads
+ * @property Integrantes[] $integrantes
  */
 class Comunidades extends \yii\db\ActiveRecord
 {
@@ -33,14 +31,11 @@ class Comunidades extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['denom', 'galeria_id'], 'required'],
+            [['denom'], 'required'],
             [['descripcion'], 'string'],
             [['created_at'], 'safe'],
-            [['galeria_id'], 'default', 'value' => null],
-            [['galeria_id'], 'integer'],
             [['denom'], 'string', 'max' => 255],
             [['denom'], 'unique'],
-          //  [['galeria_id'], 'exist', 'skipOnError' => true, 'targetClass' => Galerias::class, 'targetAttribute' => ['galeria_id' => 'id']],
         ];
     }
 
@@ -51,10 +46,9 @@ class Comunidades extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'denom' => 'denom',
+            'denom' => 'Denom',
             'descripcion' => 'Descripcion',
             'created_at' => 'Created At',
-           // 'galeria_id' => 'Galeria ID',
         ];
     }
 
@@ -69,22 +63,23 @@ class Comunidades extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Galeria]].
+     * Gets query for [[Integrantes]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getGaleria()
+    public function getIntegrantes()
     {
-        return $this->hasOne(Galerias::class, ['id' => 'galeria_id'])->inverseOf('comunidades');
-    }
-
-    /**
-     * Gets query for [[UsuarioComunidads]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUsuarioComunidads()
-    {
-        return $this->hasMany(UsuarioComunidad::class, ['comunidad_id' => 'id'])->inverseOf('comunidad');
+        return $this->hasMany(Integrantes::class, ['comunidad_id' => 'id'])->inverseOf('comunidad');
     }
 }
+    
+    
+    // /**
+    //  * Gets query for [[Galeria]].
+    //  *
+    //  * @return \yii\db\ActiveQuery
+    //  */
+    // public function getGaleria()
+    // {
+    //     return $this->hasOne(Galerias::class, ['id' => 'galeria_id'])->inverseOf('comunidades');
+    // }
