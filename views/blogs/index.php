@@ -56,10 +56,10 @@ $blogs = $dataProvider->models;
               <div class="col-lg-6">
                 <ul class="list-unstyled mb-0">
                 <li>
-                  <?= $model->ordenarBlog($dataProvider, 'titulo', 'Título'); ?>
+                  <?= Yii::$app->AdvHelper->ordenarBlog($dataProvider, 'titulo', 'Título'); ?>
                   </li>
                   <li>
-                  <?= $model->ordenarBlog($dataProvider, 'created_at', 'Fecha'); ?>
+                  <?= Yii::$app->AdvHelper->ordenarBlog($dataProvider, 'created_at', 'Fecha'); ?>
                   </li>
                 </ul>
               </div>
