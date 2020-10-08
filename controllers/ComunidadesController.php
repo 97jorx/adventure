@@ -91,23 +91,17 @@ class ComunidadesController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Comunidades();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $username = !Yii::$app->user->isGuest;
+        $username = !Yii::$app->user->isGuest;
+        if ($username) {
             $uid = Yii::$app->user->id;
-
-            if ($username) {
+            $model = new Comunidades();
+            $model->creador = $uid;
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 $integrantes = new Integrantes();
                 $integrantes->usuario_id = $uid;
                 $integrantes->comunidad_id = $model->id;
                 $integrantes->save();
-                Yii::$app->session->setFlash('success', 'Te has unido correctamente');
-                return $this->redirect(['comunidades/index']);
             }
-            Yii::$app->session->setFlash('error', 'Tienes que estar logueado.');
-
-            return $this->redirect(['comunidades/index']);
         }
         
         return $this->render('create', [
