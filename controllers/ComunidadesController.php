@@ -6,10 +6,12 @@ use Yii;
 use app\models\Comunidades;
 use app\models\ComunidadesSearch;
 use app\models\Integrantes;
+use kartik\form\ActiveForm;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * ComunidadesController implements the CRUD actions for Comunidades model.
@@ -61,6 +63,8 @@ class ComunidadesController extends Controller
     {
         $searchModel = new ComunidadesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -90,9 +94,22 @@ class ComunidadesController extends Controller
         $model = new Comunidades();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
+            $username = !Yii::$app->user->isGuest;
+            $uid = Yii::$app->user->id;
 
+            if ($username) {
+                $integrantes = new Integrantes();
+                $integrantes->usuario_id = $uid;
+                $integrantes->comunidad_id = $model->id;
+                $integrantes->save();
+                Yii::$app->session->setFlash('success', 'Te has unido correctamente');
+                return $this->redirect(['comunidades/index']);
+            }
+            Yii::$app->session->setFlash('error', 'Tienes que estar logueado.');
+
+            return $this->redirect(['comunidades/index']);
+        }
+        
         return $this->render('create', [
             'model' => $model,
         ]);
@@ -142,17 +159,17 @@ class ComunidadesController extends Controller
     public function actionUnirse($id)
     {
         $username = !Yii::$app->user->isGuest;
+        $uid = Yii::$app->user->id;
         $idexist = Integrantes::find()
-        ->where(['id' => $id])
+        ->where(['comunidad_id' => $id])
+        ->andWhere(['usuario_id' => $uid])
         ->exists();
         
         if(!$idexist){
             if($username) {
                 $integrantes = new Integrantes();
-                $uid = Yii::$app->user->id;
                 $integrantes->usuario_id = $uid;
                 $integrantes->comunidad_id = $id;
-                $integrantes->creador = false;
                 $integrantes->save();
                 Yii::$app->session->setFlash('success', "Te has unido correctamente");
                 return $this->redirect(['comunidades/index']);
@@ -174,14 +191,16 @@ class ComunidadesController extends Controller
     public function actionSalir($id)
     {
         $username = !Yii::$app->user->isGuest;
+        $uid = Yii::$app->user->id;
         $idexist = Integrantes::find()
-        ->where(['comunidad_id' => $id]);
-        
+        ->where(['comunidad_id' => $id])
+        ->andWhere(['usuario_id' => $uid]);
+
         if($idexist->exists()){
             if($username) {
                 $idexist->one()->delete();
                 Yii::$app->session->setFlash('success', "Has salido correctamente");
-                return $this->redirect(['comunidades/index']);
+                return $this->redirect(['comunidades/index']);  
             } else {
                 Yii::$app->session->setFlash('error', "Tienes que estar logueado.");
             }    

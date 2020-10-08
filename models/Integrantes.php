@@ -9,7 +9,6 @@ use Yii;
  *
  * @property int $id
  * @property int $usuario_id
- * @property bool $creador
  * @property int $comunidad_id
  *
  * @property Comunidades $comunidad
@@ -31,10 +30,9 @@ class Integrantes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['usuario_id', 'creador', 'comunidad_id'], 'required'],
+            [['usuario_id', 'comunidad_id'], 'required'],
             [['usuario_id', 'comunidad_id'], 'default', 'value' => null],
             [['usuario_id', 'comunidad_id'], 'integer'],
-            [['creador'], 'boolean'],
             [['comunidad_id'], 'exist', 'skipOnError' => true, 'targetClass' => Comunidades::class, 'targetAttribute' => ['comunidad_id' => 'id']],
             [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['usuario_id' => 'id']],
         ];
@@ -48,7 +46,6 @@ class Integrantes extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'usuario_id' => 'Usuario ID',
-            'creador' => 'Creador',
             'comunidad_id' => 'Comunidad ID',
         ];
     }

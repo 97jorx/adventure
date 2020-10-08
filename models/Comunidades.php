@@ -11,8 +11,10 @@ use Yii;
  * @property string $denom
  * @property string|null $descripcion
  * @property string $created_at
+ * @property int $creador
  *
  * @property Blogs[] $blogs
+ * @property Usuarios $creador0
  * @property Integrantes[] $integrantes
  */
 class Comunidades extends \yii\db\ActiveRecord
@@ -31,11 +33,14 @@ class Comunidades extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['denom'], 'required'],
+            [['denom', 'creador'], 'required'],
             [['descripcion'], 'string'],
             [['created_at'], 'safe'],
+            [['creador'], 'default', 'value' => null],
+            [['creador'], 'integer'],
             [['denom'], 'string', 'max' => 255],
             [['denom'], 'unique'],
+            [['creador'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['creador' => 'id']],
         ];
     }
 
@@ -49,6 +54,7 @@ class Comunidades extends \yii\db\ActiveRecord
             'denom' => 'Denom',
             'descripcion' => 'Descripcion',
             'created_at' => 'Created At',
+            'creador' => 'Creador',
         ];
     }
 
@@ -63,6 +69,16 @@ class Comunidades extends \yii\db\ActiveRecord
     }
 
     /**
+     * Gets query for [[Creador0]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCreador()
+    {
+        return $this->hasOne(Usuarios::class, ['id' => 'creador'])->inverseOf('comunidades');
+    }
+
+    /**
      * Gets query for [[Integrantes]].
      *
      * @return \yii\db\ActiveQuery
@@ -72,14 +88,3 @@ class Comunidades extends \yii\db\ActiveRecord
         return $this->hasMany(Integrantes::class, ['comunidad_id' => 'id'])->inverseOf('comunidad');
     }
 }
-    
-    
-    // /**
-    //  * Gets query for [[Galeria]].
-    //  *
-    //  * @return \yii\db\ActiveQuery
-    //  */
-    // public function getGaleria()
-    // {
-    //     return $this->hasOne(Galerias::class, ['id' => 'galeria_id'])->inverseOf('comunidades');
-    // }

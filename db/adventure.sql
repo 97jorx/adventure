@@ -11,18 +11,6 @@
 --     , fotos           text      
 -- );
 
-
-DROP TABLE IF EXISTS comunidades CASCADE;
-
-CREATE TABLE comunidades (
-    id              bigserial      PRIMARY KEY 
-  , denom           varchar(255)   NOT NULL UNIQUE    
-  , descripcion     text  
-  , created_at      timestamp(0)   NOT NULL DEFAULT current_timestamp
- -- , galeria_id      bigint         REFERENCES galerias (id)
-);
-
-
 DROP TABLE IF EXISTS usuarios CASCADE;
 
 CREATE TABLE usuarios
@@ -40,6 +28,20 @@ CREATE TABLE usuarios
   , provincia varchar(255)
   , pais varchar(255)
 );
+
+DROP TABLE IF EXISTS comunidades CASCADE;
+
+CREATE TABLE comunidades (
+    id              bigserial      PRIMARY KEY 
+  , denom           varchar(255)   NOT NULL UNIQUE    
+  , descripcion     text  
+  , created_at      timestamp(0)   NOT NULL DEFAULT current_timestamp
+  , creador         bigint         NOT NULL REFERENCES usuarios (id)
+ -- , galeria_id      bigint         REFERENCES galerias (id)
+);
+
+
+
 
 DROP TABLE IF EXISTS perfiles CASCADE;
 DROP TABLE IF EXISTS perfil CASCADE;
@@ -104,7 +106,6 @@ DROP TABLE IF EXISTS integrantes CASCADE;
 CREATE TABLE integrantes (
      id           bigserial      PRIMARY KEY 
    , usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
-   , creador      boolean        NOT NULL
    , comunidad_id bigint         NOT NULL REFERENCES comunidades (id)
 );
 
@@ -139,10 +140,10 @@ VALUES ('foto.jpg', 'Soy un administrador de Adventure', 5, 1);
 -- VALUES ('foto.png');
 
 
-INSERT INTO comunidades (denom, descripcion)
+INSERT INTO comunidades (denom, descripcion, creador)
 VALUES ('Escribir es para todos', 
         'Estaís todos invitados formar parte de la comunidad para escritores animaté 
-         y comparte tus ideas a con todos nosotros');
+         y comparte tus ideas a con todos nosotros', 1);
 
 INSERT INTO blogs (titulo, descripcion, cuerpo, comunidad_id, usuario_id)
 VALUES ('Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whiliam Shakespeare',  
@@ -188,8 +189,8 @@ VALUES ('3Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whil
 INSERT INTO comentarios (user_id_comment, id_comment_blog, texto)
 VALUES (1, 1, 'Es una maravilla, me encanta'); 
 
-INSERT INTO integrantes (usuario_id, creador, comunidad_id)
-VALUES (1, '1', 1);         
+INSERT INTO integrantes (usuario_id, comunidad_id)
+VALUES (1, 1);         
 
 
 

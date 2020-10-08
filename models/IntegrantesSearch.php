@@ -18,7 +18,6 @@ class IntegrantesSearch extends Integrantes
     {
         return [
             [['id', 'usuario_id', 'comunidad_id'], 'integer'],
-            [['creador'], 'boolean'],
         ];
     }
 
@@ -60,7 +59,6 @@ class IntegrantesSearch extends Integrantes
         $query->andFilterWhere([
             'id' => $this->id,
             'usuario_id' => $this->usuario_id,
-            'creador' => $this->creador,
             'comunidad_id' => $this->comunidad_id,
         ]);
 

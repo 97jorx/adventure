@@ -15,6 +15,8 @@ use yii\web\IdentityInterface;
  * @property string $email
  * @property string $rol
  * @property string $created_at
+ * @property Comunidades[] $comunidades 
+ * @property Integrantes[] $integrantes 
  * @property string|null $contrasena
  * @property string|null $auth_key
  * @property string|null $poblacion
@@ -92,18 +94,29 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->hasMany(Comentarios::class, ['user_id_comment' => 'id'])->inverseOf('userIdComment');
     }
 
-    /**
-     * Gets query for [[Perfils]].
+   /**
+     * Gets query for [[Perfiles]].
      *
      * @return \yii\db\ActiveQuery
      */
     public function getPerfiles()
     {
-        return $this->hasMany(Perfil::class, ['usuario_id' => 'id'])->inverseOf('usuario');
+        return $this->hasMany(Perfiles::class, ['usuario_id' => 'id'])->inverseOf('usuario');
     }
 
 
-/**    
+    /**
+    * Gets query for [[Comunidades]].
+    *
+    * @return \yii\db\ActiveQuery
+    */
+    public function getComunidades()
+    {
+        return $this->hasMany(Comunidades::class, ['creador' => 'id'])->inverseOf('creador0');
+    }
+
+
+    /**    
      * Gets query for [[Blogs]].
      *
      * @return \yii\db\ActiveQuery
@@ -114,15 +127,15 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     }
 
 
-    /**
-     * Gets query for [[UsuarioComunidads]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUsuarioComunidades()
-    {
-        return $this->hasMany(UsuarioComunidades::class, ['usuario_id' => 'id'])->inverseOf('usuario');
-    }
+    /** Gets query for [[Integrantes]].
+    *
+    * @return \yii\db\ActiveQuery
+    */
+   public function getIntegrantes()
+   {
+       return $this->hasMany(Integrantes::class, ['usuario_id' => 'id'])->inverseOf('usuario');
+   }
+
 
 
     public static function findIdentity($id)
