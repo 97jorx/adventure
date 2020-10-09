@@ -45,7 +45,7 @@ class BlogsSearch extends Blogs
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $busqueda = "") 
     {
         $query = Blogs::blogsName();
 
@@ -78,12 +78,10 @@ class BlogsSearch extends Blogs
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 
-        // grid filtering conditions
+
         $query->andFilterWhere([
             'id' => $this->id,
             'comunidad_id' => $this->comunidad_id,
@@ -91,11 +89,11 @@ class BlogsSearch extends Blogs
             'created_at' => $this->created_at,
         ]);
 
-        $query->andFilterWhere(['ilike', 'titulo', $this->titulo])
-            ->andFilterWhere(['ilike', 'descripcion', $this->descripcion])
-            ->andFilterWhere(['ilike', 'cuerpo', $this->cuerpo])
-            ->andFilterWhere(['ilike', 'u.nombre', $this->getAttribute('usuario.nombre')])
-            ->andFilterWhere(['ilike', 'c.denom', $this->getAttribute('comunidad.denom')]);
+        $query->orFilterWhere(['ilike', 'titulo', $busqueda])
+            ->orFilterWhere(['ilike', 'blogs.descripcion', $busqueda])
+            ->orFilterWhere(['ilike', 'cuerpo', $busqueda])
+            ->orFilterWhere(['ilike', 'u.nombre', $busqueda])
+            ->orFilterWhere(['ilike', 'c.denom', $busqueda]);
 
         return $dataProvider;
     }

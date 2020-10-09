@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Blogs;
 use app\models\BlogsSearch;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -35,12 +36,17 @@ class BlogsController extends Controller
      */
     public function actionIndex()
     {
+
+
+        $busqueda = Yii::$app->request->get('busqueda', '');
         $searchModel = new BlogsSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $busqueda);
+         
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'busqueda' => $busqueda
         ]);
     }
 

@@ -24,6 +24,9 @@ use yii\jui\DatePicker;
 
     <?= $form->field($model, 'cuerpo')->textarea(['rows' => 6]) ?>
 
+    <?= $form->field($model, 'usuario_id') ?>
+    <?= $form->field($model, 'comunidad_id') ?>
+
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

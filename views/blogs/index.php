@@ -41,11 +41,13 @@ $blogs = $dataProvider->models;
         <div class="card my-4">
           <h5 class="card-header">Search</h5>
           <div class="card-body">
+            <?= Html::beginForm(['blogs/index'], 'get') ?>
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search for...">
+                <?= Html::textInput('busqueda', $busqueda, ['class' => 'form-control']) ?>
               <span class="input-group-append">
-                <button class="btn btn-secondary" type="button">Go!</button>
+                <?= Html::submitButton('Buscar', ['class' => 'btn btn-primary']) ?>
               </span>
+            <?= Html::endForm() ?>
             </div>
           </div>
         </div>
