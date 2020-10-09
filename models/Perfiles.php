@@ -35,7 +35,7 @@ class Perfiles extends \yii\db\ActiveRecord
             [['valoracion', 'usuario_id'], 'integer'],
             [['usuario_id'], 'required'],
             [['foto_perfil', 'bibliografia'], 'string', 'max' => 255],
-            [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['usuario_id' => 'id']],
+            [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['usuario_id' => 'id']],
         ];
     }
 

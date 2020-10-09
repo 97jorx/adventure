@@ -73,7 +73,7 @@ class Comunidades extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getpropietario()
+    public function getPropietario()
     {
         return $this->hasOne(Usuarios::class, ['id' => 'propietario'])->inverseOf('comunidades');
     }
@@ -86,5 +86,19 @@ class Comunidades extends \yii\db\ActiveRecord
     public function getIntegrantes()
     {
         return $this->hasMany(Integrantes::class, ['comunidad_id' => 'id'])->inverseOf('comunidad');
+    }
+
+    /**
+     * Gets query for [[Integrantes]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function existeIntegrante($cid)
+    {
+        $id = Yii::$app->user->id;
+        return Integrantes::find()
+        ->where(['usuario_id' => $id,])
+        ->andWhere(['comunidad_id' => $cid])->exists();        
+            
     }
 }

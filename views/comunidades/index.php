@@ -54,7 +54,8 @@ Yii::$app->formatter->locale = 'es-ES';
                         <h5 class="card-title"><b><?=  $model->denom  ?></b></h5>
                         <p class="card-text"><b><?=  $model->descripcion ?></b></p>
                         <p class="card-text"><b><?= Yii::$app->formatter->asDate($model->created_at)?></p>
-                        <?= (!$model->getIntegrantes()->exists()) ? (Html::a('Unirse', ['comunidades/unirse', 'id' => $model->id], ['class' => 'btn btn-success'])) 
+                        <?= (!$model->existeIntegrante($model->id)) ? 
+                              (Html::a('Unirse', ['comunidades/unirse', 'id' => $model->id], ['class' => 'btn btn-success'])) 
                             : (Html::a('Salir', ['comunidades/salir', 'id' => $model->id], ['class' => 'btn btn-danger']))?>
                     </div>
                 </div>
