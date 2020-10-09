@@ -50,7 +50,7 @@ AppAsset::register($this);
             Html::beginForm(['/site/logout'], 'post').Html::submitButton(
             'Logout (' . Yii::$app->user->identity->username . ')',
             ['class' => 'dropdown-item'],).Html::endForm(),
-            ['label' => 'Perfiles', 'url' => ['perfiles/index']]
+            ['label' => 'Perfil', 'url' => ['perfiles/index']]
         ];
         
     }
@@ -63,7 +63,7 @@ AppAsset::register($this);
             ['label' => 'Comunidades', 'url' => ['comunidades/index']],
             ['label' => 'Galerias', 'url' => ['galerias/index']],
             ['label' => 'Blogs', 'url' => ['blogs/index']],
-            ['label' => 'Integrantes y Creadores', 'url' => ['integrantes/index']],
+            ['label' => 'Integrantes', 'url' => ['integrantes/index']],
             ['label' => 'Usuarios', 'url' => ['usuarios/index']],
             [
                 'label'=> 'Usuarios',

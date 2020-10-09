@@ -12,7 +12,6 @@ use yii\bootstrap4\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'foto_perfiles')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'bibliografia')->textInput(['maxlength' => true]) ?>
 

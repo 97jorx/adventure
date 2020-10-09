@@ -17,8 +17,6 @@ use yii\bootstrap4\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'foto_perfil') ?>
-
     <?= $form->field($model, 'bibliografia') ?>
 
     <?= $form->field($model, 'valoracion') ?>

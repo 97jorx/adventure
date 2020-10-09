@@ -7,16 +7,15 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\PerfilSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Perfiles';
+
+
+$this->title = 'Perfil';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="perfiles-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($this->title.' de '.Yii::$app->user->identity->username) ?></h1>
 
-    <p>
-        <?= Html::a('Create Perfiles', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
@@ -30,7 +29,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'foto_perfil',
             'bibliografia',
             'valoracion',
-            'usuario_id',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

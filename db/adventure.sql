@@ -36,15 +36,12 @@ CREATE TABLE comunidades (
   , denom           varchar(255)   NOT NULL UNIQUE    
   , descripcion     text  
   , created_at      timestamp(0)   NOT NULL DEFAULT current_timestamp
-  , creador         bigint         NOT NULL REFERENCES usuarios (id)
- -- , galeria_id      bigint         REFERENCES galerias (id)
+  , propietario     bigint         NOT NULL REFERENCES usuarios (id)
+ -- , galeria_id    bigint         REFERENCES galerias (id)
 );
 
 
-
-
 DROP TABLE IF EXISTS perfiles CASCADE;
-DROP TABLE IF EXISTS perfil CASCADE;
 
 CREATE TABLE perfiles (
      id           bigserial      PRIMARY KEY 
@@ -140,7 +137,7 @@ VALUES ('foto.jpg', 'Soy un administrador de Adventure', 5, 1);
 -- VALUES ('foto.png');
 
 
-INSERT INTO comunidades (denom, descripcion, creador)
+INSERT INTO comunidades (denom, descripcion, propietario)
 VALUES ('Escribir es para todos', 
         'Estaís todos invitados formar parte de la comunidad para escritores animaté 
          y comparte tus ideas a con todos nosotros', 1);

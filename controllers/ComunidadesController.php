@@ -95,7 +95,7 @@ class ComunidadesController extends Controller
         if ($username) {
             $uid = Yii::$app->user->id;
             $model = new Comunidades();
-            $model->creador = $uid;
+            $model->propietario = $uid;
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 $integrantes = new Integrantes();
                 $integrantes->usuario_id = $uid;

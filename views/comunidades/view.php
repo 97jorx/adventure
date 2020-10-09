@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'denom',
-            'creador',
+            'propietario',
             'descripcion:ntext',
             'created_at',
             

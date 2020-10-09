@@ -99,9 +99,9 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPerfiles()
+    public function getPerfil()
     {
-        return $this->hasMany(Perfiles::class, ['usuario_id' => 'id'])->inverseOf('usuario');
+        return $this->hasOne(Perfiles::class, ['usuario_id' => 'id'])->inverseOf('usuario');
     }
 
 
@@ -112,7 +112,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     */
     public function getComunidades()
     {
-        return $this->hasMany(Comunidades::class, ['creador' => 'id'])->inverseOf('creador0');
+        return $this->hasMany(Comunidades::class, ['propietario' => 'id'])->inverseOf('propietario');
     }
 
 

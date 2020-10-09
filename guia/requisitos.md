@@ -525,7 +525,7 @@
 
 | **R59**     | **Dar puntuación al usuario de los blogs**         |
 | --------------: | :------------------- |
-| **Descripción** | Posibilidad de dar nota al creador del blog, del 1 al 5             |
+| **Descripción** | Posibilidad de dar nota al propietario del blog, del 1 al 5             |
 | **Prioridad**   | Mínimo           |
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |

@@ -11,10 +11,10 @@ use Yii;
  * @property string $denom
  * @property string|null $descripcion
  * @property string $created_at
- * @property int $creador
+ * @property int $propietario
  *
  * @property Blogs[] $blogs
- * @property Usuarios $creador0
+ * @property Usuarios $propietario0
  * @property Integrantes[] $integrantes
  */
 class Comunidades extends \yii\db\ActiveRecord
@@ -33,14 +33,14 @@ class Comunidades extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['denom', 'creador'], 'required'],
+            [['denom', 'propietario'], 'required'],
             [['descripcion'], 'string'],
             [['created_at'], 'safe'],
-            [['creador'], 'default', 'value' => null],
-            [['creador'], 'integer'],
+            [['propietario'], 'default', 'value' => null],
+            [['propietario'], 'integer'],
             [['denom'], 'string', 'max' => 255],
             [['denom'], 'unique'],
-            [['creador'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['creador' => 'id']],
+            [['propietario'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['propietario' => 'id']],
         ];
     }
 
@@ -54,7 +54,7 @@ class Comunidades extends \yii\db\ActiveRecord
             'denom' => 'Denom',
             'descripcion' => 'Descripcion',
             'created_at' => 'Created At',
-            'creador' => 'Creador',
+            'propietario' => 'propietario',
         ];
     }
 
@@ -69,13 +69,13 @@ class Comunidades extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Creador0]].
+     * Gets query for [[propietario0]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCreador()
+    public function getpropietario()
     {
-        return $this->hasOne(Usuarios::class, ['id' => 'creador'])->inverseOf('comunidades');
+        return $this->hasOne(Usuarios::class, ['id' => 'propietario'])->inverseOf('comunidades');
     }
 
     /**
