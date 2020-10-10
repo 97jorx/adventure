@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Blogs;
 use app\models\BlogsSearch;
+use app\models\Integrantes;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -70,11 +71,23 @@ class BlogsController extends Controller
      */
     public function actionCreate()
     {
+
         $model = new Blogs();
+        $uid = Yii::$app->user->id;
+
+
+        if (!Yii::$app->user->isGuest) {
+            $model->usuario_id = $uid;
+        } else {
+            return $this->redirect(['site/login']);
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
+
+
+
 
         return $this->render('create', [
             'model' => $model,
