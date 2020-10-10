@@ -6,6 +6,7 @@ use Yii;
 use app\models\Blogs;
 use app\models\BlogsSearch;
 use app\models\Integrantes;
+use Symfony\Component\VarDumper\VarDumper;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -74,10 +75,12 @@ class BlogsController extends Controller
 
         $model = new Blogs();
         $uid = Yii::$app->user->id;
-
+        $comunidad = Integrantes::find('comunidad_id')
+        ->where(['usuario_id' => $uid])->one();
 
         if (!Yii::$app->user->isGuest) {
             $model->usuario_id = $uid;
+            $model->comunidad_id = $comunidad->comunidad_id;
         } else {
             return $this->redirect(['site/login']);
         }
@@ -85,8 +88,6 @@ class BlogsController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
-
-
 
 
         return $this->render('create', [
