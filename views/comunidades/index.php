@@ -58,11 +58,10 @@ Yii::$app->formatter->locale = 'es-ES';
                         <p class="card-text"><b><?= Yii::$app->formatter->asDate($model->created_at)?></p>
                         <?php $existe = ($model->existeIntegrante($model->id)) ? ('Salir') : ('Unirse'); ?>
                         <?php $unirse = Url::to(['comunidades/unirse', 'id' => $model->id]); ?>
-                        <?= Html::a($existe, $unirse, [
+                        <?= Html::a($existe, $unirse, ['class' => 'btn btn-primary',
                             'onclick' =>"
                                 event.preventDefault();
                                 var self = $(this);
-                                
                                 $.ajax({
                                     type: 'GET',
                                     url: '$unirse',
@@ -70,10 +69,9 @@ Yii::$app->formatter->locale = 'es-ES';
                                 }).done(function( data, textStatus, jqXHR ) {
                                     data = JSON.parse(data);
                                     $(self).text(data.button);             
-                                    if ( console && console.log ) {
-                                         console.log('La solicitud se ha completado correctamente');
-                                         console.log(data.button);
-                                    }
+                                    $('#color').prop('class', data.color);
+                                    $('#mensaje').text(data.mensaje);
+                                    $('#myModal').modal('show');
                                 }).fail(function( data, textStatus, jqXHR ) {
                                     if ( console && console.log ) {
                                         console.log( 'La solicitud a fallado');
@@ -92,14 +90,11 @@ Yii::$app->formatter->locale = 'es-ES';
 
 
 <div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
+    <div class="modal-dialog ">
+        <div id="color" class="modal-content">
             <div class="modal-body">
-                <p>Bienvenido a ADVENTURE.</p>
+                <p id="mensaje" >Bienvenido a ADVENTURE.</p>
             </div>
         </div>
     </div>
 </div>
-
-
-<!--  -->

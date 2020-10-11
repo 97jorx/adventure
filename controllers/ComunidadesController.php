@@ -172,21 +172,21 @@ class ComunidadesController extends Controller
                 $json = [ 
                     'button' => 'Salir',
                     'mensaje' => 'Te has unido correctamente.',
-                    'code' => 1
+                    'color' => 'bg-success',
                 ];
             } else {
                 $idexist->one()->delete();
                 $json = [ 
                     'button' => 'Unirse',
                     'mensaje' => 'Te has salido correctamente.',
-                    'code' => 1
+                    'color' => 'bg-danger'
                 ];
             }    
         } else {
             $json = [ 
                 'button' => 'Unirse',
                 'mensaje' => 'Tienes que estar logueado.',
-                'code' => 0
+                'color' => 'bg-danger'
             ];
         }
         
