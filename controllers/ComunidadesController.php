@@ -170,14 +170,14 @@ class ComunidadesController extends Controller
                 $integrantes->comunidad_id = $id;
                 $integrantes->save();
                 $json = [ 
-                    'button' => 'Unirse',
+                    'button' => 'Salir',
                     'mensaje' => 'Te has unido correctamente.',
                     'code' => 1
                 ];
             } else {
                 $idexist->one()->delete();
                 $json = [ 
-                    'button' => 'Salir',
+                    'button' => 'Unirse',
                     'mensaje' => 'Te has salido correctamente.',
                     'code' => 1
                 ];

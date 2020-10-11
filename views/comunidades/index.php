@@ -53,13 +53,15 @@ Yii::$app->formatter->locale = 'es-ES';
                 <div class="card  bg-light" style = "width: 22rem; " >
                     <img class="card-img-top"  src="<?php echo Yii::$app->request->baseUrl . '/uploads/test.jpg'?>" alt="Card image cap">
                     <div class="card-body">
-                        <h5 class="card-title"><b><?=  $model->denom  ?></b></h5>
-                        <p class="card-text"><b><?=  $model->descripcion ?></b></p>
+                        <h5 class="card-title"><b><?= $model->denom  ?></b></h5>
+                        <p class="card-text"><b><?= $model->descripcion ?></b></p>
                         <p class="card-text"><b><?= Yii::$app->formatter->asDate($model->created_at)?></p>
+                        <?php $existe = ($model->existeIntegrante($model->id)) ? ('Salir') : ('Unirse'); ?>
                         <?php $unirse = Url::to(['comunidades/unirse', 'id' => $model->id]); ?>
-                        <?= Html::a('Unirse', $unirse, [
-                            'onclick'=>"
+                        <?= Html::a($existe, $unirse, [
+                            'onclick' =>"
                                 event.preventDefault();
+                                var self = $(this);
                                 
                                 $.ajax({
                                     type: 'GET',
@@ -67,10 +69,10 @@ Yii::$app->formatter->locale = 'es-ES';
                                     dataType: 'json',
                                 }).done(function( data, textStatus, jqXHR ) {
                                     data = JSON.parse(data);
+                                    $(self).text(data.button);             
                                     if ( console && console.log ) {
-                                        console.log( 'La solicitud se ha completado correctamente' );
-                                        console.log( data.button );
-                                        $this.text('data.button');
+                                         console.log('La solicitud se ha completado correctamente');
+                                         console.log(data.button);
                                     }
                                 }).fail(function( data, textStatus, jqXHR ) {
                                     if ( console && console.log ) {
