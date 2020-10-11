@@ -525,7 +525,7 @@
 
 | **R59**     | **Dar puntuación al usuario de los blogs**         |
 | --------------: | :------------------- |
-| **Descripción** | Posibilidad de dar nota al propietario del blog, del 1 al 5             |
+| **Descripción** | Posibilidad de dar nota al creador del blog, del 1 al 5             |
 | **Prioridad**   | Mínimo           |
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
@@ -811,6 +811,33 @@
 | **Entrega**     | v1             |
 | **Incidencia**  | [90](https://github.com/97jorx/adventure1/issues/90) |
 
+| **R91**     | **Salir de una comunidad**         |
+| --------------: | :------------------- |
+| **Descripción** | El usuario podrá salir de la comunidad a la que ha entrado previamente.             |
+| **Prioridad**   | Mínimo           |
+| **Tipo**        | Funcional                |
+| **Complejidad** | Fácil         |
+| **Entrega**     | v1             |
+| **Incidencia**  | [91](https://github.com/97jorx/adventure1/issues/91) |
+
+| **R92**     | **Búsqueda múltiple  en el tablón de blogs**         |
+| --------------: | :------------------- |
+| **Descripción** | Se podrá buscar por cualquier campo en el tablón de blogs mediante un campo de texto.             |
+| **Prioridad**   | Mínimo           |
+| **Tipo**        | Funcional                |
+| **Complejidad** | Fácil         |
+| **Entrega**     | v1             |
+| **Incidencia**  | [92](https://github.com/97jorx/adventure1/issues/92) |
+
+| **R93**     | **La foto del perfil aparezca como icono en el usuario.**         |
+| --------------: | :------------------- |
+| **Descripción** | La foto del perfil del usuario que tenga subida aparecerá como icono cada vez que aparezca el nombre del usuario.             |
+| **Prioridad**   | Importante           |
+| **Tipo**        | Funcional                |
+| **Complejidad** | Fácil         |
+| **Entrega**     | v3             |
+| **Incidencia**  | [93](https://github.com/97jorx/adventure1/issues/93) |
+
 
 ## Cuadro resumen
 
@@ -906,3 +933,6 @@
 | (**R88**) Poder dar likes a los comentarios | Mínimo | Funcional | Difícil | v3 | | **Incidencia**  | [88](https://github.com/97jorx/adventure1/issues/88) |
 | (**R89**) Tener una barra de logueo diario | Opcional | Funcional | Difícil | v3 | | **Incidencia**  | [89](https://github.com/97jorx/adventure1/issues/89) |
 | (**R90**) Control de estados de usuarios | Mínimo | Funcional | Fácil | v1 | | **Incidencia**  | [90](https://github.com/97jorx/adventure1/issues/90) |
+| (**R91**) Salir de una comunidad | Mínimo | Funcional | Fácil | v1 | | **Incidencia**  | [91](https://github.com/97jorx/adventure1/issues/91) |
+| (**R92**) Búsqueda múltiple  en el tablón de blogs | Mínimo | Funcional | Fácil | v1 | | **Incidencia**  | [92](https://github.com/97jorx/adventure1/issues/92) |
+| (**R93**) La foto del perfil aparezca como icono en el usuario. | Importante | Funcional | Fácil | v3 | | **Incidencia**  | [93](https://github.com/97jorx/adventure1/issues/93) |
