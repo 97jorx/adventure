@@ -57,18 +57,20 @@ Yii::$app->formatter->locale = 'es-ES';
                         <p class="card-text"><b><?=  $model->descripcion ?></b></p>
                         <p class="card-text"><b><?= Yii::$app->formatter->asDate($model->created_at)?></p>
                         <?php $unirse = Url::to(['comunidades/unirse', 'id' => $model->id]); ?>
-                        <?= Html::a('Unirse',$unirse, ['id' => "boton"], [
+                        <?= Html::a('Unirse', $unirse, [
                             'onclick'=>"
                                 event.preventDefault();
+                                
                                 $.ajax({
                                     type: 'GET',
                                     url: '$unirse',
                                     dataType: 'json',
                                 }).done(function( data, textStatus, jqXHR ) {
+                                    data = JSON.parse(data);
                                     if ( console && console.log ) {
                                         console.log( 'La solicitud se ha completado correctamente' );
-                                        console.log(data.button);
-                                        
+                                        console.log( data.button );
+                                        $this.text('data.button');
                                     }
                                 }).fail(function( data, textStatus, jqXHR ) {
                                     if ( console && console.log ) {
@@ -96,3 +98,6 @@ Yii::$app->formatter->locale = 'es-ES';
         </div>
     </div>
 </div>
+
+
+<!--  -->

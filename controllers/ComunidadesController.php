@@ -182,13 +182,15 @@ class ComunidadesController extends Controller
                     'code' => 1
                 ];
             }    
-        } 
-        $json = [ 
-            'button' => 'Unirse',
-            'mensaje' => 'Tienes que estar logueado.',
-            'code' => 0
-        ];
-            return $json;
+        } else {
+            $json = [ 
+                'button' => 'Unirse',
+                'mensaje' => 'Tienes que estar logueado.',
+                'code' => 0
+            ];
+        }
+        
+            return json_encode($json);
     }
 
 
