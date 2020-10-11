@@ -152,56 +152,75 @@ class ComunidadesController extends Controller
      */
     public function actionUnirse($id)
     {
-        $username = !Yii::$app->user->isGuest;
-        $uid = Yii::$app->user->id;
-        $idexist = Integrantes::find()
-        ->where(['comunidad_id' => $id])
-        ->andWhere(['usuario_id' => $uid])
-        ->exists();
-        
-        if(!$idexist){
-            if($username) {
-                $integrantes = new Integrantes();
-                $integrantes->usuario_id = $uid;
-                $integrantes->comunidad_id = $id;
-                $integrantes->save();
-                Yii::$app->session->setFlash('success', "Te has unido correctamente");
-                return $this->redirect(['comunidades/index']);
-            } else {
-                Yii::$app->session->setFlash('error', "Tienes que estar logueado.");
-            }    
-        }
-            Yii::$app->session->setFlash('error', "Ya te has unido a esta comunidad.");
-            return $this->redirect(['comunidades/index']);
-    }
 
-
-    /**
-     * Permite al usuario logueado salir a la comunidad elegida mediante un botón.
-     * @param id se le pasa el id a la comunidad que se quiere salir.
-     * @return Comunidades the loaded model.
-     * @throws NotFoundHttpException if the model cannot be found.
-     */
-    public function actionSalir($id)
-    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
         $username = !Yii::$app->user->isGuest;
         $uid = Yii::$app->user->id;
         $idexist = Integrantes::find()
         ->where(['comunidad_id' => $id])
         ->andWhere(['usuario_id' => $uid]);
-
-        if($idexist->exists()){
-            if($username) {
-                $idexist->one()->delete();
-                Yii::$app->session->setFlash('success', "Has salido correctamente");
-                return $this->redirect(['comunidades/index']);  
-            } else {
-                Yii::$app->session->setFlash('error', "Tienes que estar logueado.");
-            }    
-        }
-        return $this->redirect(['comunidades/index']);
         
+        
+        $json = [];
+
+        if($username) {
+            if(!$idexist->exists()){
+                $integrantes = new Integrantes();
+                $integrantes->usuario_id = $uid;
+                $integrantes->comunidad_id = $id;
+                $integrantes->save();
+                $json = [ 
+                    'button' => 'Salir',
+                    'mensaje' => 'Te has unido correctamente.',
+                    'color' => 'bg-success',
+                ];
+            } else {
+                $idexist->one()->delete();
+                $json = [ 
+                    'button' => 'Unirse',
+                    'mensaje' => 'Te has salido correctamente.',
+                    'color' => 'bg-danger'
+                ];
+            }    
+        } else {
+            $json = [ 
+                'button' => 'Unirse',
+                'mensaje' => 'Tienes que estar logueado.',
+                'color' => 'bg-danger'
+            ];
+        }
+        
+            return json_encode($json);
     }
+
+
+    // /**
+    //  * Permite al usuario logueado salir a la comunidad elegida mediante un botón.
+    //  * @param id se le pasa el id a la comunidad que se quiere salir.
+    //  * @return Comunidades the loaded model.
+    //  * @throws NotFoundHttpException if the model cannot be found.
+    //  */
+    // public function actionSalir($id)
+    // {
+    //     Yii::$app->response->format = Response::FORMAT_JSON;
+    //     $username = !Yii::$app->user->isGuest;
+    //     $uid = Yii::$app->user->id;
+    //     $idexist = Integrantes::find()
+    //     ->where(['comunidad_id' => $id])
+    //     ->andWhere(['usuario_id' => $uid]);
+
+    //     if($idexist->exists()){
+    //         if($username) {
+    //             $idexist->one()->delete();
+    //             Yii::$app->session->setFlash('success', "Has salido correctamente");
+    //             return $this->redirect(['comunidades/index']);  
+    //         } else {
+    //             Yii::$app->session->setFlash('error', "Tienes que estar logueado.");
+    //         }    
+    //     }
+    //     return $this->redirect(['comunidades/index']);
+        
+    // }
 
 
     /**

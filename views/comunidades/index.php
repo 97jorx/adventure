@@ -6,6 +6,7 @@ use yii\grid\GridView;
 use yii\widgets\ListView;
 use kartik\detail\DetailView;
 use yii\grid\ActionColumn;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ComunidadesSearch */
@@ -18,6 +19,7 @@ $this->title = "ADVENTURE";
 
 $username = !Yii::$app->user->isGuest;
 $user = $username ? (Yii::$app->user->identity->username) : (null);
+
 $js = <<< EOF
 $(document).ready(function() {
     if (localStorage.getItem('$user') === null && Boolean($username)) {
@@ -51,12 +53,32 @@ Yii::$app->formatter->locale = 'es-ES';
                 <div class="card  bg-light" style = "width: 22rem; " >
                     <img class="card-img-top"  src="<?php echo Yii::$app->request->baseUrl . '/uploads/test.jpg'?>" alt="Card image cap">
                     <div class="card-body">
-                        <h5 class="card-title"><b><?=  $model->denom  ?></b></h5>
-                        <p class="card-text"><b><?=  $model->descripcion ?></b></p>
+                        <h5 class="card-title"><b><?= $model->denom  ?></b></h5>
+                        <p class="card-text"><b><?= $model->descripcion ?></b></p>
                         <p class="card-text"><b><?= Yii::$app->formatter->asDate($model->created_at)?></p>
-                        <?= (!$model->existeIntegrante($model->id)) ? 
-                              (Html::a('Unirse', ['comunidades/unirse', 'id' => $model->id], ['class' => 'btn btn-success'])) 
-                            : (Html::a('Salir', ['comunidades/salir', 'id' => $model->id], ['class' => 'btn btn-danger']))?>
+                        <?php $existe = ($model->existeIntegrante($model->id)) ? ('Salir') : ('Unirse'); ?>
+                        <?php $unirse = Url::to(['comunidades/unirse', 'id' => $model->id]); ?>
+                        <?= Html::a($existe, $unirse, ['class' => 'btn btn-primary',
+                            'onclick' =>"
+                                event.preventDefault();
+                                var self = $(this);
+                                $.ajax({
+                                    type: 'GET',
+                                    url: '$unirse',
+                                    dataType: 'json',
+                                }).done(function( data, textStatus, jqXHR ) {
+                                    data = JSON.parse(data);
+                                    $(self).text(data.button);             
+                                    $('#color').prop('class', data.color);
+                                    $('#mensaje').text(data.mensaje);
+                                    $('#myModal').modal('show');
+                                }).fail(function( data, textStatus, jqXHR ) {
+                                    if ( console && console.log ) {
+                                        console.log( 'La solicitud a fallado');
+                                    }
+                               });"
+                        ]); 
+                        ?> 
                     </div>
                 </div>
             </div>
@@ -68,10 +90,10 @@ Yii::$app->formatter->locale = 'es-ES';
 
 
 <div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
+    <div class="modal-dialog ">
+        <div id="color" class="modal-content">
             <div class="modal-body">
-                <p>Bienvenido a ADVENTURE.</p>
+                <p id="mensaje" >Bienvenido a ADVENTURE.</p>
             </div>
         </div>
     </div>
