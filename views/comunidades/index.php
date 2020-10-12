@@ -20,6 +20,13 @@ $this->title = "ADVENTURE";
 $this->registerJsFile(Yii::getAlias('@web') . '/js/masonry.js', [
     'depends' => [\yii\web\JqueryAsset::class]
 ]);
+$this->registerJsFile(Yii::getAlias('@web') . '/js/masonry.pkgd.min.js', [
+    'depends' => [\yii\web\JqueryAsset::class]
+]);
+$this->registerJsFile(Yii::getAlias('@web') . '/js/imagesloaded.pkgd.min.js', [
+    'depends' => [\yii\web\JqueryAsset::class]
+]);
+
 
 
 $username = !Yii::$app->user->isGuest;
@@ -31,15 +38,11 @@ $(document).ready(function() {
         localStorage.setItem('$user', '$user')
         $("#myModal").modal('show');
     }
+
+   
+     
 });
 
-$(function(){
-    $('.masonry-container').masonry({
-      itemSelector: '.item', 
-      columnWidth: '.panel',
-      percentPosition: true
-    });
-  });
 EOF;
 
 $this->registerJs($js);
@@ -48,16 +51,12 @@ $this->registerJs($js);
 Yii::$app->formatter->locale = 'es-ES';
 
 ?>
-<div class="comunidades-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
         <?= Html::a('Create Comunidades', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-
     <?php echo $this->render('_search', ['model' => $searchModel]); ?>
-
 
 <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog ">
@@ -69,20 +68,20 @@ Yii::$app->formatter->locale = 'es-ES';
     </div>
 </div>
 
-
-<?php foreach($dataProvider->models as $model) { ?> 
+<body>
 <div class="masonry-wrapper">
-     <div class="masonry">
-            <div class="masonry-item">
-                <div class="masonry-content">
-                    <img src="https://picsum.photos/450/325?image=100" alt="Masonry">
-                    <h5 class="masonry-title"><b><?= $model->denom  ?></b></h5>
-                    <p class="masonry-description"><b><?= $model->descripcion ?></b></p>
-                    <p class="masonry-description"><b><?= Yii::$app->formatter->asDate($model->created_at)?></p>
-                    <?php $existe = ($model->existeIntegrante($model->id)) ? ('Salir') : ('Unirse'); ?>
-                    <?php $unirse = Url::to(['comunidades/unirse', 'id' => $model->id]); ?>
-                    <div class="masonry-item">
-                    <?= Html::a($existe, $unirse, ['class' => 'masonry-button ',
+    <div class="masonry">
+        <?php foreach($dataProvider->models as $model) { ?> 
+        <div class="masonry-item">
+            <div class="masonry-content">
+                <img src="https://picsum.photos/450/325?image=100" alt="Masonry">
+                <h5 class="masonry-title"><b><?= $model->denom  ?></b></h5>
+                <p class="masonry-description"><b><?= $model->descripcion ?></b></p>
+                <p class="masonry-description"><b><?= Yii::$app->formatter->asDate($model->created_at)?></b></p>
+                <?php $existe = ($model->existeIntegrante($model->id)) ? ('Salir') : ('Unirse'); ?>
+                <?php $unirse = Url::to(['comunidades/unirse', 'id' => $model->id]); ?>
+                <div class="masonry-bar">
+                    <?= Html::a($existe, $unirse, ['class' => 'masonry-button',
                         'onclick' =>"
                             event.preventDefault();
                             var self = $(this);
@@ -103,11 +102,19 @@ Yii::$app->formatter->locale = 'es-ES';
                             });"
                     ]); 
                     ?> 
+                    <?= Html::a('Like', $unirse, ['class' => 'masonry-button']); ?>
+                    <?= Html::a('Ver', ['comunidades/view', 'id' => $model->id], ['class' => 'masonry-button']); ?>
                     </div>
                 </div>
             </div>
+            <?php } ?>
         </div>
     </div>
-</div>
-<?php } ?>
+</body>
+
+
 <script src="//unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+<script src="cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+
+
+

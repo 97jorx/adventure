@@ -1,6 +1,6 @@
 body {
-  background-color: white;
-  color: #333333;
+  background-color: #ffffff;
+  color: black;
 }
 .masonry-wrapper {
   padding: 1.5em;
@@ -21,11 +21,11 @@ body {
 }
 @media only screen and (min-width: 1024px) {
   .masonry {
-    grid-template-columns: repeat(3, minmax(100px,1fr));
+    grid-template-columns: repeat(4, minmax(100px,1fr));
   }
 }
 .masonry-item, .masonry-content {
-  border-radius: 10px;
+  border-radius: 5px;
   overflow: hidden;
 }
 .masonry-item {
@@ -39,8 +39,8 @@ body {
   overflow: hidden;
 }
 .masonry-item {
-  color: #f9f9f9;
-  background-color: #111111;
+  color: #ffffff;
+  background-color: #000000;
 }
 .masonry-title, .masonry-description {
   margin: 0;
@@ -53,18 +53,8 @@ body {
 .masonry-description {
   padding: 1.5rem;
   font-size: .75rem;
-  border-top: 1px solid rgba(0, 0, 0, .05);
+  border-top: 1px solid rgba(255, 255, 255, .05);
 }
-
-
-.masonry-button {
-  padding: 1.5rem;
-  font-size: .75rem;
-  border: 50px solid white;
-  
-}
-
-
 .masonry-footer {
   font-size: .75em;
   opacity: .25;
@@ -79,4 +69,28 @@ body {
 }
 .masonry-footer:hover, .masonry-footer:active, .masonry-footer:focus {
   opacity: .75;
+}
+
+
+
+
+
+/* BARRA DE BOTONES */
+
+
+.masonry-bar {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-auto-rows: 2.6rem;
+  width: 100%;
+  text-align: center;
+}
+
+.masonry-button {
+  padding: 0.1rem;
+  font-size: 1.35rem;
+}
+
+.masonry-button:hover{
+  background-color: white;
 }

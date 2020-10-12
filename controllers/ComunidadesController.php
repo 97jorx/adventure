@@ -101,6 +101,7 @@ class ComunidadesController extends Controller
                 $integrantes->usuario_id = $uid;
                 $integrantes->comunidad_id = $model->id;
                 $integrantes->save();
+                return $this->redirect(['index']);
             }
         }
         
@@ -139,7 +140,6 @@ class ComunidadesController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
         return $this->redirect(['index']);
     }
 
