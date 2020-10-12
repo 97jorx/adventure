@@ -145,9 +145,9 @@ class ComunidadesController extends Controller
 
 
     /**
-     * Permite al usuario logueado unirse a la comunidad elegida mediante un botón.
+     * Permite al usuario logueado unirse a la comunidad elegida mediante un botón o salirse.
      * @param id se le pasa el id de la comunidad a la que se quiere unir
-     * @return Comunidades the loaded model
+     * @return json array de opciones.
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUnirse($id)
@@ -194,33 +194,6 @@ class ComunidadesController extends Controller
     }
 
 
-    // /**
-    //  * Permite al usuario logueado salir a la comunidad elegida mediante un botón.
-    //  * @param id se le pasa el id a la comunidad que se quiere salir.
-    //  * @return Comunidades the loaded model.
-    //  * @throws NotFoundHttpException if the model cannot be found.
-    //  */
-    // public function actionSalir($id)
-    // {
-    //     Yii::$app->response->format = Response::FORMAT_JSON;
-    //     $username = !Yii::$app->user->isGuest;
-    //     $uid = Yii::$app->user->id;
-    //     $idexist = Integrantes::find()
-    //     ->where(['comunidad_id' => $id])
-    //     ->andWhere(['usuario_id' => $uid]);
-
-    //     if($idexist->exists()){
-    //         if($username) {
-    //             $idexist->one()->delete();
-    //             Yii::$app->session->setFlash('success', "Has salido correctamente");
-    //             return $this->redirect(['comunidades/index']);  
-    //         } else {
-    //             Yii::$app->session->setFlash('error', "Tienes que estar logueado.");
-    //         }    
-    //     }
-    //     return $this->redirect(['comunidades/index']);
-        
-    // }
 
 
     /**
