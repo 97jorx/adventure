@@ -5,11 +5,10 @@ use yii\helpers\Html;
     use yii\helpers\Url;
 use yii\widgets\LinkPager;
 
-$blogs = $dataProvider->models;
+    $blogs = $dataProvider->models;
     $this->title = 'Blogs';
     $this->params['breadcrumbs'][] = $this->title;
-    // $this->params['breadcrumbs'][] = $blogs[0]->comunidad->denom;
-    
+
 ?>
 </head>
 <body>
@@ -17,9 +16,8 @@ $blogs = $dataProvider->models;
     <div class="row">
       <div class="col-md-8">
         <h1 class="my-4"><?= $this->title?></h1>
-        <!-- <h2><small> $blogs[0]->comunidad->denom; ?></small></h2> -->
-        <?php
-        foreach($dataProvider->models as $model) { ?> 
+        <?php foreach($dataProvider->models as $model) { ?> 
+        <h2><small><?=  $model->comunidad->denom ?></small></h2> 
         <div class="card mb-4">
           <img class="card-img-top img-thumbnail" src="<?= Yii::$app->request->baseUrl.'/uploads/test.jpg'?>" alt="Card image cap">
           <div class="card-body">
