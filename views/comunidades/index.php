@@ -20,13 +20,6 @@ $this->title = "ADVENTURE";
 $this->registerJsFile(Yii::getAlias('@web') . '/js/masonry.js', [
     'depends' => [\yii\web\JqueryAsset::class]
 ]);
-$this->registerJsFile(Yii::getAlias('@web') . '/js/masonry.pkgd.min.js', [
-    'depends' => [\yii\web\JqueryAsset::class]
-]);
-$this->registerJsFile(Yii::getAlias('@web') . '/js/imagesloaded.pkgd.min.js', [
-    'depends' => [\yii\web\JqueryAsset::class]
-]);
-
 
 
 $username = !Yii::$app->user->isGuest;
@@ -39,7 +32,10 @@ $(document).ready(function() {
         $("#myModal").modal('show');
     }
 
-   
+    // $('.masonry').masonry({
+    //     itemSelector: '.masonry-item',
+    //     gutter: 20
+    //   });
      
 });
 
@@ -74,10 +70,11 @@ Yii::$app->formatter->locale = 'es-ES';
         <?php foreach($dataProvider->models as $model) { ?> 
         <div class="masonry-item">
             <div class="masonry-content">
-                <img src="https://picsum.photos/450/325?image=100" alt="Masonry">
+                <?php $fakeimg = "https://picsum.photos/id/".$model->id."0/200/300";  ?>
+                <img src="<?= $fakeimg ?>" alt="Masonry">
                 <h5 class="masonry-title"><b><?= $model->denom  ?></b></h5>
                 <p class="masonry-description"><b><?= $model->descripcion ?></b></p>
-                <p class="masonry-description"><b><?= Yii::$app->formatter->asDate($model->created_at)?></b></p>
+                <p id="r" class="masonry-description"><b><?= Yii::$app->formatter->asDate($model->created_at)?></b></p>
                 <?php $existe = ($model->existeIntegrante($model->id)) ? ('Salir') : ('Unirse'); ?>
                 <?php $unirse = Url::to(['comunidades/unirse', 'id' => $model->id]); ?>
                 <div class="masonry-bar">
@@ -96,9 +93,7 @@ Yii::$app->formatter->locale = 'es-ES';
                                 $('#mensaje').text(data.mensaje);
                                 $('#myModal').modal('show');
                             }).fail(function( data, textStatus, jqXHR ) {
-                                if ( console && console.log ) {
-                                    console.log( 'La solicitud a fallado');
-                                }
+                                console.log('Error de la solicitud.');
                             });"
                     ]); 
                     ?> 

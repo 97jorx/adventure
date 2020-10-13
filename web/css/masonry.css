@@ -11,7 +11,7 @@ body {
 .masonry {
   display: grid;
   grid-template-columns: repeat(1, minmax(100px,1fr));
-  grid-gap: 10px;
+  grid-gap: 50px;
   grid-auto-rows: 0;
 }
 @media only screen and (max-width: 1023px) and (min-width: 768px) {
@@ -29,18 +29,18 @@ body {
   overflow: hidden;
 }
 .masonry-item {
-  filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, .3));
+  filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, .3));
   transition: filter .25s ease-in-out;
 }
 .masonry-item:hover {
-  filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, .3));
+  filter: drop-shadow(5px 15px 15px rgba(0, 0, 0, .3));
 }
 .masonry-content {
   overflow: hidden;
 }
 .masonry-item {
-  color: #ffffff;
-  background-color: #000000;
+  color: black;
+  background-color: white;
 }
 .masonry-title, .masonry-description {
   margin: 0;
@@ -49,12 +49,19 @@ body {
   font-weight: 700;
   font-size: 1.1rem;
   padding: 1rem 1.5rem;
+  color: brown
 }
 .masonry-description {
   padding: 1.5rem;
   font-size: .75rem;
-  border-top: 1px solid rgba(255, 255, 255, .05);
+  border-top: 1px solid black;
+  margin-bottom: 1rem;
 }
+
+#r {
+  color: brown;
+}
+
 .masonry-footer {
   font-size: .75em;
   opacity: .25;
@@ -81,16 +88,20 @@ body {
 .masonry-bar {
   display: grid;
   grid-template-columns: auto auto auto;
-  grid-auto-rows: 2.6rem;
   width: 100%;
   text-align: center;
+  position: absolute;
+  bottom: 0px;
 }
 
 .masonry-button {
-  padding: 0.1rem;
   font-size: 1.35rem;
+  color:white;
+  border-left: 1px white solid;
+  background-color: rgba(0, 0, 0, 0.809);
 }
 
 .masonry-button:hover{
-  background-color: white;
+  color:brown;
+  text-decoration: none;
 }
