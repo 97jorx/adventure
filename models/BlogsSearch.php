@@ -45,9 +45,9 @@ class BlogsSearch extends Blogs
      *
      * @return ActiveDataProvider
      */
-    public function search($params, $busqueda = "") 
+    public function search($params, $actual, $busqueda = "") 
     {
-        $query = Blogs::blogsName();
+        $query = Blogs::blogsName($actual);
 
         // add conditions that should always apply here
 
@@ -84,9 +84,11 @@ class BlogsSearch extends Blogs
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'comunidad_id' => $this->comunidad_id,
+            //'comunidad_id' => $this->comunidad_id,
+            'comunidad_id' => $actual,
             'usuario_id' => $this->usuario_id,
             'created_at' => $this->created_at,
+            
         ]);
 
         $query->orFilterWhere(['ilike', 'titulo', $busqueda])

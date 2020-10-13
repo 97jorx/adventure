@@ -39,16 +39,17 @@ class BlogsController extends Controller
     public function actionIndex()
     {
 
-
         $busqueda = Yii::$app->request->get('busqueda', '');
+        $actual = Yii::$app->request->get('actual');
         $searchModel = new BlogsSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $busqueda);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $actual, $busqueda);
          
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'busqueda' => $busqueda
+            'busqueda' => $busqueda,
+            'actual' => $actual,
         ]);
     }
 

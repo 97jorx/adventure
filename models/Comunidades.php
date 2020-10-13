@@ -51,9 +51,9 @@ class Comunidades extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'denom' => 'Denom',
-            'descripcion' => 'Descripcion',
-            'created_at' => 'Created At',
+            'denom' => 'Título',
+            'descripcion' => 'Cuerpo',
+            'created_at' => 'Fecha de creación',
             'propietario' => 'propietario',
         ];
     }

@@ -8,7 +8,7 @@ use yii\widgets\LinkPager;
 $blogs = $dataProvider->models;
     $this->title = 'Blogs';
     $this->params['breadcrumbs'][] = $this->title;
-    $this->params['breadcrumbs'][] = $blogs[0]->comunidad->denom;
+    // $this->params['breadcrumbs'][] = $blogs[0]->comunidad->denom;
     
 ?>
 </head>
@@ -17,7 +17,7 @@ $blogs = $dataProvider->models;
     <div class="row">
       <div class="col-md-8">
         <h1 class="my-4"><?= $this->title?></h1>
-        <h2><small><?= $blogs[0]->comunidad->denom; ?></small></h2>
+        <!-- <h2><small> $blogs[0]->comunidad->denom; ?></small></h2> -->
         <?php
         foreach($dataProvider->models as $model) { ?> 
         <div class="card mb-4">

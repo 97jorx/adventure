@@ -12,10 +12,8 @@ use yii\helpers\Url;
 /* @var $searchModel app\models\ComunidadesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Comunidades';
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = 'Comunidades';
 
-$this->title = "ADVENTURE";
 
 $this->registerJsFile(Yii::getAlias('@web') . '/js/masonry.js', [
     'depends' => [\yii\web\JqueryAsset::class]
@@ -32,12 +30,7 @@ $(document).ready(function() {
         $("#myModal").modal('show');
     }
 
-    // $('.masonry').masonry({
-    //     itemSelector: '.masonry-item',
-    //     gutter: 20
-    //   });
-     
-});
+s});
 
 EOF;
 
@@ -71,7 +64,7 @@ Yii::$app->formatter->locale = 'es-ES';
         <div class="masonry-item">
             <div class="masonry-content">
                 <?php $fakeimg = "https://picsum.photos/id/".$model->id."0/200/300";  ?>
-                <img src="<?= $fakeimg ?>" alt="Masonry">
+                <?= Html::a(Html::img($fakeimg), ['blogs/index', 'actual' => $model->id]) ?>
                 <h5 class="masonry-title"><b><?= $model->denom  ?></b></h5>
                 <p class="masonry-description"><b><?= $model->descripcion ?></b></p>
                 <p id="r" class="masonry-description"><b><?= Yii::$app->formatter->asDate($model->created_at)?></b></p>
