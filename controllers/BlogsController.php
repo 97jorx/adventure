@@ -8,9 +8,11 @@ use app\models\BlogsSearch;
 use app\models\Integrantes;
 use Symfony\Component\VarDumper\VarDumper;
 use yii\data\ActiveDataProvider;
+use yii\data\ArrayDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 
 /**
  * BlogsController implements the CRUD actions for Blogs model.
@@ -43,10 +45,11 @@ class BlogsController extends Controller
         $actual = Yii::$app->request->get('actual');
         $searchModel = new BlogsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $actual, $busqueda);
-         
+        $model = $dataProvider->getModels();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
+            'model' => $model,
             'dataProvider' => $dataProvider,
             'busqueda' => $busqueda,
             'actual' => $actual,
