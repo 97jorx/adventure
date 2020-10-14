@@ -9,7 +9,12 @@ use yii\widgets\LinkPager;
     $this->title = 'Blogs';
     $this->params['breadcrumbs'][] = $this->title;
 
+
+    
 ?>
+    <p>
+        <?= Html::a('Crear Blog', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
 </head>
 <body>
   <div class="container">

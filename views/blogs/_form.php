@@ -11,9 +11,6 @@ use yii\jui\DatePicker;
 
 ?>
 
-
-
-
 <div class="blogs-form">
 
     <?php $form = ActiveForm::begin(); ?>

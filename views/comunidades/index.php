@@ -44,6 +44,7 @@ Yii::$app->formatter->locale = 'es-ES';
     <h1><?= Html::encode($this->title) ?></h1>
     <p>
         <?= Html::a('Create Comunidades', ['create'], ['class' => 'btn btn-success']) ?>
+       
     </p>
     <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
@@ -90,8 +91,14 @@ Yii::$app->formatter->locale = 'es-ES';
                             });"
                     ]); 
                     ?> 
-                    <?= Html::a('Like', $unirse, ['class' => 'masonry-button']); ?>
-                    <?= Html::a('Ver', ['comunidades/view', 'id' => $model->id], ['class' => 'masonry-button']); ?>
+                    <?= Html::a('', $unirse, ['class' => 'masonry-button glyphicon glyphicon-heart']); ?>
+                    <?= Html::a('', ['comunidades/view', 'id' => $model->id], ['class' => 'masonry-button glyphicon glyphicon-eye-open']); ?>
+                    <?= Html::a('', ['delete', 'id' => $model->id], [ 'class' => 'masonry-button glyphicon glyphicon-trash',
+                                'data' => [
+                                        'confirm' => 'Are you sure you want to delete this item?',
+                                        'method' => 'post',
+                                ],
+                    ]) ?>
                     </div>
                 </div>
             </div>
@@ -103,6 +110,5 @@ Yii::$app->formatter->locale = 'es-ES';
 
 <script src="//unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
 <script src="cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
-
 
 

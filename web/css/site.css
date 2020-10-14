@@ -118,3 +118,7 @@ a.desc:after {
     content: "\f2ed";
     color: var(--danger);
 }
+
+.glyphicon-heart:before{
+    content:"\e005";
+}

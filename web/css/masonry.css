@@ -87,7 +87,7 @@ body {
 
 .masonry-bar {
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: auto auto auto auto;
   width: 100%;
   text-align: center;
   position: absolute;
