@@ -65,7 +65,7 @@ Yii::$app->formatter->locale = 'es-ES';
         <div class="masonry-item">
             <div class="masonry-content">
                 <?php $fakeimg = "https://picsum.photos/id/".$model->id."0/200/300";  ?>
-                <?= Html::a(Html::img($fakeimg), ['blogs/index', 'actual' => $model->id]) ?>
+                <?= Html::a(Html::img($fakeimg), ['blogs/index', 'actual' => $model->id, 'busqueda' => '']) ?>
                 <h5 class="masonry-title"><b><?= $model->denom  ?></b></h5>
                 <p class="masonry-description"><b><?= $model->descripcion ?></b></p>
                 <p id="r" class="masonry-description"><b><?= Yii::$app->formatter->asDate($model->created_at)?></b></p>
@@ -91,7 +91,7 @@ Yii::$app->formatter->locale = 'es-ES';
                             });"
                     ]); 
                     ?> 
-                    <?= Html::a('', $unirse, ['class' => 'masonry-button glyphicon glyphicon-heart']); ?>
+                    <?= Html::a('', $unirse, ['class' => 'masonry-button fa fa-thumbs-up']); ?>
                     <?= Html::a('', ['comunidades/view', 'id' => $model->id], ['class' => 'masonry-button glyphicon glyphicon-eye-open']); ?>
                     <?= Html::a('', ['delete', 'id' => $model->id], [ 'class' => 'masonry-button glyphicon glyphicon-trash',
                                 'data' => [

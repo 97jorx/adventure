@@ -38,21 +38,18 @@ class BlogsController extends Controller
      * Lists all Blogs models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($actual)
     {
 
         $busqueda = Yii::$app->request->get('busqueda', '');
         $actual = Yii::$app->request->get('actual');
         $searchModel = new BlogsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $actual, $busqueda);
-        $model = $dataProvider->getModels();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
-            'model' => $model,
             'dataProvider' => $dataProvider,
             'busqueda' => $busqueda,
-            'actual' => $actual,
         ]);
     }
 

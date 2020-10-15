@@ -49,7 +49,7 @@ use yii\widgets\LinkPager;
           <div class="card-body">
             <?= Html::beginForm(['blogs/index'], 'get') ?>
             <div class="input-group">
-                <?= Html::textInput('busqueda', $busqueda, ['class' => 'form-control']) ?>
+                <?= Html::textInput('busqueda', $busqueda , ['class' => 'form-control']) ?>
               <span class="input-group-append">
                 <?= Html::submitButton('Buscar', ['class' => 'btn btn-primary']) ?>
               </span>

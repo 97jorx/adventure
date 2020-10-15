@@ -82,20 +82,21 @@ class BlogsSearch extends Blogs
         }
 
 
-        $query->andFilterWhere([
-            'id' => $this->id,
-            //'comunidad_id' => $this->comunidad_id,
-            'comunidad_id' => $actual,
-            'usuario_id' => $this->usuario_id,
-            'created_at' => $this->created_at,
+        // $query->andFilterWhere([
+        //     'id' => $this->id,
+        //     //'comunidad_id' => $this->comunidad_id,
+        //     'comunidad_id' => $actual,
+        //     'usuario_id' => $this->usuario_id,
+        //     'created_at' => $this->created_at,
             
-        ]);
+        // ]);
 
         $query->orFilterWhere(['ilike', 'titulo', $busqueda])
             ->orFilterWhere(['ilike', 'blogs.descripcion', $busqueda])
             ->orFilterWhere(['ilike', 'cuerpo', $busqueda])
             ->orFilterWhere(['ilike', 'u.nombre', $busqueda])
-            ->orFilterWhere(['ilike', 'c.denom', $busqueda]);
+            ->orFilterWhere(['ilike', 'c.denom', $busqueda])
+            ->andFilterWhere(['blogs.comunidad_id' => $actual]);
 
         return $dataProvider;
     }

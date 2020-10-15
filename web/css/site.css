@@ -120,5 +120,10 @@ a.desc:after {
 }
 
 .glyphicon-heart:before{
-    content:"\e005";
+    content: '\2665';
+    color: red;
+}
+
+.glyphicon-hand-up:before{
+    content:"\e125";
 }
