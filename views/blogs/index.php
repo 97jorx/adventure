@@ -8,8 +8,7 @@ use yii\widgets\LinkPager;
     $blogs = $dataProvider->models;
     $this->title = 'Blogs';
     $this->params['breadcrumbs'][] = $this->title;
-
-
+    $actual = Yii::$app->request->get('actual');
     
 ?>
     <p>
@@ -47,13 +46,14 @@ use yii\widgets\LinkPager;
         <div class="card my-4">
           <h5 class="card-header">Search</h5>
           <div class="card-body">
-            <?= Html::beginForm(['blogs/index'], 'get') ?>
+            <?= Html::beginForm(['blogs/index', 'actual' => $actual], 'get') ?>
             <div class="input-group">
-                <?= Html::textInput('busqueda', $busqueda , ['class' => 'form-control']) ?>
+                <?= Html::textInput('busqueda', $busqueda, ['class' => 'form-control']) ?>
               <span class="input-group-append">
                 <?= Html::submitButton('Buscar', ['class' => 'btn btn-primary']) ?>
               </span>
-            <?= Html::endForm() ?>
+            <?= Html::endForm();?>
+            
             </div>
           </div>
         </div>
