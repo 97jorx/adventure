@@ -1,15 +1,15 @@
 <?php
 
-use yii\helpers\ArrayHelper;
+use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
-    use yii\helpers\Url;
+use yii\helpers\Url;
 use yii\widgets\LinkPager;
 
     $blogs = $dataProvider->models;
     $this->title = 'Blogs';
+    $this->params['breadcrumbs'][] = ['label' => 'Comunidad', 'url' => ['comunidades/index']];
     $this->params['breadcrumbs'][] = $this->title;
-    $actual = Yii::$app->request->get('actual');
-    
+
 ?>
     <p>
         <?= Html::a('Crear Blog', ['create'], ['class' => 'btn btn-success']) ?>
@@ -44,19 +44,22 @@ use yii\widgets\LinkPager;
       </div>
       <div class="col-md-4">
         <div class="card my-4">
-          <h5 class="card-header">Search</h5>
+          <h5 class="card-header">Búsqueda</h5>
           <div class="card-body">
-            <?= Html::beginForm(['blogs/index', 'actual' => $actual], 'get') ?>
-            <div class="input-group">
-                <?= Html::textInput('busqueda', $busqueda, ['class' => 'form-control']) ?>
-              <span class="input-group-append">
-                <?= Html::submitButton('Buscar', ['class' => 'btn btn-primary']) ?>
-              </span>
-            <?= Html::endForm();?>
-            
-            </div>
+          <?php $form = ActiveForm::begin([
+              'method' => 'get',
+              'action' => ['index'],
+            ]); ?>
+             <div class="input-group">
+             <span class="input-group-append">
+            <?= $form->field($searchModel, 'busqueda')->textInput(['placeholder' => 'Buscar']);?>
+            <?= $form->field($searchModel, 'actual')->hiddenInput(['value'=> $actual])->label(false);?>
+            </span>
+            <?= Html::submitButton('Buscar', ['class' => 'btn btn-info']); ?>
+         <?php $form = ActiveForm::end(); ?>
           </div>
         </div>
+      </div>
         <div class="card my-4">
           <h5 class="card-header">Ordenar por... </h5>
           <div class="card-body">
@@ -77,7 +80,7 @@ use yii\widgets\LinkPager;
         <div class="card my-4">
           <h5 class="card-header">Side Widget</h5>
           <div class="card-body">
-            You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam excepturi deserunt incidunt suscipit, tempore commodi magni quam quis perspiciatis sapiente blanditiis vitae saepe dolor ipsum aperiam, eos alias animi dignissimos.
           </div>
         </div>
       </div>

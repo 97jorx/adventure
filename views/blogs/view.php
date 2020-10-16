@@ -6,6 +6,7 @@
 use yii\helpers\Html;
 
 $this->title = $model->titulo;
+$this->params['breadcrumbs'][] = ['label' => 'Comunidad', 'url' => ['comunidades/index']];
 $this->params['breadcrumbs'][] = ['label' => 'Blogs', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 

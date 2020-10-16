@@ -21,6 +21,8 @@ use Yii;
  */
 class Blogs extends \yii\db\ActiveRecord
 {
+   
+
     /**
      * {@inheritdoc}
      */
@@ -100,16 +102,17 @@ class Blogs extends \yii\db\ActiveRecord
      *
      * @return query
      */
-    public static function blogsName($actual)
+    public static function blogsName()
     {
         return static::find()
             ->select(['blogs.*', '"u".nombre AS usuario', '"c".denom AS comunidad', '"c".descripcion AS eslogan'])
             ->joinWith('comunidad c')
             ->joinWith('usuario u')
-            ->where(['blogs.comunidad_id' => $actual])
             ->groupBy('blogs.id, u.nombre, c.denom, c.descripcion');
     }
   
+
+    
  
 }
 

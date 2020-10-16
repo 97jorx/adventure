@@ -30,7 +30,7 @@ $(document).ready(function() {
         $("#myModal").modal('show');
     }
 
-s});
+});
 
 EOF;
 
@@ -65,7 +65,7 @@ Yii::$app->formatter->locale = 'es-ES';
         <div class="masonry-item">
             <div class="masonry-content">
                 <?php $fakeimg = "https://picsum.photos/id/".$model->id."0/200/300";  ?>
-                <?= Html::a(Html::img($fakeimg), ['blogs/index', 'actual' => $model->id, 'busqueda' => '']) ?>
+                <?= Html::a(Html::img($fakeimg), ['blogs/index', 'actual' => $model->id]) ?>
                 <h5 class="masonry-title"><b><?= $model->denom  ?></b></h5>
                 <p class="masonry-description"><b><?= $model->descripcion ?></b></p>
                 <p id="r" class="masonry-description"><b><?= Yii::$app->formatter->asDate($model->created_at)?></b></p>
@@ -109,6 +109,5 @@ Yii::$app->formatter->locale = 'es-ES';
 
 
 <script src="//unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
-<script src="cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
 
 

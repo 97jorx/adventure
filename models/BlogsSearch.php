@@ -5,12 +5,28 @@ namespace app\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Blogs;
+use Yii;
 
 /**
  * BlogsSearch represents the model behind the search form of `app\models\Blogs`.
  */
 class BlogsSearch extends Blogs
 {
+
+    /**
+     * Variable de búsqueda.
+     *
+     * @var [String]
+     */
+    public $busqueda;
+
+     /**
+     * Variable de búsqueda.
+     *
+     * @var [String]
+     */
+    public $actual;
+
     /**
      * {@inheritdoc}
      */
@@ -19,7 +35,8 @@ class BlogsSearch extends Blogs
         return [
             [['id', 'comunidad_id', 'usuario_id'], 'integer'],
             [['titulo', 'descripcion', 'cuerpo', 'created_at'], 'safe'],
-            [['usuario.nombre', 'comunidad.denom'], 'safe']
+            [['usuario.nombre', 'comunidad.denom'], 'safe'],
+            [['busqueda', 'actual'], 'safe'],
         ];
     }
 
@@ -45,9 +62,9 @@ class BlogsSearch extends Blogs
      *
      * @return ActiveDataProvider
      */
-    public function search($params, $actual, $busqueda = "") 
+    public function search($params) 
     {
-        $query = Blogs::blogsName($actual);
+        $query = Blogs::blogsName();
 
         // add conditions that should always apply here
 
@@ -81,22 +98,30 @@ class BlogsSearch extends Blogs
             return $dataProvider;
         }
 
+        
+        // if($query->exists()){
+            $query->andFilterWhere([
+                'id' => $this->id,
+                'comunidad_id' => $this->actual,
+                'usuario_id' => $this->usuario_id,
+                'created_at' => $this->created_at,
+            ]);
 
-        // $query->andFilterWhere([
-        //     'id' => $this->id,
-        //     //'comunidad_id' => $this->comunidad_id,
-        //     'comunidad_id' => $actual,
-        //     'usuario_id' => $this->usuario_id,
-        //     'created_at' => $this->created_at,
             
-        // ]);
+            $query->orFilterWhere(['ilike', 'titulo', $this->busqueda])
+                ->orFilterWhere(['ilike', 'blogs.descripcion', $this->busqueda])
+                ->orFilterWhere(['ilike', 'cuerpo', $this->busqueda])
+                ->orFilterWhere(['ilike', 'u.nombre', $this->busqueda])
+                ->orFilterWhere(['ilike', 'c.denom', $this->busqueda]);
+           
+            
+        // }
 
-        $query->orFilterWhere(['ilike', 'titulo', $busqueda])
-            ->orFilterWhere(['ilike', 'blogs.descripcion', $busqueda])
-            ->orFilterWhere(['ilike', 'cuerpo', $busqueda])
-            ->orFilterWhere(['ilike', 'u.nombre', $busqueda])
-            ->orFilterWhere(['ilike', 'c.denom', $busqueda])
-            ->andFilterWhere(['blogs.comunidad_id' => $actual]);
+        //  var_dump($query->createCommand()->getRawSql());
+        //  die();
+
+        // var_dump($_SESSION['actual']);
+        // die();
 
         return $dataProvider;
     }
