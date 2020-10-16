@@ -14,14 +14,21 @@ body {
   grid-gap: 50px;
   grid-auto-rows: 0;
 }
+
+@media only screen and (max-width: 767px) and (min-width: 0px) {
+  .masonry {
+    grid-template-columns: repeat(2, minmax(10rem, 1fr));
+  }
+}
+
 @media only screen and (max-width: 1023px) and (min-width: 768px) {
   .masonry {
-    grid-template-columns: repeat(2, minmax(100px,1fr));
+    grid-template-columns: repeat(3, minmax(10rem,1fr));
   }
 }
 @media only screen and (min-width: 1024px) {
   .masonry {
-    grid-template-columns: repeat(4, minmax(100px,1fr));
+    grid-template-columns: repeat(4, minmax(10rem,1fr));
   }
 }
 .masonry-item, .masonry-content {
@@ -78,7 +85,10 @@ body {
   opacity: .75;
 }
 
-
+.masonry-img{
+  width: 100%;
+  height: auto;
+}
 
 
 

@@ -64,8 +64,8 @@ Yii::$app->formatter->locale = 'es-ES';
         <?php foreach($dataProvider->models as $model) { ?> 
         <div class="masonry-item">
             <div class="masonry-content">
-                <?php $fakeimg = "https://picsum.photos/id/".$model->id."0/200/300";  ?>
-                <?= Html::a(Html::img($fakeimg), ['blogs/index', 'actual' => $model->id]) ?>
+                <?php $fakeimg = "https://picsum.photos/200/300?random=".$model->id;  ?>
+                <?= Html::a(Html::img($fakeimg), ['blogs/index', 'actual' => $model->id], ['class' => 'img-fluid']) ?>
                 <h5 class="masonry-title"><b><?= $model->denom  ?></b></h5>
                 <p class="masonry-description"><b><?= $model->descripcion ?></b></p>
                 <p id="r" class="masonry-description"><b><?= Yii::$app->formatter->asDate($model->created_at)?></b></p>
