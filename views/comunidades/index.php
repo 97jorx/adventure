@@ -73,7 +73,6 @@ Yii::$app->formatter->locale = 'es-ES';
                 <p id="r" class="masonry-description"><b><?= Yii::$app->formatter->asDate($model->created_at)?></b></p>
                 <?php $existe = ($model->existeIntegrante($model->id)) ? ('Salir') : ('Unirse'); ?>
                 <?php $unirse = Url::to(['comunidades/unirse', 'id' => $model->id]); ?>
-                </div>
                 <div class="masonry-bar">
                     <?= Html::a($existe, $unirse, ['class' => 'masonry-button',
                         'onclick' =>"
@@ -103,6 +102,7 @@ Yii::$app->formatter->locale = 'es-ES';
                                 ],
                     ]) ?>
                     </div>
+                </div>
             </div>
             <?php } ?>
         </div>

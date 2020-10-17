@@ -125,5 +125,6 @@ a.desc:after {
 }
 
 .glyphicon-hand-up:before{
-    content:"\e125";
+    content:"\f164";
+    color: var(--danger);
 }
