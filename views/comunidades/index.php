@@ -30,6 +30,8 @@ $(document).ready(function() {
         $("#myModal").modal('show');
     }
 
+    
+
 });
 
 EOF;
@@ -65,12 +67,13 @@ Yii::$app->formatter->locale = 'es-ES';
         <div class="masonry-item">
             <div class="masonry-content">
                 <?php $fakeimg = "https://picsum.photos/200/300?random=".$model->id;  ?>
-                <?= Html::a(Html::img($fakeimg), ['blogs/index', 'actual' => $model->id], ['class' => 'img-fluid']) ?>
+                <?= Html::a(Html::img($fakeimg), ['blogs/index', 'actual' => $model->id], ['class' => 'masonry-image']) ?>
                 <h5 class="masonry-title"><b><?= $model->denom  ?></b></h5>
                 <p class="masonry-description"><b><?= $model->descripcion ?></b></p>
                 <p id="r" class="masonry-description"><b><?= Yii::$app->formatter->asDate($model->created_at)?></b></p>
                 <?php $existe = ($model->existeIntegrante($model->id)) ? ('Salir') : ('Unirse'); ?>
                 <?php $unirse = Url::to(['comunidades/unirse', 'id' => $model->id]); ?>
+                </div>
                 <div class="masonry-bar">
                     <?= Html::a($existe, $unirse, ['class' => 'masonry-button',
                         'onclick' =>"
@@ -100,7 +103,6 @@ Yii::$app->formatter->locale = 'es-ES';
                                 ],
                     ]) ?>
                     </div>
-                </div>
             </div>
             <?php } ?>
         </div>
@@ -109,5 +111,6 @@ Yii::$app->formatter->locale = 'es-ES';
 
 
 <script src="//unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+<meta content="width=device-width, initial-scale=1" name="viewport" />
 
 
