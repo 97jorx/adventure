@@ -158,7 +158,6 @@ class UsuariosController extends Controller
         if (($model = Usuarios::findOne($id)) !== null) {
             return $model;
         }
-
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

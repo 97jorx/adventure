@@ -62,11 +62,10 @@ class BlogsSearch extends Blogs
      *
      * @return ActiveDataProvider
      */
-    public function search($params) 
+    public function search($params, $actual) 
     {
-        $query = Blogs::blogsName();
-
-        // add conditions that should always apply here
+        $query = Blogs::blogsName($actual);
+        
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -99,23 +98,18 @@ class BlogsSearch extends Blogs
         }
 
         
-        // if($query->exists()){
-            $query->andFilterWhere([
-                'id' => $this->id,
-                'comunidad_id' => $this->actual,
-                'usuario_id' => $this->usuario_id,
-                'created_at' => $this->created_at,
-            ]);
-
-            
-            $query->orFilterWhere(['ilike', 'titulo', $this->busqueda])
-                ->orFilterWhere(['ilike', 'blogs.descripcion', $this->busqueda])
-                ->orFilterWhere(['ilike', 'cuerpo', $this->busqueda])
-                ->orFilterWhere(['ilike', 'u.nombre', $this->busqueda])
-                ->orFilterWhere(['ilike', 'c.denom', $this->busqueda]);
-           
-            
-        // }
+    
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'usuario_id' => $this->usuario_id,
+            'created_at' => $this->created_at,
+            'comunidad_id' => $this->comunidad_id
+        ]);
+       
+        $query->orFilterWhere(['ilike', 'blogs.descripcion', $this->busqueda])
+        ->orFilterWhere(['ilike', 'cuerpo', $this->busqueda])
+        ->orFilterWhere(['ilike', 'u.nombre', $this->busqueda])
+        ->orFilterWhere(['ilike', 'c.denom', $this->busqueda]);
 
         //  var_dump($query->createCommand()->getRawSql());
         //  die();

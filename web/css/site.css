@@ -119,12 +119,19 @@ a.desc:after {
     color: var(--danger);
 }
 
+
+.glyphicon-hand-up:before{
+    content: "\f164";
+    color: var(--primary);
+}
+
+
 .glyphicon-heart:before{
-    content: '\2665';
-    color: red;
+    content: "\f08a";
 }
 
 .glyphicon-hand-up:before{
-    content:"\f164";
-    color: var(--danger);
+    content: "\f164";
+    color: var(--primary);
 }
+

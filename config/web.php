@@ -17,6 +17,8 @@ $config = [
         'cookieConsentHelper' => [
             'class' => dmstr\cookieconsent\components\CookieConsentHelper::class
         ],
+
+        
         'AdvHelper' => [
             'class' => 'app\components\HelperAdventure'
         ],

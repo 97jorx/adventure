@@ -68,6 +68,8 @@ class Comunidades extends \yii\db\ActiveRecord
         return $this->hasMany(Blogs::class, ['comunidad_id' => 'id'])->inverseOf('comunidad');
     }
 
+   
+
     /**
      * Gets query for [[propietario0]].
      *
@@ -101,4 +103,5 @@ class Comunidades extends \yii\db\ActiveRecord
         ->andWhere(['comunidad_id' => $cid])->exists();        
             
     }
+
 }

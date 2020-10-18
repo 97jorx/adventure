@@ -1,5 +1,6 @@
 <?php
 
+use kartik\icons\Icon;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -12,10 +13,11 @@ use yii\widgets\LinkPager;
 
 ?>
     <p>
-        <?= Html::a('Crear Blog', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Crear Blog', ['create', 'actual' => $actual], ['class' => 'btn btn-success']) ?>
     </p>
 </head>
 <body>
+  
   <div class="container">
     <div class="row">
       <div class="col-md-8">
@@ -46,18 +48,18 @@ use yii\widgets\LinkPager;
         <div class="card my-4">
           <h5 class="card-header">Búsqueda</h5>
           <div class="card-body">
-          <?php $form = ActiveForm::begin([
-              'method' => 'get',
-              'action' => ['index'],
-            ]); ?>
-             <div class="input-group">
-             <span class="input-group-append">
-            <?= $form->field($searchModel, 'busqueda')->textInput(['placeholder' => 'Buscar']);?>
-            <?= $form->field($searchModel, 'actual')->hiddenInput(['value'=> $actual])->label(false);?>
-            </span>
-            <?= Html::submitButton('Buscar', ['class' => 'btn btn-info']); ?>
-         <?php $form = ActiveForm::end(); ?>
-          </div>
+            <?php $form = ActiveForm::begin([
+                'method' => 'get',
+                'action' =>  Url::to(['blogs/index']),
+              ]); ?>
+            <div class="input-group">
+              <?= $form->field($searchModel, 'busqueda')->textInput(['placeholder' => 'Buscar'])->label(false);?>
+              <?= $form->field($searchModel, 'actual')->hiddenInput(['value'=> $actual])->label(false);?>
+            </div>
+            <div class="input-group-append">
+              <?= Html::submitButton(Icon::show('search'), ['class' => 'btn btn-info']); ?>
+            </div>
+            <?php $form = ActiveForm::end(); ?>
         </div>
       </div>
         <div class="card my-4">
@@ -87,3 +89,6 @@ use yii\widgets\LinkPager;
     </div>
   </div>
   
+
+
+

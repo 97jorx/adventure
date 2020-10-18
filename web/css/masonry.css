@@ -9,18 +9,29 @@ body {
   margin-left: auto;
 }
 .masonry {
-  display: grid;
-  grid-template-columns: repeat(1, minmax(100px,1fr));
-  grid-gap: 40px;
+  display: grid; 
+  grid-gap: 60px;
   grid-auto-rows: 0;
-  
 }
 
 @media only screen and (max-width: 767px) and (min-width: 0) {
   .masonry {
-    grid-template-columns: repeat(2, minmax(100px, 1fr));
+    --n:2;
+    --g:45px;
+    grid-auto-flow: column;
+    grid-auto-columns:calc((100% - (var(--n) - 1)*var(--g))/var(--n)); 
+    grid-gap: 10;
+    margin:10px;
+    max-width: 800px;
+    overflow:auto;
   }
-  
+
+  /* .masonry-bar {
+    display: grid;
+    grid-template-columns: auto auto auto; 
+    
+  } */
+
 }
 
 @media only screen and (max-width: 1023px) and (min-width: 768px) {
@@ -72,7 +83,13 @@ body {
   color: brown;
 }
 
+/* IMAGEN  */
 
+
+.masonry-image {
+  width: 100%;
+  
+}
 
 
 
@@ -81,7 +98,7 @@ body {
 
 .masonry-bar {
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: auto auto auto auto; 
   width: 100%;
   text-align: center;
   position: absolute;
@@ -91,7 +108,8 @@ body {
 .masonry-button {
   font-size: 1.25rem;
   color:white;
-  border-left: 1px white solid;
+  border: 1px solid;
+  box-shadow: 1px 1px rgba(0, 0, 0, 0.809);
   background-color: rgba(0, 0, 0, 0.809);
 }
 

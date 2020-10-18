@@ -41,19 +41,23 @@ class BlogsController extends Controller
     public function actionIndex()
     {
        
-        
-        $actual = Yii::$app->request->get('actual'); 
+        // echo "<pre>";
+        // print_r($dataProvider->getModels()[0]);
+        // echo "</pre>";
+        // die();
         $searchModel = new BlogsSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $actual);
-
-        if (isset($_GET["actual"])) {
-            $_SESSION["actual"] = $_GET["actual"];
+        $actual = Yii::$app->request->get('actual');
+        if(isset($_GET['actual']) == null ){
+             throw new NotFoundHttpException('The requested page does not exist.');
         }
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $actual);
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'actual' => $actual,
         ]);
+       $this->redirect(['comunidades/index']);
+        
     }
 
     /**
@@ -79,13 +83,20 @@ class BlogsController extends Controller
 
         $model = new Blogs();
         $uid = Yii::$app->user->id;
+        $actual = Yii::$app->request->get('actual');
         $comunidad = Integrantes::find('comunidad_id')
-        ->where(['usuario_id' => $uid])->one();
+        ->where(['usuario_id' => $uid])
+        ->andWhere(['comunidad_id' => $actual]);
 
-        if (!Yii::$app->user->isGuest) {
-            $model->usuario_id = $uid;
-            $model->comunidad_id = $comunidad->comunidad_id;
+        if($comunidad->exists()){
+            if (!Yii::$app->user->isGuest) {
+                $model->usuario_id = $uid;
+                $model->comunidad_id = $comunidad->one()->comunidad_id;
+            } else {
+                return $this->redirect(['site/login']);
+            }    
         } else {
+            Yii::$app->session->setFlash('error', 'No te has unido a esta comunidad');
             return $this->redirect(['site/login']);
         }
 

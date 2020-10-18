@@ -29,9 +29,6 @@ $(document).ready(function() {
         localStorage.setItem('$user', '$user')
         $("#myModal").modal('show');
     }
-
-    
-
 });
 
 EOF;
@@ -50,15 +47,7 @@ Yii::$app->formatter->locale = 'es-ES';
     </p>
     <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
-<div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog ">
-        <div id="color" class="modal-content">
-            <div class="modal-body">
-                <p id="mensaje" >Bienvenido a ADVENTURE.</p>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <body>
 <div class="masonry-wrapper">
@@ -66,8 +55,10 @@ Yii::$app->formatter->locale = 'es-ES';
         <?php foreach($dataProvider->models as $model) { ?> 
         <div class="masonry-item">
             <div class="masonry-content">
-                <?php $fakeimg = "https://picsum.photos/200/300?random=".$model->id;  ?>
-                <?= Html::a(Html::img($fakeimg), ['blogs/index', 'actual' => $model->id], ['class' => 'masonry-image']) ?>
+                <div class="masonry-image">
+                    <?php $fakeimg = "https://source.unsplash.com/random/300x300?sig=".$model->id;  ?>
+                    <?= Html::a(Html::img($fakeimg), ['blogs/index', 'actual' => $model->id], ['class' => 'card-image']) ?>
+                </div>
                 <h5 class="masonry-title"><b><?= $model->denom  ?></b></h5>
                 <p class="masonry-description"><b><?= $model->descripcion ?></b></p>
                 <p id="r" class="masonry-description"><b><?= Yii::$app->formatter->asDate($model->created_at)?></b></p>
@@ -93,7 +84,7 @@ Yii::$app->formatter->locale = 'es-ES';
                             });"
                     ]); 
                     ?> 
-                    <?= Html::a('', $unirse, ['class' => 'masonry-button fa fa-thumbs-up']); ?>
+                    <?= Html::a('', $unirse, ['class' => 'masonry-button glyphicon glyphicon-heart']); ?>
                     <?= Html::a('', ['comunidades/view', 'id' => $model->id], ['class' => 'masonry-button glyphicon glyphicon-eye-open']); ?>
                     <?= Html::a('', ['delete', 'id' => $model->id], [ 'class' => 'masonry-button glyphicon glyphicon-trash',
                                 'data' => [
@@ -107,10 +98,22 @@ Yii::$app->formatter->locale = 'es-ES';
             <?php } ?>
         </div>
     </div>
+
+
+    <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog ">
+        <div id="color" class="modal-content">
+            <div class="modal-body">
+                <p id="mensaje" >Bienvenido a ADVENTURE.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 
 
-<script src="//unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+
 <meta content="width=device-width, initial-scale=1" name="viewport" />
-
-
+<script src="//unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
