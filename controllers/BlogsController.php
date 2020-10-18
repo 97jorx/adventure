@@ -68,8 +68,11 @@ class BlogsController extends Controller
      */
     public function actionView($id)
     {
+
+        $actual = Yii::$app->request->get('actual');
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'actual' => $actual
         ]);
     }
 
@@ -91,7 +94,7 @@ class BlogsController extends Controller
         if($comunidad->exists()){
             if (!Yii::$app->user->isGuest) {
                 $model->usuario_id = $uid;
-                $model->comunidad_id = $comunidad->one()->comunidad_id;
+                $model->comunidad_id = $actual;
             } else {
                 return $this->redirect(['site/login']);
             }    
@@ -107,6 +110,7 @@ class BlogsController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'actual' => $actual
         ]);
     }
 
