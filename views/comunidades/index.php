@@ -5,6 +5,7 @@ use yii\bootstrap4\Html;
 use yii\grid\GridView;
 use yii\widgets\ListView;
 use kartik\detail\DetailView;
+use kartik\icons\Icon;
 use yii\grid\ActionColumn;
 use yii\helpers\Url;
 
@@ -84,7 +85,7 @@ Yii::$app->formatter->locale = 'es-ES';
                             });"
                     ]); 
                     ?> 
-                    <?= Html::a('', $unirse, ['class' => 'masonry-button glyphicon glyphicon-heart']); ?>
+                    <?= Html::a(Icon::show('heart') , $unirse, ['class' => 'masonry-button']); ?>
                     <?= Html::a('', ['comunidades/view', 'id' => $model->id], ['class' => 'masonry-button glyphicon glyphicon-eye-open']); ?>
                     <?= Html::a('', ['delete', 'id' => $model->id], [ 'class' => 'masonry-button glyphicon glyphicon-trash',
                                 'data' => [
