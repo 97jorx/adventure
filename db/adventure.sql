@@ -85,7 +85,7 @@ CREATE TABLE blogs (
 
 
 
-
+-- TODO RESPONDER COMENTARIOS.
 
 DROP TABLE IF EXISTS comentarios CASCADE;
 
@@ -98,15 +98,6 @@ CREATE TABLE comentarios (
 );
 
 
-
--- DROP TABLE IF EXISTS comentarios CASCADE;
-
--- CREATE TABLE comentarios (
---      id               bigserial     PRIMARY KEY
---    , usuario_id       bigint        NOT NULL REFERENCES usuarios (id)
---    , blog_id          bigint        NOT NULL REFERENCES blogs (id)
---    , texto            varchar(255)    
--- );
 
 
 -- DROP TABLE IF EXISTS seguidores CASCADE;
@@ -153,13 +144,13 @@ CREATE TABLE integrantes (
 
 
 
-INSERT INTO usuarios (username, nombre, apellidos, email, rol, contrasena, poblacion, provincia, pais, foto_perfil, bibliografia, valoracion, usuario_id)
+INSERT INTO usuarios (username, nombre, apellidos, email, rol, fecha_nac, contrasena, poblacion, provincia, pais, foto_perfil, bibliografia, valoracion)
 VALUES (
          'admin', 'admin', 'admin', 
-         'adventure@gmail.com', 'administrador', 
+         'adventure@gmail.com', 'administrador', '1978-06-22',
           crypt('admin', gen_salt('bf', 10)), 
          'Sanlúcar de Barrameda', 'Cádiz' ,'España', 
-         'foto.jpg', 'Soy un administrador de Adventure', 5,1
+         'foto.jpg', 'Soy un administrador de Adventure', 5
         );
 
 INSERT INTO comunidades (denom, descripcion, propietario)
