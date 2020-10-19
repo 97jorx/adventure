@@ -22,34 +22,40 @@ CREATE TABLE usuarios
   , email varchar(255) NOT NULL UNIQUE
   , rol varchar(30) NOT NULL DEFAULT 'estandar'
   , created_at timestamp(0) NOT NULL DEFAULT current_timestamp
+  , fecha_nac timestamp(0) NOT NULL
   , contrasena varchar(255)
   , auth_key varchar(255)
   , poblacion varchar(255)
   , provincia varchar(255)
   , pais varchar(255)
+  , foto_perfil  varchar(255)
+  , bibliografia varchar(255)
+  , valoracion   bigint 
 );
+
+-- DROP TABLE IF EXISTS categorias CASCADE;
+
+
+-- CREATE TABLE categorias (
+--      id           bigserial    PRIMARY KEY
+--      categoria    varchar(25)  NOT NULL
+--);
+
+
 
 DROP TABLE IF EXISTS comunidades CASCADE;
 
 CREATE TABLE comunidades (
     id              bigserial      PRIMARY KEY 
-  , denom           varchar(255)   NOT NULL UNIQUE    
-  , descripcion     text  
-  , created_at      timestamp(0)   NOT NULL DEFAULT current_timestamp
-  , propietario     bigint         NOT NULL REFERENCES usuarios (id)
- -- , galeria_id    bigint         REFERENCES galerias (id)
+   , denom           varchar(255)   NOT NULL UNIQUE    
+   , descripcion     text  
+   , created_at      timestamp(0)   NOT NULL DEFAULT current_timestamp
+   , propietario     bigint         NOT NULL REFERENCES usuarios (id)
+-- , categoria_id    bigint         REFERENCES categorias (id)
+-- , galeria_id      bigint         REFERENCES galerias (id)
 );
 
 
-DROP TABLE IF EXISTS perfiles CASCADE;
-
-CREATE TABLE perfiles (
-     id           bigserial      PRIMARY KEY 
-   , foto_perfil  varchar(255)
-   , bibliografia varchar(255)
-   , valoracion   bigint 
-   , usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
-);
 
 DROP TABLE IF EXISTS blogs CASCADE;
 
@@ -69,11 +75,15 @@ CREATE TABLE blogs (
 -- CREATE TABLE blogs_destacados (
 --      id           bigserial      PRIMARY KEY
 --    , titulo       varchar(255)   
---  --, miniatura    text
+--    , miniatura    text
 --    , likes        bigint
---    , comments     bigint
+--    , total_comments     bigint
 --    , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
 -- );
+
+
+
+
 
 
 
@@ -87,15 +97,34 @@ CREATE TABLE comentarios (
    , created_at         timestamp(0)   NOT NULL DEFAULT current_timestamp
 );
 
--- DROP TABLE IF EXISTS respuestas CASCADE;
 
--- CREATE TABLE respuestas (
+
+-- DROP TABLE IF EXISTS comentarios CASCADE;
+
+-- CREATE TABLE comentarios (
 --      id               bigserial     PRIMARY KEY
---    , user_id_response bigint        NOT NULL REFERENCES usuarios (id)
+--    , usuario_id       bigint        NOT NULL REFERENCES usuarios (id)
+--    , blog_id          bigint        NOT NULL REFERENCES blogs (id)
 --    , texto            varchar(255)    
 -- );
 
 
+-- DROP TABLE IF EXISTS seguidores CASCADE;
+
+-- CREATE TABLE seguidores (
+--      id               bigserial     PRIMARY KEY
+--    , usuario_id       bigint        NOT NULL REFERENCES usuarios (id)
+--    , seguidor         bigint        NOT NULL REFERENCES usuarios (id)
+-- );
+
+
+-- DROP TABLE IF EXISTS seguidores CASCADE;
+
+-- CREATE TABLE bloqueados (
+--      id               bigserial     PRIMARY KEY
+--    , usuario_id       bigint        NOT NULL REFERENCES usuarios (id)
+--    , bloqueado        bigint        NOT NULL REFERENCES usuarios (id)
+-- );
 
 DROP TABLE IF EXISTS integrantes CASCADE;
 
@@ -124,18 +153,14 @@ CREATE TABLE integrantes (
 
 
 
-INSERT INTO usuarios (username, nombre, apellidos, email, rol, contrasena, poblacion, provincia, pais)
-VALUES ('admin', 'admin', 'admin', 'adventure@gmail.com', 'administrador', crypt('admin', gen_salt('bf', 10)), 'Sanlúcar de Barrameda', 'Cádiz' , 'España');
-
-
-INSERT INTO perfiles (foto_perfil, bibliografia, valoracion, usuario_id)
-VALUES ('foto.jpg', 'Soy un administrador de Adventure', 5, 1);
-
-
-
--- INSERT INTO galerias (fotos)  
--- VALUES ('foto.png');
-
+INSERT INTO usuarios (username, nombre, apellidos, email, rol, contrasena, poblacion, provincia, pais, foto_perfil, bibliografia, valoracion, usuario_id)
+VALUES (
+         'admin', 'admin', 'admin', 
+         'adventure@gmail.com', 'administrador', 
+          crypt('admin', gen_salt('bf', 10)), 
+         'Sanlúcar de Barrameda', 'Cádiz' ,'España', 
+         'foto.jpg', 'Soy un administrador de Adventure', 5,1
+        );
 
 INSERT INTO comunidades (denom, descripcion, propietario)
 VALUES ('Escribir es para todos', 
@@ -190,8 +215,4 @@ INSERT INTO integrantes (usuario_id, comunidad_id)
 VALUES (1, 1);         
 
 
-
-
--- INSERT INTO chats (user_id_chat, emisor_response, receptor_response)
--- VALUES (1, "Hola, Soy el administrador", "Hola, soy un usuario")
 
