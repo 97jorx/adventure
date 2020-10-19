@@ -15,17 +15,17 @@ use yii\web\IdentityInterface;
  * @property string $email
  * @property string $rol
  * @property string $created_at
- * @property Comunidades[] $comunidades 
- * @property Integrantes[] $integrantes 
+ * @property string $fecha_nac
  * @property string|null $contrasena
  * @property string|null $auth_key
  * @property string|null $poblacion
  * @property string|null $provincia
  * @property string|null $pais
+ * @property string|null $foto_perfil
+ * @property string|null $bibliografia
  *
  * @property Blogs[] $blogs
  * @property Comentarios[] $comentarios
- * @property Perfiles[] $perfiles
  * @property UsuarioComunidad[] $usuarioComunidads
  */
 class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
@@ -50,10 +50,10 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'nombre', 'apellidos', 'email'], 'required'],
+            [['username', 'nombre', 'apellidos', 'email', 'fecha_nac'], 'required'],
             [['created_at'], 'safe'],
             [['username'], 'string', 'max' => 25],
-            [['nombre', 'apellidos', 'email', 'contrasena', 'auth_key', 'poblacion', 'provincia', 'pais'], 'string', 'max' => 255],
+            [['nombre', 'apellidos', 'email', 'contrasena', 'auth_key', 'poblacion', 'provincia', 'pais', 'foto_perfil', 'bibliografia'], 'string', 'max' => 255],
             [['rol'], 'string', 'max' => 30],
             [['email'], 'unique'],
             [['username'], 'unique'],
@@ -72,6 +72,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
             'username' => 'Username',
             'nombre' => 'Nombre',
             'apellidos' => 'Apellidos',
+            'fecha_nac' => 'Fecha Nac', 
             'email' => 'Email',
             'rol' => 'Rol',
             'created_at' => 'Created At',
@@ -81,6 +82,9 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
             'poblacion' => 'Poblacion',
             'provincia' => 'Provincia',
             'pais' => 'Pais',
+            'foto_perfil' => 'Foto Perfil', 
+            'bibliografia' => 'Bibliografia', 
+            'valoracion' => 'Valoracion', 
         ];
     }
 
@@ -190,17 +194,6 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         return true;
     }
 
-
-    public function afterSave($insert, $changedAttributes)
-    {
-        if ($this->scenario === self::SCENARIO_CREAR) {
-            parent::afterSave($insert, $changedAttributes);
-            $perfiles = new Perfiles;
-            $perfiles->usuario_id = $this->id;
-            return $perfiles->save();
-        }
-            return false;
-    }
 
 
 }
