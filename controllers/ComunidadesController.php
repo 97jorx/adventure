@@ -11,6 +11,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\Url;
 use yii\web\Response;
 
 /**
@@ -194,7 +195,25 @@ class ComunidadesController extends Controller
     }
 
 
-
+/**
+     * Deletes an existing Comunidades model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionAcceso($id)
+    {
+        if(!Yii::$app->user->isGuest){
+            $url = Url::to(['blogs/index']);
+            $model = $this->findModel($id);
+            $_POST['actual'] = $model->id;
+            $this->redirect([$url, 'comunidad' => $model->denom]);
+        } else {
+            return $this->redirect(['site/login']);
+        }
+        
+    }
     
 
 
