@@ -41,12 +41,12 @@ class BlogsController extends Controller
     public function actionIndex()
     {
        
-        // echo "<pre>";
-        // print_r($dataProvider->getModels()[0]);
-        // echo "</pre>";
-        // die();
         $searchModel = new BlogsSearch();
-        $actual = Yii::$app->request->get('actual');
+        
+        if($actual = Yii::$app->request->get('actual')){
+
+        }
+
         if(isset($_GET['actual']) == null ){
              throw new NotFoundHttpException('The requested page does not exist.');
         }
@@ -56,7 +56,6 @@ class BlogsController extends Controller
             'dataProvider' => $dataProvider,
             'actual' => $actual,
         ]);
-       $this->redirect(['comunidades/index']);
         
     }
 

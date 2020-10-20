@@ -80,11 +80,16 @@ class UsuariosController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView()
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $id = Yii::$app->user->identity->id;
+
+        if(!Yii::$app->user->isGuest){
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }
+        return $this->redirect(['site/login']);
     }
 
     /**
@@ -134,14 +139,6 @@ class UsuariosController extends Controller
      */
     public function actionDelete($id)
     {
-        $model = $this->findModel($id);
-        
-        if ($model->getPerfiles()->exists()) {
-            Perfiles::find()->where(['id' => $id])->one()->delete();
-            Yii::$app->session->setFlash('success', 'Se ha borrado el usuario.');
-        } else {
-            Yii::$app->session->setFlash('danger', 'No se ha borrado el usuario.');
-        }
         $this->findModel($id)->delete();
         return $this->redirect(['index']);
     }
