@@ -17,6 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php $form = ActiveForm::begin([
         'id' => 'login-form',
+        'enableAjaxValidation' => true,
         'layout' => 'horizontal',
         'fieldConfig' => [
             'horizontalCssClasses' => ['wrapper' => 'col-sm-5'],
@@ -28,6 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= $form->field($model, 'apellidos')->textInput() ?>
         <?= $form->field($model, 'contrasena')->passwordInput() ?>
         <?= $form->field($model, 'password_repeat')->passwordInput() ?>
+        <?= $form->field($model, 'fecha_nac')->textInput() ?>
         <?= $form->field($model, 'email')->textInput() ?>
         <?= $form->field($model, 'poblacion')->textInput() ?>
         <?= $form->field($model, 'provincia')->textInput() ?>

@@ -13,7 +13,12 @@ use yii\jui\DatePicker;
 
 <div class="blogs-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+
+<?php $form = ActiveForm::begin([
+        'id' => 'blogs-form',
+        'enableAjaxValidation' => true,
+      ]); ?> 
+
 
     <?= $form->field($model, 'titulo')->textInput(['maxlength' => true]) ?>
 
@@ -21,7 +26,7 @@ use yii\jui\DatePicker;
 
     <?= $form->field($model, 'cuerpo')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'comunidad_id')->textInput(['readonly' => true]) ?>
+    <?= $form->field($model, 'comunidad_id')->dropDownList($comunidades, ['disabled' => 'disabled']); ?>
 
 
     <div class="form-group">

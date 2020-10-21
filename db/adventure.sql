@@ -48,7 +48,7 @@ DROP TABLE IF EXISTS comunidades CASCADE;
 CREATE TABLE comunidades (
     id              bigserial      PRIMARY KEY 
    , denom           varchar(255)   NOT NULL UNIQUE    
-   , descripcion     text  
+   , descripcion     text           NOT NULL    
    , created_at      timestamp(0)   NOT NULL DEFAULT current_timestamp
    , propietario     bigint         NOT NULL REFERENCES usuarios (id)
 -- , categoria_id    bigint         REFERENCES categorias (id)
@@ -63,8 +63,8 @@ CREATE TABLE blogs (
      id           bigserial      PRIMARY KEY 
    , titulo       varchar(255)   NOT NULL UNIQUE
 -- , imagen       text
-   , descripcion  varchar(255)
-   , cuerpo       text   
+   , descripcion  varchar(255)   NOT NULL
+   , cuerpo       text           NOT NULL
    , comunidad_id bigint         NOT NULL REFERENCES comunidades (id)
    , usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
    , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
@@ -73,29 +73,35 @@ CREATE TABLE blogs (
  -- DROP TABLE IF EXISTS blogs_destacados CASCADE;
 
 -- CREATE TABLE blogs_destacados (
---      id           bigserial      PRIMARY KEY
---    , titulo       varchar(255)   
---    , miniatura    text
---    , likes        bigint
---    , total_comments     bigint
---    , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
+--      id             bigserial      PRIMARY KEY
+--    , titulo         varchar(255)   
+--    , miniatura      text
+--    , likes          bigint
+--    , total_comments bigint
 -- );
 
 
+ -- DROP TABLE IF EXISTS favoritos CASCADE;
+
+-- CREATE TABLE likes (
+--      id           bigserial      PRIMARY KEY
+--      usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
+--      blog_id      bigint         NOT NULL REFERENCES blogs (id)           
+-- );
 
 
 
 -- TODO RESPONDER COMENTARIOS.
 
-DROP TABLE IF EXISTS comentarios CASCADE;
+-- DROP TABLE IF EXISTS comentarios CASCADE;
 
-CREATE TABLE comentarios (
-     id                 bigserial      PRIMARY KEY 
-   , user_id_comment    bigint         NOT NULL REFERENCES usuarios (id)
-   , id_comment_blog    bigint         NOT NULL REFERENCES blogs (id)
-   , texto              varchar(255)  
-   , created_at         timestamp(0)   NOT NULL DEFAULT current_timestamp
-);
+-- CREATE TABLE comentarios (
+--      id                 bigserial      PRIMARY KEY 
+--    , usuario_id         bigint         NOT NULL REFERENCES usuarios (id)
+--    , blog_id            bigint         NOT NULL REFERENCES blogs (id)+
+--    , texto              varchar(255)   NOT NULL
+--    , created_at         timestamp(0)   NOT NULL DEFAULT current_timestamp
+-- );
 
 
 

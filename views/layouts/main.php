@@ -61,9 +61,8 @@ AppAsset::register($this);
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'Comunidades', 'url' => ['comunidades/index']],
-            ['label' => 'Usuarios', 'url' => ['usuarios/index']],
             [
-                'label'=> 'Usuarios',
+                'label'=>  (!Yii::$app->user->isGuest) ? Yii::$app->user->identity->username : 'Iniciar sesión',
                 'items' => $items,
             ],
         ],

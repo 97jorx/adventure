@@ -12,7 +12,11 @@ use yii\bootstrap4\ActiveForm;
 
 <div class="usuarios-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([ 
+        'id' => 'usuarios-form',
+        'enableAjaxValidation' => true,
+        ]); ?>
+    
 
     <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
 
@@ -21,10 +25,6 @@ use yii\bootstrap4\ActiveForm;
     <?= $form->field($model, 'apellidos')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'rol')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
 
     <?= $form->field($model, 'contrasena')->textInput(['maxlength' => true]) ?>
 
@@ -39,9 +39,6 @@ use yii\bootstrap4\ActiveForm;
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
-
-
-
 
     <?php ActiveForm::end(); ?>
 

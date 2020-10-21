@@ -10,7 +10,10 @@ use yii\bootstrap4\ActiveForm;
 
 <div class="comunidades-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+<?php $form = ActiveForm::begin([
+        'id' => 'comunidades-form',
+        'enableAjaxValidation' => true,
+      ]); ?> 
 
     <?= $form->field($model, 'denom')->textInput(['maxlength' => true]) ?>
 
@@ -18,9 +21,9 @@ use yii\bootstrap4\ActiveForm;
 
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Crear blog', ['class' => 'btn btn-success']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+<?php ActiveForm::end(); ?>
 
 </div>

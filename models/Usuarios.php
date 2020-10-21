@@ -52,6 +52,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         return [
             [['username', 'nombre', 'apellidos', 'email', 'fecha_nac'], 'required'],
             [['created_at'], 'safe'],
+            ['fecha_nac', 'date', 'format' => 'php:Y-m-d'],
             [['username'], 'string', 'max' => 25],
             [['nombre', 'apellidos', 'email', 'contrasena', 'auth_key', 'poblacion', 'provincia', 'pais', 'foto_perfil', 'bibliografia'], 'string', 'max' => 255],
             [['rol'], 'string', 'max' => 30],

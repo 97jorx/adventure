@@ -37,7 +37,7 @@ class Blogs extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['titulo', 'comunidad_id', 'usuario_id'], 'required'],
+            [['titulo', 'comunidad_id', 'cuerpo', 'descripcion', 'usuario_id'], 'required'],
             [['cuerpo'], 'string'],
             [['comunidad_id', 'usuario_id'], 'default', 'value' => null],
             [['comunidad_id', 'usuario_id'], 'integer'],

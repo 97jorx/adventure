@@ -7,10 +7,12 @@ use app\models\Perfiles;
 use Yii;
 use app\models\Usuarios;
 use app\models\UsuariosSearch;
+use yii\bootstrap4\ActiveForm;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\Response;
 
 /**
  * UsuariosController implements the CRUD actions for Usuarios model.
@@ -49,10 +51,16 @@ class UsuariosController extends Controller
     {
         $model = new Usuarios(['scenario' => Usuarios::SCENARIO_CREAR]);
 
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', 'Se ha creado el usuario.');
             return $this->redirect(['site/login']);
         }
+
 
         return $this->render('registrar', [
             'model' => $model,

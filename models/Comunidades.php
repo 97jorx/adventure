@@ -33,7 +33,7 @@ class Comunidades extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['denom', 'propietario'], 'required'],
+            [['denom', 'propietario' ,'descripcion'], 'required'],
             [['descripcion'], 'string'],
             [['created_at'], 'safe'],
             [['propietario'], 'default', 'value' => null],

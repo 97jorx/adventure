@@ -79,6 +79,7 @@ $config = [
                 '/comunidad/<actual:\d+>/blogs/index' => 'blogs/index',
                 '/comunidad/<actual:\d+>/blogs/create' => 'blogs/create',
                 '/comunidad/<actual:\d+>/blogs/update' => 'blogs/update',
+                '/comunidad/<actual:\d+>/blogs/update/<id:\d+>' => 'blogs/search',
             ],
         ],
 

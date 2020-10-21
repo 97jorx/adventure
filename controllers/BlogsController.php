@@ -5,8 +5,10 @@ namespace app\controllers;
 use Yii;
 use app\models\Blogs;
 use app\models\BlogsSearch;
+use app\models\Comunidades;
 use app\models\Integrantes;
 use Symfony\Component\VarDumper\VarDumper;
+use yii\bootstrap4\ActiveForm;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 use yii\filters\AccessControl;
@@ -14,6 +16,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
+use yii\web\Response;
 
 /**
  * BlogsController implements the CRUD actions for Blogs model.
@@ -67,8 +70,7 @@ class BlogsController extends Controller
         $searchModel = new BlogsSearch();
 
         if(isset($_GET['actual']) == null ){
-             
-             throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException('The requested page does not exist.');
         }
         $actual = Yii::$app->request->get('actual');
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $actual);
@@ -105,11 +107,14 @@ class BlogsController extends Controller
     {
 
         $model = new Blogs();
+        
+        
         $uid = Yii::$app->user->id;
         $actual = Yii::$app->request->get('actual');
         $comunidad = Integrantes::find('comunidad_id')
         ->where(['usuario_id' => $uid])
         ->andWhere(['comunidad_id' => $actual]);
+        
 
         if($comunidad->exists()){
             if (!Yii::$app->user->isGuest) {
@@ -123,6 +128,13 @@ class BlogsController extends Controller
             return $this->redirect(['site/login']);
         }
 
+        
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id, 'actual' => $actual]);
         }
@@ -130,7 +142,8 @@ class BlogsController extends Controller
 
         return $this->render('create', [
             'model' => $model,
-            'actual' => $actual
+            'actual' => $actual,
+            'comunidades' => ArrayHelper::map(Comunidades::find()->all(), 'id', 'denom'),
         ]);
     }
 
@@ -145,12 +158,19 @@ class BlogsController extends Controller
     {
         $model = $this->findModel($id);
 
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'comunidades' => ArrayHelper::map(Comunidades::find()->all(), 'id', 'denom')
         ]);
     }
 
@@ -164,7 +184,6 @@ class BlogsController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
         return $this->redirect(['index']);
     }
 
