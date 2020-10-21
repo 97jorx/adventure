@@ -62,9 +62,9 @@ class BlogsSearch extends Blogs
      *
      * @return ActiveDataProvider
      */
-    public function search($params) 
+    public function search($params, $actual) 
     {
-        $query = Blogs::allBlogs();
+        $query = Blogs::blogsName($actual);
         
 
         $dataProvider = new ActiveDataProvider([
@@ -103,8 +103,7 @@ class BlogsSearch extends Blogs
             'id' => $this->id,
             'usuario_id' => $this->usuario_id,
             'created_at' => $this->created_at,
-            'comunidad_id' => $this->comunidad_id,
-            'actual' => $this->actual
+            'comunidad_id' => $this->comunidad_id
         ]);
        
         $query->orFilterWhere(['ilike', 'blogs.descripcion', $this->busqueda])

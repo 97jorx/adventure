@@ -13,7 +13,7 @@ use yii\widgets\LinkPager;
 
 ?>
     <p>
-        <?= Html::a('Crear Blog', ['create', 'actual' => $actual], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Crear Blog', ['create', 'actual' => $actual],  ['class' => 'btn btn-success']) ?>
     </p>
 </head>
 <body>
@@ -32,7 +32,7 @@ use yii\widgets\LinkPager;
           <div class="card-body">
             <h2 class="card-title"><?= Html::encode($model->titulo); ?></h2>
             <p class="card-text"></p>
-            <?= Html::a('Continuar leyendo...', ['blogs/view', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a('Continuar leyendo...', ['blogs/view', 'id' => $model->id, 'actual' => $actual], ['class' => 'btn btn-primary']) ?>
           </div>
           <div class="card-footer text-muted">
             Creado <?= $model->created_at ?> por

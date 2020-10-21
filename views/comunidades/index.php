@@ -58,7 +58,7 @@ Yii::$app->formatter->locale = 'es-ES';
             <div class="masonry-content">
                 <div class="masonry-image">
                     <?php $fakeimg = "https://source.unsplash.com/random/300x300?sig=".$model->id;  ?>
-                    <?= Html::a(Html::img($fakeimg), ['comunidades/acceso', 'id' => $model->id], ['class' => 'card-image']) ?>
+                    <?= Html::a(Html::img($fakeimg), ['blogs/index', 'actual' => $model->id], ['class' => 'card-image']) ?>
                 </div>
                 <h5 class="masonry-title"><b><?= $model->denom  ?></b></h5>
                 <p class="masonry-description"><b><?= $model->descripcion ?></b></p>

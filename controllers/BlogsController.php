@@ -9,6 +9,7 @@ use app\models\Integrantes;
 use Symfony\Component\VarDumper\VarDumper;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -19,7 +20,7 @@ use yii\helpers\ArrayHelper;
  */
 class BlogsController extends Controller
 {
-    /**
+     /**
      * {@inheritdoc}
      */
     public function behaviors()
@@ -31,6 +32,28 @@ class BlogsController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access' => [
+                'class' => AccessControl::class,
+                //'only' => ['index'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                  //      'actions' => ['create', 'update', 'delete'],
+                        'roles' => ['@'],
+                        // 'matchCallback' => function ($rules, $action) {
+                        //     return Yii::$app->user->identity->username === 'admin';
+                        // },
+                    ],
+                    // [
+                    //     'allow' => true,
+                    //     'actions' => ['view', 'delete'],
+                    //     'roles' => ['@'],
+                    //     'matchCallback' => function ($rules, $action) {
+                    //         return Yii::$app->user->identity->username === 'pepe';
+                    //     },
+                    // ],
+                ],
+            ],
         ];
     }
 
@@ -38,18 +61,16 @@ class BlogsController extends Controller
      * Lists all Blogs models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($actual)
     {
        
         $searchModel = new BlogsSearch();
-        
-        if($actual = Yii::$app->request->get('actual')){
-
-        }
 
         if(isset($_GET['actual']) == null ){
+             
              throw new NotFoundHttpException('The requested page does not exist.');
         }
+        $actual = Yii::$app->request->get('actual');
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $actual);
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -103,7 +124,7 @@ class BlogsController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id, 'actual' => $actual]);
         }
 
 
@@ -162,4 +183,24 @@ class BlogsController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+
+    /**
+     * Finds the Blogs model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Blogs the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findBlogs($comunidad_id)
+    {
+        if (($model = Blogs::find(['comunidad_id' => $comunidad_id])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+
+
 }

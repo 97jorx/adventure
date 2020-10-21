@@ -76,9 +76,13 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'home/<comunidad:[-a-zA-Z 0-9]+>' => 'blogs/index',
+                '/comunidad/<actual:\d+>/blogs/index' => 'blogs/index',
+                '/comunidad/<actual:\d+>/blogs/create' => 'blogs/create',
+                '/comunidad/<actual:\d+>/blogs/update' => 'blogs/update',
             ],
         ],
+
+       
         
     ],
     'container' => [

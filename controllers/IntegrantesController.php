@@ -14,7 +14,7 @@ use yii\filters\VerbFilter;
  */
 class IntegrantesController extends Controller
 {
-    /**
+     /**
      * {@inheritdoc}
      */
     public function behaviors()
@@ -24,6 +24,20 @@ class IntegrantesController extends Controller
                 'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::class,
+                //'only' => ['index'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['create', 'update', 'delete'],
+                        'roles' => ['@'],
+                         'matchCallback' => function ($rules, $action) {
+                             return Yii::$app->user->identity->username === 'admin';
+                        },
+                    ],
                 ],
             ],
         ];

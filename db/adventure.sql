@@ -109,7 +109,7 @@ CREATE TABLE comentarios (
 -- );
 
 
--- DROP TABLE IF EXISTS seguidores CASCADE;
+-- DROP TABLE IF EXISTS bloqueados CASCADE;
 
 -- CREATE TABLE bloqueados (
 --      id               bigserial     PRIMARY KEY
