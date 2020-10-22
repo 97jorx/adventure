@@ -41,20 +41,12 @@ class BlogsController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                  //      'actions' => ['create', 'update', 'delete'],
+                        'actions' => ['delete'],
                         'roles' => ['@'],
-                        // 'matchCallback' => function ($rules, $action) {
-                        //     return Yii::$app->user->identity->username === 'admin';
-                        // },
+                         'matchCallback' => function ($rules, $action) {
+                             return Yii::$app->user->identity->username === 'admin';
+                         },
                     ],
-                    // [
-                    //     'allow' => true,
-                    //     'actions' => ['view', 'delete'],
-                    //     'roles' => ['@'],
-                    //     'matchCallback' => function ($rules, $action) {
-                    //         return Yii::$app->user->identity->username === 'pepe';
-                    //     },
-                    // ],
                 ],
             ],
         ];
