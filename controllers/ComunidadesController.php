@@ -137,8 +137,8 @@ class ComunidadesController extends Controller
     }
 
     /**
-     * Deletes an existing Comunidades model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * Borra la comunidad por el id pasado como parametro.
+     * Si se borra correctamente la fila se redireccionará hacia el index.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -200,9 +200,8 @@ class ComunidadesController extends Controller
     }
 
 
-/**
-     * Deletes an existing Comunidades model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
+    /**
+     * Es una accion del controlador que permite acceder a la Comunidad.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -217,7 +216,6 @@ class ComunidadesController extends Controller
         } else {
             return $this->redirect(['site/login']);
         }
-        
     }
     
 

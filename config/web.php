@@ -14,6 +14,8 @@ $config = [
     ],
     'language' => 'es-ES',
     'components' => [
+
+        
         'cookieConsentHelper' => [
             'class' => dmstr\cookieconsent\components\CookieConsentHelper::class
         ],

@@ -24,6 +24,9 @@ class AppAsset extends AssetBundle
         'css/masonry.css',
     ];
     public $js = [
+        'js/imagesloaded.pkgd.js',
+        'js/masonry.js',
+        'js/parsley.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

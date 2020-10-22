@@ -9,6 +9,31 @@ use yii\bootstrap4\ActiveForm;
 
 $this->title = 'Registrar usuario';
 $this->params['breadcrumbs'][] = $this->title;
+
+
+$js = <<< EOF
+$('#email').on('input', function(){
+    $('#email').parsley().validate();
+    // window.ParsleyValidator.addValidator('checkemail', {
+    //   validateString: function(value)
+    //   {
+    //     return $.ajax({
+    //       url:'',
+    //       method:"POST",
+    //       data: data,
+    //       success:function(data)
+    //       {
+    //         return true;
+    //       }
+    //     });
+    //   }
+    // });
+
+  });
+EOF;
+
+$this->registerJs($js);
+
 ?>
 <div class="site-login">
     <h1><?= Html::encode($this->title) ?></h1>
@@ -30,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= $form->field($model, 'contrasena')->passwordInput() ?>
         <?= $form->field($model, 'password_repeat')->passwordInput() ?>
         <?= $form->field($model, 'fecha_nac')->textInput() ?>
-        <?= $form->field($model, 'email')->textInput() ?>
+        <?= $form->field($model, 'email')->textInput(['id' => 'email', 'type' => 'email', 'data-parsley-type' => 'email']) ?>
         <?= $form->field($model, 'poblacion')->textInput() ?>
         <?= $form->field($model, 'provincia')->textInput() ?>
         <?= $form->field($model, 'pais')->textInput() ?>
@@ -41,4 +66,5 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
     <?php ActiveForm::end(); ?>
+    
 </div> 

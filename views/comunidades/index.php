@@ -15,12 +15,6 @@ use yii\helpers\Url;
 
 $this->params['breadcrumbs'][] = 'Comunidades';
 
-
-$this->registerJsFile(Yii::getAlias('@web') . '/js/masonry.js', [
-    'depends' => [\yii\web\JqueryAsset::class]
-]);
-
-
 $username = !Yii::$app->user->isGuest;
 $user = $username ? (Yii::$app->user->identity->username) : (null);
 
@@ -110,11 +104,8 @@ Yii::$app->formatter->locale = 'es-ES';
         </div>
     </div>
 </div>
-
 </body>
 
 
 
-<meta content="width=device-width, initial-scale=1" name="viewport" />
-<script src="//unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
