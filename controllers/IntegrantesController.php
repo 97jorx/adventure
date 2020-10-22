@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Integrantes;
 use app\models\IntegrantesSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -32,7 +33,7 @@ class IntegrantesController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['create', 'update', 'delete'],
+                        'actions' => ['create', 'update', 'delete', 'index'],
                         'roles' => ['@'],
                          'matchCallback' => function ($rules, $action) {
                              return Yii::$app->user->identity->username === 'admin';

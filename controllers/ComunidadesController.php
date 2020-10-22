@@ -37,12 +37,12 @@ class ComunidadesController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index','update', 'create', 'view'],
+                        'actions' => ['index','update', 'create', 'view', 'unirse'],
                         'roles' => ['@'],
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['index', 'create', 'update', 'delete', 'view'],
+                        'actions' => ['index', 'unirse', 'create', 'update', 'delete', 'view'],
                         'roles' => ['@'],
                         'matchCallback' => function ($rules, $action) {
                            return Yii::$app->user->identity->username === 'admin';
@@ -142,7 +142,18 @@ class ComunidadesController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        if ($model->getIntegrantes()->exists()) {
+            Integrantes::find()
+            ->where(['comunidad_id' => $id])
+            ->one()
+            ->delete();
+            $model->delete();    
+            Yii::$app->session->setFlash('success', 'Se ha borrado la comunidad y todos sus usuarios de ella.');
+        } else {
+            Yii::$app->session->setFlash('success', 'No se ha borrado la comunidad.');
+        }
+        
         return $this->redirect(['index']);
     }
 
