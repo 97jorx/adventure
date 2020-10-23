@@ -102,14 +102,14 @@ class Blogs extends \yii\db\ActiveRecord
      *
      * @return query
      */
-    public static function blogsName($actual)
+    public static function blogsName()
     {
 
         return static::find()
             ->select(['blogs.*', '"u".nombre AS usuario', '"c".denom AS comunidad', '"c".descripcion AS eslogan'])
             ->joinWith('comunidad c')
-            ->joinWith('usuario u')
-            ->andWhere(['c.id' => $actual]);
+            ->joinWith('usuario u');
+            
             
     }
   

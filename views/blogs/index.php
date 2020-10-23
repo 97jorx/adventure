@@ -11,12 +11,22 @@ use yii\widgets\LinkPager;
     $this->params['breadcrumbs'][] = ['label' => 'Comunidad', 'url' => ['comunidades/index']];
     $this->params['breadcrumbs'][] = $this->title;
 
+$js = <<< EOT
+$('#form').on('submit',function(){
+  $('#form')
+  .append('<input type="hidden" value="$actual">')
+  .submit();
+}) 
+EOT;    
+
+$this->registerJs($js);
+
 ?>
     <p>
         <?= Html::a('Crear Blog', ['create', 'actual' => $actual],  ['class' => 'btn btn-success']) ?>
     </p>
 </head>
-<body>
+<?php $this->beginBody() ?>
   
   <div class="container">
     <div class="row">
@@ -48,18 +58,14 @@ use yii\widgets\LinkPager;
         <div class="card my-4">
           <h5 class="card-header">Búsqueda</h5>
           <div class="card-body">
-            <?php $form = ActiveForm::begin([
-                'method' => 'get',
-                'action' =>  Url::to(['blogs/index']),
-              ]); ?>
+          <?= Html::beginForm(['blogs/index'], 'get') ?>
             <div class="input-group">
-              <?= $form->field($searchModel, 'busqueda')->textInput(['placeholder' => 'Buscar'])->label(false);?>
-              <?= $form->field($searchModel, 'actual')->hiddenInput(['value'=> $actual])->label(false);?>
-            </div>
-            <div class="input-group-append">
-              <?= Html::submitButton(Icon::show('search'), ['class' => 'btn btn-info']); ?>
-            </div>
-            <?php $form = ActiveForm::end(); ?>
+                <?= Html::textInput('busqueda', $busqueda, ['class' => 'form-control']) ?>
+                <?= Html::textInput('actual', $actual, ['class' => 'form-control', 'hidden' => true]) ?>
+              <span class="input-group-append">
+                <?= Html::submitButton('Buscar', ['class' => 'btn btn-primary']) ?>
+              </span>
+            <?= Html::endForm();?>
         </div>
       </div>
         <div class="card my-4">
@@ -88,7 +94,7 @@ use yii\widgets\LinkPager;
       </div>
     </div>
   </div>
-  
+  <?php $this->beginBody() ?>
 
 
 

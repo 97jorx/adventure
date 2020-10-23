@@ -33,9 +33,17 @@ CREATE TABLE usuarios
   , valoracion   bigint 
 );
 
+
+DROP TABLE IF EXISTS notas CASCADE;
+CREATE TABLE notas (
+     id           bigserial    PRIMARY KEY
+   , nota         integer      NOT NULL
+   , blog_id      bigint       NOT NULL REFERENCES blogs (id)   
+   , usuario_id   bigint       NOT NULL REFERENCES usuarios (id)
+);
+
+
 -- DROP TABLE IF EXISTS categorias CASCADE;
-
-
 -- CREATE TABLE categorias (
 --      id           bigserial    PRIMARY KEY
 --      categoria    varchar(25)  NOT NULL
@@ -68,6 +76,7 @@ CREATE TABLE blogs (
    , comunidad_id bigint         NOT NULL REFERENCES comunidades (id)
    , usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
    , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
+   , visitas      bigint         DEFAULT 0       
 );
 
  -- DROP TABLE IF EXISTS blogs_destacados CASCADE;
@@ -81,13 +90,13 @@ CREATE TABLE blogs (
 -- );
 
 
- -- DROP TABLE IF EXISTS favoritos CASCADE;
+DROP TABLE IF EXISTS favoritos CASCADE;
 
--- CREATE TABLE likes (
---      id           bigserial      PRIMARY KEY
---      usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
---      blog_id      bigint         NOT NULL REFERENCES blogs (id)           
--- );
+CREATE TABLE favoritos (
+     id           bigserial      PRIMARY KEY
+     usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
+     blog_id      bigint         NOT NULL REFERENCES blogs (id)        
+);
 
 
 
@@ -98,7 +107,8 @@ CREATE TABLE blogs (
 -- CREATE TABLE comentarios (
 --      id                 bigserial      PRIMARY KEY 
 --    , usuario_id         bigint         NOT NULL REFERENCES usuarios (id)
---    , blog_id            bigint         NOT NULL REFERENCES blogs (id)+
+--    , blog_id            bigint         NOT NULL REFERENCES blogs (id)
+--    , reply_id           bigint         NOT NULL REFERENCES comentarios (id)
 --    , texto              varchar(255)   NOT NULL
 --    , created_at         timestamp(0)   NOT NULL DEFAULT current_timestamp
 -- );
@@ -142,10 +152,6 @@ CREATE TABLE integrantes (
 --    , emisor_response   text
 --    , receptor_response text  
 -- );
-
-
-
-
 
 
 

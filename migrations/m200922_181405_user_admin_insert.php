@@ -23,6 +23,9 @@ class m200922_181405_user_admin_insert extends Migration
             'poblacion' => 'Sanlúcar',
             'provincia' => 'Cádiz',
             'pais' => 'España',
+            'foto_perfil' => 'foto.jpg',
+            'bibliografia' => 'Soy el administrador de Adventure',
+            'valoracion' => 5,
         ]);
     }
 

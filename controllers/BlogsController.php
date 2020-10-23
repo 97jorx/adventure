@@ -61,20 +61,22 @@ class BlogsController extends Controller
      * Lists all Blogs models.
      * @return mixed
      */
-    public function actionIndex($actual)
+    public function actionIndex()
     {
        
         $searchModel = new BlogsSearch();
-
         if(isset($_GET['actual']) == null ){
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+        
+        $busqueda = Yii::$app->request->get('busqueda', '');
         $actual = Yii::$app->request->get('actual');
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $actual);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $busqueda, $actual);
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'actual' => $actual,
+            'busqueda' => $busqueda,
         ]);
         
     }
@@ -104,8 +106,6 @@ class BlogsController extends Controller
     {
 
         $model = new Blogs();
-        
-        
         $uid = Yii::$app->user->id;
         $actual = Yii::$app->request->get('actual');
         $comunidad = Integrantes::find('comunidad_id')

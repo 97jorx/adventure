@@ -13,19 +13,8 @@ use Yii;
 class BlogsSearch extends Blogs
 {
 
-    /**
-     * Variable de búsqueda.
-     *
-     * @var [String]
-     */
-    public $busqueda;
-
-     /**
-     * Variable de búsqueda.
-     *
-     * @var [String]
-     */
-    public $actual;
+  
+    
 
     /**
      * {@inheritdoc}
@@ -36,7 +25,7 @@ class BlogsSearch extends Blogs
             [['id', 'comunidad_id', 'usuario_id'], 'integer'],
             [['titulo', 'descripcion', 'cuerpo', 'created_at'], 'safe'],
             [['usuario.nombre', 'comunidad.denom'], 'safe'],
-            [['busqueda', 'actual'], 'safe'],
+            [['busqueda'], 'safe'],
         ];
     }
 
@@ -62,11 +51,11 @@ class BlogsSearch extends Blogs
      *
      * @return ActiveDataProvider
      */
-    public function search($params, $actual) 
+    public function search($params, $busqueda, $actual) 
     {
-        $query = Blogs::blogsName($actual);
         
-
+        $query = Blogs::blogsName();
+       
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
@@ -106,17 +95,20 @@ class BlogsSearch extends Blogs
             'comunidad_id' => $this->comunidad_id
         ]);
        
-        $query->orFilterWhere(['ilike', 'blogs.descripcion', $this->busqueda])
-        ->orFilterWhere(['ilike', 'cuerpo', $this->busqueda])
-        ->orFilterWhere(['ilike', 'u.nombre', $this->busqueda])
-        ->orFilterWhere(['ilike', 'c.denom', $this->busqueda]);
+        $query->orFilterWhere(['ilike', 'blogs.descripcion', $busqueda])
+        ->orFilterWhere(['ilike', 'cuerpo', $busqueda])
+        ->orFilterWhere(['ilike', 'titulo', $busqueda])
+        ->orFilterWhere(['ilike', 'u.nombre', $busqueda])
+        ->orFilterWhere(['ilike', 'c.denom', $busqueda]);
+        
 
-        //  var_dump($query->createCommand()->getRawSql());
-        //  die();
+       
 
         // var_dump($_SESSION['actual']);
         // die();
-
+        $query->andWhere(['blogs.comunidad_id' => $actual]);
+        // var_dump($query->createCommand()->getRawSql());
+        // die();
         return $dataProvider;
     }
 }
