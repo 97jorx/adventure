@@ -11,16 +11,8 @@ use yii\widgets\LinkPager;
     $this->params['breadcrumbs'][] = ['label' => 'Comunidad', 'url' => ['comunidades/index']];
     $this->params['breadcrumbs'][] = $this->title;
 
-$js = <<< EOT
-$('#form').on('submit',function(){
-  $('#form')
-  .append('<input type="hidden" value="$actual">')
-  .submit();
-}) 
-EOT;    
-
-$this->registerJs($js);
-
+    // var_dump($busqueda);
+    // die();
 ?>
     <p>
         <?= Html::a('Crear Blog', ['create', 'actual' => $actual],  ['class' => 'btn btn-success']) ?>
@@ -58,7 +50,9 @@ $this->registerJs($js);
         <div class="card my-4">
           <h5 class="card-header">Búsqueda</h5>
           <div class="card-body">
-          <?= Html::beginForm(['blogs/index'], 'get') ?>
+           <!-- Html::textInput('busqueda', $busqueda, ['class' => 'form-control', 'hidden' => true]) ?>
+           ///  $url = Url::To(['blogs/index', 'busqueda' => $busqueda, 'actual' => $actual]);?>  -->
+            <?= Html::beginForm([$url]) ?>
             <div class="input-group">
                 <?= Html::textInput('busqueda', $busqueda, ['class' => 'form-control']) ?>
                 <?= Html::textInput('actual', $actual, ['class' => 'form-control', 'hidden' => true]) ?>

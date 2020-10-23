@@ -98,8 +98,6 @@ CREATE TABLE favoritos (
      blog_id      bigint         NOT NULL REFERENCES blogs (id)        
 );
 
-
-
 -- TODO RESPONDER COMENTARIOS.
 
 -- DROP TABLE IF EXISTS comentarios CASCADE;
@@ -112,8 +110,6 @@ CREATE TABLE favoritos (
 --    , texto              varchar(255)   NOT NULL
 --    , created_at         timestamp(0)   NOT NULL DEFAULT current_timestamp
 -- );
-
-
 
 
 -- DROP TABLE IF EXISTS seguidores CASCADE;
@@ -210,9 +206,13 @@ VALUES ('3Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whil
 
 
 
+INSERT INTO notas (nota, usuario_id, blog_id)
+VALUES (5, 1, 1);         
 
-INSERT INTO comentarios (user_id_comment, id_comment_blog, texto)
-VALUES (1, 1, 'Es una maravilla, me encanta'); 
+
+INSERT INTO favoritos (usuario_id, blog_id)
+VALUES (1, 1);         
+
 
 INSERT INTO integrantes (usuario_id, comunidad_id)
 VALUES (1, 1);         

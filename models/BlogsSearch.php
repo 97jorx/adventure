@@ -100,12 +100,8 @@ class BlogsSearch extends Blogs
         ->orFilterWhere(['ilike', 'titulo', $busqueda])
         ->orFilterWhere(['ilike', 'u.nombre', $busqueda])
         ->orFilterWhere(['ilike', 'c.denom', $busqueda]);
-        
-
-       
 
         // var_dump($_SESSION['actual']);
-        // die();
         $query->andWhere(['blogs.comunidad_id' => $actual]);
         // var_dump($query->createCommand()->getRawSql());
         // die();

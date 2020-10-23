@@ -109,8 +109,6 @@ class Blogs extends \yii\db\ActiveRecord
             ->select(['blogs.*', '"u".nombre AS usuario', '"c".denom AS comunidad', '"c".descripcion AS eslogan'])
             ->joinWith('comunidad c')
             ->joinWith('usuario u');
-            
-            
     }
   
 
