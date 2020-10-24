@@ -15,32 +15,26 @@ DROP TABLE IF EXISTS usuarios CASCADE;
 
 CREATE TABLE usuarios
  (
-    id bigserial PRIMARY KEY
-  , username varchar(25) NOT NULL UNIQUE
-  , nombre varchar(255) NOT NULL
-  , apellidos varchar(255) NOT NULL
-  , email varchar(255) NOT NULL UNIQUE
-  , rol varchar(30) NOT NULL DEFAULT 'estandar'
-  , created_at timestamp(0) NOT NULL DEFAULT current_timestamp
-  , fecha_nac timestamp(0) NOT NULL
-  , contrasena varchar(255)
-  , auth_key varchar(255)
-  , poblacion varchar(255)
-  , provincia varchar(255)
-  , pais varchar(255)
-  , foto_perfil  varchar(255)
-  , bibliografia varchar(255)
-  , valoracion   bigint 
+     id bigserial PRIMARY KEY
+   , username varchar(25) NOT NULL UNIQUE
+   , nombre varchar(255) NOT NULL
+   , apellidos varchar(255) NOT NULL
+   , email varchar(255) NOT NULL UNIQUE
+   , rol varchar(30) NOT NULL DEFAULT 'estandar'
+   , created_at timestamp(0) NOT NULL DEFAULT current_timestamp
+   , fecha_nac timestamp(0) NOT NULL
+   , contrasena varchar(255)
+   , auth_key varchar(255)
+   , poblacion varchar(255)
+   , provincia varchar(255)
+   , pais varchar(255)
+   , foto_perfil  varchar(255)
+   , bibliografia varchar(255)
+   , valoracion   bigint 
 );
 
 
-DROP TABLE IF EXISTS notas CASCADE;
-CREATE TABLE notas (
-     id           bigserial    PRIMARY KEY
-   , nota         integer      NOT NULL
-   , blog_id      bigint       NOT NULL REFERENCES blogs (id)   
-   , usuario_id   bigint       NOT NULL REFERENCES usuarios (id)
-);
+
 
 
 -- DROP TABLE IF EXISTS categorias CASCADE;
@@ -54,7 +48,7 @@ CREATE TABLE notas (
 DROP TABLE IF EXISTS comunidades CASCADE;
 
 CREATE TABLE comunidades (
-    id              bigserial      PRIMARY KEY 
+     id              bigserial      PRIMARY KEY 
    , denom           varchar(255)   NOT NULL UNIQUE    
    , descripcion     text           NOT NULL    
    , created_at      timestamp(0)   NOT NULL DEFAULT current_timestamp
@@ -79,23 +73,41 @@ CREATE TABLE blogs (
    , visitas      bigint         DEFAULT 0       
 );
 
+
+
+DROP TABLE IF EXISTS notas CASCADE;
+CREATE TABLE notas (
+     id           bigserial    PRIMARY KEY
+   , nota         integer      NOT NULL
+   , blog_id      bigint       NOT NULL REFERENCES blogs (id)   
+   , usuario_id   bigint       NOT NULL REFERENCES usuarios (id)
+);
+
  -- DROP TABLE IF EXISTS blogs_destacados CASCADE;
 
 -- CREATE TABLE blogs_destacados (
---      id             bigserial      PRIMARY KEY
---    , titulo         varchar(255)   
---    , miniatura      text
---    , likes          bigint
---    , total_comments bigint
+--    id             bigserial      PRIMARY KEY
+-- , titulo         varchar(255)   
+-- , miniatura      text
+-- , likes          bigint
+-- , total_comments bigint
 -- );
 
 
-DROP TABLE IF EXISTS favoritos CASCADE;
+DROP TABLE IF EXISTS favblogs CASCADE;
 
-CREATE TABLE favoritos (
+CREATE TABLE favblogs (
      id           bigserial      PRIMARY KEY
-     usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
-     blog_id      bigint         NOT NULL REFERENCES blogs (id)        
+   , usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
+   , blog_id      bigint         NOT NULL REFERENCES blogs (id)        
+);
+
+DROP TABLE IF EXISTS favcomunidades CASCADE;
+
+CREATE TABLE favcomunidades (
+     id           bigserial      PRIMARY KEY
+   , usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
+   , comunidad_id bigint         NOT NULL REFERENCES blogs (id)        
 );
 
 -- TODO RESPONDER COMENTARIOS.
@@ -103,12 +115,12 @@ CREATE TABLE favoritos (
 -- DROP TABLE IF EXISTS comentarios CASCADE;
 
 -- CREATE TABLE comentarios (
---      id                 bigserial      PRIMARY KEY 
---    , usuario_id         bigint         NOT NULL REFERENCES usuarios (id)
---    , blog_id            bigint         NOT NULL REFERENCES blogs (id)
---    , reply_id           bigint         NOT NULL REFERENCES comentarios (id)
---    , texto              varchar(255)   NOT NULL
---    , created_at         timestamp(0)   NOT NULL DEFAULT current_timestamp
+--   id                 bigserial      PRIMARY KEY 
+-- , usuario_id         bigint         NOT NULL REFERENCES usuarios (id)
+-- , blog_id            bigint         NOT NULL REFERENCES blogs (id)
+-- , reply_id           bigint         NOT NULL REFERENCES comentarios (id)
+-- , texto              varchar(255)   NOT NULL
+-- , created_at         timestamp(0)   NOT NULL DEFAULT current_timestamp
 -- );
 
 
@@ -116,8 +128,8 @@ CREATE TABLE favoritos (
 
 -- CREATE TABLE seguidores (
 --      id               bigserial     PRIMARY KEY
---    , usuario_id       bigint        NOT NULL REFERENCES usuarios (id)
---    , seguidor         bigint        NOT NULL REFERENCES usuarios (id)
+-- , usuario_id       bigint        NOT NULL REFERENCES usuarios (id)
+-- , seguidor         bigint        NOT NULL REFERENCES usuarios (id)
 -- );
 
 
@@ -125,8 +137,8 @@ CREATE TABLE favoritos (
 
 -- CREATE TABLE bloqueados (
 --      id               bigserial     PRIMARY KEY
---    , usuario_id       bigint        NOT NULL REFERENCES usuarios (id)
---    , bloqueado        bigint        NOT NULL REFERENCES usuarios (id)
+-- , usuario_id       bigint        NOT NULL REFERENCES usuarios (id)
+-- , bloqueado        bigint        NOT NULL REFERENCES usuarios (id)
 -- );
 
 DROP TABLE IF EXISTS integrantes CASCADE;
@@ -144,9 +156,9 @@ CREATE TABLE integrantes (
 
 -- CREATE TABLE chats (
 --      id                bigserial PRIMARY KEY 
---    , user_id_chat      bigint    NOT NULL REFERENCES noticias (id)
---    , emisor_response   text
---    , receptor_response text  
+--  , user_id_chat      bigint    NOT NULL REFERENCES noticias (id)
+--  , emisor_response   text
+--  , receptor_response text  
 -- );
 
 
@@ -210,8 +222,11 @@ INSERT INTO notas (nota, usuario_id, blog_id)
 VALUES (5, 1, 1);         
 
 
-INSERT INTO favoritos (usuario_id, blog_id)
-VALUES (1, 1);         
+INSERT INTO favblogs (usuario_id, blog_id)
+VALUES (1, 1);    
+
+INSERT INTO favcomunidades (usuario_id, comunidad_id)
+VALUES (1, 1);    
 
 
 INSERT INTO integrantes (usuario_id, comunidad_id)
