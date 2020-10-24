@@ -42,12 +42,15 @@ class BlogsController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index','update', 'create', 'view'],
+                        'actions' => ['index','update', 'create', 'view', 'like'],
                         'roles' => ['@'],
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['index', 'create', 'update', 'delete', 'view'],
+                        'actions' => [
+                            'index', 'create',
+                            'update', 'delete', 
+                            'view', 'like'],
                         'roles' => ['@'],
                         'matchCallback' => function ($rules, $action) {
                            return Yii::$app->user->identity->username === 'admin';
@@ -90,7 +93,6 @@ class BlogsController extends Controller
      */
     public function actionView($id)
     {
-
         
         $actual = Yii::$app->request->get('actual');
         return $this->render('view', [
@@ -197,7 +199,7 @@ class BlogsController extends Controller
             $usuarioid = Yii::$app->user->id;
             $haslike = FavBlogs::find()
             ->where([
-                'libro_id' => $id,
+                'blog_id' => $id,
                 'usuario_id' => $usuarioid
             ])->exists();
     
@@ -210,7 +212,7 @@ class BlogsController extends Controller
          * @param integer $libroid es el ID del libro.
          * @param integer $lectorid es el ID del lector actual.
          */
-        public function actionFavblog()
+        public function actionLike()
         {
             Yii::$app->response->format = Response::FORMAT_JSON;
             $usuarioid = null;

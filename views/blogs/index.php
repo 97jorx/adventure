@@ -36,9 +36,12 @@ use yii\widgets\LinkPager;
             <p class="card-text"></p>
             <?= Html::a('Continuar leyendo...', ['blogs/view', 'id' => $model->id, 'actual' => $actual], ['class' => 'btn btn-primary']) ?>
           </div>
-          <div class="card-footer text-muted">
-            Creado <?= $model->created_at ?> por
+          <div class="card-footer text-muted ml-4">
+            Creado <?= Yii::$app->formatter->asDate($model->created_at) ?> por
             <a href="#"><?= $model->usuario->nombre ?></a>
+            <?php $like = Url::to(['blogs/like']); ?>
+            <span class="ml-4"><?=$model->favs ?></span>
+            <?= Icon::show('hand-up', ['framework' => Icon::BSG]) ?> 
           </div>
         </div>
         <?php $index++;} ?>
@@ -56,7 +59,7 @@ use yii\widgets\LinkPager;
                 <?= Html::textInput('busqueda', $busqueda, ['class' => 'form-control']) ?>
                 <?= Html::textInput('actual', $actual, ['class' => 'form-control', 'hidden' => true]) ?>
               <span class="input-group-append">
-                <?= Html::submitButton('Buscar', ['class' => 'btn btn-primary']) ?>
+                <?= Html::submitButton(Icon::show('search'), ['class' => 'btn btn-primary']) ?>
               </span>
             <?= Html::endForm();?>
         </div>

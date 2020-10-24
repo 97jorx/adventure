@@ -3,12 +3,15 @@
 /* @var $this yii\web\View */
 /* @var $model app\models\Blogs */
 
+use kartik\icons\Icon;
 use yii\helpers\Html;
 
 $this->title = $model->titulo;
 $this->params['breadcrumbs'][] = ['label' => 'Comunidad', 'url' => ['comunidades/index']];
 $this->params['breadcrumbs'][] = ['label' => 'Blogs', 'url' => ['index', 'actual' => $actual]];
 $this->params['breadcrumbs'][] = $this->title;
+
+
 
 ?>
 <div class="blogs-view">
@@ -34,6 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </p>
         <hr>
         <p>Posteado <?= $model->created_at?></p>
+        <p> <?= Html::a($model->favs.Icon::show('hand-up', ['class' => 'fa fa-thumbs-o-up', 'framework' => Icon::FAS] ) , $like); ?> </p>
         <hr>
         <img class="img-fluid rounded" src="<?php echo Yii::$app->request->baseUrl.'/uploads/test.jpg'?>" alt="">
         <hr>
