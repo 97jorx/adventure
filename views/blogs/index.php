@@ -18,7 +18,7 @@ use yii\widgets\LinkPager;
         <?= Html::a('Crear Blog', ['create', 'actual' => $actual],  ['class' => 'btn btn-success']) ?>
     </p>
 </head>
-<?php $this->beginBody() ?>
+
   
   <div class="container">
     <div class="row">
@@ -73,6 +73,9 @@ use yii\widgets\LinkPager;
                   <li>
                   <?= Yii::$app->AdvHelper->ordenarBlog($dataProvider, 'created_at', 'Fecha'); ?>
                   </li>
+                  <li>
+                  <?= Yii::$app->AdvHelper->ordenarBlog($dataProvider, 'favs', 'Favoritos'); ?>  
+                  </li> 
                 </ul>
               </div>
             </div>
@@ -87,7 +90,7 @@ use yii\widgets\LinkPager;
       </div>
     </div>
   </div>
-  <?php $this->beginBody() ?>
+  
 
 
 

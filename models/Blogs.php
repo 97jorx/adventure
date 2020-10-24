@@ -34,7 +34,7 @@ use Yii;
 class Blogs extends \yii\db\ActiveRecord
 {
    
-
+    private $_favs = null;
     /**
      * {@inheritdoc}
      */
@@ -119,15 +119,7 @@ class Blogs extends \yii\db\ActiveRecord
         return $this->hasMany(FavBlogs::class, ['blog_id' => 'id'])->inverseOf('blog');
     }
 
-    /**
-     * Gets query for [[Favcomunidades]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getFavcomunidades()
-    {
-        return $this->hasMany(Favcomunidades::class, ['comunidad_id' => 'id'])->inverseOf('comunidad');
-    }
+   
 
 
     /**
@@ -139,6 +131,21 @@ class Blogs extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Notas::class, ['blog_id' => 'id'])->inverseOf('blog');
     }
+
+
+
+    public function setFavs($favs) {
+        $this->_favs = $favs;
+    }
+
+    public function getFavs()
+    {
+        if ($this->_favs === null && !$this->isNewRecord) {
+            $this->setFavs($this->getFavblogs()->count());
+        }
+        return $this->_favs;
+    }
+
 
     /**
      * Consulta para mostrar Comunidad por su nombre 
@@ -154,12 +161,13 @@ class Blogs extends \yii\db\ActiveRecord
                 'blogs.*', 
                 '"u".nombre AS usuario', 
                 '"c".denom AS comunidad', 
-                '"c".descripcion AS eslogan, 
-                COUNT(f.id) AS favs'
+                '"c".descripcion AS eslogan', 
+                'COUNT(f.id) AS favs'
              ])
             ->joinWith('comunidad c')
             ->joinWith('usuario u')
-            ->joinWith('favblogs f');
+            ->joinWith('favblogs f')
+            ->groupBy('blogs.id, u.nombre, c.denom, c.descripcion');
     }
   
 

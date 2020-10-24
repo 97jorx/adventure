@@ -22,7 +22,7 @@ class BlogsSearch extends Blogs
     public function rules()
     {
         return [
-            [['id', 'comunidad_id', 'usuario_id'], 'integer'],
+            [['id', 'comunidad_id', 'usuario_id', 'favs'], 'integer'],
             [['titulo', 'descripcion', 'cuerpo', 'created_at'], 'safe'],
             [['usuario.nombre', 'comunidad.denom'], 'safe'],
             [['busqueda'], 'safe'],
@@ -41,7 +41,10 @@ class BlogsSearch extends Blogs
 
     public function attributes()
     {
-        return array_merge(parent::attributes(), ['usuario.nombre', 'comunidad.denom']);
+        return array_merge(parent::attributes(), [
+                'usuario.nombre',
+                'comunidad.denom',
+            ]);
     }
 
     /**
@@ -79,9 +82,9 @@ class BlogsSearch extends Blogs
             'desc' => ['c.denom' => SORT_DESC],
         ];
 
-        $dataProvider->sort->attributes['comunidad.denom'] = [
-            'asc' => ['c.denom' => SORT_ASC],
-            'desc' => ['c.denom' => SORT_DESC],
+        $dataProvider->sort->attributes['favs'] = [
+            'asc' => ['COUNT(f.id)' => SORT_ASC],
+            'desc' => ['COUNT(f.id)' => SORT_DESC],
         ];
 
         $this->load($params);
@@ -108,6 +111,7 @@ class BlogsSearch extends Blogs
         // var_dump($_SESSION['actual']);
         $query->andWhere(['blogs.comunidad_id' => $actual]);
         // var_dump($query->createCommand()->getRawSql());
+        // var_dump($dataProvider);
         // die();
         return $dataProvider;
     }
