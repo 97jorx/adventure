@@ -81,3 +81,8 @@ body {
 .masonry-footer:hover, .masonry-footer:active, .masonry-footer:focus {
   opacity: .75;
 }
+
+.responsive {
+  width: 100%;
+  height: auto;
+}

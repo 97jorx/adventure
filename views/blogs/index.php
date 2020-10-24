@@ -50,9 +50,8 @@ use yii\widgets\LinkPager;
         <div class="card my-4">
           <h5 class="card-header">Búsqueda</h5>
           <div class="card-body">
-           <!-- Html::textInput('busqueda', $busqueda, ['class' => 'form-control', 'hidden' => true]) ?>
-           ///  $url = Url::To(['blogs/index', 'busqueda' => $busqueda, 'actual' => $actual]);?>  -->
-            <?= Html::beginForm([$url]) ?>
+            <!-- $url = Url::To(['blogs/index', 'busqueda' => $busqueda, 'actual' => $actual]);?> -->
+            <?= Html::beginForm(['blogs/index'], 'get') ?>
             <div class="input-group">
                 <?= Html::textInput('busqueda', $busqueda, ['class' => 'form-control']) ?>
                 <?= Html::textInput('actual', $actual, ['class' => 'form-control', 'hidden' => true]) ?>

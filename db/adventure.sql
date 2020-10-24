@@ -23,7 +23,7 @@ CREATE TABLE usuarios
    , rol varchar(30) NOT NULL DEFAULT 'estandar'
    , created_at timestamp(0) NOT NULL DEFAULT current_timestamp
    , fecha_nac timestamp(0) NOT NULL
-   , contrasena varchar(255)
+   , contrasena varchar(255) NOT NULL
    , auth_key varchar(255)
    , poblacion varchar(255)
    , provincia varchar(255)

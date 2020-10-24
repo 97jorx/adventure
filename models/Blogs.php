@@ -5,19 +5,31 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "blogs".
+ * This is the model class for table "usuarios".
  *
  * @property int $id
- * @property string $titulo
- * @property string|null $descripcion
- * @property string|null $cuerpo
- * @property int $comunidad_id
- * @property int $usuario_id
+ * @property string $username
+ * @property string $nombre
+ * @property string $apellidos
+ * @property string $email
+ * @property string $rol
  * @property string $created_at
+ * @property string $fecha_nac
+ * @property string|null $contrasena
+ * @property string|null $auth_key
+ * @property string|null $poblacion
+ * @property string|null $provincia
+ * @property string|null $pais
+ * @property string|null $foto_perfil
+ * @property string|null $bibliografia
+ * @property int|null $valoracion
  *
- * @property Comunidades $comunidad
- * @property Usuarios $usuario
- * @property Comentarios[] $comentarios
+ * @property Blogs[] $blogs
+ * @property Comunidades[] $comunidades
+ * @property Favblogs[] $favblogs
+ * @property Favcomunidades[] $favcomunidades
+ * @property Integrantes[] $integrantes
+ * @property Notas[] $notas
  */
 class Blogs extends \yii\db\ActiveRecord
 {
@@ -39,8 +51,8 @@ class Blogs extends \yii\db\ActiveRecord
         return [
             [['titulo', 'comunidad_id', 'cuerpo', 'descripcion', 'usuario_id'], 'required'],
             [['cuerpo'], 'string'],
-            [['comunidad_id', 'usuario_id'], 'default', 'value' => null],
-            [['comunidad_id', 'usuario_id'], 'integer'],
+            [['comunidad_id', 'usuario_id', 'visitas'], 'default', 'value' => null],
+            [['comunidad_id', 'usuario_id', 'visitas'], 'integer'],
             [['created_at'], 'safe'],
             [['titulo', 'descripcion'], 'string', 'max' => 255],
             [['titulo'], 'unique'],
@@ -62,6 +74,7 @@ class Blogs extends \yii\db\ActiveRecord
             'comunidad_id' => 'Comunidad',
             'usuario_id' => 'Usuario',
             'created_at' => 'Created At',
+            'visitas' => 'Visitas', 
         ];
     }
 
@@ -95,6 +108,37 @@ class Blogs extends \yii\db\ActiveRecord
         return $this->hasMany(Comentarios::class, ['id_comment_blog' => 'id'])->inverseOf('commentBlog');
     }
 
+
+     /**
+     * Gets query for [[Favblogs]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFavblogs()
+    {
+        return $this->hasMany(Favblogs::class, ['blog_id' => 'id'])->inverseOf('blog');
+    }
+
+    /**
+     * Gets query for [[Favcomunidades]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFavcomunidades()
+    {
+        return $this->hasMany(Favcomunidades::class, ['comunidad_id' => 'id'])->inverseOf('comunidad');
+    }
+
+
+    /**
+     * Gets query for [[Notas]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getNotas()
+    {
+        return $this->hasMany(Notas::class, ['blog_id' => 'id'])->inverseOf('blog');
+    }
 
     /**
      * Consulta para mostrar Comunidad por su nombre 

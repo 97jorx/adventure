@@ -16,17 +16,21 @@ use yii\web\IdentityInterface;
  * @property string $rol
  * @property string $created_at
  * @property string $fecha_nac
- * @property string|null $contrasena
+ * @property string $contrasena
  * @property string|null $auth_key
  * @property string|null $poblacion
  * @property string|null $provincia
  * @property string|null $pais
  * @property string|null $foto_perfil
  * @property string|null $bibliografia
+ * @property int|null $valoracion
  *
  * @property Blogs[] $blogs
- * @property Comentarios[] $comentarios
- * @property UsuarioComunidad[] $usuarioComunidads
+ * @property Comunidades[] $comunidades
+ * @property Favblogs[] $favblogs
+ * @property Favcomunidades[] $favcomunidades
+ * @property Integrantes[] $integrantes
+ * @property Notas[] $notas
  */
 class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
 {
@@ -50,17 +54,35 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'nombre', 'apellidos', 'email', 'fecha_nac'], 'required'],
-            [['created_at'], 'safe'],
+            [['username', 'nombre', 'apellidos', 'email', 'fecha_nac', 'contrasena'], 'required'],
+            [['username', 'nombre', 'apellidos', 'email', 'poblacion', 'provincia', 'pais'], 'trim'],
+            [['created_at', 'fecha_nac'], 'safe'],
             ['fecha_nac', 'date', 'format' => 'php:Y/m/d'],
+            [['valoracion'], 'default', 'value' => null],
+            [['valoracion'], 'integer'],
             [['username'], 'string', 'max' => 25],
             [['nombre', 'apellidos', 'email', 'contrasena', 'auth_key', 'poblacion', 'provincia', 'pais', 'foto_perfil', 'bibliografia'], 'string', 'max' => 255],
             [['rol'], 'string', 'max' => 30],
             [['email'],'unique'],
             ['email', 'email'],
             [['username'], 'unique'],
-            [['password_repeat'], 'required', 'on' => self::SCENARIO_CREAR],
-            [['password_repeat'], 'compare', 'compareAttribute' => 'contrasena'],
+            [
+                ['contrasena'],
+                'trim',
+                'on' => [self::SCENARIO_CREAR],
+            ],
+            [['password_repeat'], 
+
+                'compare', 
+                'compareAttribute' => 'contrasena',
+                'on' => self::SCENARIO_CREAR,
+                'skipOnEmpty' => false,
+
+            ],
+            [['password_repeat'],
+            
+                'required'
+            ],
         ];
     }
 
@@ -90,25 +112,6 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         ];
     }
 
-    /**
-     * Gets query for [[Comentarios]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getComentarios()
-    {
-        return $this->hasMany(Comentarios::class, ['user_id_comment' => 'id'])->inverseOf('userIdComment');
-    }
-
-   /**
-     * Gets query for [[Perfiles]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPerfil()
-    {
-        return $this->hasOne(Perfiles::class, ['usuario_id' => 'id'])->inverseOf('usuario');
-    }
 
 
     /**
@@ -131,6 +134,43 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return $this->hasMany(Blogs::class, ['usuario_id' => 'id'])->inverseOf('usuario');
     }
+
+
+    /**
+     * Gets query for [[Favblogs]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFavblogs()
+    {
+        return $this->hasMany(Favblogs::class, ['usuario_id' => 'id'])->inverseOf('usuario');
+    }
+
+
+
+
+    /**
+     * Gets query for [[Favcomunidades]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFavcomunidades()
+    {
+        return $this->hasMany(Favcomunidades::class, ['usuario_id' => 'id'])->inverseOf('usuario');
+    }
+
+
+
+    /**
+     * Gets query for [[Notas]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getNotas()
+    {
+        return $this->hasMany(Notas::class, ['usuario_id' => 'id'])->inverseOf('usuario');
+    }
+
 
 
     /** Gets query for [[Integrantes]].

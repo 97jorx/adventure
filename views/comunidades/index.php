@@ -44,14 +44,13 @@ Yii::$app->formatter->locale = 'es-ES';
 
 
 
-<body>
 <div class="masonry-wrapper">
     <div class="masonry">
         <?php foreach($dataProvider->models as $model) { ?> 
         <div class="masonry-item">
-            <div class="masonry-content">
+            <div class="masonry-content responsive">
                 <div class="masonry-image">
-                    <?php $fakeimg = "https://source.unsplash.com/random/300x300?sig=".$model->id;  ?>
+                    <?php $fakeimg = "https://picsum.photos/200/300?random=".$model->id;  ?>
                     <?= Html::a(Html::img($fakeimg), ['blogs/index', 'actual' => $model->id], ['class' => 'card-image']) ?>
                 </div>
                 <h5 class="masonry-title"><b><?= $model->denom  ?></b></h5>
@@ -104,7 +103,6 @@ Yii::$app->formatter->locale = 'es-ES';
         </div>
     </div>
 </div>
-</body>
 
 
 

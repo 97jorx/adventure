@@ -90,6 +90,7 @@ class BlogsController extends Controller
     public function actionView($id)
     {
 
+        
         $actual = Yii::$app->request->get('actual');
         return $this->render('view', [
             'model' => $this->findModel($id),

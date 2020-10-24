@@ -80,7 +80,7 @@ $config = [
             'rules' => [
                 '/comunidad/<actual:\d+>/blogs/index' => 'blogs/index',
                 '/comunidad/<actual:\d+>/blogs/create' => 'blogs/create',
-                '/comunidad/<actual:\d+>/blogs/<busqueda:\w+>' => 'blogs/index',
+                // '/comunidad/<actual:\d+>/blogs/<busqueda:\w+>' => 'blogs/index',
                 '/comunidad/<actual:\d+>/blogs/update/<id:\d+>' => 'blogs/update',
                 '/comunidad/<actual:\d+>/blogs/view/<id:\d+>' => 'blogs/view',
             ],
