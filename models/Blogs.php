@@ -116,7 +116,7 @@ class Blogs extends \yii\db\ActiveRecord
      */
     public function getFavblogs()
     {
-        return $this->hasMany(Favblogs::class, ['blog_id' => 'id'])->inverseOf('blog');
+        return $this->hasMany(FavBlogs::class, ['blog_id' => 'id'])->inverseOf('blog');
     }
 
     /**
@@ -152,7 +152,8 @@ class Blogs extends \yii\db\ActiveRecord
         return static::find()
             ->select(['blogs.*', '"u".nombre AS usuario', '"c".denom AS comunidad', '"c".descripcion AS eslogan'])
             ->joinWith('comunidad c')
-            ->joinWith('usuario u');
+            ->joinWith('usuario u')
+            ->joinWith('favblogs f');
     }
   
 

@@ -79,6 +79,10 @@ class BlogsSearch extends Blogs
             'desc' => ['c.denom' => SORT_DESC],
         ];
 
+        $dataProvider->sort->attributes['comunidad.denom'] = [
+            'asc' => ['c.denom' => SORT_ASC],
+            'desc' => ['c.denom' => SORT_DESC],
+        ];
 
         $this->load($params);
 

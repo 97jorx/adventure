@@ -6,6 +6,7 @@ use Yii;
 use app\models\Blogs;
 use app\models\BlogsSearch;
 use app\models\Comunidades;
+use app\models\FavBlogs;
 use app\models\Integrantes;
 use Symfony\Component\VarDumper\VarDumper;
 use yii\bootstrap4\ActiveForm;
@@ -183,6 +184,57 @@ class BlogsController extends Controller
         return $this->redirect(['index']);
     }
 
+
+    /**
+     * 
+     * Comprueba si tiene favorito el blog.
+     * @param int $id el id del blog.
+     * @return haslike retorna verdadero o falso si existe o no la fila en la tabla favblogs.
+     */
+    public function tieneFavorito($id){
+        
+        if (!Yii::$app->user->isGuest) {
+            $usuarioid = Yii::$app->user->id;
+            $haslike = FavBlogs::find()
+            ->where([
+                'libro_id' => $id,
+                'usuario_id' => $usuarioid
+            ])->exists();
+    
+            return $haslike;
+        }
+            
+        }
+        /**
+         * Add row into Favoritos table.
+         * @param integer $libroid es el ID del libro.
+         * @param integer $lectorid es el ID del lector actual.
+         */
+        public function actionFavblog()
+        {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $usuarioid = null;
+            $blogid = Yii::$app->request->get('id');
+            $json = [];
+            if (!Yii::$app->user->isGuest) {
+                $usuarioid = Yii::$app->user->id;
+                $model = new FavBlogs();
+                $model->blog_id = $blogid;
+                $model->usuario_id = $usuarioid;
+                $model->save();
+                $json = ['mensaje' => 'Se ha dado like al blog'];
+            } else {
+                FavBlogs::findOne([
+                    'blog_id' => $blogid, 
+                    'usuario_id' => $usuarioid
+                ])->delete();
+                $json = ['mensaje' => 'Se ha  quitado el like al blog'];
+            }
+            
+            return json_encode($json);
+        }
+    
+    
     /**
      * Finds the Blogs model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
