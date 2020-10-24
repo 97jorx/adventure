@@ -15,7 +15,7 @@ body {
   grid-auto-rows: 0;
 }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 1022px) and (min-width: 0px){
   .masonry {
     display: grid;
     padding: 16px;
@@ -42,12 +42,11 @@ body {
       overflow: hidden;
   } 
 
-
 }
 
 @media only screen and (max-width: 1023px) and (min-width: 768px) {
   .masonry {
-    grid-template-columns: repeat(3, minmax(100px, 1fr));
+    grid-template-columns: repeat(3);
   }
   
 }
@@ -56,6 +55,7 @@ body {
     grid-template-columns: repeat(4, minmax(100px, 1fr));
   }
 }
+
 .masonry-item, .masonry-content, .masonry-button {
   border-radius: 5px;
   
@@ -99,6 +99,7 @@ body {
 
 .masonry-image {
   width: 100%;
+  height: auto;
   
 }
 
