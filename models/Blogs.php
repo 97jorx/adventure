@@ -150,7 +150,13 @@ class Blogs extends \yii\db\ActiveRecord
     {
 
         return static::find()
-            ->select(['blogs.*', '"u".nombre AS usuario', '"c".denom AS comunidad', '"c".descripcion AS eslogan'])
+            ->select([
+                'blogs.*', 
+                '"u".nombre AS usuario', 
+                '"c".denom AS comunidad', 
+                '"c".descripcion AS eslogan, 
+                COUNT(f.id) AS favs'
+             ])
             ->joinWith('comunidad c')
             ->joinWith('usuario u')
             ->joinWith('favblogs f');
