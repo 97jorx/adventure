@@ -214,8 +214,7 @@ class BlogsController extends Controller
         $usuarioid = Yii::$app->user->id;
         $blogid = Yii::$app->request->get('id');
         $model = new Favblogs();
-        $blogs = new Blogs();
-        $fav =  $blogs->getFavblogs(); 
+        $fav =  Favblogs::find(['blog_id' => $blogid])->count();
         $json = [];
 
         if (!Yii::$app->user->isGuest) {
@@ -226,7 +225,7 @@ class BlogsController extends Controller
                 $model->save();
                 $json = [
                     'mensaje' => 'Se ha dado like al blog',
-                    'fav' => $fav->count().Icon::show('hand-up', ['framework' => Icon::FAS]),
+                    'fav' => $fav.Icon::show('hand-up', ['framework' => Icon::FAS]),
                 ];
 
             } else {
@@ -234,7 +233,7 @@ class BlogsController extends Controller
                 $this->tieneFavorito($blogid)->one()->delete();
                 $json = [
                     'mensaje' => 'Se ha  quitado el like al blog',
-                    'fav' => $fav->count().Icon::show('hand-down', ['framework' => Icon::FAS]),
+                    'fav' => $fav.Icon::show('hand-down', ['framework' => Icon::FAS]),
                 ];
                 
             }

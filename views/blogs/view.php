@@ -47,15 +47,14 @@ $like = ($tienefavs) ? (Icon::show('thumbs-up', ['framework' => Icon::FAS])) :
                   dataType: 'json',
               }).done(function( data, textStatus, jqXHR ) {
                   data = JSON.parse(data);
-                  console.log(data.mensaje);
-                  console.log(data.fav);
+                  $('#fav').html(data.fav);
               }).fail(function( data, textStatus, jqXHR ) {
                   console.log('Error de la solicitud.');
               });"
           ]); 
           ?> 
           </div>
-          <div class="col-1">
+          <div id='fav' class="col-1">
               <?= $model->favs ?>     
           </div>
         </div>
