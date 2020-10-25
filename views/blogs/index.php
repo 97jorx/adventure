@@ -29,7 +29,7 @@ use yii\widgets\LinkPager;
             <?php $model->comunidad->denom;?>
           <h2><small><?= $model->comunidad->denom ?></small></h2> 
          <?php endif; ?> 
-        <div class="card mb-4">
+        <div class="card mb-4"> 
           <img class="card-img-top img-thumbnail" src="<?= Yii::$app->request->baseUrl.'/uploads/test.jpg'?>" alt="Card image cap">
           <div class="card-body">
             <h2 class="card-title"><?= Html::encode($model->titulo); ?></h2>
@@ -41,7 +41,7 @@ use yii\widgets\LinkPager;
             <a href="#"><?= $model->usuario->nombre ?></a>
             <?php $like = Url::to(['blogs/like']); ?>
             <span class="ml-4"><?=$model->favs ?></span>
-            <?= Icon::show('hand-up', ['framework' => Icon::BSG]) ?> 
+            <?= Icon::show('thumbs-up', ['framework' => Icon::FAS]) ?> 
           </div>
         </div>
         <?php $index++;} ?>

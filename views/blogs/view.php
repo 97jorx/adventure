@@ -5,6 +5,7 @@
 
 use kartik\icons\Icon;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 $this->title = $model->titulo;
 $this->params['breadcrumbs'][] = ['label' => 'Comunidad', 'url' => ['comunidades/index']];
@@ -12,19 +13,16 @@ $this->params['breadcrumbs'][] = ['label' => 'Blogs', 'url' => ['index', 'actual
 $this->params['breadcrumbs'][] = $this->title;
 
 
+// var_dump($fav->all());
+// die();
+
+$url = Url::to(['blogs/like', 'id' => $model->id]);
+$like = ($tienefavs) ? (Icon::show('thumbs-up', ['framework' => Icon::FAS])) :
+(Icon::show('thumbs-up', ['framework' => Icon::FAS]));
 
 ?>
 <div class="blogs-view">
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <title>Blog Post - Start Bootstrap Template</title>
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/blog-post.css" rel="stylesheet">
-</head>
 
 <body>
   <div class="container">
@@ -37,7 +35,30 @@ $this->params['breadcrumbs'][] = $this->title;
         </p>
         <hr>
         <p>Posteado <?= $model->created_at?></p>
-        <p> <?= Html::a($model->favs.Icon::show('hand-up', ['class' => 'fa fa-thumbs-o-up', 'framework' => Icon::FAS] ) , $like); ?> </p>
+        <div class="row">
+          <div class="col-1">
+          <?= Html::a($like, $url, [
+            'onclick' =>"
+              event.preventDefault();
+              var self = $(this);
+              $.ajax({
+                  type: 'POST',
+                  url: '$url',
+                  dataType: 'json',
+              }).done(function( data, textStatus, jqXHR ) {
+                  data = JSON.parse(data);
+                  console.log(data.mensaje);
+                  console.log(data.fav);
+              }).fail(function( data, textStatus, jqXHR ) {
+                  console.log('Error de la solicitud.');
+              });"
+          ]); 
+          ?> 
+          </div>
+          <div class="col-1">
+              <?= $model->favs ?>     
+          </div>
+        </div>
         <hr>
         <img class="img-fluid rounded" src="<?php echo Yii::$app->request->baseUrl.'/uploads/test.jpg'?>" alt="">
         <hr>

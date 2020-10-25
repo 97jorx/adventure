@@ -116,7 +116,7 @@ class Blogs extends \yii\db\ActiveRecord
      */
     public function getFavblogs()
     {
-        return $this->hasMany(FavBlogs::class, ['blog_id' => 'id'])->inverseOf('blog');
+        return $this->hasMany(Favblogs::class, ['blog_id' => 'id'])->inverseOf('blog');
     }
 
    

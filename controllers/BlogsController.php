@@ -6,8 +6,9 @@ use Yii;
 use app\models\Blogs;
 use app\models\BlogsSearch;
 use app\models\Comunidades;
-use app\models\FavBlogs;
+use app\models\Favblogs;
 use app\models\Integrantes;
+use kartik\icons\Icon;
 use Symfony\Component\VarDumper\VarDumper;
 use yii\bootstrap4\ActiveForm;
 use yii\data\ActiveDataProvider;
@@ -97,7 +98,9 @@ class BlogsController extends Controller
         $actual = Yii::$app->request->get('actual');
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'actual' => $actual
+            'actual' => $actual,
+            'tienefavs' => $this->tieneFavorito($id)->exists()
+
         ]);
     }
 
@@ -194,14 +197,11 @@ class BlogsController extends Controller
      * @return haslike retorna verdadero o falso si existe o no la fila en la tabla favblogs.
      */
     public function tieneFavorito($id){
-        
         $usuarioid = Yii::$app->user->id;
-        return FavBlogs::find()
-        ->where([
+        return Favblogs::find([
             'blog_id' => $id,
             'usuario_id' => $usuarioid
         ]);
-
     }
     /**
      * Add row into Favoritos table.
@@ -211,37 +211,48 @@ class BlogsController extends Controller
     {
         
         Yii::$app->response->format = Response::FORMAT_JSON;
-        $usuarioid = null;
-        $blogs = new Blogs();
-        $fav = $blogs->getFavblogs()->count();
+        $usuarioid = Yii::$app->user->id;
         $blogid = Yii::$app->request->get('id');
+        $model = new Favblogs();
+        $blogs = new Blogs();
+        $fav =  $blogs->getFavblogs(); 
         $json = [];
+
         if (!Yii::$app->user->isGuest) {
+
             if(!$this->tieneFavorito($blogid)->exists()){
-                $usuarioid = Yii::$app->user->id;
-                $model = new FavBlogs();
                 $model->blog_id = $blogid;
                 $model->usuario_id = $usuarioid;
                 $model->save();
                 $json = [
                     'mensaje' => 'Se ha dado like al blog',
-                    'fav' => $fav,
+                    'fav' => $fav->count().Icon::show('hand-up', ['framework' => Icon::FAS]),
                 ];
+
             } else {
+            
                 $this->tieneFavorito($blogid)->one()->delete();
                 $json = [
                     'mensaje' => 'Se ha  quitado el like al blog',
-                    'fav' => $fav,
+                    'fav' => $fav->count().Icon::show('hand-down', ['framework' => Icon::FAS]),
                 ];
+                
             }
+
         } else {
+
             return $this->redirect(['site/login']);
+
         }
         
         return json_encode($json);
     }
     
     
+
+
+
+
     /**
      * Finds the Blogs model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
