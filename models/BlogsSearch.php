@@ -57,7 +57,7 @@ class BlogsSearch extends Blogs
     public function search($params, $busqueda, $actual) 
     {
         
-        $query = Blogs::blogsName();
+        $query = Blogs::blogsQuery();
        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

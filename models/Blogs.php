@@ -153,7 +153,7 @@ class Blogs extends \yii\db\ActiveRecord
      *
      * @return query
      */
-    public static function blogsName()
+    public static function blogsQuery()
     {
 
         return static::find()

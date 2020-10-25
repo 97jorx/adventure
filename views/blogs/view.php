@@ -17,8 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 // die();
 
 $url = Url::to(['blogs/like', 'id' => $model->id]);
-$like = ($tienefavs) ? (Icon::show('thumbs-up', ['framework' => Icon::FAS])) :
-(Icon::show('thumbs-up', ['framework' => Icon::FAS]));
+$like = ($tienefavs) ? ('thumbs-up') : ('thumbs-down');
 
 ?>
 <div class="blogs-view">
@@ -37,7 +36,7 @@ $like = ($tienefavs) ? (Icon::show('thumbs-up', ['framework' => Icon::FAS])) :
         <p>Posteado <?= $model->created_at?></p>
         <div class="row">
           <div class="col-1">
-          <?= Html::a($like, $url, [
+          <?= Html::a(Icon::show($like, ['id' => 'like', 'framework' => Icon::FAS]), $url, [
             'onclick' =>"
               event.preventDefault();
               var self = $(this);
@@ -45,11 +44,12 @@ $like = ($tienefavs) ? (Icon::show('thumbs-up', ['framework' => Icon::FAS])) :
                   type: 'POST',
                   url: '$url',
                   dataType: 'json',
-              }).done(function( data, textStatus, jqXHR ) {
+              }).done(function(data, textStatus, jqXHR) {
                   data = JSON.parse(data);
                   $('#fav').html(data.fav);
-                  console.log(data);
-              }).fail(function( data, textStatus, jqXHR ) {
+                  $('#like').attr('class', (data.icono) ?
+                  ('fas fa-thumbs-down') : ('fas fa-thumbs-up'))
+              }).fail(function(data, textStatus, jqXHR) {
                   console.log('Error de la solicitud.');
               });"
           ]); 
