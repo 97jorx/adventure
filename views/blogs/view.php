@@ -48,6 +48,7 @@ $like = ($tienefavs) ? (Icon::show('thumbs-up', ['framework' => Icon::FAS])) :
               }).done(function( data, textStatus, jqXHR ) {
                   data = JSON.parse(data);
                   $('#fav').html(data.fav);
+                  console.log(data);
               }).fail(function( data, textStatus, jqXHR ) {
                   console.log('Error de la solicitud.');
               });"

@@ -196,13 +196,25 @@ class BlogsController extends Controller
      * @param int $id el id del blog.
      * @return haslike retorna verdadero o falso si existe o no la fila en la tabla favblogs.
      */
-    public function tieneFavorito($id){
+    public function tieneFavorito($blogid){
         $usuarioid = Yii::$app->user->id;
-        return Favblogs::find([
-            'blog_id' => $id,
-            'usuario_id' => $usuarioid
-        ]);
+        return Favblogs::find()
+        ->where(['blog_id' => $blogid])
+        ->andWhere(['usuario_id' => $usuarioid]);
+        
     }
+
+
+     /**
+     * Cuenta los favoritos de un blog
+     * @param int $id el id del blog.
+     * @return haslike retorna verdadero o falso si existe o no la fila en la tabla favblogs.
+     */
+    public function favCount($id){
+        return Favblogs::find(['blog_id' => $id])->count();
+    }
+
+
     /**
      * Add row into Favoritos table.
      * @param integer $blogid es el ID del blog.
@@ -214,9 +226,7 @@ class BlogsController extends Controller
         $usuarioid = Yii::$app->user->id;
         $blogid = Yii::$app->request->get('id');
         $model = new Favblogs();
-        $fav =  Favblogs::find(['blog_id' => $blogid])->count();
         $json = [];
-
         if (!Yii::$app->user->isGuest) {
 
             if(!$this->tieneFavorito($blogid)->exists()){
@@ -225,26 +235,22 @@ class BlogsController extends Controller
                 $model->save();
                 $json = [
                     'mensaje' => 'Se ha dado like al blog',
-                    'fav' => $fav.Icon::show('hand-up', ['framework' => Icon::FAS]),
+                    'icono' => 'hand-up'
                 ];
 
             } else {
-            
                 $this->tieneFavorito($blogid)->one()->delete();
                 $json = [
-                    'mensaje' => 'Se ha  quitado el like al blog',
-                    'fav' => $fav.Icon::show('hand-down', ['framework' => Icon::FAS]),
+                    'mensaje' => 'Se ha quitado el like al blog',
+                    'icono' => 'hand-down'
                 ];
                 
             }
 
-        } else {
-
-            return $this->redirect(['site/login']);
-
+            // return $this->redirect(['site/login']);
         }
         
-        return json_encode($json);
+        return json_encode(array_merge($json, ['fav' => $this->favCount($blogid)]));
     }
     
     

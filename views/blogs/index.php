@@ -11,8 +11,7 @@ use yii\widgets\LinkPager;
     $this->params['breadcrumbs'][] = ['label' => 'Comunidad', 'url' => ['comunidades/index']];
     $this->params['breadcrumbs'][] = $this->title;
 
-    // var_dump($busqueda);
-    // die();
+    
 ?>
     <p>
         <?= Html::a('Crear Blog', ['create', 'actual' => $actual],  ['class' => 'btn btn-success']) ?>
@@ -40,7 +39,7 @@ use yii\widgets\LinkPager;
             Creado <?= Yii::$app->formatter->asDate($model->created_at) ?> por
             <a href="#"><?= $model->usuario->nombre ?></a>
             <?php $like = Url::to(['blogs/like']); ?>
-            <span class="ml-4"><?=$model->favs ?></span>
+            <span class="ml-4"><?= $model->favs ?></span>
             <?= Icon::show('thumbs-up', ['framework' => Icon::FAS]) ?> 
           </div>
         </div>

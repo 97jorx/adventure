@@ -208,25 +208,6 @@ class ComunidadesController extends Controller
     }
 
 
-    /**
-     * Es una accion del controlador que permite acceder a la Comunidad.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionAcceso($id)
-    {
-        if(!Yii::$app->user->isGuest){
-            $url = Url::to(['blogs/index']);
-            $model = $this->findModel($id);
-            $_POST['actual'] = $model->id;
-            $this->redirect([$url, 'comunidad' => $model->denom]);
-        } else {
-            return $this->redirect(['site/login']);
-        }
-    }
-    
-
 
 
     /**

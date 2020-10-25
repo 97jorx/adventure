@@ -60,6 +60,8 @@ class Favblogs extends \yii\db\ActiveRecord
         return $this->hasOne(Blogs::className(), ['id' => 'blog_id'])->inverseOf('favblogs');
     }
 
+
+    
     /**
      * Gets query for [[Usuario]].
      *
