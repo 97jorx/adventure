@@ -6,7 +6,9 @@ use Yii;
 use app\models\Blogs;
 use app\models\BlogsSearch;
 use app\models\Comunidades;
+use app\models\Favblogs;
 use app\models\Integrantes;
+use kartik\icons\Icon;
 use Symfony\Component\VarDumper\VarDumper;
 use yii\bootstrap4\ActiveForm;
 use yii\data\ActiveDataProvider;
@@ -41,12 +43,15 @@ class BlogsController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index','update', 'create', 'view'],
+                        'actions' => ['index','update', 'create', 'view', 'like'],
                         'roles' => ['@'],
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['index', 'create', 'update', 'delete', 'view'],
+                        'actions' => [
+                            'index', 'create',
+                            'update', 'delete', 
+                            'view', 'like'],
                         'roles' => ['@'],
                         'matchCallback' => function ($rules, $action) {
                            return Yii::$app->user->identity->username === 'admin';
@@ -89,12 +94,13 @@ class BlogsController extends Controller
      */
     public function actionView($id)
     {
-
         
         $actual = Yii::$app->request->get('actual');
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'actual' => $actual
+            'actual' => $actual,
+            'tienefavs' => !$this->tieneFavorito($id)->exists()
+
         ]);
     }
 
@@ -182,6 +188,76 @@ class BlogsController extends Controller
         $this->findModel($id)->delete();
         return $this->redirect(['index']);
     }
+
+
+    /**
+     * 
+     * Comprueba si tiene favorito el blog.
+     * @param int $id el id del blog.
+     * @return haslike retorna verdadero o falso si existe o no la fila en la tabla favblogs.
+     */
+    public function tieneFavorito($blogid){
+        $usuarioid = Yii::$app->user->id;
+        return Favblogs::find()
+        ->where(['blog_id' => $blogid])
+        ->andWhere(['usuario_id' => $usuarioid]);
+        
+    }
+
+
+     /**
+     * Cuenta los favoritos de un blog
+     * @param int $id el id del blog.
+     * @return haslike retorna verdadero o falso si existe o no la fila en la tabla favblogs.
+     */
+    public function favCount($id){
+        return Favblogs::find(['blog_id' => $id])->count();
+    }
+
+
+    /**
+     * Add row into Favoritos table.
+     * @param integer $blogid es el ID del blog.
+     */
+    public function actionLike()
+    {
+        
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $usuarioid = Yii::$app->user->id;
+        $blogid = Yii::$app->request->get('id');
+        $fav = new Favblogs();
+        
+        $json = [];
+        if (!Yii::$app->user->isGuest) {
+
+            if(!$this->tieneFavorito($blogid)->exists()){
+                $fav->blog_id = $blogid;
+                $fav->usuario_id = $usuarioid;
+                $fav->save();
+                $json = [
+                    'mensaje' => 'Se ha dado like al blog',
+                    'icono' => 1
+                ];
+
+            } else {
+                $this->tieneFavorito($blogid)->one()->delete();
+                $json = [
+                    'mensaje' => 'Se ha quitado el like al blog',
+                    'icono' => 0
+                ];
+                
+            }
+
+            // return $this->redirect(['site/login']);
+        }
+        
+        return json_encode(array_merge($json, ['fav' => $this->findModel($blogid)->favs]));
+    }
+    
+    
+
+
+
 
     /**
      * Finds the Blogs model based on its primary key value.

@@ -14,7 +14,7 @@ use Yii;
  * @property Blogs $blog
  * @property Usuarios $usuario
  */
-class FavBlogs extends \yii\db\ActiveRecord
+class Favblogs extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -33,8 +33,8 @@ class FavBlogs extends \yii\db\ActiveRecord
             [['usuario_id', 'blog_id'], 'required'],
             [['usuario_id', 'blog_id'], 'default', 'value' => null],
             [['usuario_id', 'blog_id'], 'integer'],
-            [['blog_id'], 'exist', 'skipOnError' => true, 'targetClass' => Blogs::class, 'targetAttribute' => ['blog_id' => 'id']],
-            [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['usuario_id' => 'id']],
+            [['blog_id'], 'exist', 'skipOnError' => true, 'targetClass' => Blogs::className(), 'targetAttribute' => ['blog_id' => 'id']],
+            [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['usuario_id' => 'id']],
         ];
     }
 
@@ -57,9 +57,11 @@ class FavBlogs extends \yii\db\ActiveRecord
      */
     public function getBlog()
     {
-        return $this->hasOne(Blogs::class, ['id' => 'blog_id'])->inverseOf('favBlogs');
+        return $this->hasOne(Blogs::className(), ['id' => 'blog_id'])->inverseOf('favblogs');
     }
 
+
+    
     /**
      * Gets query for [[Usuario]].
      *
@@ -67,6 +69,6 @@ class FavBlogs extends \yii\db\ActiveRecord
      */
     public function getUsuario()
     {
-        return $this->hasOne(Usuarios::class, ['id' => 'usuario_id'])->inverseOf('favBlogs');
+        return $this->hasOne(Usuarios::className(), ['id' => 'usuario_id'])->inverseOf('favblogs');
     }
 }

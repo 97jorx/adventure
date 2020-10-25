@@ -68,7 +68,15 @@ class Comunidades extends \yii\db\ActiveRecord
         return $this->hasMany(Blogs::class, ['comunidad_id' => 'id'])->inverseOf('comunidad');
     }
 
-   
+    /**
+     * Gets query for [[Favcomunidades]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFavComunidades()
+    {
+        return $this->hasMany(FavComunidades::class, ['comunidad_id' => 'id'])->inverseOf('comunidad');
+    }
 
     /**
      * Gets query for [[propietario0]].
