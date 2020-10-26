@@ -73,9 +73,9 @@ class Comunidades extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getFavComunidades()
+    public function getFavcomunidades()
     {
-        return $this->hasMany(FavComunidades::class, ['comunidad_id' => 'id'])->inverseOf('comunidad');
+        return $this->hasMany(Favcomunidades::class, ['comunidad_id' => 'id'])->inverseOf('comunidad');
     }
 
     /**
@@ -112,4 +112,22 @@ class Comunidades extends \yii\db\ActiveRecord
             
     }
 
+
+    /**
+     * Consulta para mostrar Comunidad por su nombre 
+     * y el Usuario por su nombre en Blogs
+     *
+     * @return query
+     */
+    public static function comunidadesQuery()
+    {
+
+        return static::find()
+            ->select([
+                'COUNT(f.id) AS favs'
+             ])
+            ->joinWith('favcomunidades f')
+            ->groupBy('blogs.id');
+    }
+  
 }

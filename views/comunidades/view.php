@@ -1,6 +1,8 @@
 <?php
 
+use kartik\icons\Icon;
 use yii\bootstrap4\Html;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
@@ -24,8 +26,28 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
-    </p>
 
+    <?php $url = Url::to(['comunidades/like', 'id' => $model->id]); ?>
+    <?php $like = ($tienefavs) ? ('thumbs-up') : ('thumbs-down'); ?>
+    <?= Html::a(Icon::show($like, ['id' => 'like', 'framework' => Icon::FAS]), $url, ['class' => 'masonry-button',
+            'onclick' =>"
+            event.preventDefault();
+            var self = $(this);
+            $.ajax({
+                type: 'POST',
+                url: '$url',
+                dataType: 'json',
+            }).done(function(data, textStatus, jqXHR) {
+                data = JSON.parse(data);
+                $('#fav').html(data.fav);
+                $('#like').attr('class', (data.icono) ?
+                ('fas fa-thumbs-down') : ('fas fa-thumbs-up'))
+            }).fail(function(data, textStatus, jqXHR) {
+                console.log('Error de la solicitud.');
+            });"
+        ]); 
+    ?> 
+    <p>
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [

@@ -78,7 +78,7 @@ Yii::$app->formatter->locale = 'es-ES';
                             });"
                     ]); 
                     ?> 
-                    <?= Html::a(Icon::show('heart') , $unirse, ['class' => 'masonry-button']); ?>
+                    <?= Html::a(Icon::show('heart') , '', ['class' => 'masonry-button']); ?>
                     <?= Html::a('', ['comunidades/view', 'id' => $model->id], ['class' => 'masonry-button glyphicon glyphicon-eye-open']); ?>
                     <?= Html::a('', ['delete', 'id' => $model->id], [ 'class' => 'masonry-button glyphicon glyphicon-trash',
                                 'data' => [
