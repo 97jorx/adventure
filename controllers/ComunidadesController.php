@@ -33,25 +33,25 @@ class ComunidadesController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-            'access' => [
-                'class' => AccessControl::class,
-                //'only' => ['index'],
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'actions' => ['index','update', 'create', 'view', 'unirse'],
-                        'roles' => ['@'],
-                    ],
-                    [
-                        'allow' => true,
-                        'actions' => ['index', 'unirse', 'create', 'update', 'delete', 'view'],
-                        'roles' => ['@'],
-                        'matchCallback' => function ($rules, $action) {
-                           return Yii::$app->user->identity->username === 'admin';
-                        },
-                    ],
-                ],
-            ],
+            // 'access' => [
+            //     'class' => AccessControl::class,
+            //     //'only' => ['index'],
+            //     'rules' => [
+            //         [
+            //             'allow' => true,
+            //             'actions' => ['index','update', 'create', 'view', 'unirse'],
+            //             'roles' => ['@'],
+            //         ],
+            //         // [
+            //         //     'allow' => true,
+            //         //     'actions' => ['index', 'unirse', 'create', 'update', 'delete', 'view'],
+            //         //     'roles' => ['@'],
+            //         //     'matchCallback' => function ($rules, $action) {
+            //         //        return Yii::$app->user->identity->username === 'admin';
+            //         //     },
+            //         // ],
+            //     ],
+            // ],
         ];
     }
 

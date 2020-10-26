@@ -19,6 +19,8 @@ use Yii;
  */
 class Comunidades extends \yii\db\ActiveRecord
 {
+
+    private $_favs = null;
     /**
      * {@inheritdoc}
      */
@@ -112,6 +114,17 @@ class Comunidades extends \yii\db\ActiveRecord
             
     }
 
+    public function setFavs($favs) {
+        $this->_favs = $favs;
+    }
+
+    public function getFavs()
+    {
+        if ($this->_favs === null && !$this->isNewRecord) {
+            $this->setFavs($this->getFavcomunidades()->count());
+        }
+        return $this->_favs;
+    }
 
     /**
      * Consulta para mostrar Comunidad por su nombre 
@@ -124,10 +137,11 @@ class Comunidades extends \yii\db\ActiveRecord
 
         return static::find()
             ->select([
+                'comunidades.*',
                 'COUNT(f.id) AS favs'
              ])
             ->joinWith('favcomunidades f')
-            ->groupBy('blogs.id');
+            ->groupBy('comunidades.id');
     }
   
 }
