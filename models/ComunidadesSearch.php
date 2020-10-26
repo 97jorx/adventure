@@ -19,6 +19,7 @@ class ComunidadesSearch extends Comunidades
         return [
             [['id', 'propietario'], 'integer'],
             [['denom', 'descripcion', 'created_at'], 'safe'],
+            [['favs'],'safe']
         ];
     }
 
@@ -40,7 +41,7 @@ class ComunidadesSearch extends Comunidades
      */
     public function search($params)
     {
-        $query = Comunidades::find();
+        $query = Comunidades::comunidadesQuery();
 
         // add conditions that should always apply here
 

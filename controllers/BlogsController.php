@@ -94,12 +94,13 @@ class BlogsController extends Controller
      */
     public function actionView($id)
     {
-        
+        $fav = $this;
+        $favoritos = Yii::$app->AdvHelper->tieneFavoritos($id, $fav);
         $actual = Yii::$app->request->get('actual');
         return $this->render('view', [
             'model' => $this->findModel($id),
             'actual' => $actual,
-            'tienefavs' => !$this->tieneFavorito($id)->exists()
+            'tienefavs' => !$favoritos->exists()
 
         ]);
     }
@@ -190,30 +191,7 @@ class BlogsController extends Controller
     }
 
 
-    /**
-     * 
-     * Comprueba si tiene favorito el blog.
-     * @param int $id el id del blog.
-     * @return haslike retorna verdadero o falso si existe o no la fila en la tabla favblogs.
-     */
-    public function tieneFavorito($blogid){
-        $usuarioid = Yii::$app->user->id;
-        return Favblogs::find()
-        ->where(['blog_id' => $blogid])
-        ->andWhere(['usuario_id' => $usuarioid]);
-        
-    }
-
-
-     /**
-     * Cuenta los favoritos de un blog
-     * @param int $id el id del blog.
-     * @return haslike retorna verdadero o falso si existe o no la fila en la tabla favblogs.
-     */
-    public function favCount($id){
-        return Favblogs::find(['blog_id' => $id])->count();
-    }
-
+   
 
     /**
      * Add row into Favoritos table.
@@ -226,11 +204,12 @@ class BlogsController extends Controller
         $usuarioid = Yii::$app->user->id;
         $blogid = Yii::$app->request->get('id');
         $fav = new Favblogs();
-        
+        $favoritos = Yii::$app->AdvHelper->tieneFavoritos($blogid, $this);
+
         $json = [];
         if (!Yii::$app->user->isGuest) {
 
-            if(!$this->tieneFavorito($blogid)->exists()){
+            if(!$favoritos->exists()){
                 $fav->blog_id = $blogid;
                 $fav->usuario_id = $usuarioid;
                 $fav->save();
@@ -240,15 +219,14 @@ class BlogsController extends Controller
                 ];
 
             } else {
-                $this->tieneFavorito($blogid)->one()->delete();
+                $favoritos->one()->delete();
                 $json = [
                     'mensaje' => 'Se ha quitado el like al blog',
                     'icono' => 0
                 ];
-                
             }
-
-            // return $this->redirect(['site/login']);
+        } else {
+            return $this->redirect(['site/login']);
         }
         
         return json_encode(array_merge($json, ['fav' => $this->findModel($blogid)->favs]));

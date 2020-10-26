@@ -5,6 +5,8 @@ namespace app\controllers;
 use Yii;
 use app\models\Comunidades;
 use app\models\ComunidadesSearch;
+use app\models\Favblogs;
+use app\models\Favcomunidades;
 use app\models\Integrantes;
 use kartik\form\ActiveForm;
 use yii\filters\AccessControl;
@@ -31,25 +33,25 @@ class ComunidadesController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-            'access' => [
-                'class' => AccessControl::class,
-                //'only' => ['index'],
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'actions' => ['index','update', 'create', 'view', 'unirse'],
-                        'roles' => ['@'],
-                    ],
-                    [
-                        'allow' => true,
-                        'actions' => ['index', 'unirse', 'create', 'update', 'delete', 'view'],
-                        'roles' => ['@'],
-                        'matchCallback' => function ($rules, $action) {
-                           return Yii::$app->user->identity->username === 'admin';
-                        },
-                    ],
-                ],
-            ],
+            // 'access' => [
+            //     'class' => AccessControl::class,
+            //     //'only' => ['index'],
+            //     'rules' => [
+            //         [
+            //             'allow' => true,
+            //             'actions' => ['index','update', 'create', 'view', 'unirse'],
+            //             'roles' => ['@'],
+            //         ],
+            //         // [
+            //         //     'allow' => true,
+            //         //     'actions' => ['index', 'unirse', 'create', 'update', 'delete', 'view'],
+            //         //     'roles' => ['@'],
+            //         //     'matchCallback' => function ($rules, $action) {
+            //         //        return Yii::$app->user->identity->username === 'admin';
+            //         //     },
+            //         // ],
+            //     ],
+            // ],
         ];
     }
 
@@ -62,10 +64,11 @@ class ComunidadesController extends Controller
         $searchModel = new ComunidadesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
-
+        
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            
         ]);
     }
 
@@ -77,8 +80,11 @@ class ComunidadesController extends Controller
      */
     public function actionView($id)
     {
+        
+        $favoritos = Yii::$app->AdvHelper->tieneFavoritos($id, $this);
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'tienefavs' => !$favoritos->exists()
         ]);
     }
 
@@ -207,7 +213,43 @@ class ComunidadesController extends Controller
             return json_encode($json);
     }
 
+   
 
+
+ /**
+     * Add row into Favoritos table.
+     * @param integer $blogid es el ID del blog.
+     */
+    public function actionLike()
+    {
+        
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $usuarioid = Yii::$app->user->id;
+        $cid = Yii::$app->request->get('id');
+        $fav = new Favcomunidades();
+        $favoritos = Yii::$app->AdvHelper->tieneFavoritos($cid, $this);
+        $json = [];
+        if (!Yii::$app->user->isGuest) {
+            if(!$favoritos->exists()){
+                $fav->comunidad_id = $cid;
+                $fav->usuario_id = $usuarioid;
+                $fav->save();
+                $json = [
+                    'mensaje' => 'Se ha dado like a la comunidad',
+                    'icono' => 1
+                ];
+            } else {
+                $favoritos->one()->delete();
+                $json = [
+                    'mensaje' => 'Se ha quitado el like a la comunidad',
+                    'icono' => 0
+                ];
+            }
+        } else {
+            return $this->redirect(['site/login']);
+        }
+        return json_encode(array_merge($json, ['fav' => $this->findModel($cid)->favs]));
+    }
 
 
     /**

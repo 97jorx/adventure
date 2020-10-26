@@ -14,7 +14,7 @@ use Yii;
  * @property Blogs $comunidad
  * @property Usuarios $usuario
  */
-class FavComunidades extends \yii\db\ActiveRecord
+class Favcomunidades extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -57,7 +57,7 @@ class FavComunidades extends \yii\db\ActiveRecord
      */
     public function getComunidad()
     {
-        return $this->hasOne(Blogs::class, ['id' => 'comunidad_id'])->inverseOf('favComunidades');
+        return $this->hasOne(Blogs::class, ['id' => 'comunidad_id'])->inverseOf('favcomunidades');
     }
 
     /**
@@ -67,6 +67,6 @@ class FavComunidades extends \yii\db\ActiveRecord
      */
     public function getUsuario()
     {
-        return $this->hasOne(Usuarios::class, ['id' => 'usuario_id'])->inverseOf('favComunidades');
+        return $this->hasOne(Usuarios::class, ['id' => 'usuario_id'])->inverseOf('favcomunidades');
     }
 }
