@@ -4,6 +4,7 @@
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model app\models\RegistrarForm */
 
+use kartik\date\DatePickerAsset;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 use yii\jui\DatePicker;
@@ -11,14 +12,18 @@ use yii\jui\DatePicker;
 $this->title = 'Registrar usuario';
 $this->params['breadcrumbs'][] = $this->title;
 
+$this->registerCssFile("@web/css/jquery-ui.css", [
+    'media' => 'print',
+]);
+
 
 $js = <<< EOF
 $('#login-form').on('input', function(){
     $('#login-form').parsley().validate();
 });
 EOF;
-
 $this->registerJs($js);
+
 
 ?>
 <div class='site-login'>
@@ -40,7 +45,7 @@ $this->registerJs($js);
         <?= $form->field($model, 'apellidos')->textInput(['type' => 'text']) ?>
         <?= $form->field($model, 'contrasena')->passwordInput(['type' => 'password', 'id' => 'password1']) ?>
         <?= $form->field($model, 'password_repeat')->passwordInput(['type' => 'password', 'data-parsley-equalto' => '#password1']) ?>
-         <!-- $form->field($model, 'fecha_nac')->textInput(['id' => 'fecha', 'placeholder' => 'YYYY/MM/D', 'data-date-format' => '']) ?>  -->
+         <!-- $form->field($model, 'fecha_nac')->textInput(['id' => 'fecha', , 'data-date-format' => '']) ?>  -->
         <?= $form->field($model, 'fecha_nac')->widget(DatePicker::class,[
             'name' => 'Fecha nacimiento',
             'language' => 'es-ES',
@@ -50,14 +55,10 @@ $this->registerJs($js);
                 'changeMonth' => true,
                 'changeYear' => true,
                 'yearRange' => '1996:2099',
-                'showOn' => 'button',
-                'buttonImage' => 'images/calendar.gif',
                 'buttonImageOnly' => true,
                 'class' => 'form-control',
-                'nextText' => '>',
-                'prevText' => '<',
+                'placeholder' => 'YYYY/MM/D',
                 'autocomplete'=>'off',
-                'buttonText' => 'Select date'
                 ],
         ]) ?>
         <?= $form->field($model, 'email')->textInput(['id' => 'email', 'type' => 'email', 'data-parsley-type' => 'email']) ?>

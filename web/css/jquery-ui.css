@@ -71,6 +71,7 @@
 	text-indent: -99999px;
 	overflow: hidden;
 	background-repeat: no-repeat;
+	
 }
 
 .ui-widget-icon-block {
@@ -1308,4 +1309,28 @@ a.ui-button:active,
 .ui-widget-shadow {
 	-webkit-box-shadow: 0px 0px 5px #666666;
 	box-shadow: 0px 0px 5px #666666;
+}
+
+
+
+.ui-datepicker-prev:before,
+.ui-datepicker-next:before {
+  font-family: FontAwesome;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  font-weight: normal;
+  align-items: center;
+  justify-content: center;
+}
+
+.ui-datepicker-prev:before {
+  content: "\f100";
+}
+
+.ui-datepicker-next:before {
+  content: "\f101";
 }
