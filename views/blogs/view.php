@@ -12,12 +12,9 @@ $this->params['breadcrumbs'][] = ['label' => 'Comunidad', 'url' => ['comunidades
 $this->params['breadcrumbs'][] = ['label' => 'Blogs', 'url' => ['index', 'actual' => $actual]];
 $this->params['breadcrumbs'][] = $this->title;
 
-
-// var_dump($fav->all());
-// die();
-
 $url = Url::to(['blogs/like', 'id' => $model->id]);
-$like = ($tienefavs) ? ('thumbs-up') : ('thumbs-down');
+$like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gusta']);
+
 
 ?>
 <div class="blogs-view">
@@ -36,7 +33,7 @@ $like = ($tienefavs) ? ('thumbs-up') : ('thumbs-down');
         <p>Posteado <?= $model->created_at?></p>
         <div class="row">
           <div class="col-1">
-          <?= Html::a(Icon::show($like, ['id' => 'like', 'framework' => Icon::FAS]), $url, [
+          <?= Html::a(Icon::show($like[0], ['id' => 'like', 'framework' => Icon::FAS]), $url, [
             'onclick' =>"
               event.preventDefault();
               var self = $(this);
@@ -47,11 +44,11 @@ $like = ($tienefavs) ? ('thumbs-up') : ('thumbs-down');
               }).done(function(data, textStatus, jqXHR) {
                   data = JSON.parse(data);
                   $('#fav').html(data.fav);
-                  $('#like').attr('class', (data.icono) ?
-                  ('fas fa-thumbs-down') : ('fas fa-thumbs-up'))
+                  $('#like').attr('class', (data.icono) ? ('fas fa-thumbs-down') : ('fas fa-thumbs-up')) 
+                  $('#like').attr('title', (data.icono) ? ('No me gusta') : ('Me gusta'))
               }).fail(function(data, textStatus, jqXHR) {
                   console.log('Error de la solicitud.');
-              });"
+              });", 'title' => $like[1]
           ]); 
           ?> 
           </div>
