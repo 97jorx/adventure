@@ -19,13 +19,12 @@ $username = !Yii::$app->user->isGuest;
 $user = $username ? (Yii::$app->user->identity->username) : (null);
 
 $js = <<< EOF
-$(document).ready(function() {
+window.onload = (e) => { 
     if (localStorage.getItem('$user') === null && Boolean($username)) {
         localStorage.setItem('$user', '$user')
         $("#myModal").modal('show');
     }
-});
-
+}
 EOF;
 
 $this->registerJs($js);
