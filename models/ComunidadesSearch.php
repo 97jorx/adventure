@@ -47,7 +47,17 @@ class ComunidadesSearch extends Comunidades
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                    'favs' => SORT_DESC,
+                ]
+            ],
         ]);
+
+        $dataProvider->sort->attributes['favs'] = [
+            'asc' => ['COUNT(f.id)' => SORT_ASC],
+            'desc' => ['COUNT(f.id)' => SORT_DESC],
+        ];
 
         $this->load($params);
 

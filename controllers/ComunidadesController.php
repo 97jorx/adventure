@@ -39,7 +39,7 @@ class ComunidadesController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'create', 'view', 'unirse'],
+                        'actions' => ['index', 'create', 'view', 'unirse', 'like'],
                         'roles' => ['@'],
                     ],
                     [

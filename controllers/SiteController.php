@@ -2,16 +2,15 @@
 
 namespace app\controllers;
 
-use app\models\Comunidades;
+
 use Yii;
+use app\models\ComunidadesSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
-use yii\data\ActiveDataProvider;
-use yii\data\ArrayDataProvider;
 
 class SiteController extends Controller
 {
@@ -65,32 +64,13 @@ class SiteController extends Controller
     public function actionIndex()
     {
 
-        $comunidades = new Comunidades();
-        $query = $comunidades::comunidadesQuery();
-        
-        $dataProvider = new ActiveDataProvider([
-            'query'  => $query,
-            'sort' => [
-                'defaultOrder' => [
-                    'favs' => SORT_ASC,
-                ]
-            ],
-        ]);
-
-        $provider = new ArrayDataProvider([
-            'allModels' => $query,
-                'pagination' => [
-                    'pageSize' => 10,
-                ],
-            'sort' => [
-                'attributes' => ['favs'],
-            ],
-        ]);
-        
+        $searchModel = new ComunidadesSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        // var_dump($query->createCommand()->getRawSql());
         
         return $this->render('index',[
             'dataProvider' => $dataProvider,
-            'provider' => $provider
+            
         ]);
     }
 
