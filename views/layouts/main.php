@@ -47,7 +47,7 @@ AppAsset::register($this);
         ];
     } else  {
         $items = [
-            Html::beginForm(['/site/logout'], 'post').Html::submitButton(
+            Html::beginForm(['site/logout'], 'post').Html::submitButton(
             'Logout (' . Yii::$app->user->identity->username . ')',
             ['class' => 'dropdown-item'],).Html::endForm(),
             ['label' => 'Perfil', 'url' => ['usuarios/view']]
@@ -74,6 +74,10 @@ AppAsset::register($this);
 
     <div class="container">
         <?= Breadcrumbs::widget([
+             'homeLink' => [
+                'label' => 'Inicio',
+                'url' => '/site/index',
+            ],
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>

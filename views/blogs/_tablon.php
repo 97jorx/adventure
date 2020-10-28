@@ -1,19 +1,16 @@
 <?php
 
-
 use kartik\icons\Icon;
+use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
 
-
-$blogs = $dataProvider->models;
-
+    $blogs = $dataProvider->models;
+  
+    
 ?>
-
-<div class="blogs-index">
-
-<p>
+    <p>
         <?= Html::a('Crear Blog', ['create', 'actual' => $actual],  ['class' => 'btn btn-success']) ?>
     </p>
 </head>
@@ -83,9 +80,14 @@ $blogs = $dataProvider->models;
             </div>
           </div>
         </div>
+        <div class="card my-4">
+          <h5 class="card-header">Side Widget</h5>
+          <div class="card-body">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam excepturi deserunt incidunt suscipit,
+            tempore commodi magni quam quis perspiciatis sapiente blanditiis vitae saepe dolor ipsum aperiam, 
+            eos alias animi dignissimos.
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  
-
-</div>

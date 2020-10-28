@@ -15,15 +15,7 @@ use yii\bootstrap4\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <!-- <?= $form->field($model, 'id') ?> -->
-
     <?= $form->field($model, 'denom') ?>
-
-    <!-- <?= $form->field($model, 'descripcion') ?> -->
-
-    <?= $form->field($model, 'created_at') ?> 
-
-    
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
