@@ -15,15 +15,6 @@ $this->params['breadcrumbs'][] = $this->title;
 $url = Url::to(['blogs/like', 'id' => $model->id]);
 $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gusta']);
 
-$js = <<< EOF
-$( document ).ready(function() {
-  console.log( "ready!" );
-  $('#like').animate();
-});
-EOF;
-
-$this->registerJs($js);
-
 ?>
 <div class="blogs-view">
 
@@ -52,6 +43,7 @@ $this->registerJs($js);
               }).done(function(data, textStatus, jqXHR) {
                   data = JSON.parse(data);
                   $('#fav').html(data.fav);
+                  $('#like').efect();
                   $('#like').attr('class', (data.icono) ? ('fas fa-thumbs-down') : ('fas fa-thumbs-up')) 
                   $('#like').attr('title', (data.icono) ? ('No me gusta') : ('Me gusta'))
               }).fail(function(data, textStatus, jqXHR) {
@@ -65,7 +57,7 @@ $this->registerJs($js);
           </div>
         </div>
         <hr>
-        <img class="img-fluid rounded" src="<?php echo Yii::$app->request->baseUrl.'/uploads/test.jpg'?>" alt="">
+        <img class="img-fluid rounded"  src="<?php echo Yii::$app->request->baseUrl.'/uploads/test.jpg'?>"  alt="">
         <hr>
         <p class="lead"><?= $model->descripcion?></p>
         <p class="lead"><?= $model->cuerpo ?></p>

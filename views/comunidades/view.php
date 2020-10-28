@@ -14,6 +14,8 @@ $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 
 
+$url = Url::to(['comunidades/like', 'id' => $model->id]); 
+$like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gusta']);
 
 ?>
 <div class="comunidades-view">
@@ -29,12 +31,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
-
-    <?php $url = Url::to(['comunidades/like', 'id' => $model->id]); ?>
-    <?php $like = ($tienefavs) ? ('thumbs-up') : ('thumbs-down'); ?>
     <p>
     <div class="ml-3">
-        <?= Html::a(Icon::show($like, ['id' => 'like', 'framework' => Icon::FAS]), $url, [
+        <?= Html::a(Icon::show($like[0], ['id' => 'like', 'framework' => Icon::FAS]), $url, [
                 'onclick' =>"
                 event.preventDefault();
                 var self = $(this);
@@ -45,11 +44,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 }).done(function(data, textStatus, jqXHR) {
                     data = JSON.parse(data);
                     $('#fav').html(data.fav);
-                    $('#like').attr('class', (data.icono) ?
-                    ('fas fa-thumbs-down') : ('fas fa-thumbs-up'))
+                    $('#like').efect();
+                    $('#like').attr('class', (data.icono) ? ('fas fa-thumbs-down') : ('fas fa-thumbs-up'))
+                    $('#like').attr('title', (data.icono) ? ('No me gusta') : ('Me gusta'))
                 }).fail(function(data, textStatus, jqXHR) {
                     console.log('Error de la solicitud.');
-                });"
+                });", 'title' => $like[1]
             ]); 
             ?> 
         <span id="fav" class="ml-3"><?= $model->favs ?></span>
