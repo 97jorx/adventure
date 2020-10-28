@@ -15,6 +15,14 @@ $this->params['breadcrumbs'][] = $this->title;
 $url = Url::to(['blogs/like', 'id' => $model->id]);
 $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gusta']);
 
+$js = <<< EOF
+$( document ).ready(function() {
+  console.log( "ready!" );
+  $('#like').animate();
+});
+EOF;
+
+$this->registerJs($js);
 
 ?>
 <div class="blogs-view">

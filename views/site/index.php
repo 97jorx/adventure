@@ -3,9 +3,6 @@
 
 /* @var $this yii\web\View */
 use dmstr\cookieconsent\widgets\CookieConsent;
-
-
-
 ?>
 
 <body>
@@ -71,45 +68,12 @@ use dmstr\cookieconsent\widgets\CookieConsent;
     'domain' => '',
     'expiryDays' => 365,
     'message' => Yii::t('cookie-consent',
-    'Utilizamos cookies para asegurar el correcto funcionamiento de nuestro sitio web. 
-     Para una mejor experiencia de visita utilizamos productos de análisis. Se utilizan cuando está de acuerdo con "Estadísticas"..'),
-    // 'save' => Yii::t('cookie-consent', 'Guardar'),
+      'Utilizamos cookies para asegurar el correcto funcionamiento de nuestro sitio web. 
+       Para una mejor experiencia de visita utilizamos productos de análisis. Se utilizan cuando está de acuerdo con "Estadísticas"..'),
     'acceptAll' => Yii::t('cookie-consent', 'Aceptar'),
     'controlsOpen' => false,
     'detailsOpen' => false,
-    // Yii::t('cookie-consent', 'Detalles'),
     'learnMore' =>  false,
-    // Yii::t('cookie-consent', 'Declaracion de privacidad'),
-    // 'visibleControls' => true,
-    // 'visibleDetails' => true,
-    //  'link' => '#',
-    //  'consent' => [
-    //      'necessary' => [
-    //          'label' => Yii::t('cookie-consent', 'Necesario'),
-    //          'checked' => true,
-    //          'disabled' => true
-    //       ],
-    //      'statistics' => [
-    //          'label' => Yii::t('cookie-consent', 'Estadísticas'),
-    //          'cookies' => [
-    //              ['name' => '_ga'],
-    //              ['name' => '_gat', 'domain' => '', 'path' => '/'],
-    //              ['name' => '_gid', 'domain' => '', 'path' => '/']
-    //          ],
-    //          'details' => [
-    //              [
-    //                  'title' => Yii::t('cookie-consent', 'Google Analytics'),
-    //                  'description' => Yii::t('cookie-consent', 'Crear datos de estadísticas')
-
-    //              ],
-    //              [
-    //                  'title' => Yii::t('cookie-consent', 'Goal'),
-    //                  'description' => Yii::t('cookie-consent', '_ga, _gat, _gid, _gali')
-
-    //              ]
-    //          ]
-    // //     ]
-    //  ]
 ]) ?>
     
 
