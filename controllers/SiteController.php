@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-
+use app\models\Comunidades;
 use Yii;
 use app\models\ComunidadesSearch;
 use yii\filters\AccessControl;
@@ -66,11 +66,11 @@ class SiteController extends Controller
 
         $searchModel = new ComunidadesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        // var_dump($query->createCommand()->getRawSql());
+        $count = Comunidades::find()->count();
         
         return $this->render('index',[
             'dataProvider' => $dataProvider,
-            
+            'count' => $count
         ]);
     }
 
