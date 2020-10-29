@@ -178,6 +178,19 @@ VALUES ('Escribir es para todos',
         'Estaís todos invitados formar parte de la comunidad para escritores animaté 
          y comparte tus ideas a con todos nosotros', 1);
 
+
+INSERT INTO comunidades (denom, descripcion, propietario)
+VALUES ('Viajes', 
+        'Si te gusta viajar y comentar tus grandes aventuras esta es tu comunidad', 1);
+
+INSERT INTO comunidades (denom, descripcion, propietario)
+VALUES ('Videojuegos', 
+        'Los videojuegos estan a la orden del día disfruta con más personas de este hobbit', 1);
+
+INSERT INTO comunidades (denom, descripcion, propietario)
+VALUES ('Ciencialistas', 
+        '¿Buscas una comunidad de aficionados a la ciencia? Entra aquí y comenta tus conocimientos', 1);
+
 INSERT INTO blogs (titulo, descripcion, cuerpo, comunidad_id, usuario_id)
 VALUES ('Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whiliam Shakespeare',  
         'Lo mejor que me he leído hasta ahora de Shakespeare: 
