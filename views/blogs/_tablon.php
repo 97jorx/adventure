@@ -16,7 +16,7 @@ use yii\widgets\LinkPager;
 </head>
 
   
-  <div class="container">
+  <div itemtype="adventureSchema.org/blogs" class="container">
     <div class="row">
       <div class="col-md-8">
         <h1 class="my-4"><?= $this->title?></h1>
@@ -26,17 +26,17 @@ use yii\widgets\LinkPager;
           <h2><small><?= $model->comunidad->denom ?></small></h2> 
          <?php endif; ?> 
         <div class="card mb-4"> 
-          <img class="card-img-top img-thumbnail" src="<?= Yii::$app->request->baseUrl.'/uploads/test.jpg'?>" alt="Card image cap">
+          <img itemprop="thumbnail" class="card-img-top img-thumbnail" src="<?= Yii::$app->request->baseUrl.'/uploads/test.jpg'?>" alt="Card image cap">
           <div class="card-body">
-            <h2 class="card-title"><?= Html::encode($model->titulo); ?></h2>
+            <h2 temprop="titulo" class="card-title"><?= Html::encode($model->titulo); ?></h2>
             <p class="card-text"></p>
             <?= Html::a('Continuar leyendo...', ['blogs/view', 'id' => $model->id, 'actual' => $actual], ['class' => 'btn btn-primary']) ?>
           </div>
           <div class="card-footer text-muted ml-4">
             Creado <?= Yii::$app->formatter->asDate($model->created_at) ?> por
-            <a href="#"><?= $model->usuario->nombre ?></a>
+            <a itemprop="usuario" href="#"><?= $model->usuario->nombre ?></a>
             <?php $like = Url::to(['blogs/like']); ?>
-            <span class="ml-4"><?= $model->favs ?></span>
+            <span temprop="favoritos" class="ml-4"><?= $model->favs ?></span>
             <?= Icon::show('thumbs-up', ['framework' => Icon::FAS]) ?> 
           </div>
         </div>

@@ -43,7 +43,7 @@ Yii::$app->formatter->locale = 'es-ES';
 
 
 
-<div class="masonry-wrapper">
+<div itemtype="adventureSchema.org/comunidades" class="masonry-wrapper">
     <div class="masonry">
         <?php foreach($dataProvider->models as $model) { ?> 
         <div class="masonry-item">
@@ -52,9 +52,9 @@ Yii::$app->formatter->locale = 'es-ES';
                     <?php $fakeimg = "https://picsum.photos/200/300?random=".$model->id;  ?>
                     <?= Html::a(Html::img($fakeimg), ['blogs/index', 'actual' => $model->id], ['class' => 'card-image']) ?>
                 </div>
-                <h5 class="masonry-title"><b><?= $model->denom  ?></b></h5>
-                <p class="masonry-description"><b><?= $model->descripcion ?></b></p>
-                <p id="r" class="masonry-description"><b><?= Yii::$app->formatter->asDate($model->created_at)?></b></p>
+                <h5 itemprop="titulo" class="masonry-title"><b><?= $model->denom  ?></b></h5>
+                <p itemprop="descripción" class="masonry-description"><b><?= $model->descripcion ?></b></p>
+                <p itemprop="fecha" id="r" class="masonry-description"><b><?= Yii::$app->formatter->asDate($model->created_at)?></b></p>
                 <?php $existe = ($model->existeIntegrante($model->id)) ? ('Salir') : ('Unirse'); ?>
                 <?php $unirse = Url::to(['comunidades/unirse', 'id' => $model->id]); ?>
                 <div class="masonry-bar">
