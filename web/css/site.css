@@ -139,10 +139,19 @@ a.desc:after {
     content: "\e125";
 }
 
+.overlay-div {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.61);
+  color: white;
+  opacity: .7;
+}
 
-
-
-
+.fluid-img > img {
+    object-fit: cover;
+    opacity: 0.7;
+ }
 
 @keyframes efectoEscalar {
     0% {

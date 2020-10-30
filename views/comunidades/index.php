@@ -59,13 +59,11 @@ Yii::$app->formatter->locale = 'es-ES';
         <?php foreach($dataProvider->models as $model) { ?> 
         <div class="masonry-item">
             <div class="masonry-content responsive">
-                <div class="masonry-image">
-                    <?php $fakeimg = "https://picsum.photos/200/300?random=".$model->id;  ?>
-                    <?= Html::a(Html::img($fakeimg), ['blogs/index', 'actual' => $model->id], ['class' => 'card-img-top']) ?>
-                </div>
+                <?php $fakeimg = "https://picsum.photos/800/800?random=".$model->id;  ?>
+                <?= Html::a(Html::img($fakeimg, ['class' => 'card-img-top masonry-img']), ['blogs/index', 'actual' => $model->id]) ?>
                 <h5 itemprop="titulo" class="masonry-title"><b><?= $model->denom  ?></b></h5>
                 <p itemprop="descripción" class="masonry-description"><b><?= $model->descripcion ?></b></p>
-                <p itemprop="fecha" id='r' class="masonry-description"><b><?= Yii::$app->formatter->asDate($model->created_at)?></b></p>
+                <p itemprop="fecha" id='footer' class="masonry-description"><b><?= Yii::$app->formatter->asDate($model->created_at)?></b></p>
                 <?php $existe = ($model->existeIntegrante($model->id)) ? ('Salir') : ('Unirse'); ?>
                 <?php $unirse = Url::to(['comunidades/unirse', 'id' => $model->id]); ?>
                 <div class="masonry-bar">

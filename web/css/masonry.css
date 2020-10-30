@@ -15,15 +15,22 @@ body {
   grid-auto-rows: 0;
 }
 
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 @media only screen and (max-width: 1022px) and (min-width: 0px){
-  /* .masonry {
+  .masonry {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px,1fr));
+    padding: 17px;
+    grid-template-columns: repeat(auto-fill,minmax(160px,1fr));
     grid-auto-flow: column;
-    grid-row-end: span 11;
     grid-auto-columns: minmax(160px,1fr);
-    overflow-x: auto;
-  } */
+    overflow-x: scroll;
+  }
+
 
  .masonry-description {
       width: auto;
@@ -44,30 +51,17 @@ body {
 
 }
 
-
 @media only screen and (max-width: 1023px) and (min-width: 768px) {
   .masonry {
-    grid-template-columns: repeat(3, minmax(100px, 1fr));
+    grid-template-columns: repeat(3);
   }
-  img { 
-    max-width: 100%; 
-  }
+  
 }
 @media only screen and (min-width: 1024px) {
   .masonry {
     grid-template-columns: repeat(4, minmax(100px, 1fr));
   }
-  img { 
-    max-width: 100%; 
-  }
 }
-@media screen and ( min-width:1025px ) and ( max-width: 1280px ) {
-  img {
-    max-width: 100%; 
-  }
-}
-
-
 
 .masonry-item, .masonry-content, .masonry-button {
   border-radius: 5px;
@@ -82,7 +76,6 @@ body {
 }
 .masonry-content {
   overflow: hidden;
-  
 }
 .masonry-item {
   color: black;
@@ -114,15 +107,6 @@ body {
   color: brown;
 }
 
-/* IMAGEN  */
-
-
-.masonry-image {
-  width: 100%;
-  height: auto;
-  
-}
-
 
 /* BARRA DE BOTONES */
 
@@ -148,4 +132,3 @@ body {
   color:brown;
   text-decoration: none;
 }
-
