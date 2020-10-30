@@ -60,7 +60,8 @@ use yii\widgets\LinkPager;
             <?= Html::endForm();?>
         </div>
       </div>
-        <div class="card my-4">
+    </div>
+      <div class="card my-4">
           <h5 class="card-header">Ordenar por... </h5>
           <div class="card-body">
             <div class="row">
@@ -74,18 +75,18 @@ use yii\widgets\LinkPager;
                   </li>
                   <li>
                   <?= Yii::$app->AdvHelper->ordenarBlog($dataProvider, 'favs', 'Favoritos'); ?>  
-                  </li> 
+                  </li>
                 </ul>
               </div>
             </div>
           </div>
         </div>
-        <div class="card my-4">
-          <h5 class="card-header">Side Widget</h5>
-          <div class="card-body">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam excepturi deserunt incidunt suscipit,
-            tempore commodi magni quam quis perspiciatis sapiente blanditiis vitae saepe dolor ipsum aperiam, 
-            eos alias animi dignissimos.
+          <div class="card my-4">
+            <h5 class="card-header">Side Widget</h5>
+              <div class="card-body">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam excepturi deserunt incidunt suscipit, 
+               tempore commodi magni quam quis perspiciatis sapiente blanditiis vitae saepe dolor ipsum aperiam, eos alias animi dignissimos.
+            </div>
           </div>
         </div>
       </div>

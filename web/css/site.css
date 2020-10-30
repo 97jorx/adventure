@@ -3,6 +3,11 @@ body {
     height: 100%;
 }
 
+img{
+    border-radius: 8px;
+}
+
+
 .wrap {
     min-height: 100%;
     height: auto;
@@ -133,6 +138,9 @@ a.desc:after {
 .glyphicon-thumbs-up:before {
     content: "\e125";
 }
+
+
+
 
 
 

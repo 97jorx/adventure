@@ -24,6 +24,17 @@ window.onload = (e) => {
         localStorage.setItem('$user', '$user')
         $("#myModal").modal('show');
     }
+
+$('#next_nav').click(function () {
+    $( "#nav" ).animate({
+        scrollLeft: '+=156px'
+    });
+});
+$('#prev_nav').click(function () {
+    $( "#nav" ).animate({
+        scrollLeft: '-=156px'
+    });
+});
 }
 EOF;
 
@@ -50,11 +61,11 @@ Yii::$app->formatter->locale = 'es-ES';
             <div class="masonry-content responsive">
                 <div class="masonry-image">
                     <?php $fakeimg = "https://picsum.photos/200/300?random=".$model->id;  ?>
-                    <?= Html::a(Html::img($fakeimg), ['blogs/index', 'actual' => $model->id], ['class' => 'card-image']) ?>
+                    <?= Html::a(Html::img($fakeimg), ['blogs/index', 'actual' => $model->id], ['class' => 'card-img-top']) ?>
                 </div>
                 <h5 itemprop="titulo" class="masonry-title"><b><?= $model->denom  ?></b></h5>
                 <p itemprop="descripción" class="masonry-description"><b><?= $model->descripcion ?></b></p>
-                <p itemprop="fecha" id="r" class="masonry-description"><b><?= Yii::$app->formatter->asDate($model->created_at)?></b></p>
+                <p itemprop="fecha" id='r' class="masonry-description"><b><?= Yii::$app->formatter->asDate($model->created_at)?></b></p>
                 <?php $existe = ($model->existeIntegrante($model->id)) ? ('Salir') : ('Unirse'); ?>
                 <?php $unirse = Url::to(['comunidades/unirse', 'id' => $model->id]); ?>
                 <div class="masonry-bar">
