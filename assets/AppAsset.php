@@ -22,7 +22,8 @@ class AppAsset extends AssetBundle
     public $css = [
         'css/site.css',
         'css/masonry.css',
-        'css/jquery-ui.css'
+        'css/jquery-ui.css',
+        'css/cookie-consent.css'
     ];
     public $js = [
         'js/imagesloaded.pkgd.js',

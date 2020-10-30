@@ -1,0 +1,33 @@
+
+.cookie-consent-open,
+.cookie-consent-close,
+.cookie-consent-toggle,
+.cookie-consent-controls-open,
+.cookie-consent-controls-close,
+.cookie-consent-controls-toggle,
+.cookie-consent-details-open,
+.cookie-consent-details-close,
+.cookie-consent-details-toggle,
+.cookie-consent-accept-all,
+.cookie-consent-save {
+    color: #fff !important;
+    text-transform: uppercase;
+    text-decoration: none;
+    background: #ed3330;
+    border-radius: 5px;
+    border: none;
+    transition: all 0.4s ease 0s;
+    background: #000000a8;
+    letter-spacing: 1px;
+    -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
+    transition: all 0.4s ease 0s;
+}
+
+
+
+.cookie-consent-details-toggle, .cookie-consent-controls-toggle {
+    display: none;
+}
+
