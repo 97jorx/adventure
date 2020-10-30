@@ -1,4 +1,10 @@
 
+
+.cookie-consent-popup {
+    background-color: #000000a8;
+    color: white;
+}
+
 .cookie-consent-open,
 .cookie-consent-close,
 .cookie-consent-toggle,

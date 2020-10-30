@@ -5,7 +5,7 @@
 use dmstr\cookieconsent\widgets\CookieConsent;
 use yii\bootstrap4\Html;
 
-
+$this->registerCssFile('@web/css/cookie-consent.css');
 
 ?>
 
