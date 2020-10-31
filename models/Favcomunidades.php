@@ -33,7 +33,7 @@ class Favcomunidades extends \yii\db\ActiveRecord
             [['usuario_id', 'comunidad_id'], 'required'],
             [['usuario_id', 'comunidad_id'], 'default', 'value' => null],
             [['usuario_id', 'comunidad_id'], 'integer'],
-            [['comunidad_id'], 'exist', 'skipOnError' => true, 'targetClass' => Blogs::class, 'targetAttribute' => ['comunidad_id' => 'id']],
+            [['comunidad_id'], 'exist', 'skipOnError' => true, 'targetClass' => Comunidades::class, 'targetAttribute' => ['comunidad_id' => 'id']],
             [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['usuario_id' => 'id']],
         ];
     }
@@ -57,7 +57,7 @@ class Favcomunidades extends \yii\db\ActiveRecord
      */
     public function getComunidad()
     {
-        return $this->hasOne(Blogs::class, ['id' => 'comunidad_id'])->inverseOf('favcomunidades');
+        return $this->hasOne(Comunidades::class, ['id' => 'comunidad_id'])->inverseOf('favcomunidades');
     }
 
     /**

@@ -107,7 +107,7 @@ DROP TABLE IF EXISTS favcomunidades CASCADE;
 CREATE TABLE favcomunidades (
      id           bigserial      PRIMARY KEY
    , usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
-   , comunidad_id bigint         NOT NULL REFERENCES blogs (id)        
+   , comunidad_id bigint         NOT NULL REFERENCES comunidades (id)        
 );
 
 -- TODO RESPONDER COMENTARIOS.

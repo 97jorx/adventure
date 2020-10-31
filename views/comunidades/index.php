@@ -91,9 +91,10 @@ Yii::$app->formatter->locale = 'es-ES';
                             data = JSON.parse(data);
                             $('#fav$id').html(data.fav);
                             $('#like').efect();
-                            $('#like').attr('aria-label', (data.icono) ? ('No me gusta') : ('Me gusta'))
+                            console.log(data);
                         }).fail(function(data, textStatus, jqXHR) {
                             console.log('Error de la solicitud.');
+                            console.log(data);
                         });", 'aria-label' => 'Me gusta', 'data-balloon-pos' => 'up', 'class' => 'masonry-button', 
                     ]); 
                     ?> 
