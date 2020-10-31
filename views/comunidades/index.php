@@ -1,18 +1,13 @@
 <?php
 
-use hoaaah\sbadmin2\widgets\Card;
 use yii\bootstrap4\Html;
-use yii\grid\GridView;
-use yii\widgets\ListView;
-use kartik\detail\DetailView;
+use kartik\icons\FontAwesomeAsset;
 use kartik\icons\Icon;
-use yii\grid\ActionColumn;
 use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ComunidadesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
 $this->params['breadcrumbs'][] = 'Comunidades';
 
 $username = !Yii::$app->user->isGuest;
@@ -58,12 +53,15 @@ Yii::$app->formatter->locale = 'es-ES';
     <div class="masonry">
         <?php foreach($dataProvider->models as $model) { ?> 
         <div class="masonry-item">
-            <div class="masonry-content responsive">
+            <div class="masonry-content">
                 <?php $fakeimg = "https://picsum.photos/800/800?random=".$model->id;  ?>
                 <?= Html::a(Html::img($fakeimg, ['class' => 'card-img-top masonry-img']), ['blogs/index', 'actual' => $model->id]) ?>
                 <h5 itemprop="titulo" class="masonry-title"><b><?= $model->denom  ?></b></h5>
                 <p itemprop="descripción" class="masonry-description"><b><?= $model->descripcion ?></b></p>
-                <p itemprop="fecha" id='footer' class="masonry-description"><b><?= Yii::$app->formatter->asDate($model->created_at)?></b></p>
+                <div class="masonry-details">
+                    <i itemprop="fecha" data-balloon-pos='up'aria-label='<?=Yii::$app->formatter->asDate($model->created_at)?>'><?= Icon::show('clock')?></i> 
+                    <i itemprop="detalles" class='favdetail' ><i><?= $model->favs ?></i><?= Icon::show('heart')?></i>
+                </div>
                 <?php $existe = ($model->existeIntegrante($model->id)) ? ('Salir') : ('Unirse'); ?>
                 <?php $unirse = Url::to(['comunidades/unirse', 'id' => $model->id]); ?>
                 <div class="masonry-bar">
@@ -86,9 +84,21 @@ Yii::$app->formatter->locale = 'es-ES';
                             });"
                     ]); 
                     ?> 
-                    <?= Html::a(Icon::show('heart') , '', ['class' => 'masonry-button']); ?>
-                    <?= Html::a('', ['comunidades/view', 'id' => $model->id], ['class' => 'masonry-button glyphicon glyphicon-eye-open']); ?>
-                    <?= Html::a('', ['delete', 'id' => $model->id], [ 'class' => 'masonry-button glyphicon glyphicon-trash',
+                    <?= Html::a(Icon::show('heart') , ['comunidades/like', 'id' => $model->id], [
+                        'class' => 'masonry-button', 
+                        'aria-label' => 'Me gusta', 
+                        'data-balloon-pos' => 'up'
+                    ]); ?>
+                    <?= Html::a(Icon::show('bar-chart'), ['comunidades/view', 'id' => $model->id], [
+                        'class' => 'masonry-button fa-bar-chart', 
+                        'aria-label' => 'Estadísticas', 
+                        'data-balloon-pos' => 'up'
+                    ]); ?>
+
+                    <?= Html::a(Icon::show('trash'), ['delete', 'id' => $model->id], [
+                        'class' => 'masonry-button',
+                        'aria-label' => 'Borrar', 
+                        'data-balloon-pos' => 'up',
                                 'data' => [
                                         'confirm' => 'Are you sure you want to delete this item?',
                                         'method' => 'post',
@@ -102,7 +112,7 @@ Yii::$app->formatter->locale = 'es-ES';
     </div>
 
 
-    <div id="myModal" class="modal fade" role="dialog">
+<div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog ">
         <div id="color" class="modal-content">
             <div class="modal-body">
@@ -111,7 +121,4 @@ Yii::$app->formatter->locale = 'es-ES';
         </div>
     </div>
 </div>
-
-
-
 

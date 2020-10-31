@@ -139,6 +139,19 @@ a.desc:after {
     content: "\e125";
 }
 
+.fa-bar-chart:before {
+    content: "\f080";
+    color: aqua;
+}
+
+.fa-heart:before {
+    color:red;
+}
+
+.fa-trash:before {
+    color: rgba(128, 0, 6, 0.884);
+}
+
 .overlay-div {
   height: 100%;
   width: 100%;
@@ -152,6 +165,19 @@ a.desc:after {
     object-fit: cover;
     opacity: 0.7;
  }
+
+
+.card-details {
+    position:absolute;
+    left:40%;
+    top:-20px;
+    border-radius:50%;
+}
+
+.card-font {
+    font-size: 0.6rem;
+}
+
 
 @keyframes efectoEscalar {
     0% {

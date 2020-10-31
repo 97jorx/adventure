@@ -97,20 +97,38 @@ body {
   margin-bottom: 1rem; 
 }
 
-.masonry-details {
-  padding: 1.5rem;
-  font-size: .75rem;
-  border-top: 1px solid black;
+
+
+/* BARRA  DE DETALLES*/
+
+
+.favdetail i{
+  margin-right: .5rem;
 }
 
-#r {
-  color: brown;
+.masonry-details {
+  display: grid;
+  grid-template-columns: auto auto auto auto; 
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  font-size: 0.7rem;
+  bottom: 0px; 
+  color: white;
+  background-color: rgba(0, 0, 0, 0.809);
+  border-radius: 0 0 5px 5px;
 }
+
+
+.masonry-details i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 
 
 /* BARRA DE BOTONES */
-
-
 .masonry-bar {
   display: grid;
   grid-template-columns: auto auto auto auto; 
