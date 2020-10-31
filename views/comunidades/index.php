@@ -102,6 +102,12 @@ Yii::$app->formatter->locale = 'es-ES';
                         'aria-label' => 'Estadísticas', 
                         'data-balloon-pos' => 'up'
                     ]); ?>
+                    <?= Html::a(Icon::show('pencil', ['framework' => Icon::FA]), ['comunidades/update', 'id' => $model->id], [
+                        'class' => 'masonry-button', 
+                        'aria-label' => 'Modificar', 
+                        'data-balloon-pos' => 'up'
+                    ]); ?>
+                    <?php if(Yii::$app->user->identity->username === 'admin') : ?>
                     <?= Html::a(Icon::show('trash'), ['delete', 'id' => $model->id], [
                         'class' => 'masonry-button',
                         'aria-label' => 'Borrar', 
@@ -111,6 +117,7 @@ Yii::$app->formatter->locale = 'es-ES';
                                         'method' => 'post',
                                 ],
                     ]) ?>
+                    <?php endif;?>
                     </div>
                 <?php $fakeimg = "https://picsum.photos/800/800?random=".$model->id;  ?>
                 <?= Html::a(Html::img($fakeimg, ['class' => 'card-img-top masonry-img']), ['blogs/index', 'actual' => $model->id]) ?>

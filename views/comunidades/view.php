@@ -33,6 +33,26 @@ $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gust
         ]) ?>
     <p> -->
     <div class="ml-3">
+        <?= Html::a(Icon::show($like[0], ['id' => 'like', 'framework' => Icon::FAS]), $url, [
+                'onclick' =>"
+                event.preventDefault();
+                var self = $(this);
+                $.ajax({
+                    type: 'POST',
+                    url: '$url',
+                    dataType: 'json',
+                }).done(function(data, textStatus, jqXHR) {
+                    data = JSON.parse(data);
+                    $('#fav').html(data.fav);
+                    $('#like').efect();
+                    $('#like').attr('class', (data.icono) ? ('fas fa-thumbs-down') : ('fas fa-thumbs-up'))
+                    $('#like').attr('title', (data.icono) ? ('No me gusta') : ('Me gusta'))
+                }).fail(function(data, textStatus, jqXHR) {
+                    console.log('Error de la solicitud.');
+                });", 'title' => $like[1]
+            ]); 
+            ?> 
+        <span id="fav" class="ml-3"><?= $model->favs ?></span>
     </div>
 
     <?= DetailView::widget([

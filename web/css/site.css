@@ -152,6 +152,13 @@ a.desc:after {
     color: rgba(128, 0, 6, 0.884);
 }
 
+.fa-pencil:before {
+    content: "\f303";
+    color:green;
+}
+
+
+
 .overlay-div {
   height: 100%;
   width: 100%;
