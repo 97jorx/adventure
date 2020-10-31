@@ -219,18 +219,16 @@ class ComunidadesController extends Controller
      * Add row into Favoritos table.
      * @param integer $blogid es el ID del blog.
      */
-    public function actionLike()
+    public function actionLike($id)
     {
-        
         Yii::$app->response->format = Response::FORMAT_JSON;
         $usuarioid = Yii::$app->user->id;
-        $cid = Yii::$app->request->get('id');
         $fav = new Favcomunidades();
-        $favoritos = Yii::$app->AdvHelper->tieneFavoritos($cid, $this);
+        $favoritos = Yii::$app->AdvHelper->tieneFavoritos($id, $this);
         $json = [];
         if (!Yii::$app->user->isGuest) {
             if(!$favoritos->exists()){
-                $fav->comunidad_id = $cid;
+                $fav->comunidad_id = $id;
                 $fav->usuario_id = $usuarioid;
                 $fav->save();
                 $json = [
@@ -247,7 +245,7 @@ class ComunidadesController extends Controller
         } else {
             return $this->redirect(['site/login']);
         }
-        return json_encode(array_merge($json, ['fav' => $this->findModel($cid)->favs]));
+        return json_encode(array_merge($json, ['fav' => $this->findModel($id)->favs]));
     }
 
 
