@@ -20,13 +20,13 @@ use yii\widgets\LinkPager;
     <div class="row">
       <div class="col-md-8">
         <h1 class="my-4"><?= $this->title?></h1>
-        <?php $index = 0; foreach($dataProvider->models as $model) { ?> 
-          <?php if($index == 0): ?>  
+        <?php $index = 0; foreach($dataProvider->models as $model) : ?> 
+          <?php if ($index == 0): ?>  
             <?php $model->comunidad->denom;?>
           <h2><small><?= $model->comunidad->denom ?></small></h2> 
          <?php endif; ?> 
         <div class="card mb-4"> 
-          <img itemprop="thumbnail" class="card-img-top img-thumbnail" src="<?= Yii::$app->request->baseUrl.'/uploads/test.jpg'?>" alt="Card image cap">
+          <img itemprop="thumbnail" class="card-img-top img-thumbnail" src="<?= Yii::$app->request->baseUrl . '/uploads/test.jpg'?>" alt="Card image cap">
           <div class="card-body">
             <h2 temprop="titulo" class="card-title"><?= Html::encode($model->titulo); ?></h2>
             <p class="card-text"></p>
@@ -40,7 +40,7 @@ use yii\widgets\LinkPager;
             <?= Icon::show('thumbs-up', ['framework' => Icon::FAS]) ?> 
           </div>
         </div>
-        <?php $index++;} ?>
+        <?php $index++; endforeach; ?>
         <?= LinkPager::widget([
             'pagination' => $dataProvider->pagination,
         ]);?>
