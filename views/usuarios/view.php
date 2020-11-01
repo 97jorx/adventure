@@ -28,7 +28,7 @@ $this->registerCssFile("@web/css/perfil.css");
            <?php $fakeimg = "https://picsum.photos/300/300?random=".$model->id;  ?>
            <?= Html::a(Html::img($fakeimg, ['class' => 'photo'])) ?>
         </div>
-        <h4 class="name"><?= strtoupper($model->nombre) ?></h4>
+        <h4 class="nombre"><?= strtoupper($model->nombre) ?></h4>
         <p class="info"><?= $model->rol ?></p>
         <p class="info"><?= $model->email ?></p>
         <div class="stats row">
@@ -51,10 +51,17 @@ $this->registerCssFile("@web/css/perfil.css");
         <ul class="nav-perfil">
           <li>Blogs creados</li>
         </ul>
-        <div class="row gallery">
-          <div class="col-md-4">
-           <?php $fakeimg = "https://picsum.photos/800/800?random=".$model->id;  ?>
-           <?= Html::a(Html::img($fakeimg)) ?>
+        <div class="tab-content">
+          <div class="row gallery">
+            <div class="col-md-4">
+                <?php $fakeimg = "https://picsum.photos/800/800?random=".$model->id;  ?>
+                <?= Html::a(Html::img($fakeimg)) ?>
+                <div id="menu3" class="tab-pane fade">
+                  <h3>Menu 3</h3>
+                  <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -2,12 +2,14 @@
 
 namespace app\controllers;
 
+use app\models\Blogs;
 use app\models\Perfil;
 use app\models\Perfiles;
 use Yii;
 use app\models\Usuarios;
 use app\models\UsuariosSearch;
 use yii\bootstrap4\ActiveForm;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -88,14 +90,20 @@ class UsuariosController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView()
+    public function actionView($username)
     {
-        $id = Yii::$app->user->identity->id;
-        $count = new Usuarios;
+        $id = Usuarios::find('id')->where(['username' => $username])->scalar();
+        $blogs = Blogs::find()->where(['usuario_id' => $id]);    
+        
+        $dataProvider = new ActiveDataProvider([
+            'query' => $blogs,
+        ]);
+
         if(!Yii::$app->user->isGuest){
             return $this->render('view', [
                 'model' => $this->findModel($id),
-                'count' => $count->countBlogs(),
+                'count' => $blogs->count(),
+                'dataProvider' => $dataProvider
             ]);
         }
         return $this->redirect(['site/login']);
