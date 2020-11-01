@@ -23,7 +23,7 @@ class AppAsset extends AssetBundle
         'css/site.css',
         'css/masonry.css',
         'css/jquery-ui.css',
-        'css/balloon.css'
+        'css/balloon.css',
     ];
     public $js = [
         'js/imagesloaded.pkgd.js',

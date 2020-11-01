@@ -10,40 +10,55 @@ use yii\widgets\DetailView;
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Comunidades', 'url' => ['comunidades/index']];
 $this->params['breadcrumbs'][] = $model->username;
-\yii\web\YiiAsset::register($this);
+
+$this->registerCssFile("@web/css/perfil.css");
+
 ?>
 <div class="usuarios-view">
 
-<!-- 
-    <h1>?= Html::encode($this->title) ?></h1>
-
-    <p>
-        ?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        ?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p> -->
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'username',
-            'nombre',
-            'apellidos',
-            'email:email',
-            'rol',
-            'created_at',
-            'foto_perfil',
-            'bibliografia',
-            'valoracion',
-            'poblacion',
-            'provincia',
-            'pais',
-        ],
-    ]) ?>
-
+<body>
+<div class="container-perfil">
+  <header>
+  </header>
+  <main>
+    <div class="row">
+      <div class="left col-lg-4">
+        <div class="photo-left">
+           <?php $fakeimg = "https://picsum.photos/300/300?random=".$model->id;  ?>
+           <?= Html::a(Html::img($fakeimg, ['class' => 'photo'])) ?>
+        </div>
+        <h4 class="name"><?= strtoupper($model->nombre) ?></h4>
+        <p class="info"><?= $model->rol ?></p>
+        <p class="info"><?= $model->email ?></p>
+        <div class="stats row">
+          <div class="stat col-xs-4" style="padding-right: 50px;">
+            <p class="number-stat">5</p>
+            <p class="desc-stat">Puntuación</p>
+          </div>
+          <div class="stat col-xs-4">
+            <p class="number-stat">4</p>
+            <p class="desc-stat">Blogs creados</p>
+          </div>
+          <div class="stat col-xs-4" style="padding-left: 50px;">
+            <p class="number-stat">38</p>
+            <p class="desc-stat">Seguidores</p>
+          </div>
+        </div>
+        <p class="desc"><?= $model->bibliografia ?></p>
+      </div>
+      <div class="right col-lg-8">
+        <ul class="nav-perfil">
+          <li>Blogs creados</li>
+        </ul>
+        <div class="row gallery">
+          <div class="col-md-4">
+           <?php $fakeimg = "https://picsum.photos/800/800?random=".$model->id;  ?>
+           <?= Html::a(Html::img($fakeimg)) ?>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
 </div>
+</body>
+
