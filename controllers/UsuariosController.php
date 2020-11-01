@@ -91,10 +91,11 @@ class UsuariosController extends Controller
     public function actionView()
     {
         $id = Yii::$app->user->identity->id;
-
+        $count = new Usuarios;
         if(!Yii::$app->user->isGuest){
             return $this->render('view', [
                 'model' => $this->findModel($id),
+                'count' => $count->countBlogs(),
             ]);
         }
         return $this->redirect(['site/login']);
@@ -138,6 +139,8 @@ class UsuariosController extends Controller
         ]);
     }
 
+    
+    
     /**
      * Deletes an existing Usuarios model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

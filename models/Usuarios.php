@@ -183,6 +183,16 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
    }
 
 
+    /** Gets query for [[Blogs count]].
+    *
+    * @return \yii\db\ActiveQuery
+    */
+    public function countBlogs()
+    {
+        return Blogs::find()->where(['usuario_id' => Yii::$app->user->id])->count();
+    }
+
+
 
     public static function findIdentity($id)
     {

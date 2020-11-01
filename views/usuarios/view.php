@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Comunidades', 'url' => ['comunidad
 $this->params['breadcrumbs'][] = $model->username;
 
 $this->registerCssFile("@web/css/perfil.css");
-
+        
 ?>
 
 
@@ -37,7 +37,7 @@ $this->registerCssFile("@web/css/perfil.css");
             <p class="desc-stat">Puntuación</p>
           </div>
           <div class="stat col-xs-4">
-            <p class="number-stat">4</p>
+            <p class="number-stat"><?= $count ?></p>
             <p class="desc-stat">Blogs creados</p>
           </div>
           <div class="stat col-xs-4" style="padding-left: 50px;">
