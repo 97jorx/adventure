@@ -1,3 +1,4 @@
+
 <?php
 
 use yii\bootstrap4\Html;
@@ -14,7 +15,7 @@ $this->params['breadcrumbs'][] = $model->username;
 $this->registerCssFile("@web/css/perfil.css");
 
 ?>
-<div class="usuarios-view">
+
 
 <body>
 <div class="container-perfil">
