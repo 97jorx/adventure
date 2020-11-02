@@ -16,6 +16,7 @@ $this->params['breadcrumbs'][] = $model->username;
 $this->registerCssFile("@web/css/perfil.css");
        
 $js = <<< EOT
+
 $(document).ready(function(){    
       $('.tabs a').click(function(){
         $('.tab-content div').removeClass('active');
@@ -24,7 +25,7 @@ $(document).ready(function(){
         //  if(!$(this).closest('li').hasClass('active')){
         //     $('.tab-content').css('border', 'black 1px solid');
         //  }
-  });
+    });
 });
 
 EOT;
@@ -75,7 +76,7 @@ $this->registerJs($js);
           </nav> 
           <div class="tab-content scroll-vertical">
             <?php foreach($dataProvider->models as $model) : ?>
-              <div id="<?=$model->comunidad_id?>" class='tab-pane <?=$model->comunidad_id?>'>
+              <div id="<?=$model->comunidad_id?>" class='tab-pane active <?=$model->comunidad_id?>'>
               <a name="top"></a>
                 <div class="card mb-3" style="max-width: 540px;" >
                   <div class="row no-gutters">
