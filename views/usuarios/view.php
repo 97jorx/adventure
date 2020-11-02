@@ -14,8 +14,24 @@ $this->params['breadcrumbs'][] = ['label' => 'Comunidades', 'url' => ['comunidad
 $this->params['breadcrumbs'][] = $model->username;
 
 $this->registerCssFile("@web/css/perfil.css");
-        // var_dump($comunidades);
-        // die();
+       
+$js = <<< EOT
+$(document).ready(function(){    
+      $('.tabs a').click(function(){
+        $('.tab-content div').removeClass('active');
+        var hr = $(this).attr("href");
+         $(hr).addClass('active');
+         if(!$(this).closest('li').hasClass('active')){
+            $('.tab-content').css('border', 'black 1px solid');
+         }
+         
+  });
+});
+
+EOT;
+
+$this->registerJs($js);
+
 ?>
 
 
@@ -51,18 +67,17 @@ $this->registerCssFile("@web/css/perfil.css");
         <a href="#top"><button class="btn btn-primary" aria-label='Volver arriba' data-balloon-pos="up"><?= Icon::show('arrow-up') ?></button></a>
       </div>
       <div class="right col-lg-8">
-          <nav class='tabs' >
+          <nav class='tabs' id='activeTab'>
             <ul class="nav nav-tabs">
               <?php foreach($dataProvider2->models as $model) : ?>
-              <li class="nav-link active"><a data-toggle="tab" href="#<?=$model->id?>"><?= $model->denom ?></a></li>
-              <?php endforeach; ?>
+              <li class="nav-link"><a data-toggle="tab" href=".<?=$model->id?>"><?= $model->denom ?></a></li>
+              <?php endforeach; ?>              
             </ul>
-            </nav> 
-           
+          </nav> 
           <div class="tab-content scroll-vertical">
             <?php foreach($dataProvider->models as $model) : ?>
-            <div id="<?=$model->comunidad_id?>" class="tab-pane active in">
-            <a name="top"></a>
+              <div id="<?=$model->comunidad_id?>" class='tab-pane <?=$model->comunidad_id?>'>
+              <a name="top"></a>
                 <div class="card mb-3" style="max-width: 540px;" >
                   <div class="row no-gutters">
                     <div class="col-md-4">
@@ -81,9 +96,8 @@ $this->registerCssFile("@web/css/perfil.css");
                   </div>
                 </div>
               </div>
-            <?php endforeach; ?>
+              <?php endforeach; ?>
           </div>
-          
         </div>
     </div>
   </main>

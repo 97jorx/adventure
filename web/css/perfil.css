@@ -165,7 +165,6 @@ main {
 }
 
 
-
 .tab-content > div{
   filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, .3));
   transition: filter .25s ease-in-out;
