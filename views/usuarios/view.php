@@ -1,6 +1,7 @@
 
 <?php
 
+use kartik\icons\Icon;
 use yii\bootstrap4\Html;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
@@ -46,25 +47,43 @@ $this->registerCssFile("@web/css/perfil.css");
           </div>
         </div>
         <p class="desc"><?= $model->bibliografia ?></p>
+        <a href="#top"><button class="btn btn-primary" aria-label='Volver arriba' data-balloon-pos="up"><?= Icon::show('arrow-up') ?></button></a>
       </div>
       <div class="right col-lg-8">
-        <ul class="nav-perfil">
-          <li>Blogs creados</li>
-        </ul>
-        <div class="tab-content">
-          <div class="row gallery">
-            <div class="col-md-4">
-                <?php $fakeimg = "https://picsum.photos/800/800?random=".$model->id;  ?>
-                <?= Html::a(Html::img($fakeimg)) ?>
-                <div id="menu3" class="tab-pane fade">
-                  <h3>Menu 3</h3>
-                  <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+          <nav class='tabs' >
+            <ul class="nav nav-tabs">
+              <?php foreach($dataProvider->models as $model) : ?>
+              <li class="nav-link active"><a data-toggle="tab" href="#home"><?= $model->comunidad_id ?></a></li>
+              <?php break; ?>
+              <?php endforeach; ?>
+            </ul>
+            </nav> 
+           
+          <div class="tab-content scroll-vertical">
+            <div id="home" class="tab-pane active in">
+            <a name="top"></a>
+              <?php foreach($dataProvider->models as $model) : ?>
+                <div class="card mb-3" style="max-width: 540px; margin-top: 20px;" >
+                  <div class="row no-gutters">
+                    <div class="col-md-4">
+                      <div class='img-holder'>
+                        <?php $fakeimg = "https://picsum.photos/250/250?random=".$model->id;  ?>
+                        <?= Html::a(Html::img($fakeimg)) ?>
+                      </div>
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <h5 class="card-title"><?= $model->titulo ?></h5>
+                        <p class="card-text"><?= $model->descripcion ?></p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              <?php endforeach; ?>
             </div>
           </div>
         </div>
-      </div>
     </div>
   </main>
 </div>
