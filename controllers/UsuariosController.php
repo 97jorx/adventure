@@ -2,17 +2,15 @@
 
 namespace app\controllers;
 
-use app\models\Blogs;
-use app\models\Perfil;
-use app\models\Perfiles;
 use Yii;
+use app\models\Blogs;
+use app\models\Comunidades;
 use app\models\Usuarios;
 use app\models\UsuariosSearch;
 use yii\bootstrap4\ActiveForm;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Response;
 
@@ -93,17 +91,27 @@ class UsuariosController extends Controller
     public function actionView($username)
     {
         $id = Usuarios::find('id')->where(['username' => $username])->scalar();
-        $blogs = Blogs::find()->where(['usuario_id' => $id]);    
+        $blogs = Blogs::find()->where(['usuario_id' => $id]);  
+        $comunidades = Comunidades::find()
+        ->joinWith('blogs b')
+        ->where(['b.usuario_id' => $id])
+        ->groupBy('comunidades.id');  
         
         $dataProvider = new ActiveDataProvider([
             'query' => $blogs,
+        ]);
+
+        $dataProvider2 = new ActiveDataProvider([
+            'query' => $comunidades,
         ]);
 
         if(!Yii::$app->user->isGuest){
             return $this->render('view', [
                 'model' => $this->findModel($id),
                 'count' => $blogs->count(),
-                'dataProvider' => $dataProvider
+                'dataProvider' => $dataProvider,
+                'dataProvider2' => $dataProvider2,
+                'comunidades' => $comunidades
             ]);
         }
         return $this->redirect(['site/login']);

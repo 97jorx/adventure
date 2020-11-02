@@ -14,7 +14,8 @@ $this->params['breadcrumbs'][] = ['label' => 'Comunidades', 'url' => ['comunidad
 $this->params['breadcrumbs'][] = $model->username;
 
 $this->registerCssFile("@web/css/perfil.css");
-        
+        // var_dump($comunidades);
+        // die();
 ?>
 
 
@@ -52,18 +53,17 @@ $this->registerCssFile("@web/css/perfil.css");
       <div class="right col-lg-8">
           <nav class='tabs' >
             <ul class="nav nav-tabs">
-              <?php foreach($dataProvider->models as $model) : ?>
-              <li class="nav-link active"><a data-toggle="tab" href="#home"><?= $model->comunidad_id ?></a></li>
-              <?php break; ?>
+              <?php foreach($dataProvider2->models as $model) : ?>
+              <li class="nav-link active"><a data-toggle="tab" href="#<?=$model->id?>"><?= $model->denom ?></a></li>
               <?php endforeach; ?>
             </ul>
             </nav> 
            
           <div class="tab-content scroll-vertical">
-            <div id="home" class="tab-pane active in">
+            <?php foreach($dataProvider->models as $model) : ?>
+            <div id="<?=$model->comunidad_id?>" class="tab-pane active in">
             <a name="top"></a>
-              <?php foreach($dataProvider->models as $model) : ?>
-                <div class="card mb-3" style="max-width: 540px; margin-top: 20px;" >
+                <div class="card mb-3" style="max-width: 540px;" >
                   <div class="row no-gutters">
                     <div class="col-md-4">
                       <div class='img-holder'>
@@ -80,9 +80,10 @@ $this->registerCssFile("@web/css/perfil.css");
                     </div>
                   </div>
                 </div>
-              <?php endforeach; ?>
-            </div>
+              </div>
+            <?php endforeach; ?>
           </div>
+          
         </div>
     </div>
   </main>
