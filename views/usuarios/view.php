@@ -21,10 +21,9 @@ $(document).ready(function(){
         $('.tab-content div').removeClass('active');
         var hr = $(this).attr("href");
          $(hr).addClass('active');
-         if(!$(this).closest('li').hasClass('active')){
-            $('.tab-content').css('border', 'black 1px solid');
-         }
-         
+        //  if(!$(this).closest('li').hasClass('active')){
+        //     $('.tab-content').css('border', 'black 1px solid');
+        //  }
   });
 });
 
