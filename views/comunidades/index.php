@@ -50,7 +50,7 @@ Yii::$app->formatter->locale = 'es-ES';
 
 
 
-<div itemtype="adventureSchema.org/comunidades" class="masonry-wrapper">
+<div itemscope itemtype="http://schema.org/Blog" class="masonry-wrapper">
     <div class="masonry">
         <?php foreach($dataProvider->models as $model) { ?> 
         <div class="masonry-item">
@@ -122,12 +122,12 @@ Yii::$app->formatter->locale = 'es-ES';
                     </div>
                 <?php $fakeimg = "https://picsum.photos/800/800?random=".$model->id;  ?>
                 <?= Html::a(Html::img($fakeimg, ['class' => 'card-img-top masonry-img']), ['blogs/index', 'actual' => $model->id]) ?>
-                <h5 itemprop="titulo" class="masonry-title"><b><?= $model->denom  ?></b></h5>
-                <p itemprop="descripción" class="masonry-description"><b><?= $model->descripcion ?></b></p>
+                <h5 itemprop="tittle" class="masonry-title"><b><?= $model->denom  ?></b></h5>
+                <p itemprop="description" class="masonry-description"><b><?= $model->descripcion ?></b></p>
                 </div>
                 <div class="masonry-details">
-                    <i itemprop="fecha" data-balloon-pos='up'aria-label='<?=Yii::$app->formatter->asDate($model->created_at)?>'><?= Icon::show('clock')?></i> 
-                    <i itemprop="detalles" class='favdetail' ><i id='fav<?=$model->id?>'><?= $model->favs ?></i><?= Icon::show('heart')?></i>
+                    <i itemprop="date" data-balloon-pos='up'aria-label='<?=Yii::$app->formatter->asDate($model->created_at)?>'><?= Icon::show('clock')?></i> 
+                    <i  class='favdetail' ><i id='fav<?=$model->id?>'><?= $model->favs ?></i><?= Icon::show('heart')?></i>
                 </div>
             </div>
             <?php } ?>

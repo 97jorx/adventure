@@ -17,14 +17,10 @@ $this->registerCssFile("@web/css/perfil.css");
        
 $js = <<< EOT
 $(document).ready(function(){    
-  $('.tab-content').addClass('border-class');
-
-
   $('.nav-link').click(function(){
     $('.nav-link').removeClass('active');    
     $(this).addClass('active');
   });
-
 
   $('.tabs a').click(function(){
       $('.tab-content div').removeClass('active');
@@ -77,11 +73,11 @@ $this->registerJs($js);
           <nav class='tabs' id='activeTab'>
             <ul class="nav nav-tabs">
               <?php foreach($dataProvider2->models as $model) : ?>
-              <li id='current' class="nav-link br-pane"><a data-toggle="tab" href=".<?=$model->id?>"><?= $model->denom ?></a></li>
+              <li  class="nav-link active"><a data-toggle="tab" href=".<?=$model->id?>"><?= $model->denom ?></a></li>
               <?php endforeach; ?>              
             </ul>
           </nav> 
-          <div class="tab-content br-pane scroll-vertical">
+          <div class="tab-content border-class scroll-vertical">
           <a href="#top"><button class="top" aria-label='Volver arriba' data-balloon-pos="right"><?= Icon::show('arrow-up') ?></button></a>
             <?php foreach($dataProvider->models as $model) : ?>
               <div id="<?=$model->comunidad_id?>" class='tab-pane active in <?=$model->comunidad_id?>'>
@@ -98,7 +94,7 @@ $this->registerJs($js);
                       <div class="card-body">
                         <h5 class="card-title"><?= $model->titulo ?></h5>
                         <p class="card-text"><?= $model->descripcion ?></p>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        <p class="card-text"><small class="text-muted"><?= Icon::show('heart') . $model->favs ?></small></p>
                       </div>
                     </div>
                   </div>

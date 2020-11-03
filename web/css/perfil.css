@@ -153,8 +153,10 @@ main {
 
 
 .nav-link.active  {
-  border: 1px grey solid !important;
+  border-bottom: 6px red solid !important;
 }
+
+
 
 .top {
   position: sticky !important;
@@ -170,6 +172,3 @@ main {
 }
 
 
-.border-class {
-  border: 1px grey solid;
-}
