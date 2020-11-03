@@ -16,15 +16,22 @@ $this->params['breadcrumbs'][] = $model->username;
 $this->registerCssFile("@web/css/perfil.css");
        
 $js = <<< EOT
-
 $(document).ready(function(){    
-      $('.tabs a').click(function(){
-        $('.tab-content div').removeClass('active');
-        var hr = $(this).attr("href");
-         $(hr).addClass('active');
-        //  if(!$(this).closest('li').hasClass('active')){
-        //     $('.tab-content').css('border', 'black 1px solid');
-        //  }
+  $('.tab-content').addClass('border-class');
+
+
+  $('.nav-link').click(function(){
+    $('.nav-link').removeClass('active');    
+    $(this).addClass('active');
+  });
+
+
+  $('.tabs a').click(function(){
+      $('.tab-content div').removeClass('active');
+      $(this).addClass('active');
+      $(this).removeClass('active');
+      var hr = $(this).attr("href");
+      $(hr).addClass('active');
     });
 });
 
@@ -64,19 +71,20 @@ $this->registerJs($js);
           </div>
         </div>
         <p class="desc"><?= $model->bibliografia ?></p>
-        <a href="#top"><button class="btn btn-primary" aria-label='Volver arriba' data-balloon-pos="up"><?= Icon::show('arrow-up') ?></button></a>
+       
       </div>
       <div class="right col-lg-8">
           <nav class='tabs' id='activeTab'>
             <ul class="nav nav-tabs">
               <?php foreach($dataProvider2->models as $model) : ?>
-              <li class="nav-link"><a data-toggle="tab" href=".<?=$model->id?>"><?= $model->denom ?></a></li>
+              <li id='current' class="nav-link br-pane"><a data-toggle="tab" href=".<?=$model->id?>"><?= $model->denom ?></a></li>
               <?php endforeach; ?>              
             </ul>
           </nav> 
-          <div class="tab-content scroll-vertical">
+          <div class="tab-content br-pane scroll-vertical">
+          <a href="#top"><button class="top" aria-label='Volver arriba' data-balloon-pos="right"><?= Icon::show('arrow-up') ?></button></a>
             <?php foreach($dataProvider->models as $model) : ?>
-              <div id="<?=$model->comunidad_id?>" class='tab-pane active <?=$model->comunidad_id?>'>
+              <div id="<?=$model->comunidad_id?>" class='tab-pane active in <?=$model->comunidad_id?>'>
               <a name="top"></a>
                 <div class="card mb-3" style="max-width: 540px;" >
                   <div class="row no-gutters">

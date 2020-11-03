@@ -1,10 +1,11 @@
 .container-perfil {
   max-width: 1250px;
+  height: 850px;
   margin: 30px auto 30px;
   padding: 0 !important;
   width: 90%;
   background-color: #fff;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.10), 0 3px 6px rgba(0,0,0,0.10);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.40), 0 6px 12px rgba(0,0,0,0.40);
 }
 
 
@@ -48,6 +49,9 @@ header i {
   }
   .stats div:last-child{
     padding-right: 65px;
+  }
+  .container-perfil{
+   height: auto;
   }
 }
 
@@ -131,44 +135,41 @@ main {
   object-fit: cover;
 }
 
-
-.text-tab h3 {
-  font-size: 1rem;
-}
-
-.text-tab i {
-  color: #888;
-  font-size: 0.5rem;
-}
-
-/* .nav {
-  margin-bottom: 20px !important;
-} */
-
-
 .scroll-vertical{
     max-height: 450px;
     overflow-y: scroll;
 }
 
 
-.tabs .nav-tabs {
-  overflow-x: auto;
-  overflow-y: hidden;
-  flex-wrap: nowrap;
-  
+.card {
+  margin: 25px;
+  box-shadow: 3px 3px 3px rgba(0,0,0,0.40);
 }
 
-.tabs .nav-tabs .nav-link {
-  white-space: nowrap;
-  
-}
-
-
-.tab-content > div{
-  filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, .3));
-  transition: filter .25s ease-in-out;
-  
+.tab-content {
+  margin-bottom: 25px;
+  border-radius: 5px;
 }
 
 
+.nav-link.active  {
+  border: 1px grey solid !important;
+}
+
+.top {
+  position: sticky !important;
+  top: 0;
+  z-index: 9999;
+  font-size: 12px;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.top:hover {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.40), 0 1px 3px rgba(0,0,0,0.40);
+}
+
+
+.border-class {
+  border: 1px grey solid;
+}
