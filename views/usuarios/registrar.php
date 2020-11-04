@@ -45,7 +45,6 @@ $this->registerJs($js);
         <?= $form->field($model, 'apellidos')->textInput(['type' => 'text']) ?>
         <?= $form->field($model, 'contrasena')->passwordInput(['type' => 'password', 'id' => 'password1']) ?>
         <?= $form->field($model, 'password_repeat')->passwordInput(['type' => 'password', 'data-parsley-equalto' => '#password1']) ?>
-         <!-- $form->field($model, 'fecha_nac')->textInput(['id' => 'fecha', , 'data-date-format' => '']) ?>  -->
         <?= $form->field($model, 'fecha_nac')->widget(DatePicker::class,[
             'name' => 'Fecha nacimiento',
             'language' => 'es-ES',

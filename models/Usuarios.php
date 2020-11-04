@@ -47,20 +47,25 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return 'usuarios';
     }
-
+// ^(?=.{3,15}$)[a-zñA-ZÑ]*$ nombre
+// // ^[a-zñA-ZÑ](\s?[a-zñA-ZÑ])*$ apellidos
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['username', 'nombre', 'apellidos', 'email', 'fecha_nac', 'contrasena'], 'required'],
+            [['username', 'nombre', 'apellidos', 'email', 'fecha_nac', 'contrasena'], 'required', 'message' => 'El {attribute} es obligatorio, no puede estar vacío.'],
             [['username', 'nombre', 'apellidos', 'email', 'poblacion', 'provincia', 'pais'], 'trim'],
             [['created_at', 'fecha_nac'], 'safe'],
             ['fecha_nac', 'date', 'format' => 'php:Y/m/d'],
             [['valoracion'], 'default', 'value' => null],
             [['valoracion'], 'integer'],
-            [['username'], 'string', 'max' => 25],
+            [['username'], 'string', 'max' => 15],
+            [['username'], 'match', 'pattern' => '/^[A-Za-z][A-Za-z0-9]{5,15}$/', 'message' => 'El {attribute} es incorrecto o ya esta en uso, intentelo de nuevo.'],
+            [['nombre'], 'match', 'pattern' => '/^(?=.{3,15}$)[a-zñA-ZÑ]*$/', 'message' => 'El {attribute} es incorrecto, vuelva a intentarlo.'],
+            [['apellidos'], 'match', 'pattern' => '/^[a-zñA-ZÑ](\s?[a-zñA-ZÑ])*$/'],
+            [['username'], 'unique', 'message' => '{attribute} Este nombre de usuario ya existe. Por Favor, inserte otro nombre de usuario.'],
             [['nombre', 'apellidos', 'email', 'contrasena', 'auth_key', 'poblacion', 'provincia', 'pais', 'foto_perfil', 'bibliografia'], 'string', 'max' => 255],
             [['rol'], 'string', 'max' => 30],
             [['email'],'unique'],
