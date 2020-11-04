@@ -5,15 +5,14 @@ namespace app\controllers;
 use Yii;
 use app\models\Comunidades;
 use app\models\ComunidadesSearch;
-use app\models\Favblogs;
 use app\models\Favcomunidades;
 use app\models\Integrantes;
+use app\models\UsuariosSearch;
 use kartik\form\ActiveForm;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\helpers\Url;
 use yii\web\Response;
 
 /**
@@ -133,8 +132,13 @@ class ComunidadesController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $searchModel = new UsuariosSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
         return $this->render('update', [
             'model' => $model,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
