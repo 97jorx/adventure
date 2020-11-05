@@ -47,6 +47,13 @@ class ComunidadesController extends Controller
                            return Yii::$app->user->identity->username === 'admin';
                         },
                     ],
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rules, $action) {
+                           return Yii::$app->user->identity->username === 'admin';
+                        },
+                    ],
                 ],
             ],
         ];

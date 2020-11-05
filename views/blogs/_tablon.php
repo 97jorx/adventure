@@ -6,7 +6,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
 
-    $blogs = $dataProvider->models;
+$blogs = $dataProvider->models;
   
     
 ?>
@@ -46,21 +46,11 @@ use yii\widgets\LinkPager;
         ]);?>
       </div>
       <div class="col-md-4">
-        <div class="card my-4">
-          <h5 class="card-header">Búsqueda</h5>
-          <div class="card-body">
-            <!-- $url = Url::To(['blogs/index', 'busqueda' => $busqueda, 'actual' => $actual]);?> -->
-            <?= Html::beginForm(['blogs/index'], 'get') ?>
-            <div class="input-group">
-                <?= Html::textInput('busqueda', $busqueda, ['class' => 'form-control']) ?>
-                <?= Html::textInput('actual', $actual, ['class' => 'form-control', 'hidden' => true]) ?>
-              <span class="input-group-append">
-                <?= Html::submitButton(Icon::show('search'), ['class' => 'btn btn-primary']) ?>
-              </span>
-            <?= Html::endForm();?>
-        </div>
-      </div>
-    </div>
+      <?php echo $this->render('_search', [
+          'model' => $searchModel , 
+          'busqueda' => $busqueda,
+          'actual' => $actual,
+        ]); ?>
       <div class="card my-4">
           <h5 class="card-header">Ordenar por... </h5>
           <div class="card-body">

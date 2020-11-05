@@ -4,6 +4,7 @@ $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 $log = require __DIR__ . '/log.php';
 
+
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
@@ -74,14 +75,17 @@ $config = [
             'timeZone' => 'Europe/Madrid',
         ],
         
+        
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'enableStrictParsing' => false,
             'rules' => [
                 '/comunidad/<actual:\d+>/blogs/index' => 'blogs/index',
+                '/comunidad/<actual:\d+>/blogs/search/<busqueda:\w+>' => 'blogs/search',
                 '/comunidad/<actual:\d+>/blogs/create' => 'blogs/create',
                 '/comunidad/inicio' => 'comunidades/index',
-                // '/comunidad/<actual:\d+>/blogs/<busqueda:\w+>' => 'blogs/index',
+                '/comunidad/estadisticas/<id:\d+>' => 'comunidades/view',
                 '/comunidad/<actual:\d+>/blogs/update/<id:\d+>' => 'blogs/update',
                 '/comunidad/<actual:\d+>/blogs/view/<id:\d+>' => 'blogs/view',
                 '/perfil/usuario/<username:\w+>' => 'usuarios/view',
