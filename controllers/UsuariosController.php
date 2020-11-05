@@ -73,14 +73,25 @@ class UsuariosController extends Controller
      */
     public function actionIndex()
     {
+        $id = Yii::$app->request->get('id');
         $searchModel = new UsuariosSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        if (!isset($id)) {
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        } else {
+            return $this->renderPartial('_userConf.php', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
+
     }
+
+
 
     /**
      * Displays a single Usuarios model.

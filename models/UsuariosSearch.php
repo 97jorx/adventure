@@ -38,11 +38,18 @@ class UsuariosSearch extends Usuarios
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $id = null)
     {
-        $query = Usuarios::find();
+        
+        if (isset($id)) {
+            $query = Usuarios::find();
+        } else {
+            $query = Usuarios::find()
+            ->joinWith('integrantes i')
+            ->where(['i.comunidad_id' => $id]);
+        }
+        
 
-        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

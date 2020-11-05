@@ -19,20 +19,12 @@ $this->params['breadcrumbs'][] = 'Update';
         'model' => $model,
     ]) ?>
 
-<?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-            'username',
-            'nombre',
-            'apellidos',
-            'email:email',
-            'rol',
-            'created_at',
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
+
+
+    <?= Yii::$app->runAction('usuarios/index', [
+        'id' => $model->id
     ]); ?>
 
+    
 
 </div>
