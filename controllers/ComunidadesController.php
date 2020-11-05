@@ -33,18 +33,14 @@ class ComunidadesController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::class,
-                //'only' => ['index'],
+                'only' => ['update'],
                 'rules' => [
-                    [
-                        'allow' => true,
-                        'actions' => ['index', 'create', 'view', 'unirse', 'like'],
-                        'roles' => ['@'],
-                    ],
                     [
                         'allow' => true,
                         'roles' => ['@'],
                         'matchCallback' => function ($rules, $action) {
-                           return Yii::$app->user->identity->username === 'admin';
+                            return Comunidades::esPropietario();
+
                         },
                     ],
                     [
@@ -253,6 +249,21 @@ class ComunidadesController extends Controller
         }
         return json_encode(array_merge($json, ['fav' => $this->findModel($id)->favs]));
     }
+
+
+    /**
+     * Devuelve el propietario a partir del id de la comunidad seleccionada.
+     * @return Boolean retorna un booleano dependiendo si el usuario actual 
+     * es propietario de la comunidad
+     */
+    public function esPropietario(){
+        $id = Yii::$app->request->get('id');
+        $propietario = Comunidades::find();
+        
+        
+        return $propietario;
+    }
+
 
 
     /**

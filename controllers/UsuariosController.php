@@ -24,7 +24,7 @@ class UsuariosController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['index'],
+                'only' => ['update'],
                 'rules' => [
                     [
                         'allow' => true,
@@ -36,7 +36,7 @@ class UsuariosController extends Controller
                     ],
                     // [
                     //     'allow' => true,
-                    //     'actions' => ['view', 'delete'],
+                    //     'actions' => ['view', 'delete', 'update'],
                     //     'roles' => ['@'],
                     //     'matchCallback' => function ($rules, $action) {
                     //         return Yii::$app->user->identity->username === 'pepe';

@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Comunidades;
 use kartik\icons\Icon;
 use yii\bootstrap4\Html;
 use yii\helpers\Url;
@@ -12,7 +13,6 @@ $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Comunidades', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
-
 
 $url = Url::to(['comunidades/like', 'id' => $model->id]); 
 $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gusta']);

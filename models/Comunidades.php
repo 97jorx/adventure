@@ -85,7 +85,7 @@ class Comunidades extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPropietario()
+    public function getPropietario0()
     {
         return $this->hasOne(Usuarios::class, ['id' => 'propietario'])->inverseOf('comunidades');
     }
@@ -125,6 +125,22 @@ class Comunidades extends \yii\db\ActiveRecord
         }
         return $this->_favs;
     }
+
+
+ /**
+     * Devuelve el propietario a partir del id de la comunidad seleccionada.
+     * @return Boolean retorna un booleano dependiendo si el usuario actual 
+     * es propietario de la comunidad
+     */
+    public static function esPropietario(){
+        $id = Yii::$app->request->get('id');
+        $propietario = Comunidades::find()
+        ->select('propietario')
+        ->where(['id' => $id])->scalar();
+        
+        return $propietario === Yii::$app->user->id;
+    }
+
 
     /**
      * Consulta para mostrar Comunidad por su nombre 

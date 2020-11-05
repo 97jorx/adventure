@@ -115,13 +115,13 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
 
 
     /**
-    * Gets query for [[Comunidades]].
-    *
-    * @return \yii\db\ActiveQuery
-    */
+     * Gets query for [[Comunidades]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
     public function getComunidades()
     {
-        return $this->hasMany(Comunidades::class, ['propietario' => 'id'])->inverseOf('propietario');
+        return $this->hasMany(Comunidades::class, ['propietario' => 'id'])->inverseOf('propietario0');
     }
 
 
