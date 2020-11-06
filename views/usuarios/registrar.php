@@ -21,6 +21,12 @@ $js = <<< EOF
 $('#login-form').on('input', function(){
     $('#login-form').parsley().validate();
 });
+
+$.getJSON('http://www.geoplugin.net/json.gp?jsoncallback=?', function(data) {
+    var geo = JSON.parse(JSON.stringify(data, null, 2));
+    var provincia = geo.geoplugin_regionName;
+    $('#provincia').val(geo.geoplugin_regionName);
+  });
 EOF;
 $this->registerJs($js);
 
@@ -61,15 +67,15 @@ $this->registerJs($js);
                 ],
         ]) ?>
         <?= $form->field($model, 'email')->textInput(['id' => 'email', 'type' => 'email', 'data-parsley-type' => 'email']) ?>
-        <?= $form->field($model, 'poblacion')->textInput() ?>
-        <?= $form->field($model, 'provincia')->textInput() ?>
-        <?= $form->field($model, 'pais')->textInput() ?>
+        <?= $form->field($model, 'poblacion')->textInput(['value' => $ciudad, 'disabled' => 'disabled']) ?>
+        <?= $form->field($model, 'pais')->textInput(['value' => $pais, 'disabled' => 'disabled']) ?>
+        <?= $form->field($model, 'provincia')->textInput(['id' => 'provincia', 'value' => '', 'disabled' => 'disabled']) ?>
         <div class='form-group'>
             <div class='offset-sm-2'>
                 <?= Html::submitButton('Registrar', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
             </div>
         </div>
-
+                <?php  ?>
     <?php ActiveForm::end(); ?>
     
 </div> 
