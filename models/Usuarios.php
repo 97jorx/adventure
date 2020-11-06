@@ -63,7 +63,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
             [['username'], 'match', 'pattern' => '/^[A-Za-z][A-Za-z0-9]{5,15}$/', 'message' => 'El {attribute} es incorrecto o ya esta en uso, intentelo de nuevo.'],
             [['username'], 'uniqueUser'],
             [['nombre'], 'match', 'pattern' => '/^(?=.{3,15}$)[a-zñA-ZÑ]*$/', 'message' => 'El {attribute} es incorrecto, vuelva a intentarlo.'],
-            [['apellidos'], 'match', 'pattern' => '/^[a-zñA-ZÑ](\s?[a-zñA-ZÑ])*$/'],
+            [['apellidos'], 'match', 'pattern' => '/^(?=.{3,15}$)[A-Z][a-z]+(?: [A-Z][a-zñáéíóú]+)?$/'],
             [['nombre', 'apellidos', 'email', 'contrasena', 'auth_key', 'poblacion', 'provincia', 'pais', 'foto_perfil', 'bibliografia'], 'string', 'max' => 255],
             [['rol'], 'string', 'max' => 30],
             [['email'],'unique'],

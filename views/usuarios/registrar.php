@@ -75,7 +75,6 @@ $this->registerJs($js);
                 <?= Html::submitButton('Registrar', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
             </div>
         </div>
-                <?php  ?>
     <?php ActiveForm::end(); ?>
     
 </div> 
