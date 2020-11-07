@@ -61,9 +61,9 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
             [['valoracion'], 'default', 'value' => null],
             [['valoracion'], 'integer'],
             [['username'], 'string', 'max' => 15],
-            [['username'], 'match', 'pattern' => '/^[A-Za-z][A-Za-z0-9]{5,15}$/', 'message' => 'El {attribute} es incorrecto o ya esta en uso, intentelo de nuevo.'],
-            [['username'], 'uniqueUser'],
-            [['nombre'], 'match', 'pattern' => '/^(?=.{3,15}$)[a-zñA-ZÑ]*$/', 'message' => 'El {attribute} es incorrecto, vuelva a intentarlo.'],
+            [['username'], 'unique'],
+            [['username'], 'checkUsername'],
+            [['nombre'], 'match', 'pattern' => '/^(?=.{3,8}$)[a-zñA-ZÑ]*$/', 'message' => 'El {attribute} es incorrecto, vuelva a intentarlo.'],
             [['apellidos'], 'match', 'pattern' => '/^(?=.{3,15}$)[A-Z][a-z]+(?: [A-Z][a-zñáéíóú]+)?$/'],
             [['nombre', 'apellidos', 'email', 'contrasena', 'auth_key', 'poblacion', 'provincia', 'pais', 'foto_perfil', 'bibliografia'], 'string', 'max' => 255],
             [['rol'], 'string', 'max' => 30],
@@ -98,11 +98,11 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             'id' => 'ID',
-            'username' => 'Username',
+            'username' => 'Nombre de usuario',
             'nombre' => 'Nombre',
             'apellidos' => 'Apellidos',
-            'fecha_nac' => 'Fecha Nac', 
-            'email' => 'Email',
+            'fecha_nac' => 'Fecha Nacimiento', 
+            'email' => 'Correo Electrónico',
             'rol' => 'Rol',
             'created_at' => 'Created At',
             'contrasena' => 'Contrasena',
@@ -119,11 +119,13 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
 
 
 
-    public function uniqueUser($attribute,$params)
+    public function checkUsername($attribute,$params)
 	{
-        if(Usuarios::find()->where(['username' => $this->$attribute])){
-            $this->addError('username', 'Funciona');
+        $pattern = '/^[A-Za-z][A-Za-z0-9]{5,8}$/';
+         if(!preg_match($pattern, $this->$attribute)) {
+            $this->addError('username','El usermane es inválido.');
         }
+        
 	}
 
 

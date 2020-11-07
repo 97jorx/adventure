@@ -18,8 +18,8 @@ $this->registerCssFile("@web/css/jquery-ui.css", [
 
 
 $js = <<< EOF
-$('#login-form').on('input', function(){
-    $('#login-form').parsley().validate();
+$('#parsley').on('input', function(){
+    $('#parsley').parsley().validate();
 });
 
 $.getJSON('http://www.geoplugin.net/json.gp?jsoncallback=?', function(data) {
@@ -27,6 +27,8 @@ $.getJSON('http://www.geoplugin.net/json.gp?jsoncallback=?', function(data) {
     var provincia = geo.geoplugin_regionName;
     $('#provincia').val(geo.geoplugin_regionName);
   });
+
+  
 EOF;
 $this->registerJs($js);
 
@@ -38,7 +40,7 @@ $this->registerJs($js);
     <p>Introduzca los siguientes datos para registrarse:</p>
 
     <?php $form = ActiveForm::begin([
-        'id' => 'login-form',
+        'id' => 'parsley',
         'enableAjaxValidation' => true,
         'layout' => 'horizontal',
         'fieldConfig' => [
