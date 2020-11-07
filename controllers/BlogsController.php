@@ -70,7 +70,7 @@ class BlogsController extends Controller
     {
        
         $searchModel = new BlogsSearch();
-        if(isset($_GET['actual']) == null ){
+        if(isset($_GET['actual'])){
             throw new NotFoundHttpException('The requested page does not exist.');
         }
         

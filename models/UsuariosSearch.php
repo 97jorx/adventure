@@ -41,12 +41,13 @@ class UsuariosSearch extends Usuarios
     public function search($params, $id = null)
     {
         
-        if (isset($id)) {
+        if (!isset($id)) {
             $query = Usuarios::find();
         } else {
             $query = Usuarios::find()
             ->joinWith('integrantes i')
-            ->where(['i.comunidad_id' => $id]);
+            ->where(['i.comunidad_id' => $id])
+            ->andWhere(['<>', 'i.usuario_id', 1]);
         }
         
 
