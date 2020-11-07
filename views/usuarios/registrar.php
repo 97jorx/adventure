@@ -16,24 +16,41 @@ $this->registerCssFile("@web/css/jquery-ui.css", [
     'media' => 'print',
 ]);
 
-
+;
 $js = <<< EOF
 $('#parsley').on('input', function(){
     $('#parsley').parsley().validate();
 });
 
-$.getJSON('http://www.geoplugin.net/json.gp?jsoncallback=?', function(data) {
-    var geo = JSON.parse(JSON.stringify(data, null, 2));
-    var provincia = geo.geoplugin_regionName;
-    $('#provincia').val(geo.geoplugin_regionName);
-  });
+if (window.navigator.geolocation) {
+    var failure, success;
+    success = function(position) {
+        $.ajax({
+            url: "https://geolocation-db.com/jsonp",
+            jsonpCallback: "callback",
+            dataType: "jsonp",
+            success: function(location) {
+              $('#pais').val(location.country_name);
+              $('#provincia').val(location.state);
+              $('#poblacion').val(location.city);
+            }
+          });
+    };
+    failure = function(message) {
+      alert('No se ha podido encontrar la localización!');
+    };
+    navigator.geolocation.getCurrentPosition(success, failure, {
+      maximumAge: Infinity,
+      timeout: 5000
+    });
+}
 
-  
 EOF;
 $this->registerJs($js);
 
 
 ?>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=<AIzaSyCcDtT4jEMwzFLwULB2_3ae9teZmq2joJc>&sensor=false&v=3&libraries=geometry"></script>
 <div class='site-login'>
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -48,8 +65,8 @@ $this->registerJs($js);
         ],
     ]); ?>
 
-        <?= $form->field($model, 'username')->textInput(['class' => 'form-control input-lg parsley-validated']) ?>
-        <?= $form->field($model, 'nombre')->textInput(['autofocus' => true, 'type' => 'text']) ?>
+        <?= $form->field($model, 'username')->textInput(['type' => 'text', 'class' => 'form-control input-lg parsley-validated']) ?>
+        <?= $form->field($model, 'nombre')->textInput(['type' => 'text']) ?>
         <?= $form->field($model, 'apellidos')->textInput(['type' => 'text']) ?>
         <?= $form->field($model, 'contrasena')->passwordInput(['type' => 'password', 'id' => 'password1']) ?>
         <?= $form->field($model, 'password_repeat')->passwordInput(['type' => 'password', 'data-parsley-equalto' => '#password1']) ?>
@@ -69,9 +86,9 @@ $this->registerJs($js);
                 ],
         ]) ?>
         <?= $form->field($model, 'email')->textInput(['id' => 'email', 'type' => 'email', 'data-parsley-type' => 'email']) ?>
-        <?= $form->field($model, 'poblacion')->textInput(['value' => $ciudad, 'disabled' => 'disabled']) ?>
-        <?= $form->field($model, 'pais')->textInput(['value' => $pais, 'disabled' => 'disabled']) ?>
-        <?= $form->field($model, 'provincia')->textInput(['id' => 'provincia', 'value' => '', 'disabled' => 'disabled']) ?>
+        <?= $form->field($model, 'poblacion')->hiddenInput(['id' => 'poblacion'])->label(false) ?>
+        <?= $form->field($model, 'pais')->hiddenInput(['id' => 'pais'])->label(false) ?>
+        <?= $form->field($model, 'provincia')->hiddenInput(['id' => 'provincia', 'value' => ''])->label(false) ?>
         <div class='form-group'>
             <div class='offset-sm-2'>
                 <?= Html::submitButton('Registrar', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>

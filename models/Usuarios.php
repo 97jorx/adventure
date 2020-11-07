@@ -104,7 +104,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
             'email' => 'Correo Electrónico',
             'rol' => 'Rol',
             'created_at' => 'Created At',
-            'contrasena' => 'Contrasena',
+            'contrasena' => 'Contraseña',
             'password_repeat' => 'Repetir contraseña',
             'auth_key' => 'Auth Key',
             'poblacion' => 'Poblacion',

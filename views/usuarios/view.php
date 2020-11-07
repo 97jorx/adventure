@@ -72,7 +72,7 @@ $this->registerJs($js);
       </div>
       <div class="right col-lg-8">
           <nav class='tabs' id='activeTab'>
-            <ul class="nav nav-tabs">
+            <ul class="nav nav-tabs only-profile">
               <?php foreach($dataProvider2->models as $model) : ?>
               <li  class="nav-link active"><a data-toggle="tab" href=".<?=$model->id?>"><?= $model->denom ?></a></li>
               <?php endforeach; ?>              
