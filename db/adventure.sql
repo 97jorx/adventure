@@ -57,6 +57,13 @@ CREATE TABLE comunidades (
 -- , galeria_id      bigint         REFERENCES galerias (id)
 );
 
+DROP TABLE IF EXISTS bloqcomunidades CASCADE;
+
+CREATE TABLE bloqcomunidades (
+  id               bigserial     PRIMARY KEY
+, usuario_id       bigint        NOT NULL REFERENCES usuarios (id)
+, bloqueado        bigint        NOT NULL REFERENCES comunidades (id)
+);
 
 
 DROP TABLE IF EXISTS blogs CASCADE;
