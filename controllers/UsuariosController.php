@@ -50,11 +50,7 @@ class UsuariosController extends Controller
     public function actionRegistrar()
     {
         $model = new Usuarios(['scenario' => Usuarios::SCENARIO_CREAR]);
-        $address = Yii::$app->getRequest()->getUserIP();
-        $geoip = new \lysenkobv\GeoIP\GeoIP();
-        $ip = $geoip->ip("79.158.132.204");
-        $ciudad = $ip->city; 
-        $pais = $ip->country; 
+        
 
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
@@ -69,9 +65,6 @@ class UsuariosController extends Controller
 
         return $this->render('registrar', [
             'model' => $model,
-            'ciudad' => $ciudad,
-            'pais' => $pais
-            
         ]);
     }
     

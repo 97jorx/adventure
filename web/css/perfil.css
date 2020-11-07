@@ -152,7 +152,7 @@ main {
 }
 
 
-.nav-link.active  {
+.only-profile > .nav-link.active  {
   border-bottom: 6px red solid !important;
 }
 
