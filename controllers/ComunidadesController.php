@@ -48,7 +48,7 @@ class ComunidadesController extends Controller
                         'allow' => false,
                         'roles' => ['@'],
                         'matchCallback' => function ($rules, $action) {
-                            return Comunidades::estaBloqueado();
+                            return Yii::$app->AdvHelper->estaBloqueado();
 
                         },
                     ],
@@ -248,6 +248,7 @@ class ComunidadesController extends Controller
                 $json = [
                     'mensaje' => 'Se ha dado like a la comunidad',
                     'icono' => 1
+                    
                 ];
             } else {
                 $favoritos->one()->delete();
@@ -270,42 +271,36 @@ class ComunidadesController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionBloquear($id)
+    public function actionBloquear($uid, $id)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
         $user = !Yii::$app->user->isGuest;
-        $cid = Yii::$app->request->get('id');
         $idexist = Bloqcomunidades::find()
-        ->where(['comunidad_id' => $cid])
-        ->andWhere(['bloqueado' => $id]);
-        
+        ->where(['comunidad_id' => $id])
+        ->andWhere(['bloqueado' => $uid]);
         
         $json = [];
             if($user) {
                 if(!$idexist->exists()){
                     $bloq = new Bloqcomunidades();
-                    $bloq->bloqueado = $id;
-                    $bloq->comunidad_id = $cid;
+                    $bloq->bloqueado = $uid;
+                    $bloq->comunidad_id = $id;
                     $bloq->save();
                     $json = [ 
-                        'button' => 'Bloquear',
-                        'mensaje' => 'Se ha bloqueado el usuario correctamente.',
-                        'color' => 'bg-success',
+                            'button' => 'Desbloquear',
+                            'color'  => 'bg-danger',
+                            'mensaje' => 'Se ha bloqueado el usuario correctamente'
                     ];
                 } else {
                     $idexist->one()->delete();
                     $json = [ 
-                        'button' => 'Desbloquear',
-                        'mensaje' => 'Se ha desbloqueado el usuario correctamente.',
-                        'color' => 'bg-danger'
+                        'button' => 'Bloquear',
+                        'color'  => 'bg-success',
+                        'mensaje' => 'Se ha desbloqueado el usuario correctamente'
                     ];
                 }    
             } else {
-                $json = [ 
-                    'button' => 'Bloquear',
-                    'mensaje' => 'Tienes que estar logueado.',
-                    'color' => 'bg-danger'
-                ];
+                $this->redirect('site/login');
             }
             
             return json_encode($json);

@@ -8,7 +8,14 @@ use yii\helpers\Url;
 
 $this->title = 'Configuración de usuario';
 $this->params['breadcrumbs'][] = $this->title;
+
+$js = <<< EOT
+
+EOT;
+$this->registerJs($js);
+
 ?>
+
 <div class="userconf-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -28,9 +35,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{bloquear}',
                 'buttons' => [
-                    'bloquear' => function ($model) {
-                        $bloquear = Url::to(['comunidades/bloquear', 'id' => $model->id]);
-                        return  Html::a('', $bloquear, [
+                    'bloquear' => function ($url, $model) {
+                        $bloquear = Url::to(['comunidades/bloquear', 'uid' => $model->id, 'id' => Yii::$app->request->get('id')]);
+                        $existe = (Yii::$app->AdvHelper->estaBloqueado($model->id, Yii::$app->request->get('id'))) ? ('Desbloquear') : ('Bloquear'); 
+                        return  Html::a($existe, $bloquear, ['class' => 'btn btn-danger',
                             'onclick' =>"
                                 event.preventDefault();
                                 var self = $(this);
@@ -41,8 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 }).done(function(data, textStatus, jqXHR) {
                                     data = JSON.parse(data);
                                     $(self).text(data.button);             
-                                    $('#color').prop('class', data.color);
-                                    $('#mensaje').text(data.mensaje);
+                                    $(body).append(data.modal);
                                     $('#myModal').modal('show');
                                 }).fail(function( data, textStatus, jqXHR ) {
                                     console.log('Error de la solicitud.');
