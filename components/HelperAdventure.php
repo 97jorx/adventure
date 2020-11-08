@@ -4,12 +4,10 @@ namespace app\components;
 
 use app\controllers\BlogsController;
 use app\controllers\ComunidadesController;
-use app\models\Blogs;
-use app\models\Comunidades;
 use app\models\Favblogs;
 use app\models\Favcomunidades;
-use Yii;
 use yii\base\Component;
+use Yii;
 
 
 class HelperAdventure extends Component
@@ -29,8 +27,6 @@ class HelperAdventure extends Component
          'label' =>  $name,
         ]);
     }
-
-
 
      /**
      * 

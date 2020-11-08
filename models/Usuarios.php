@@ -26,6 +26,7 @@ use yii\web\IdentityInterface;
  * @property int|null $valoracion
  *
  * @property Blogs[] $blogs
+ * @property Bloqcomunidades[] $bloqcomunidades
  * @property Comunidades[] $comunidades
  * @property Favblogs[] $favblogs
  * @property Favcomunidades[] $favcomunidades
@@ -147,7 +148,15 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     }
 
 
-
+    /**
+     * Gets query for [[Bloqcomunidades]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBloqcomunidades()
+    {
+        return $this->hasMany(Bloqcomunidades::class, ['bloqueado' => 'id'])->inverseOf('bloqueado0');
+    }
 
     /**
      * Gets query for [[Favcomunidades]].

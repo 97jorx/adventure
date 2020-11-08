@@ -167,7 +167,6 @@ class UsuariosController extends Controller
     }
 
     
-    
     /**
      * Deletes an existing Usuarios model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

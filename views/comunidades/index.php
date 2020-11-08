@@ -108,7 +108,7 @@ Yii::$app->formatter->locale = 'es-ES';
                         'aria-label' => 'Modificar', 
                         'data-balloon-pos' => 'up'
                     ]); ?>
-                    <?php if(Yii::$app->user->identity->username === 'admin') : ?>
+                    <?php if($user === 'admin') : ?>
                     <?= Html::a(Icon::show('trash'), ['delete', 'id' => $model->id], [
                         'class' => 'masonry-button',
                         'aria-label' => 'Borrar', 

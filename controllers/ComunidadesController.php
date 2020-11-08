@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Bloqcomunidades;
 use Yii;
 use app\models\Comunidades;
 use app\models\ComunidadesSearch;
@@ -40,6 +41,14 @@ class ComunidadesController extends Controller
                         'roles' => ['@'],
                         'matchCallback' => function ($rules, $action) {
                             return Comunidades::esPropietario();
+
+                        },
+                    ],
+                    [
+                        'allow' => false,
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rules, $action) {
+                            return Comunidades::estaBloqueado();
 
                         },
                     ],
@@ -165,6 +174,9 @@ class ComunidadesController extends Controller
     }
 
 
+   
+
+
     /**
      * Permite al usuario logueado unirse a la comunidad elegida mediante un botón o salirse.
      * @param id se le pasa el id de la comunidad a la que se quiere unir
@@ -175,7 +187,7 @@ class ComunidadesController extends Controller
     {
 
         Yii::$app->response->format = Response::FORMAT_JSON;
-        $username = !Yii::$app->user->isGuest;
+        $user = !Yii::$app->user->isGuest;
         $uid = Yii::$app->user->id;
         $idexist = Integrantes::find()
         ->where(['comunidad_id' => $id])
@@ -184,7 +196,7 @@ class ComunidadesController extends Controller
         
         $json = [];
 
-        if($username) {
+        if($user) {
             if(!$idexist->exists()){
                 $integrantes = new Integrantes();
                 $integrantes->usuario_id = $uid;
@@ -252,18 +264,53 @@ class ComunidadesController extends Controller
 
 
     /**
-     * Devuelve el propietario a partir del id de la comunidad seleccionada.
-     * @return Boolean retorna un booleano dependiendo si el usuario actual 
-     * es propietario de la comunidad
+     * Bloquea a usuario de la comunidad seleccionada.
+     * Si se borra correctamente la fila se redireccionará hacia el index.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
      */
-    public function esPropietario(){
-        $id = Yii::$app->request->get('id');
-        $propietario = Comunidades::find();
+    public function actionBloquear($id)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $user = !Yii::$app->user->isGuest;
+        $cid = Yii::$app->request->get('id');
+        $idexist = Bloqcomunidades::find()
+        ->where(['comunidad_id' => $cid])
+        ->andWhere(['bloqueado' => $id]);
         
         
-        return $propietario;
+        $json = [];
+            if($user) {
+                if(!$idexist->exists()){
+                    $bloq = new Bloqcomunidades();
+                    $bloq->bloqueado = $id;
+                    $bloq->comunidad_id = $cid;
+                    $bloq->save();
+                    $json = [ 
+                        'button' => 'Bloquear',
+                        'mensaje' => 'Se ha bloqueado el usuario correctamente.',
+                        'color' => 'bg-success',
+                    ];
+                } else {
+                    $idexist->one()->delete();
+                    $json = [ 
+                        'button' => 'Desbloquear',
+                        'mensaje' => 'Se ha desbloqueado el usuario correctamente.',
+                        'color' => 'bg-danger'
+                    ];
+                }    
+            } else {
+                $json = [ 
+                    'button' => 'Bloquear',
+                    'mensaje' => 'Tienes que estar logueado.',
+                    'color' => 'bg-danger'
+                ];
+            }
+            
+            return json_encode($json);
     }
-
+    
 
 
     /**
