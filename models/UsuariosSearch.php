@@ -5,6 +5,7 @@ namespace app\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Usuarios;
+use Yii;
 
 /**
  * UsuariosSearch represents the model behind the search form of `app\models\Usuarios`.
@@ -38,11 +39,19 @@ class UsuariosSearch extends Usuarios
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $id = null)
     {
-        $query = Usuarios::find();
+        $propietario = Yii::$app->user->id;
+        if (!isset($id)) {
+            $query = Usuarios::find();
+        } else {
+            $query = Usuarios::find()
+            ->joinWith('integrantes i')
+            ->where(['i.comunidad_id' => $id])
+            ->andWhere(['not in', 'i.usuario_id', [1, $propietario]]);
+        }
+        
 
-        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

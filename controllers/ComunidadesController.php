@@ -2,10 +2,10 @@
 
 namespace app\controllers;
 
+use app\models\Bloqcomunidades;
 use Yii;
 use app\models\Comunidades;
 use app\models\ComunidadesSearch;
-use app\models\Favblogs;
 use app\models\Favcomunidades;
 use app\models\Integrantes;
 use kartik\form\ActiveForm;
@@ -13,7 +13,6 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\helpers\Url;
 use yii\web\Response;
 
 /**
@@ -35,12 +34,23 @@ class ComunidadesController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::class,
-                //'only' => ['index'],
+                'only' => ['update'],
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'create', 'view', 'unirse', 'like'],
                         'roles' => ['@'],
+                        'matchCallback' => function ($rules, $action) {
+                            return Comunidades::esPropietario();
+
+                        },
+                    ],
+                    [
+                        'allow' => false,
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rules, $action) {
+                            return Yii::$app->AdvHelper->estaBloqueado();
+
+                        },
                     ],
                     [
                         'allow' => true,
@@ -136,6 +146,7 @@ class ComunidadesController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+
     }
 
     /**
@@ -163,6 +174,9 @@ class ComunidadesController extends Controller
     }
 
 
+   
+
+
     /**
      * Permite al usuario logueado unirse a la comunidad elegida mediante un botón o salirse.
      * @param id se le pasa el id de la comunidad a la que se quiere unir
@@ -173,7 +187,7 @@ class ComunidadesController extends Controller
     {
 
         Yii::$app->response->format = Response::FORMAT_JSON;
-        $username = !Yii::$app->user->isGuest;
+        $user = !Yii::$app->user->isGuest;
         $uid = Yii::$app->user->id;
         $idexist = Integrantes::find()
         ->where(['comunidad_id' => $id])
@@ -182,7 +196,7 @@ class ComunidadesController extends Controller
         
         $json = [];
 
-        if($username) {
+        if($user) {
             if(!$idexist->exists()){
                 $integrantes = new Integrantes();
                 $integrantes->usuario_id = $uid;
@@ -234,6 +248,7 @@ class ComunidadesController extends Controller
                 $json = [
                     'mensaje' => 'Se ha dado like a la comunidad',
                     'icono' => 1
+                    
                 ];
             } else {
                 $favoritos->one()->delete();
@@ -247,6 +262,50 @@ class ComunidadesController extends Controller
         }
         return json_encode(array_merge($json, ['fav' => $this->findModel($id)->favs]));
     }
+
+
+    /**
+     * Bloquea a usuario de la comunidad seleccionada.
+     * Si se borra correctamente la fila se redireccionará hacia el index.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionBloquear($uid, $id)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $user = !Yii::$app->user->isGuest;
+        $idexist = Bloqcomunidades::find()
+        ->where(['comunidad_id' => $id])
+        ->andWhere(['bloqueado' => $uid]);
+        
+        $json = [];
+            if($user) {
+                if(!$idexist->exists()){
+                    $bloq = new Bloqcomunidades();
+                    $bloq->bloqueado = $uid;
+                    $bloq->comunidad_id = $id;
+                    $bloq->save();
+                    $json = [ 
+                            'button' => 'Desbloquear',
+                            'color'  => 'bg-danger',
+                            'mensaje' => 'Se ha bloqueado el usuario correctamente'
+                    ];
+                } else {
+                    $idexist->one()->delete();
+                    $json = [ 
+                        'button' => 'Bloquear',
+                        'color'  => 'bg-success',
+                        'mensaje' => 'Se ha desbloqueado el usuario correctamente'
+                    ];
+                }    
+            } else {
+                $this->redirect('site/login');
+            }
+            
+            return json_encode($json);
+    }
+    
 
 
     /**

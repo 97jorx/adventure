@@ -70,10 +70,6 @@ class BlogsController extends Controller
     {
        
         $searchModel = new BlogsSearch();
-        if(isset($_GET['actual']) == null ){
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-        
         $busqueda = Yii::$app->request->get('busqueda', '');
         $actual = Yii::$app->request->get('actual');
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $busqueda, $actual);

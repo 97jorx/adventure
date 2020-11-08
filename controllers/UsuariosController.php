@@ -24,7 +24,7 @@ class UsuariosController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['index'],
+                'only' => ['update'],
                 'rules' => [
                     [
                         'allow' => true,
@@ -36,7 +36,7 @@ class UsuariosController extends Controller
                     ],
                     // [
                     //     'allow' => true,
-                    //     'actions' => ['view', 'delete'],
+                    //     'actions' => ['view', 'delete', 'update'],
                     //     'roles' => ['@'],
                     //     'matchCallback' => function ($rules, $action) {
                     //         return Yii::$app->user->identity->username === 'pepe';
@@ -73,14 +73,25 @@ class UsuariosController extends Controller
      */
     public function actionIndex()
     {
+        $id = Yii::$app->request->get('id');
         $searchModel = new UsuariosSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        if (!isset($id)) {
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        } else {
+            return $this->renderPartial('_userConf.php', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
+
     }
+
+
 
     /**
      * Displays a single Usuarios model.
@@ -155,7 +166,6 @@ class UsuariosController extends Controller
         ]);
     }
 
-    
     
     /**
      * Deletes an existing Usuarios model.

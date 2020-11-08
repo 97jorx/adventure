@@ -44,7 +44,7 @@ CREATE TABLE usuarios
 --);
 
 
-
+-- TABLA DE LAS COMUNIDADES
 DROP TABLE IF EXISTS comunidades CASCADE;
 
 CREATE TABLE comunidades (
@@ -59,6 +59,16 @@ CREATE TABLE comunidades (
 
 
 
+-- TABLA DE LOS USUARIOS BLOQUEADOS 
+DROP TABLE IF EXISTS bloqcomunidades CASCADE;
+
+CREATE TABLE bloqcomunidades (
+     id               bigserial     PRIMARY KEY
+   , bloqueado        bigint        NOT NULL REFERENCES usuarios (id)
+   , comunidad_id     bigint        NOT NULL REFERENCES comunidades (id)
+);
+
+-- TABLA DE LOS BLOGS
 DROP TABLE IF EXISTS blogs CASCADE;
 
 CREATE TABLE blogs (
@@ -93,7 +103,7 @@ CREATE TABLE notas (
 -- , total_comments bigint
 -- );
 
-
+-- TABLA DE LOS BLOGS FAVORITOS DE CADA USUARIO
 DROP TABLE IF EXISTS favblogs CASCADE;
 
 CREATE TABLE favblogs (
@@ -102,6 +112,8 @@ CREATE TABLE favblogs (
    , blog_id      bigint         NOT NULL REFERENCES blogs (id)        
 );
 
+
+-- TABLA DE LAS COMUNIDADES FAVORITAS DE CADA USUARIO
 DROP TABLE IF EXISTS favcomunidades CASCADE;
 
 CREATE TABLE favcomunidades (
