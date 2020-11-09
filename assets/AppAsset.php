@@ -24,6 +24,7 @@ class AppAsset extends AssetBundle
         'css/masonry.css',
         'css/jquery-ui.css',
         'css/balloon.css',
+        'css/parsley.css'
     ];
     public $js = [
         'js/imagesloaded.pkgd.js',
