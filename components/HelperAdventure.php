@@ -59,17 +59,19 @@ class HelperAdventure extends Component
      */
     public static function estaBloqueado($uid = null, $id = null){
         
-        $bloqueado = Bloqcomunidades::find()
-        ->where(['comunidad_id' => $id]);
+        $bloqueado = Bloqcomunidades::find();
         
         if (!isset($uid)) {
-            $uid = Yii::$app->user->id;    
+            $uid = Yii::$app->user->id;
+            $id = Yii::$app->request->get('id');
             return $bloqueado
             ->andWhere(['bloqueado' => $uid])
+            ->where(['comunidad_id' => $id])
             ->exists();
         } else {
             return $bloqueado
             ->andWhere(['bloqueado' => $uid])
+            ->where(['comunidad_id' => $id])
             ->exists();
         }
     }

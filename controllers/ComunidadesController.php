@@ -34,7 +34,6 @@ class ComunidadesController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['update'],
                 'rules' => [
                     [
                         'allow' => true,
@@ -45,10 +44,10 @@ class ComunidadesController extends Controller
                         },
                     ],
                     [
-                        'allow' => false,
+                        'allow' => true,
                         'roles' => ['@'],
                         'matchCallback' => function ($rules, $action) {
-                            return Yii::$app->AdvHelper->estaBloqueado();
+                            return !Yii::$app->AdvHelper->estaBloqueado();
 
                         },
                     ],
@@ -230,8 +229,9 @@ class ComunidadesController extends Controller
 
 
  /**
-     * Add row into Favoritos table.
-     * @param integer $blogid es el ID del blog.
+     * Añade una fila en la tabla de favcomunidades o la quita dependiendo si es
+     * un like o dislike.
+     * @param integer $id es el ID del blog.
      */
     public function actionLike($id)
     {
