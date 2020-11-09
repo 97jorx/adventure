@@ -1,0 +1,6 @@
+/* Mensaje de error para la validación con Parsley.js */
+#error-container {
+    color: red;
+
+}
+

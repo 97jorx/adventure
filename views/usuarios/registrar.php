@@ -50,7 +50,6 @@ $this->registerJs($js);
 
 
 ?>
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=<AIzaSyCcDtT4jEMwzFLwULB2_3ae9teZmq2joJc>&sensor=false&v=3&libraries=geometry"></script>
 <div class='site-login'>
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -64,7 +63,7 @@ $this->registerJs($js);
             'horizontalCssClasses' => ['wrapper' => 'col-sm-5'],
         ],
     ]); ?>
-
+        
         <?= $form->field($model, 'username')->textInput(['type' => 'text', 'class' => 'form-control input-lg parsley-validated']) ?>
         <?= $form->field($model, 'nombre')->textInput(['type' => 'text']) ?>
         <?= $form->field($model, 'apellidos')->textInput(['type' => 'text']) ?>
@@ -85,7 +84,14 @@ $this->registerJs($js);
                 'autocomplete'=>'off',
                 ],
         ]) ?>
-        <?= $form->field($model, 'email')->textInput(['id' => 'email', 'type' => 'email', 'data-parsley-type' => 'email']) ?>
+        <?= $form->field($model, 'email')->textInput([
+            'id' => 'email', 
+            'type' => 'email', 
+            'data-parsley-type' => 'email',
+            'data-parsley-errors-container' => "#error-container",
+            'data-parsley-error-message' => 'El email introducido es incorrecto.',
+        ]) ?>
+        <p id="error-container"></p>
         <?= $form->field($model, 'poblacion')->hiddenInput(['id' => 'poblacion'])->label(false) ?>
         <?= $form->field($model, 'pais')->hiddenInput(['id' => 'pais'])->label(false) ?>
         <?= $form->field($model, 'provincia')->hiddenInput(['id' => 'provincia', 'value' => ''])->label(false) ?>
@@ -94,6 +100,7 @@ $this->registerJs($js);
                 <?= Html::submitButton('Registrar', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
             </div>
         </div>
+        
     <?php ActiveForm::end(); ?>
     
 </div> 
