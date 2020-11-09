@@ -32,15 +32,16 @@ class ComunidadesController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+           
             'access' => [
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'allow' => true,
+                        'allow' => false,
+                        'actions' => ['update'],
                         'roles' => ['@'],
                         'matchCallback' => function ($rules, $action) {
-                            return Comunidades::esPropietario();
-
+                            return !Comunidades::esPropietario();
                         },
                     ],
                     [
@@ -48,7 +49,6 @@ class ComunidadesController extends Controller
                         'roles' => ['@'],
                         'matchCallback' => function ($rules, $action) {
                             return !Yii::$app->AdvHelper->estaBloqueado();
-
                         },
                     ],
                     [

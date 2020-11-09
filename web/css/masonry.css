@@ -31,6 +31,9 @@ body {
     overflow-x: scroll;
   }
 
+  .visible {
+    display: block;
+  }
 
  .masonry-description {
       width: auto;
@@ -48,6 +51,8 @@ body {
       line-clamp: 5;
       overflow: hidden;
   } 
+ 
+  
 
 }
 
@@ -55,12 +60,19 @@ body {
   .masonry {
     grid-template-columns: repeat(3);
   }
+  .visible {
+    display: block;
+  }
   
 }
 @media only screen and (min-width: 1024px) {
   .masonry {
     grid-template-columns: repeat(4, minmax(100px, 1fr));
   }
+  .visible {
+    display: none;
+  }
+  
 }
 
 .masonry-item, .masonry-content, .masonry-button {

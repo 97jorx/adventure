@@ -21,16 +21,14 @@ window.onload = (e) => {
         $("#myModal").modal('show');
     }
 
-$('#next_nav').click(function () {
-    $( "#nav" ).animate({
-        scrollLeft: '+=156px'
-    });
+   
+$(".arrow-left").click(function(){
+    $(".masonry").animate({scrollLeft: "-="+100});
 });
-$('#prev_nav').click(function () {
-    $( "#nav" ).animate({
-        scrollLeft: '-=156px'
-    });
-});
+$(".arrow-right").click(function(){
+    $(".masonry").animate({scrollLeft: "+="+100});
+});        
+    
 }
 EOF;
 
@@ -51,6 +49,7 @@ Yii::$app->formatter->locale = 'es-ES';
 
 
 <div itemscope itemtype="http://schema.org/Blog" class="masonry-wrapper">
+<a class="arrow-left visible"><?= Icon::show('angle-left')?> </a>
     <div class="masonry">
         <?php foreach($dataProvider->models as $model) { ?> 
         <div class="masonry-item">
@@ -132,6 +131,7 @@ Yii::$app->formatter->locale = 'es-ES';
             </div>
             <?php } ?>
         </div>
+        <a class="arrow-right visible" ><?= Icon::show('angle-right')?> </a>
     </div>
 
 
