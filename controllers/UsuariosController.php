@@ -36,10 +36,10 @@ class UsuariosController extends Controller
                     ],
                     // [
                     //     'allow' => true,
-                    //     'actions' => ['view', 'delete'],
+                    //     'actions' => ['registrar'],
                     //     'roles' => ['@'],
                     //     'matchCallback' => function ($rules, $action) {
-                    //         return Yii::$app->user->identity->username === 'pepe';
+                    //         return !Yii::$app->user->isGuest;
                     //     },
                     // ],
                 ],
@@ -49,23 +49,22 @@ class UsuariosController extends Controller
 
     public function actionRegistrar()
     {
-        $model = new Usuarios(['scenario' => Usuarios::SCENARIO_CREAR]);
-        
+            
+            $model = new Usuarios(['scenario' => Usuarios::SCENARIO_CREAR]);
+          
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success', 'Se ha creado el usuario.');
+                return $this->redirect(['site/login']);
+            }
+            if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ActiveForm::validate($model);
+            }
 
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
-        }
-        
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', 'Se ha creado el usuario.');
-            return $this->redirect(['site/login']);
-        }
+            return $this->renderAjax('registrar', [
+                'model' => $model,
+            ]);
 
-
-        return $this->render('registrar', [
-            'model' => $model,
-        ]);
     }
     
     /**

@@ -16,7 +16,7 @@ $this->registerCssFile("@web/css/jquery-ui.css", [
     'media' => 'print',
 ]);
 
-;
+
 $js = <<< EOF
 $('#parsley').on('input', function(){
     $('#parsley').parsley().validate();
@@ -63,7 +63,7 @@ $this->registerJs($js);
             'horizontalCssClasses' => ['wrapper' => 'col-sm-5'],
         ],
     ]); ?>
-        
+
         <?= $form->field($model, 'username')->textInput(['type' => 'text', 'class' => 'form-control input-lg parsley-validated']) ?>
         <?= $form->field($model, 'nombre')->textInput(['type' => 'text']) ?>
         <?= $form->field($model, 'apellidos')->textInput(['type' => 'text']) ?>
@@ -95,12 +95,14 @@ $this->registerJs($js);
         <?= $form->field($model, 'poblacion')->hiddenInput(['id' => 'poblacion'])->label(false) ?>
         <?= $form->field($model, 'pais')->hiddenInput(['id' => 'pais'])->label(false) ?>
         <?= $form->field($model, 'provincia')->hiddenInput(['id' => 'provincia', 'value' => ''])->label(false) ?>
-        <div class='form-group'>
-            <div class='offset-sm-2'>
-                <?= Html::submitButton('Registrar', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+            <div class='form-group'>
+                <div class='offset-sm-2'>
+                    <?= Html::submitButton('Registrar', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                </div>
             </div>
-        </div>
         
     <?php ActiveForm::end(); ?>
     
+
+
 </div> 
