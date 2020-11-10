@@ -52,7 +52,6 @@ $this->registerJs($js);
 ?>
 <div class='site-login'>
     <h1><?= Html::encode($this->title) ?></h1>
-
     <p>Introduzca los siguientes datos para registrarse:</p>
 
     <?php $form = ActiveForm::begin([
@@ -66,9 +65,23 @@ $this->registerJs($js);
 
         <?= $form->field($model, 'username')->textInput(['type' => 'text', 'class' => 'form-control input-lg parsley-validated']) ?>
         <?= $form->field($model, 'nombre')->textInput(['type' => 'text']) ?>
-        <?= $form->field($model, 'apellidos')->textInput(['type' => 'text']) ?>
-        <?= $form->field($model, 'contrasena')->passwordInput(['type' => 'password', 'id' => 'password1']) ?>
-        <?= $form->field($model, 'password_repeat')->passwordInput(['type' => 'password', 'data-parsley-equalto' => '#password1']) ?>
+        <?= $form->field($model, 'apellidos')->textInput([
+            'type' => 'text',
+            'name' => 'apellidos',
+            'data-parsley-error-message' => 'Los apellidos deben estar en Mayúscula y separados por un espacio.',    
+        ]) ?>
+        <?= $form->field($model, 'contrasena')->passwordInput([
+            'id' => 'password1',
+            'type' => 'password',
+            'data-parsley-pattern' => '/((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,15})/g',
+            'data-parsley-error-message' => 'La contraseña debe contener 1 mayúscula, 1 carácter especial, 1 número como mínimo.',
+        ]) ?>
+        <?= $form->field($model, 'password_repeat')->passwordInput([
+            'data-parsley-equalto' => '#password1',
+            'data-parsley-type' => 'password',
+            'data-parsley-pattern' => '/((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,15})/g',
+            'data-parsley-error-message' => 'La contraseña debe contener 1 mayúscula, 1 carácter especial, 1 número como mínimo.',
+        ]) ?>
         <?= $form->field($model, 'fecha_nac')->widget(DatePicker::class,[
             'name' => 'Fecha nacimiento',
             'language' => 'es-ES',
@@ -88,7 +101,6 @@ $this->registerJs($js);
             'id' => 'email', 
             'type' => 'email', 
             'data-parsley-type' => 'email',
-            'data-parsley-errors-container' => "#error-container",
             'data-parsley-error-message' => 'El email introducido es incorrecto.',
         ]) ?>
         <p id="error-container"></p>

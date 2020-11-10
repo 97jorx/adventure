@@ -5,7 +5,6 @@ namespace app\controllers;
 use Yii;
 use app\models\Comunidades;
 use app\models\ComunidadesSearch;
-use app\models\Favblogs;
 use app\models\Favcomunidades;
 use app\models\Integrantes;
 use kartik\form\ActiveForm;
@@ -13,7 +12,6 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\helpers\Url;
 use yii\web\Response;
 
 /**
