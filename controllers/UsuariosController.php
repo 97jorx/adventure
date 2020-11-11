@@ -37,10 +37,14 @@ class UsuariosController extends Controller
                     // [
                     //     'allow' => true,
 <<<<<<< HEAD
+<<<<<<< HEAD
                     //     'actions' => ['view', 'delete', 'update'],
 =======
                     //     'actions' => ['registrar'],
 >>>>>>> [ADD] Agrego una ventana modal para el registrar
+=======
+                    //     'actions' => ['registrar'],
+>>>>>>> ce7bfc7914c6239d3ab7039c33fc5dbcc545872f
                     //     'roles' => ['@'],
                     //     'matchCallback' => function ($rules, $action) {
                     //         return !Yii::$app->user->isGuest;
