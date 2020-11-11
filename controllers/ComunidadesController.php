@@ -13,6 +13,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\ForbiddenHttpException;
 use yii\web\Response;
 
 /**
@@ -32,25 +33,32 @@ class ComunidadesController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-           
+            // 'access' => [
+            //     'class' => AccessControl::class,
+            //     'only' => ['unirse','view','like','bloquear'],
+            //     'rules' => [
+            //         [
+            //             'allow' => true,
+            //             'roles' => ['@'],
+            //             'matchCallback' => function ($rules, $action) {
+            //                 return Yii::$app->AdvHelper->estaBloqueado();
+            //             },
+            //         ],        
+                    
+            //     ],
+            // ],
             'access' => [
                 'class' => AccessControl::class,
+                'only' => ['view','unirse','like','bloquear','update'],
                 'rules' => [
-                    [
-                        'allow' => false,
-                        'actions' => ['update'],
-                        'roles' => ['@'],
-                        'matchCallback' => function ($rules, $action) {
-                            return !Comunidades::esPropietario();
-                        },
-                    ],
-                    [
-                        'allow' => true,
-                        'roles' => ['@'],
-                        'matchCallback' => function ($rules, $action) {
-                            return !Yii::$app->AdvHelper->estaBloqueado();
-                        },
-                    ],
+                    // [
+                    //     'allow' => true,
+                    //     'actions' => ['update'],
+                    //     'roles' => ['@'],
+                    //     'matchCallback' => function ($rules, $action) {
+                    //         return Comunidades::esPropietario();
+                    //     },
+                    // ],
                     [
                         'allow' => true,
                         'roles' => ['@'],
@@ -58,8 +66,16 @@ class ComunidadesController extends Controller
                            return Yii::$app->user->identity->username === 'admin';
                         },
                     ],
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rules, $action) {
+                            return Yii::$app->AdvHelper->estaBloqueado();
+                        },
+                    ],        
                 ],
             ],
+            
         ];
     }
 
@@ -136,16 +152,20 @@ class ComunidadesController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if(Comunidades::esPropietario()){
+        
+            $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        } else {
+            throw new ForbiddenHttpException(Yii::t('yii', 'You are not allowed to perform this action.')); 
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-
     }
 
     /**

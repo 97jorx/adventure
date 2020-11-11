@@ -64,14 +64,14 @@ class HelperAdventure extends Component
         if (!isset($uid)) {
             $uid = Yii::$app->user->id;
             $id = Yii::$app->request->get('id');
-            return $bloqueado
-            ->andWhere(['bloqueado' => $uid])
+            return !$bloqueado
             ->where(['comunidad_id' => $id])
-            ->exists();
+            ->andWhere(['bloqueado' => $uid])->exists();
+            
         } else {
             return $bloqueado
-            ->andWhere(['bloqueado' => $uid])
             ->where(['comunidad_id' => $id])
+            ->andWhere(['bloqueado' => $uid])
             ->exists();
         }
     }

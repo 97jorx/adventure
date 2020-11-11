@@ -10,7 +10,6 @@ $this->title = 'Configuración de usuario';
 $this->params['breadcrumbs'][] = $this->title;
 
 $js = <<< EOT
-
 EOT;
 $this->registerJs($js);
 

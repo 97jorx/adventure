@@ -13,6 +13,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
 use yii\web\Response;
+use yii\filters\VerbFilter;
 
 /**
  * UsuariosController implements the CRUD actions for Usuarios model.
@@ -22,34 +23,10 @@ class UsuariosController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::class,
-                'only' => ['update'],
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'actions' => ['index', 'create', 'update', 'delete'],
-                        'roles' => ['@'],
-                        'matchCallback' => function ($rules, $action) {
-                            return Yii::$app->user->identity->username === 'admin';
-                        },
-                    ],
-                    // [
-                    //     'allow' => true,
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    //     'actions' => ['view', 'delete', 'update'],
-=======
-                    //     'actions' => ['registrar'],
->>>>>>> [ADD] Agrego una ventana modal para el registrar
-=======
-                    //     'actions' => ['registrar'],
->>>>>>> ce7bfc7914c6239d3ab7039c33fc5dbcc545872f
-                    //     'roles' => ['@'],
-                    //     'matchCallback' => function ($rules, $action) {
-                    //         return !Yii::$app->user->isGuest;
-                    //     },
-                    // ],
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'delete' => ['POST'],
                 ],
             ],
         ];
@@ -96,10 +73,7 @@ class UsuariosController extends Controller
                 'dataProvider' => $dataProvider,
             ]);
         }
-
     }
-
-
 
     /**
      * Displays a single Usuarios model.
@@ -174,6 +148,7 @@ class UsuariosController extends Controller
         ]);
     }
 
+    
     
     /**
      * Deletes an existing Usuarios model.
