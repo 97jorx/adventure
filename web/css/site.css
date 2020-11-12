@@ -180,9 +180,21 @@ a.desc:after {
     top:-20px;
     border-radius:50%;
 }
-
 .card-font {
     font-size: 0.6rem;
+}
+
+
+
+/* VENTANA MODAL REGISTRAR */
+.modal-content {
+    width: auto;
+} 
+#createContent{
+  padding-right: 20%;
+}
+#header{
+    padding-left: 20%;
 }
 
 

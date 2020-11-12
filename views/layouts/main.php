@@ -15,7 +15,7 @@ use yii\helpers\Url;
 AppAsset::register($this);
 
 $js= <<<EOT
-$('#createModal').click(function (){
+$('#registrar').click(function (){
     $('#modal').modal('show')
     .find('#createContent')
     .load($(this).attr('value'));
@@ -62,7 +62,7 @@ $this->registerJs($js);
             ['label' => Html::button('Registrar', 
                 [   'value' => Url::to('usuarios/registrar'),  
                     'class' => 'btn btn-success', 
-                    'id' => 'createModal'
+                    'id' => 'registrar'
                 ]) 
             ]
         ];
@@ -117,7 +117,11 @@ $this->registerJs($js);
 </footer>
 
 
-<?php Modal::begin(['id' => 'modal','size' => 'modal-lg']);?>
+<?php Modal::begin([
+    'title' => 'Registrarse',
+    'id' => 'modal',
+    'size' => 'modal-lg',
+]);?>
     <?="<div id='createContent'></div>"?>
 <?php Modal::end();?>
 

@@ -68,13 +68,17 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
             [['nombre', 'apellidos', 'email', 'contrasena', 'auth_key', 'poblacion', 'provincia', 'pais', 'foto_perfil', 'bibliografia'], 'string', 'max' => 255],
             [['rol'], 'string', 'max' => 30],
             [['email'],'unique'],
-            ['fecha_nac', 'date', 'format' => 'php:Y/m/d'],
+            ['fecha_nac', 'date', 'format' => 'php:d/m/Y'],
             ['email', 'email'],
             
             [
                 ['contrasena'],
                 'trim',
                 'on' => [self::SCENARIO_CREAR],
+            ],
+            [
+                ['contrasena'],
+                'match', 'pattern' => '/((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!?¿()=.@#$%]).{8,15})/',
             ],
             [['password_repeat'], 
 
