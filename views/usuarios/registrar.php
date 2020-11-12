@@ -23,8 +23,6 @@ $('#parsley').on('input', function(){
     $('#parsley').parsley().validate();
 });
 
-
-
 if (window.navigator.geolocation) {
     var failure, success;
     success = function(position) {
@@ -84,6 +82,8 @@ $this->registerJs($js);
             'data-parsley-pattern' => '/((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!?¿()=.@#$%]).{8,15})/g',
             'data-parsley-error-message' => 'La contraseña debe contener 1 mayúscula, 1 carácter especial, 1 número como mínimo.',
             'placeholder' => 'Contraseña',
+            'aria-label' => 'La contraseña debe contener 1 mayúscula, 1 carácter especial, 1 número como mínimo.!',
+            'data-balloon-pos' => 'right'
         ])->label(false) ?>
         <?= $form->field($model, 'password_repeat')->passwordInput([
             'data-parsley-equalto' => '#password1',

@@ -60,7 +60,7 @@ $this->registerJs($js);
         $items = [
             ['label' => 'Login', 'url' => ['/site/login']],
             ['label' => Html::button('Registrar', 
-                [   'value' => Url::to('usuarios/registrar'),  
+                [   'value' => Url::to(['usuarios/registrar']),  
                     'class' => 'btn btn-success', 
                     'id' => 'registrar'
                 ]) 
@@ -118,9 +118,18 @@ $this->registerJs($js);
 
 
 <?php Modal::begin([
+    'headerOptions' => [
+        'class' => 'text-center'
+    ],
+    'titleOptions' => [
+        'class' => 'modal-title text-center col-md-11',
+        // 'style' => 'align-items: center'
+    ],
     'title' => 'Registrarse',
     'id' => 'modal',
     'size' => 'modal-lg',
+    
+
 ]);?>
     <?="<div id='createContent'></div>"?>
 <?php Modal::end();?>
