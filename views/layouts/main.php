@@ -20,6 +20,10 @@ $('#login').click(function (){
     $('#modal').modal('show').find('#createContent').load($(this).attr('value'));
 });
 
+$('#to-login').click(function (){
+    $('#modal').modal('show').find('#createContent').load($(this).attr('value'));
+});
+
 $('#registrar').click(function (){
     $('#modal').modal('show') .find('#createContent').load($(this).attr('value'));
 });

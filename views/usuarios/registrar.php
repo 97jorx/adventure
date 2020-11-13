@@ -7,6 +7,7 @@
 use kartik\date\DatePickerAsset;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
+use yii\helpers\Url;
 use yii\jui\DatePicker;
 
 $this->title = 'Registrarse';
@@ -72,7 +73,6 @@ $this->registerJs($js);
         ])->label(false) ?>
         <?= $form->field($model, 'apellidos')->textInput([
             'type' => 'text',
-            // 'name' => 'apellidos',
             'data-parsley-error-message' => 'Los apellidos deben estar en Mayúscula y separados por un espacio.',    
             'placeholder' => 'Apellidos',
         ])->label(false) ?>
@@ -120,7 +120,13 @@ $this->registerJs($js);
         <?= $form->field($model, 'provincia')->hiddenInput(['id' => 'provincia', 'value' => ''])->label(false) ?>
             <div class='form-group'>
                 <div class='offset-sm-2'>
-                    <?= Html::submitButton('Registrar', ['class' => 'btn btn-primary', 'type'=>'button', 'name' => 'login-button']) ?>
+                    <?= Html::submitButton('Registrar',  [
+                        'value' => Url::to(['site/login']),
+                        'class' => 'btn btn-primary', 
+                        'type'=>'button', 
+                        'id' => 'login-button', 
+                        'name' => 'login-button'
+                    ]) ?>
                 </div>
             </div>
         
