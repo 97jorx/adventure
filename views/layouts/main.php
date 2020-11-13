@@ -15,10 +15,13 @@ use yii\helpers\Url;
 AppAsset::register($this);
 
 $js= <<<EOT
+
+$('#login').click(function (){
+    $('#modal').modal('show').find('#createContent').load($(this).attr('value'));
+});
+
 $('#registrar').click(function (){
-    $('#modal').modal('show')
-    .find('#createContent')
-    .load($(this).attr('value'));
+    $('#modal').modal('show') .find('#createContent').load($(this).attr('value'));
 });
 EOT;
 $this->registerJs($js);
@@ -58,10 +61,14 @@ $this->registerJs($js);
     $items = [];
     if(Yii::$app->user->isGuest) {
         $items = [
-            ['label' => 'Login', 'url' => ['/site/login']],
+            ['label' => Html::button('Login', 
+            [   'value' => Url::to(['site/login']),  
+                'class' => 'btn btn-info', 
+                'id' => 'login'
+            ]) ],
             ['label' => Html::button('Registrar', 
                 [   'value' => Url::to(['usuarios/registrar']),  
-                    'class' => 'btn btn-success', 
+                    'class' => 'btn btn-info', 
                     'id' => 'registrar'
                 ]) 
             ]

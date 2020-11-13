@@ -72,7 +72,7 @@ $this->registerJs($js);
         ])->label(false) ?>
         <?= $form->field($model, 'apellidos')->textInput([
             'type' => 'text',
-            'name' => 'apellidos',
+            // 'name' => 'apellidos',
             'data-parsley-error-message' => 'Los apellidos deben estar en Mayúscula y separados por un espacio.',    
             'placeholder' => 'Apellidos',
         ])->label(false) ?>

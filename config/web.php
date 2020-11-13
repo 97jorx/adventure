@@ -96,6 +96,7 @@ $config = [
                 '/comunidad/<actual:\d+>/blogs/view/<id:\d+>' => 'blogs/view',
                 '/perfil/usuario/<username:\w+>' => 'usuarios/view',
                 'usuarios/registrarse' => 'usuarios/registrar',
+                'usuarios/login' => 'site/login',
             ],
         ],
 
