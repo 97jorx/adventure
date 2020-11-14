@@ -1,5 +1,7 @@
 <?php
 
+use yii\helpers\Url;
+
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 $log = require __DIR__ . '/log.php';
@@ -15,6 +17,9 @@ $config = [
     ],
     'language' => 'es-ES',
     'components' => [
+
+        
+
         'geoip' => ['class' => 'lysenkobv\GeoIP\GeoIP'],
         
         'ip2location' => [

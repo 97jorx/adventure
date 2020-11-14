@@ -57,6 +57,8 @@ $this->registerJs($js);
     <?php $form = ActiveForm::begin([
         'id' => 'parsley',
         'enableAjaxValidation' => true,
+        'validateOnChange' => false,
+        'validateOnBlur' => false,
         'layout' => 'horizontal',
         'fieldConfig' => [
             'horizontalCssClasses' => ['wrapper' => 'col-sm-8'],
@@ -67,6 +69,8 @@ $this->registerJs($js);
             'class' => 'form-control input-lg parsley-validated',
             'placeholder' => 'Nombre de Usuario',
          ])->label(false) ?>
+
+    <div class='password-group'>
         <?= $form->field($model, 'nombre')->textInput([
             'type' => 'text',
             'placeholder' => 'Nombre',
@@ -76,22 +80,27 @@ $this->registerJs($js);
             'data-parsley-error-message' => 'Los apellidos deben estar en Mayúscula y separados por un espacio.',    
             'placeholder' => 'Apellidos',
         ])->label(false) ?>
-        <?= $form->field($model, 'contrasena')->passwordInput([
-            'id' => 'password1',
-            'type' => 'password',
-            'data-parsley-pattern' => '/((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!?¿()=.@#$%]).{8,15})/g',
-            'data-parsley-error-message' => 'La contraseña debe contener 1 mayúscula, 1 carácter especial, 1 número como mínimo.',
-            'placeholder' => 'Contraseña',
-            'aria-label' => 'La contraseña debe contener 1 mayúscula, 1 carácter especial, 1 número como mínimo.!',
-            'data-balloon-pos' => 'right'
-        ])->label(false) ?>
-        <?= $form->field($model, 'password_repeat')->passwordInput([
-            'data-parsley-equalto' => '#password1',
-            'data-parsley-type' => 'password',
-            'data-parsley-pattern' => '/((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!?¿()=.@#$%]).{8,15})/g',
-            'data-parsley-error-message' => 'La contraseña debe contener 1 mayúscula, 1 carácter especial, 1 número como mínimo.',
-            'placeholder' => 'Repetir contraseña',
-        ])->label(false) ?>
+    </div>
+
+    <div class='password-group'>
+            <?= $form->field($model, 'contrasena')->passwordInput([
+                'id' => 'password1',
+                'type' => 'password',
+                'data-parsley-pattern' => '/((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!?¿()=.@#$%]).{8,15})/g',
+                'data-parsley-error-message' => 'La contraseña debe contener 1 mayúscula, 1 carácter especial, 1 número como mínimo.',
+                'placeholder' => 'Contraseña',
+                'aria-label' => 'La contraseña debe contener 1 mayúscula, 1 carácter especial, 1 número como mínimo.!',
+                'data-balloon-pos' => 'right'
+            ])->label(false) ?>
+            <?= $form->field($model, 'password_repeat')->passwordInput([
+                'data-parsley-equalto' => '#password1',
+                'data-parsley-type' => 'password',
+                'data-parsley-pattern' => '/((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!?¿()=.@#$%]).{8,15})/g',
+                'data-parsley-error-message' => 'La contraseña debe contener 1 mayúscula, 1 carácter especial, 1 número como mínimo.',
+                'placeholder' => 'Repetir contraseña',
+            ])->label(false) ?>
+      </div>
+
         <?= $form->field($model, 'fecha_nac')->widget(DatePicker::class,[
             'name' => 'Fecha nacimiento',
             'language' => 'es-ES',
