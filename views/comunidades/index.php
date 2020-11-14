@@ -1,7 +1,6 @@
 <?php
 
 use yii\bootstrap4\Html;
-use kartik\icons\FontAwesomeAsset;
 use kartik\icons\Icon;
 use yii\helpers\Url;
 

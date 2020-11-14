@@ -55,22 +55,30 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'nombre', 'apellidos', 'email', 'fecha_nac', 'contrasena'], 'required'],
+            [['username', 'nombre', 'apellidos', 'email', 'fecha_nac', 'contrasena'], 'required', 'message' => 'El campo {attribute} es obligatorio, no puede estar vacío.'],
             [['username', 'nombre', 'apellidos', 'email', 'poblacion', 'provincia', 'pais'], 'trim'],
             [['created_at', 'fecha_nac'], 'safe'],
-            ['fecha_nac', 'date', 'format' => 'php:Y/m/d'],
             [['valoracion'], 'default', 'value' => null],
             [['valoracion'], 'integer'],
-            [['username'], 'string', 'max' => 25],
+            [['username'], 'string', 'max' => 15],
+            [['username'], 'unique'],
+            [['username'], 'checkUsername'],
+            [['nombre'], 'match', 'pattern' => '/^(?=.{3,8}$)[a-zñA-ZÑ]*$/', 'message' => 'El {attribute} es incorrecto, vuelva a intentarlo.'],
+            [['apellidos'], 'match', 'pattern' => '/^(?=.{3,40}$)[A-Z][a-z]+(?: [A-Z][a-zñáéíóú]+)?$/'],
             [['nombre', 'apellidos', 'email', 'contrasena', 'auth_key', 'poblacion', 'provincia', 'pais', 'foto_perfil', 'bibliografia'], 'string', 'max' => 255],
             [['rol'], 'string', 'max' => 30],
             [['email'],'unique'],
+            ['fecha_nac', 'date', 'format' => 'php:d/m/Y'],
             ['email', 'email'],
-            [['username'], 'unique'],
+            
             [
                 ['contrasena'],
                 'trim',
                 'on' => [self::SCENARIO_CREAR],
+            ],
+            [
+                ['contrasena'],
+                'match', 'pattern' => '/((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!?¿()=.@#$%]).{8,15})/',
             ],
             [['password_repeat'], 
 
@@ -94,14 +102,14 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             'id' => 'ID',
-            'username' => 'Username',
+            'username' => 'Nombre de usuario',
             'nombre' => 'Nombre',
             'apellidos' => 'Apellidos',
-            'fecha_nac' => 'Fecha Nac', 
-            'email' => 'Email',
+            'fecha_nac' => 'Fecha Nacimiento', 
+            'email' => 'Correo Electrónico',
             'rol' => 'Rol',
             'created_at' => 'Created At',
-            'contrasena' => 'Contrasena',
+            'contrasena' => 'Contraseña',
             'password_repeat' => 'Repetir contraseña',
             'auth_key' => 'Auth Key',
             'poblacion' => 'Poblacion',
@@ -113,6 +121,16 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         ];
     }
 
+
+
+    public function checkUsername($attribute,$params)
+	{
+        $pattern = '/^[A-Za-z][A-Za-z0-9]{5,8}$/';
+         if(!preg_match($pattern, $this->$attribute)) {
+            $this->addError('username','El usermane es inválido.');
+        }
+        
+	}
 
 
     /**

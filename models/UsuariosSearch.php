@@ -50,8 +50,6 @@ class UsuariosSearch extends Usuarios
             ->where(['i.comunidad_id' => $id])
             ->andWhere(['not in', 'i.usuario_id', [1, $propietario]]);
         }
-        
-
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

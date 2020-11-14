@@ -27,20 +27,6 @@ class IntegrantesController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-            'access' => [
-                'class' => AccessControl::class,
-                //'only' => ['index'],
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'actions' => ['create', 'update', 'delete', 'index'],
-                        'roles' => ['@'],
-                         'matchCallback' => function ($rules, $action) {
-                             return Yii::$app->user->identity->username === 'admin';
-                        },
-                    ],
-                ],
-            ],
         ];
     }
 

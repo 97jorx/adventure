@@ -91,7 +91,7 @@ class SiteController extends Controller
         }
 
         $model->contrasena = '';
-        return $this->render('login', [
+        return $this->renderAjax('login', [
             'model' => $model,
         ]);
     }

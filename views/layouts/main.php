@@ -9,8 +9,27 @@ use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
 use yii\bootstrap4\Breadcrumbs;
 use app\assets\AppAsset;
+use yii\bootstrap4\Modal;
+use yii\helpers\Url;
 
 AppAsset::register($this);
+
+$js= <<<EOT
+
+$('#login').click(function (){
+    $('#modal').modal('show').find('#createContent').load($(this).attr('value'));
+});
+
+$('#to-login').click(function (){
+    $('#modal').modal('show').find('#createContent').load($(this).attr('value'));
+});
+
+$('#registrar').click(function (){
+    $('#modal').modal('show') .find('#createContent').load($(this).attr('value'));
+});
+EOT;
+$this->registerJs($js);
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -26,6 +45,7 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
+
 <div class="wrap">
     <?php
     NavBar::begin([
@@ -38,12 +58,24 @@ AppAsset::register($this);
             'class' => 'justify-content-end',
         ],
     ]);
+
+
+    
     
     $items = [];
     if(Yii::$app->user->isGuest) {
         $items = [
-            ['label' => 'Login', 'url' => ['/site/login']],
-            ['label' => 'Registrarse', 'url' => ['usuarios/registrar']]
+            ['label' => Html::button('Login', 
+            [   'value' => Url::to(['site/login']),  
+                'class' => 'btn btn-info', 
+                'id' => 'login'
+            ]) ],
+            ['label' => Html::button('Registrar', 
+                [   'value' => Url::to(['usuarios/registrar']),  
+                    'class' => 'btn btn-info', 
+                    'id' => 'registrar'
+                ]) 
+            ]
         ];
     } else  {
         $items = [
@@ -58,6 +90,7 @@ AppAsset::register($this);
     
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
+        'encodeLabels' => false,
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'Comunidades', 'url' => ['comunidades/index']],
@@ -65,6 +98,7 @@ AppAsset::register($this);
                 'label'=>  (!Yii::$app->user->isGuest) ? Yii::$app->user->identity->username : 'Iniciar sesión',
                 'items' => $items,
             ],
+            
         ],
     ]);
     NavBar::end();
@@ -93,7 +127,27 @@ AppAsset::register($this);
     </div>
 </footer>
 
+
+<?php Modal::begin([
+    'headerOptions' => [
+        'class' => 'text-center'
+    ],
+    'titleOptions' => [
+        'class' => 'modal-title text-center col-md-11',
+        // 'style' => 'align-items: center'
+    ],
+    'title' => 'Registrarse',
+    'id' => 'modal',
+    'size' => 'modal-lg',
+    
+
+]);?>
+    <?="<div id='createContent'></div>"?>
+<?php Modal::end();?>
+
+
 <?php $this->endBody() ?>
 </body>
+
 </html>
 <?php $this->endPage() ?>

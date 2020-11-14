@@ -7,9 +7,10 @@
 use kartik\date\DatePickerAsset;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
+use yii\helpers\Url;
 use yii\jui\DatePicker;
 
-$this->title = 'Registrar usuario';
+$this->title = 'Registrarse';
 $this->params['breadcrumbs'][] = $this->title;
 
 $this->registerCssFile("@web/css/jquery-ui.css", [
@@ -18,59 +19,116 @@ $this->registerCssFile("@web/css/jquery-ui.css", [
 
 
 $js = <<< EOF
-$('#login-form').on('input', function(){
-    $('#login-form').parsley().validate();
+
+$('#parsley').on('input', function(){
+    $('#parsley').parsley().validate();
 });
+
+if (window.navigator.geolocation) {
+    var failure, success;
+    success = function(position) {
+        $.ajax({
+            url: "https://geolocation-db.com/jsonp",
+            jsonpCallback: "callback",
+            dataType: "jsonp",
+            success: function(location) {
+              $('#pais').val(location.country_name);
+              $('#provincia').val(location.state);
+              $('#poblacion').val(location.city);
+            }
+          });
+    };
+    failure = function(message) {
+      alert('No se ha podido encontrar la localización!');
+    };
+    navigator.geolocation.getCurrentPosition(success, failure, {
+      maximumAge: Infinity,
+      timeout: 5000
+    });
+}
+
 EOF;
 $this->registerJs($js);
 
 
 ?>
+
 <div class='site-login'>
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>Introduzca los siguientes datos para registrarse:</p>
-
     <?php $form = ActiveForm::begin([
-        'id' => 'login-form',
+        'id' => 'parsley',
         'enableAjaxValidation' => true,
         'layout' => 'horizontal',
         'fieldConfig' => [
-            'horizontalCssClasses' => ['wrapper' => 'col-sm-5'],
+            'horizontalCssClasses' => ['wrapper' => 'col-sm-8'],
         ],
     ]); ?>
 
-        <?= $form->field($model, 'username')->textInput(['class' => 'form-control input-lg parsley-validated']) ?>
-        <?= $form->field($model, 'nombre')->textInput(['autofocus' => true, 'type' => 'text']) ?>
-        <?= $form->field($model, 'apellidos')->textInput(['type' => 'text']) ?>
-        <?= $form->field($model, 'contrasena')->passwordInput(['type' => 'password', 'id' => 'password1']) ?>
-        <?= $form->field($model, 'password_repeat')->passwordInput(['type' => 'password', 'data-parsley-equalto' => '#password1']) ?>
-         <!-- $form->field($model, 'fecha_nac')->textInput(['id' => 'fecha', , 'data-date-format' => '']) ?>  -->
+        <?= $form->field($model, 'username')->textInput(['type' => 'text',
+            'class' => 'form-control input-lg parsley-validated',
+            'placeholder' => 'Nombre de Usuario',
+         ])->label(false) ?>
+        <?= $form->field($model, 'nombre')->textInput([
+            'type' => 'text',
+            'placeholder' => 'Nombre',
+        ])->label(false) ?>
+        <?= $form->field($model, 'apellidos')->textInput([
+            'type' => 'text',
+            'data-parsley-error-message' => 'Los apellidos deben estar en Mayúscula y separados por un espacio.',    
+            'placeholder' => 'Apellidos',
+        ])->label(false) ?>
+        <?= $form->field($model, 'contrasena')->passwordInput([
+            'id' => 'password1',
+            'type' => 'password',
+            'data-parsley-pattern' => '/((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!?¿()=.@#$%]).{8,15})/g',
+            'data-parsley-error-message' => 'La contraseña debe contener 1 mayúscula, 1 carácter especial, 1 número como mínimo.',
+            'placeholder' => 'Contraseña',
+            'aria-label' => 'La contraseña debe contener 1 mayúscula, 1 carácter especial, 1 número como mínimo.!',
+            'data-balloon-pos' => 'right'
+        ])->label(false) ?>
+        <?= $form->field($model, 'password_repeat')->passwordInput([
+            'data-parsley-equalto' => '#password1',
+            'data-parsley-type' => 'password',
+            'data-parsley-pattern' => '/((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!?¿()=.@#$%]).{8,15})/g',
+            'data-parsley-error-message' => 'La contraseña debe contener 1 mayúscula, 1 carácter especial, 1 número como mínimo.',
+            'placeholder' => 'Repetir contraseña',
+        ])->label(false) ?>
         <?= $form->field($model, 'fecha_nac')->widget(DatePicker::class,[
             'name' => 'Fecha nacimiento',
             'language' => 'es-ES',
             'options' => [],
-            'dateFormat' => 'yyyy/MM/dd',
+            'dateFormat' => 'dd/M/yyyy',
             'options' => [
                 'changeMonth' => true,
                 'changeYear' => true,
                 'yearRange' => '1996:2099',
                 'buttonImageOnly' => true,
                 'class' => 'form-control',
-                'placeholder' => 'YYYY/MM/D',
+                'placeholder' => 'Fecha de nacimiento',
                 'autocomplete'=>'off',
                 ],
-        ]) ?>
-        <?= $form->field($model, 'email')->textInput(['id' => 'email', 'type' => 'email', 'data-parsley-type' => 'email']) ?>
-        <?= $form->field($model, 'poblacion')->textInput() ?>
-        <?= $form->field($model, 'provincia')->textInput() ?>
-        <?= $form->field($model, 'pais')->textInput() ?>
-        <div class='form-group'>
-            <div class='offset-sm-2'>
-                <?= Html::submitButton('Registrar', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+        ])->label(false) ?>
+        <?= $form->field($model, 'email')->textInput([
+            'id' => 'email', 
+            'type' => 'email', 
+            'data-parsley-type' => 'email',
+            'data-parsley-error-message' => 'El email introducido es incorrecto.',
+            'placeholder'=>'Correo eletrónico' 
+        ])->label(false) ?>
+        <p id="error-container"></p>
+        <?= $form->field($model, 'poblacion')->hiddenInput(['id' => 'poblacion'])->label(false) ?>
+        <?= $form->field($model, 'pais')->hiddenInput(['id' => 'pais'])->label(false) ?>
+        <?= $form->field($model, 'provincia')->hiddenInput(['id' => 'provincia', 'value' => ''])->label(false) ?>
+            <div class='form-group'>
+                <div class='offset-sm-2'>
+                    <?= Html::submitButton('Registrar',  [
+                        'value' => Url::to(['site/login']),
+                        'class' => 'btn btn-primary', 
+                        'type'=>'button', 
+                        'id' => 'login-button', 
+                        'name' => 'login-button'
+                    ]) ?>
+                </div>
             </div>
-        </div>
-
+        
     <?php ActiveForm::end(); ?>
     
-</div> 

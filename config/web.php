@@ -15,7 +15,13 @@ $config = [
     ],
     'language' => 'es-ES',
     'components' => [
-
+        'geoip' => ['class' => 'lysenkobv\GeoIP\GeoIP'],
+        
+        'ip2location' => [
+            'class' => 'frontend\components\IP2Location\Geolocation',
+            'database' => __DIR__ .DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'components'.DIRECTORY_SEPARATOR.'IP2Location'.DIRECTORY_SEPARATOR.'IP2LOCATION-LITE-DB1.BIN',
+            'mode' => 'FILE_IO',
+        ],
         
         'cookieConsentHelper' => [
             'class' => dmstr\cookieconsent\components\CookieConsentHelper::class
@@ -89,6 +95,8 @@ $config = [
                 '/comunidad/<actual:\d+>/blogs/update/<id:\d+>' => 'blogs/update',
                 '/comunidad/<actual:\d+>/blogs/view/<id:\d+>' => 'blogs/view',
                 '/perfil/usuario/<username:\w+>' => 'usuarios/view',
+                'usuarios/registrarse' => 'usuarios/registrar',
+                'usuarios/login' => 'site/login',
             ],
         ],
 
