@@ -13,14 +13,15 @@ use yii\bootstrap4\Modal;
 use yii\helpers\Url;
 
 AppAsset::register($this);
-
 $js= <<<EOT
-$('.login').click(function (){
-    $('#modal').modal('show').find('#createContent').load($(this).attr('value'));
-});
+// $('.login').click(function (){
+//     $('#modal').modal('show').find('#createContent').load($(this).attr('value'));
+//     $('.modal-title').text('Acceder');
+// });
 
 $('#registrar').click(function (){
     $('#modal').modal('show') .find('#createContent').load($(this).attr('value'));
+    $('.modal-title').text('Registrarse');
 });
 EOT;
 $this->registerJs($js);
@@ -60,12 +61,13 @@ $this->registerJs($js);
     $items = [];
     if(Yii::$app->user->isGuest) {
         $items = [
-            ['label' => Html::button('Login', 
-            [   
-                'value' => Url::to(['site/login']),  
-                'class' => 'btn btn-info login', 
-                'id' => 'login'
-            ]) ],
+            ['label' => 'Login', 'url' => ['site/login']],
+            // ['label' => Html::button('Login', 
+            // [   
+            //     'value' => Url::to(['site/login']),  
+            //     'class' => 'btn btn-info login', 
+            //     'id' => 'login'
+            // ]) ],
             ['label' => Html::button('Registrar', 
                 [   
                     'value' => Url::to(['usuarios/registrar']),  
@@ -131,13 +133,10 @@ $this->registerJs($js);
     ],
     'titleOptions' => [
         'class' => 'modal-title text-center col-md-11',
-        // 'style' => 'align-items: center'
     ],
-    'title' => 'Registrarse',
+    'title' => '',
     'id' => 'modal',
     'size' => 'modal-md',
-    
-
 ]);?>
     <?="<div id='createContent'></div>"?>
 <?php Modal::end();?>

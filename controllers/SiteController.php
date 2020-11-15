@@ -11,6 +11,8 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use yii\bootstrap\ActiveForm;
+use yii\helpers\Url;
 
 class SiteController extends Controller
 {
@@ -20,17 +22,22 @@ class SiteController extends Controller
     public function behaviors()
     {
         return [
-            // 'access' => [
-            //     'class' => AccessControl::class,
-            //     'only' => ['logout'],
-            //     'rules' => [
-            //         [
-            //             'actions' => ['logout'],
-            //             'allow' => true,
-            //             'roles' => ['@'],
-            //         ],
-            //     ],
-            // ],
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['login', 'logout'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['login'],
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['logout'],
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
@@ -81,26 +88,22 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
+        // if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+        //     Yii::$app->response->format = Response::FORMAT_JSON;
+        //     return ActiveForm::validate($model);
+        // }
+        if ($model->load(Yii::$app->request->post()) && $model->login()) { 
+            return $this->goHome();
+        } 
+      
+        // if(Yii::$app->request->isAjax){
+        //     return $this->renderAjax('login', ['model' => $model]);
+        // }
 
-        $model->contrasena = '';
-        if (Yii::$app->request->isAjax) {
-            return $this->renderAjax('login', [
-                'model' => $model,
-            ]);
-        } else {
-            return $this->render('login', [
-                'model' => $model,
-            ]);
-        }
+        return $this->render('login', ['model' => $model]);
     }
+   
 
     /**
      * Logout action.

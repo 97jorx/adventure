@@ -39,7 +39,7 @@ if (window.navigator.geolocation) {
           });
     };
     failure = function(message) {
-      alert('No se ha podido encontrar la localización!');
+      console.log('No se ha podido encontrar la localización!');
     };
     navigator.geolocation.getCurrentPosition(success, failure, {
       maximumAge: Infinity,
@@ -57,8 +57,6 @@ $this->registerJs($js);
     <?php $form = ActiveForm::begin([
         'id' => 'parsley',
         'enableAjaxValidation' => true,
-        'validateOnChange' => false,
-        'validateOnBlur' => false,
         'layout' => 'horizontal',
         'fieldConfig' => [
             'horizontalCssClasses' => ['wrapper' => 'col-sm-8'],
