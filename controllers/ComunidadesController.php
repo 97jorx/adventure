@@ -13,6 +13,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\Url;
 use yii\web\ForbiddenHttpException;
 use yii\web\Response;
 
@@ -51,14 +52,6 @@ class ComunidadesController extends Controller
                 'class' => AccessControl::class,
                 'only' => ['view','unirse','like','bloquear','update'],
                 'rules' => [
-                    // [
-                    //     'allow' => true,
-                    //     'actions' => ['update'],
-                    //     'roles' => ['@'],
-                    //     'matchCallback' => function ($rules, $action) {
-                    //         return Comunidades::esPropietario();
-                    //     },
-                    // ],
                     [
                         'allow' => true,
                         'roles' => ['@'],
@@ -152,7 +145,7 @@ class ComunidadesController extends Controller
      */
     public function actionUpdate($id)
     {
-        if(Comunidades::esPropietario()){
+        if(Comunidades::esPropietario() || Yii::$app->user->identity->username === 'admin'){
         
             $model = $this->findModel($id);
 
@@ -192,9 +185,7 @@ class ComunidadesController extends Controller
         return $this->redirect(['index']);
     }
 
-
-   
-
+    
 
     /**
      * Permite al usuario logueado unirse a la comunidad elegida mediante un botón o salirse.
@@ -326,8 +317,7 @@ class ComunidadesController extends Controller
             return json_encode($json);
     }
     
-
-
+    
     /**
      * Finds the Comunidades model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
