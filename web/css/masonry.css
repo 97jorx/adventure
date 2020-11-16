@@ -148,6 +148,9 @@ body {
   text-align: center;
   position: absolute;
   top: 0px; 
+  visibility: hidden;
+  font-size: 2em;
+  transition: transform .6s ease-out;
 }
 
 .masonry-button {
@@ -161,4 +164,14 @@ body {
 .masonry-button:hover{
   color:brown;
   text-decoration: none;
+}
+
+
+.masonry:hover .masonry-bar {
+  visibility: visible;
+}
+
+
+.masonry:hover .masonry-bar{
+  transform: translate(0, -50px);
 }
