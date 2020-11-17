@@ -14,11 +14,19 @@ $user = $username ? (Yii::$app->user->identity->username) : (null);
 
 
 $js = <<< EOF
+$(".masonry-item").hover(
+    function() {
+      var id = $(this).attr('id');
+      $("#masonry-bar"+id).toggleClass("move-top").stop( true, true );
+    } 
+);
+
 window.onload = (e) => { 
-    if (localStorage.getItem('$user') === null && Boolean($username)) {
-        localStorage.setItem('$user', '$user')
-        $("#myModal").modal('show');
-    }
+
+if (localStorage.getItem('$user') === null && Boolean($username)) {
+    localStorage.setItem('$user', '$user')
+    $("#myModal").modal('show');
+}
 
    
 $(".arrow-left").click(function(){
@@ -51,9 +59,9 @@ Yii::$app->formatter->locale = 'es-ES';
 <a class="arrow-left visible"><?= Icon::show('angle-left')?> </a>
     <div class="masonry">
         <?php foreach($dataProvider->models as $model) { ?> 
-        <div class="masonry-item">
+        <div class="masonry-item" id="<?=$model->id?>">
             <div class="masonry-content">
-                <div class="masonry-bar">
+                <div class="masonry-bar" id="masonry-bar<?=$model->id?>">
                     <?php $existe = ($model->existeIntegrante($model->id)) ? ('Salir') : ('Unirse'); ?>
                     <?php $unirse = Url::to(['comunidades/unirse', 'id' => $model->id]); ?>
                     <?= Html::a($existe, $unirse, ['class' => 'masonry-button',

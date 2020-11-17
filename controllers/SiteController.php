@@ -88,20 +88,19 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        $model = new LoginForm();
-        // if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-        //     Yii::$app->response->format = Response::FORMAT_JSON;
-        //     return ActiveForm::validate($model);
-        // }
-        if ($model->load(Yii::$app->request->post()) && $model->login()) { 
+        if (!Yii::$app->user->isGuest) {
             return $this->goHome();
-        } 
-      
-        // if(Yii::$app->request->isAjax){
-        //     return $this->renderAjax('login', ['model' => $model]);
-        // }
+        }
 
-        return $this->render('login', ['model' => $model]);
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            return $this->goBack();
+        }
+
+        $model->contrasena = '';
+        return $this->render('login', [
+            'model' => $model,
+        ]);
     }
    
 

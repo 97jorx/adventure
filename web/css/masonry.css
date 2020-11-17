@@ -52,25 +52,40 @@ body {
       overflow: hidden;
   } 
  
+  .masonry-bar {
+    visibility: visible;
+  }
   
 
 }
 
 @media only screen and (max-width: 1023px) and (min-width: 768px) {
+
   .masonry {
     grid-template-columns: repeat(3);
   }
+
   .visible {
     display: block;
   }
-  
+
+  .masonry-bar {
+    visibility: visible;
+  }
 }
 @media only screen and (min-width: 1024px) {
+
   .masonry {
     grid-template-columns: repeat(4, minmax(100px, 1fr));
   }
+
   .visible {
     display: none;
+  }
+  .masonry-bar {
+    visibility: hidden;
+    font-size: 2em;
+    transition: transform .6s ease-out;
   }
   
 }
@@ -148,9 +163,7 @@ body {
   text-align: center;
   position: absolute;
   top: 0px; 
-  visibility: hidden;
-  font-size: 2em;
-  transition: transform .6s ease-out;
+  
 }
 
 .masonry-button {
@@ -167,11 +180,15 @@ body {
 }
 
 
-.masonry:hover .masonry-bar {
+
+.move-top {
   visibility: visible;
-}
-
-
-.masonry:hover .masonry-bar{
   transform: translate(0, -50px);
 }
+
+.move-down {
+  visibility: hidden;
+  transform: translate(0, 0px);
+}
+
+

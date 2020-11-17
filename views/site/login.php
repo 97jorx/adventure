@@ -16,7 +16,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>Please fill out the following fields to login:</p>
 
     <?php $form = ActiveForm::begin([
-        'enableAjaxValidation' => true,
         'id' => 'login-form',
         'layout' => 'horizontal',
         'fieldConfig' => [
