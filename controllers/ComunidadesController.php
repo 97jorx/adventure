@@ -213,21 +213,21 @@ class ComunidadesController extends Controller
                 $integrantes->comunidad_id = $id;
                 $integrantes->save();
                 $json = [ 
-                    'button' => 'Salir',
+                    'button' => 'sign-out-alt',
                     'mensaje' => 'Te has unido correctamente.',
                     'color' => 'bg-success',
                 ];
             } else {
                 $idexist->one()->delete();
                 $json = [ 
-                    'button' => 'Unirse',
+                    'button' => 'sign-in-alt',
                     'mensaje' => 'Te has salido correctamente.',
                     'color' => 'bg-danger'
                 ];
             }    
         } else {
             $json = [ 
-                'button' => 'Unirse',
+                'button' => 'sign-in-alt',
                 'mensaje' => 'Tienes que estar logueado.',
                 'color' => 'bg-danger'
             ];

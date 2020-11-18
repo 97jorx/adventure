@@ -16,8 +16,9 @@ $user = $username ? (Yii::$app->user->identity->username) : (null);
 $js = <<< EOF
 $(".masonry-item").hover(
     function() {
-      var id = $(this).attr('id');
-      $("#masonry-bar"+id).toggleClass("move-top").stop( true, true );
+      $(this).find(".masonry-bar")
+      .toggleClass("move-top")
+      .stop(true, true);
     } 
 );
 
@@ -62,9 +63,10 @@ Yii::$app->formatter->locale = 'es-ES';
         <div class="masonry-item" id="<?=$model->id?>">
             <div class="masonry-content">
                 <div class="masonry-bar" id="masonry-bar<?=$model->id?>">
-                    <?php $existe = ($model->existeIntegrante($model->id)) ? ('Salir') : ('Unirse'); ?>
+                    <?php $existe = ($model->existeIntegrante($model->id)) ? ['sign-out-alt', 'Salir'] : ['sign-in-alt', 'Unirse']; ?>
                     <?php $unirse = Url::to(['comunidades/unirse', 'id' => $model->id]); ?>
-                    <?= Html::a($existe, $unirse, ['class' => 'masonry-button',
+                    <?= Html::a(Icon::show($existe[0], ['id' => 'acceso']), $unirse, ['class' => 'masonry-button', 
+                        'aria-label' => $existe[1], 'data-balloon-pos' => 'up',
                         'onclick' =>"
                             event.preventDefault();
                             var self = $(this);
@@ -74,7 +76,7 @@ Yii::$app->formatter->locale = 'es-ES';
                                 dataType: 'json',
                             }).done(function( data, textStatus, jqXHR ) {
                                 data = JSON.parse(data);
-                                $(self).text(data.button);             
+                                $('#acceder').attr('class', 'fas fa-');
                                 $('#color').prop('class', data.color);
                                 $('#mensaje').text(data.mensaje);
                                 $('#myModal').modal('show');
@@ -95,7 +97,7 @@ Yii::$app->formatter->locale = 'es-ES';
                             dataType: 'json',
                         }).done(function(data, textStatus, jqXHR) {
                             data = JSON.parse(data);
-                            $('#fav$id').html(data.fav);
+                            $('.fav$id').html(data.fav);
                             $('#like').efect();
                             console.log(data);
                         }).fail(function(data, textStatus, jqXHR) {
@@ -133,7 +135,7 @@ Yii::$app->formatter->locale = 'es-ES';
                 </div>
                 <div class="masonry-details">
                     <i itemprop="date" data-balloon-pos='up'aria-label='<?=Yii::$app->formatter->asDate($model->created_at)?>'><?= Icon::show('clock')?></i> 
-                    <i  class='favdetail' ><i id='fav<?=$model->id?>'><?= $model->favs ?></i><?= Icon::show('heart')?></i>
+                    <i  class='favdetail' ><i class='fav<?=$model->id?>'><?= $model->favs ?></i><?= Icon::show('heart')?></i>
                 </div>
             </div>
             <?php } ?>

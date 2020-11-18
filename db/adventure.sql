@@ -35,8 +35,6 @@ CREATE TABLE usuarios
 
 
 
-
-
 -- DROP TABLE IF EXISTS categorias CASCADE;
 -- CREATE TABLE categorias (
 --      id           bigserial    PRIMARY KEY
