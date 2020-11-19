@@ -204,7 +204,11 @@ class ComunidadesController extends Controller
         ->andWhere(['usuario_id' => $uid]);
         
         
-        $json = [];
+        $json = [ 
+            'button' => ['sign-in-alt','Unirse'],
+            'mensaje' => 'Te has salido correctamente.',
+            'color' => 'bg-danger'
+        ];
 
         if($user) {
             if(!$idexist->exists()){
@@ -213,23 +217,16 @@ class ComunidadesController extends Controller
                 $integrantes->comunidad_id = $id;
                 $integrantes->save();
                 $json = [ 
-                    'button' => 'sign-out-alt',
+                    'button' => ['sign-out-alt','Salir'],
                     'mensaje' => 'Te has unido correctamente.',
                     'color' => 'bg-success',
                 ];
             } else {
                 $idexist->one()->delete();
-                $json = [ 
-                    'button' => 'sign-in-alt',
-                    'mensaje' => 'Te has salido correctamente.',
-                    'color' => 'bg-danger'
-                ];
             }    
         } else {
             $json = [ 
-                'button' => 'sign-in-alt',
                 'mensaje' => 'Tienes que estar logueado.',
-                'color' => 'bg-danger'
             ];
         }
         

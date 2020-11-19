@@ -70,13 +70,15 @@ Yii::$app->formatter->locale = 'es-ES';
                         'onclick' =>"
                             event.preventDefault();
                             var self = $(this);
+                            $(self).find('i').removeClass();
                             $.ajax({
                                 type: 'GET',
                                 url: '$unirse',
                                 dataType: 'json',
                             }).done(function( data, textStatus, jqXHR ) {
                                 data = JSON.parse(data);
-                                $('#acceder').attr('class', 'fas fa-');
+                                $(self).find('i').addClass('fas fa-'+data.button[0]);
+                                $(self).attr('aria-label', data.button[1]);
                                 $('#color').prop('class', data.color);
                                 $('#mensaje').text(data.mensaje);
                                 $('#myModal').modal('show');
