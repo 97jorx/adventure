@@ -205,7 +205,7 @@ class ComunidadesController extends Controller
         
         
         $json = [ 
-            'button' => ['sign-in-alt','Unirse'],
+            'iconclass' => ['sign-in-alt','Unirse'],
             'mensaje' => 'Te has salido correctamente.',
             'color' => 'bg-danger'
         ];
@@ -217,7 +217,7 @@ class ComunidadesController extends Controller
                 $integrantes->comunidad_id = $id;
                 $integrantes->save();
                 $json = [ 
-                    'button' => ['sign-out-alt','Salir'],
+                    'iconclass' => ['sign-out-alt','Salir'],
                     'mensaje' => 'Te has unido correctamente.',
                     'color' => 'bg-success',
                 ];
@@ -255,14 +255,14 @@ class ComunidadesController extends Controller
                 $fav->save();
                 $json = [
                     'mensaje' => 'Se ha dado like a la comunidad',
-                    'icono' => 1
+                    'iconclass' => 'fas fa-heart'
                     
                 ];
             } else {
                 $favoritos->one()->delete();
                 $json = [
                     'mensaje' => 'Se ha quitado el like a la comunidad',
-                    'icono' => 0
+                    'iconclass' => 'fas fa-heart-broken'
                 ];
             }
         } else {

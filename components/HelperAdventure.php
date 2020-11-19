@@ -5,6 +5,7 @@ namespace app\components;
 use app\controllers\BlogsController;
 use app\controllers\ComunidadesController;
 use app\models\Bloqcomunidades;
+use app\models\Comunidades;
 use app\models\Favblogs;
 use app\models\Favcomunidades;
 use yii\base\Component;
@@ -45,7 +46,7 @@ class HelperAdventure extends Component
             return Favblogs::find()
             ->where(['blog_id' => $id])
             ->andWhere(['usuario_id' => $usuarioid]);
-        } elseif ($model instanceof ComunidadesController) {
+        } elseif ($model instanceof ComunidadesController || $model == 'view') {
             return Favcomunidades::find()
             ->where(['comunidad_id' => $id])
             ->andWhere(['usuario_id' => $usuarioid]);

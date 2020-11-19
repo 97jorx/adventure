@@ -91,20 +91,30 @@ body {
   .masonry {
     grid-template-columns: repeat(4, minmax(100px, 1fr));
   }
+  
   .visible {
     display: none;
   }
+
   .masonry-bar {
     z-index: -999999;
-    font-size: 2em;
-    transition: transform .6s ease-out;
+    font-size: 1em;
+    transition: transform 2s ease-out;
   }
   
-.move-top {
-  visibility: visible;
-  transform: translate(-20%, -50%);
-  transition: .25s cubic-bezier(0.40, 1, 1, 1);
-}
+  .move-top {
+    visibility: visible;
+    transform: translate(-20%, -80%);
+    transition: .25s cubic-bezier(0.25, 0, 0.5, 2);
+    position: absolute;
+    display: grid;
+    grid-template-columns: auto auto auto auto; 
+  }
+
+  .masonry-button{
+    position: absolute;
+    transform: translate(-50%);
+  }
 
 }
 
@@ -145,8 +155,6 @@ body {
 
 
 /* BARRA  DE DETALLES*/
-
-
 .favdetail i{
   margin-right: .5rem;
 }
@@ -175,18 +183,16 @@ body {
 
 /* BARRA DE BOTONES */
 .masonry-bar {
-  display: grid;
-  grid-template-columns: auto auto auto auto; 
   width: 100%;
-  column-gap: 0.5rem;
-  text-align: center;
+  column-gap: -5rem;
+  left: 0px;
+  top: 0px;
   position: absolute;
-  top: 0px; 
-  
+  text-align: center;
 }
 
 .masonry-button {
-  font-size: 1.25rem;
+  font-size: 1rem;
   color:white;
   border-radius: 50%;
   box-shadow: 1px 1px rgba(0, 0, 0, 0.809);

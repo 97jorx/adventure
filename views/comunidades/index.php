@@ -9,9 +9,10 @@ use yii\helpers\Url;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 $this->params['breadcrumbs'][] = 'Comunidades';
 
+
+
 $username = !Yii::$app->user->isGuest;
 $user = $username ? (Yii::$app->user->identity->username) : (null);
-
 
 $js = <<< EOF
 $(".masonry-item").hover(
@@ -23,12 +24,10 @@ $(".masonry-item").hover(
 );
 
 window.onload = (e) => { 
-
 if (localStorage.getItem('$user') === null && Boolean($username)) {
     localStorage.setItem('$user', '$user')
     $("#myModal").modal('show');
 }
-
    
 $(".arrow-left").click(function(){
     $(".masonry").animate({scrollLeft: "-="+100});
@@ -77,8 +76,8 @@ Yii::$app->formatter->locale = 'es-ES';
                                 dataType: 'json',
                             }).done(function( data, textStatus, jqXHR ) {
                                 data = JSON.parse(data);
-                                $(self).find('i').addClass('fas fa-'+data.button[0]);
-                                $(self).attr('aria-label', data.button[1]);
+                                $(self).find('i').addClass('fas fa-'+data.iconclass[0]);
+                                $(self).attr('aria-label', data.iconclass[1]);
                                 $('#color').prop('class', data.color);
                                 $('#mensaje').text(data.mensaje);
                                 $('#myModal').modal('show');
@@ -88,8 +87,13 @@ Yii::$app->formatter->locale = 'es-ES';
                     ]); 
                     ?> 
                     <?php $id = html::encode($model->id)?>
+                    <?php $tienelike = (Yii::$app->AdvHelper->tieneFavoritos($id, 'view')->exists()) ?
+                         ['heart-broken', 'No me gusta'] : 
+                         ['heart', 'Me gusta']; 
+                    ?>
                     <?php $url = Url::to(['comunidades/like', 'id' => $model->id]); ?>
-                    <?= Html::a(Icon::show('heart', ['id' => 'like', 'framework' => Icon::FAS]), $url, [
+                    <?= Html::a(Icon::show($tienelike[0], ['id' => 'like', 'framework' => Icon::FAS]), $url, [
+                        'aria-label' => $tienelike[1], 'data-balloon-pos' => 'up', 'class' => 'masonry-button',
                         'onclick' =>"
                         event.preventDefault();
                         var self = $(this);
@@ -101,11 +105,15 @@ Yii::$app->formatter->locale = 'es-ES';
                             data = JSON.parse(data);
                             $('.fav$id').html(data.fav);
                             $('#like').efect();
-                            console.log(data);
+                            $(self).find('i').addClass(data.iconclass[0]);
+                            $(self).attr('aria-label', data.iconclass[1]);
+                            $('#color').prop('class', data.color);
+                            $('#mensaje').text(data.mensaje);
+                            $('#myModal').modal('show');
                         }).fail(function(data, textStatus, jqXHR) {
                             console.log('Error de la solicitud.');
                             console.log(data);
-                        });", 'aria-label' => 'Me gusta', 'data-balloon-pos' => 'up', 'class' => 'masonry-button', 
+                        });",  
                     ]); 
                     ?> 
                     <?= Html::a(Icon::show('bar-chart'), ['comunidades/view', 'id' => $model->id], [
