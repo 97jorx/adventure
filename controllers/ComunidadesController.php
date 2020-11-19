@@ -255,14 +255,14 @@ class ComunidadesController extends Controller
                 $fav->save();
                 $json = [
                     'mensaje' => 'Se ha dado like a la comunidad',
-                    'iconclass' => 'fas fa-heart'
+                    'iconclass' => ['fas fa-heart-broken', 'No me gusta']
                     
                 ];
             } else {
                 $favoritos->one()->delete();
                 $json = [
                     'mensaje' => 'Se ha quitado el like a la comunidad',
-                    'iconclass' => 'fas fa-heart-broken'
+                    'iconclass' => ['fas fa-heart', 'Me gusta']
                 ];
             }
         } else {

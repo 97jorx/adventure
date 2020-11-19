@@ -18,8 +18,7 @@ $js = <<< EOF
 $(".masonry-item").hover(
     function() {
       $(this).find(".masonry-bar")
-      .toggleClass("move-top")
-      .stop(true, true);
+      .toggleClass("move-top move-down")
     } 
 );
 
@@ -69,13 +68,13 @@ Yii::$app->formatter->locale = 'es-ES';
                         'onclick' =>"
                             event.preventDefault();
                             var self = $(this);
-                            $(self).find('i').removeClass();
                             $.ajax({
                                 type: 'GET',
                                 url: '$unirse',
                                 dataType: 'json',
                             }).done(function( data, textStatus, jqXHR ) {
                                 data = JSON.parse(data);
+                                $(self).find('i').removeClass();
                                 $(self).find('i').addClass('fas fa-'+data.iconclass[0]);
                                 $(self).attr('aria-label', data.iconclass[1]);
                                 $('#color').prop('class', data.color);
@@ -97,6 +96,7 @@ Yii::$app->formatter->locale = 'es-ES';
                         'onclick' =>"
                         event.preventDefault();
                         var self = $(this);
+                        
                         $.ajax({
                             type: 'POST',
                             url: '$url',
@@ -105,6 +105,7 @@ Yii::$app->formatter->locale = 'es-ES';
                             data = JSON.parse(data);
                             $('.fav$id').html(data.fav);
                             $('#like').efect();
+                            $(self).find('i').removeClass();
                             $(self).find('i').addClass(data.iconclass[0]);
                             $(self).attr('aria-label', data.iconclass[1]);
                             $('#color').prop('class', data.color);
