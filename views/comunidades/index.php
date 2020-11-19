@@ -18,7 +18,7 @@ $js = <<< EOF
 $(".masonry-item").hover(
     function() {
       $(this).find(".masonry-bar")
-      .toggleClass("move-top move-down")
+      .toggleClass("move-top")
     } 
 );
 
