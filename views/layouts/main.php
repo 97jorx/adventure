@@ -11,16 +11,21 @@ use yii\bootstrap4\Breadcrumbs;
 use app\assets\AppAsset;
 use yii\bootstrap4\Modal;
 use yii\helpers\Url;
-
+$guest = Yii::$app->user->isGuest;
 AppAsset::register($this);
 $js= <<<EOT
-// $('.login').click(function (){
-//     $('#modal').modal('show').find('#createContent').load($(this).attr('value'));
-//     $('.modal-title').text('Acceder');
-// });
+
+if('$guest'){
+    $('.login').click(function (){
+        $('#modal').modal('show')
+        $('#modal').find('#createContent').load($('#login').attr('value'));
+        $('.modal-title').text('Acceder');
+    });
+}
 
 $('#registrar').click(function (){
-    $('#modal').modal('show') .find('#createContent').load($(this).attr('value'));
+    $('#modal').find('.site-login').remove()
+    $('#modal').modal('show').find('#createContent').load($(this).attr('value'));
     $('.modal-title').text('Registrarse');
 });
 EOT;
@@ -61,13 +66,12 @@ $this->registerJs($js);
     $items = [];
     if(Yii::$app->user->isGuest) {
         $items = [
-            ['label' => 'Login', 'url' => ['site/login']],
-            // ['label' => Html::button('Login', 
-            // [   
-            //     'value' => Url::to(['site/login']),  
-            //     'class' => 'btn btn-info login', 
-            //     'id' => 'login'
-            // ]) ],
+            ['label' => Html::button('Login', 
+            [   
+                'value' => Url::to(['site/login']),  
+                'class' => 'btn btn-info login', 
+                'id' => 'login'
+            ]) ],
             ['label' => Html::button('Registrar', 
                 [   
                     'value' => Url::to(['usuarios/registrar']),  
@@ -140,6 +144,8 @@ $this->registerJs($js);
 ]);?>
     <?="<div id='createContent'></div>"?>
 <?php Modal::end();?>
+
+
 
 
 <?php $this->endBody() ?>

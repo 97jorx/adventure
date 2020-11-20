@@ -15,6 +15,10 @@ $username = !Yii::$app->user->isGuest;
 $user = $username ? (Yii::$app->user->identity->username) : (null);
 
 $js = <<< EOF
+if(!'$username') {
+    $('.login').attr('href', '#');
+}
+
 $(".masonry-item").hover(
     function() {
       $(this).find(".masonry-bar")
@@ -63,7 +67,7 @@ Yii::$app->formatter->locale = 'es-ES';
                 <div class="masonry-bar" id="masonry-bar<?=$model->id?>">
                     <?php $existe = ($model->existeIntegrante($model->id)) ? ['sign-out-alt', 'Salir'] : ['sign-in-alt', 'Unirse']; ?>
                     <?php $unirse = Url::to(['comunidades/unirse', 'id' => $model->id]); ?>
-                    <?= Html::a(Icon::show($existe[0], ['id' => 'acceso']), $unirse, ['class' => 'masonry-button', 
+                    <?= Html::a(Icon::show($existe[0], ['id' => 'acceso']), $unirse, ['class' => 'masonry-button login', 
                         'aria-label' => $existe[1], 'data-balloon-pos' => 'up',
                         'onclick' =>"
                             event.preventDefault();
@@ -92,7 +96,7 @@ Yii::$app->formatter->locale = 'es-ES';
                     ?>
                     <?php $url = Url::to(['comunidades/like', 'id' => $model->id]); ?>
                     <?= Html::a(Icon::show($tienelike[0], ['id' => 'like', 'framework' => Icon::FAS]), $url, [
-                        'aria-label' => $tienelike[1], 'data-balloon-pos' => 'up', 'class' => 'masonry-button',
+                        'aria-label' => $tienelike[1], 'data-balloon-pos' => 'up', 'class' => 'masonry-button login',
                         'onclick' =>"
                         event.preventDefault();
                         var self = $(this);
@@ -118,18 +122,18 @@ Yii::$app->formatter->locale = 'es-ES';
                     ]); 
                     ?> 
                     <?= Html::a(Icon::show('bar-chart'), ['comunidades/view', 'id' => $model->id], [
-                        'class' => 'masonry-button fa-bar-chart', 
+                        'class' => 'masonry-button login', 
                         'aria-label' => 'Estadísticas', 
                         'data-balloon-pos' => 'up'
                     ]); ?>
                     <?= Html::a(Icon::show('pencil', ['framework' => Icon::FA]), ['comunidades/update', 'id' => $model->id], [
-                        'class' => 'masonry-button', 
+                        'class' => 'masonry-button login', 
                         'aria-label' => 'Modificar', 
                         'data-balloon-pos' => 'up'
                     ]); ?>
                     <?php if($user === 'admin') : ?>
                     <?= Html::a(Icon::show('trash'), ['delete', 'id' => $model->id], [
-                        'class' => 'masonry-button',
+                        'class' => 'masonry-button login',
                         'aria-label' => 'Borrar', 
                         'data-balloon-pos' => 'up',
                                 'data' => [
@@ -140,7 +144,7 @@ Yii::$app->formatter->locale = 'es-ES';
                     <?php endif;?>
                     </div>
                 <?php $fakeimg = "https://picsum.photos/800/800?random=".$model->id;  ?>
-                <?= Html::a(Html::img($fakeimg, ['class' => 'card-img-top masonry-img']), ['blogs/index', 'actual' => $model->id]) ?>
+                <?= Html::a(Html::img($fakeimg, ['class' => 'card-img-top masonry-img ']),  ['blogs/index',  'actual' => $model->id], ['class' => 'login']) ?>
                 <h5 itemprop="tittle" class="masonry-title"><b><?= $model->denom  ?></b></h5>
                 <p itemprop="description" class="masonry-description"><b><?= $model->descripcion ?></b></p>
                 </div>

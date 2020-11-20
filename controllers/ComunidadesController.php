@@ -265,8 +265,6 @@ class ComunidadesController extends Controller
                     'iconclass' => ['fas fa-heart', 'Me gusta']
                 ];
             }
-        } else {
-            return $this->redirect(['site/login']);
         }
         return json_encode(array_merge($json, ['fav' => $this->findModel($id)->favs]));
     }
@@ -307,9 +305,7 @@ class ComunidadesController extends Controller
                         'mensaje' => 'Se ha desbloqueado el usuario correctamente'
                     ];
                 }    
-            } else {
-                $this->redirect('site/login');
-            }
+            } 
             
             return json_encode($json);
     }

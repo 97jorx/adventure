@@ -88,9 +88,6 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
@@ -98,9 +95,11 @@ class SiteController extends Controller
         }
 
         $model->contrasena = '';
-        return $this->render('login', [
-            'model' => $model,
-        ]);
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('login', [
+                'model' => $model,
+            ]);
+        } 
     }
    
 

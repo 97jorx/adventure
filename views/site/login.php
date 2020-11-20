@@ -11,11 +11,9 @@ $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>Please fill out the following fields to login:</p>
 
     <?php $form = ActiveForm::begin([
+        'enableAjaxValidation' => true,
         'id' => 'login-form',
         'layout' => 'horizontal',
         'fieldConfig' => [
@@ -23,9 +21,9 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 
-        <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+        <?= $form->field($model, 'username')->textInput(['autofocus' => true, 'placeholder' => 'Nombre de usuario'])->label(false) ?>
 
-        <?= $form->field($model, 'contrasena')->passwordInput() ?>
+        <?= $form->field($model, 'contrasena')->passwordInput(['placeholder' => 'Contraseña'])->label(false) ?>
 
         <?= $form->field($model, 'rememberMe')->checkbox() ?>
 
@@ -36,9 +34,4 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
     <?php ActiveForm::end(); ?>
-
-    <div class="offset-sm-2" style="color:#999;">
-        You may login with <strong>admin/admin</strong> or <strong>demo/demo</strong>.<br>
-        To modify the username/password, please check out the code <code>app\models\User::$users</code>.
-    </div>
 </div>
