@@ -107,11 +107,10 @@ body {
   .move-top {
     visibility: visible;
     transform: translate(-30%, -70%);
-    
     transition: .25s cubic-bezier(0.2, 0, 0, 0.5);
     position: absolute;
     display: grid;
-    grid-template-columns: auto auto auto auto; 
+    grid-template-columns: auto auto auto auto auto; 
   }
 
 }
@@ -170,7 +169,7 @@ body {
 .masonry-item:hover {
   box-shadow: 0 5px 20px rgba(0,0,0,0.1);
   transform-origin: top right;
-  transform: skew(2deg);
+  transform: scale(1.1);
 }
 
 
@@ -213,8 +212,8 @@ body {
 .masonry-bar {
   width: 100%;
   column-gap: 0.1rem;
-  left: 0px;
-  top: 0px;
+  right: -3.5rem;
+  top: -10px;
   position: absolute;
   text-align: center;
 }
