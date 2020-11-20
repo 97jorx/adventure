@@ -16,12 +16,12 @@ $this->registerCssFile('@web/css/cookie-consent.css');
      <div class="card h-100 flex-row flex-wrap border-0">
         <div class="col-lg-7">
           <?php $fakeimg = "https://picsum.photos/600/450?random=".$model->id;  ?>
-          <?= Html::a(Html::img($fakeimg, ['class' => 'card-image']), ['blogs/index', 'actual' => $model->id]) ?>
+          <?= Html::a(Html::img($fakeimg, ['class' => 'card-image']), ['blogs/index', 'actual' => $model->id],  ['class' => 'login']) ?>
         </div>
         <div class="col-lg-5">
                 <h1 class="font-weight-light"><?= $model->denom  ?></h1>
           <p class="card-text"><?= $model->descripcion ?></p>
-          <a class="btn btn-primary" href="#">Ver comunidad</a>
+          <?= Html::a('Ver comunidad', ['blogs/index', 'actual' => $model->id],  ['class' => 'btn btn-info login']) ?>
         </div>
      </div>
     </div>
@@ -39,7 +39,7 @@ $this->registerCssFile('@web/css/cookie-consent.css');
               <p class="card-text"><?= $model->descripcion ?></p>
           </div>
           <div class="card-footer">
-            <a href="#" class="btn btn-primary btn-sm">Ver Comunidad</a>
+          <?= Html::a('Ver comunidad', ['blogs/index', 'actual' => $model->id],  ['class' => 'btn btn-info btn-sm login']) ?>
           </div>
         </div>
       </div>

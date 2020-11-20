@@ -14,8 +14,8 @@ use yii\helpers\Url;
 $guest = Yii::$app->user->isGuest;
 AppAsset::register($this);
 $js= <<<EOT
-
 if('$guest'){
+    $('.login').attr('href', '#');
     $('.login').click(function (){
         $('#modal').modal('show')
         $('#modal').find('#createContent').load($('#login').attr('value'));

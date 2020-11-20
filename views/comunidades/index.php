@@ -15,10 +15,6 @@ $username = !Yii::$app->user->isGuest;
 $user = $username ? (Yii::$app->user->identity->username) : (null);
 
 $js = <<< EOF
-if(!'$username') {
-    $('.login').attr('href', '#');
-}
-
 $(".masonry-item").hover(
     function() {
       $(this).find(".masonry-bar")
