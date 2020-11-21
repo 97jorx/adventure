@@ -125,7 +125,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
 
     public function checkUsername($attribute,$params)
 	{
-        $pattern = '/^[A-Za-z][A-Za-z0-9]{5,8}$/';
+        $pattern = '/^[A-Za-z][A-Za-z0-9]{3,8}$/';
          if(!preg_match($pattern, $this->$attribute)) {
             $this->addError('username','El usermane es inválido.');
         }

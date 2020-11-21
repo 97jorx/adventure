@@ -39,7 +39,7 @@ class UsuariosController extends Controller
           
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 Yii::$app->session->setFlash('success', 'Se ha creado el usuario.');
-                return $this->redirect(['site/login']);
+                return $this->redirect(['site/index']);
             }
             if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
                 Yii::$app->response->format = Response::FORMAT_JSON;
