@@ -47,6 +47,9 @@ class ComunidadesSearch extends Comunidades
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
             'sort' => [
                 'defaultOrder' => [
                     'favs' => SORT_DESC,

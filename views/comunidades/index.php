@@ -1,8 +1,10 @@
 <?php
 
-use yii\bootstrap4\Html;
+use ereminmdev\yii2\infinite_scroll\InfiniteScroll;
 use kartik\icons\Icon;
+use yii\bootstrap4\Html;
 use yii\helpers\Url;
+use yii\widgets\LinkPager;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ComunidadesSearch */
@@ -15,12 +17,20 @@ $username = !Yii::$app->user->isGuest;
 $user = $username ? (Yii::$app->user->identity->username) : (null);
 
 $js = <<< EOF
+
 $(".masonry-item").hover(
     function() {
       $(this).find(".masonry-bar")
       .toggleClass("move-top")
     } 
 );
+
+$('.masonry-img').imagesLoaded( {}, function() {
+    $(".loader").fadeOut("slow");
+    $(".spinner").fadeOut("slow");
+    $('.masonry').show();
+});
+
 
 window.onload = (e) => { 
 if (localStorage.getItem('$user') === null && Boolean($username)) {
@@ -54,18 +64,22 @@ Yii::$app->formatter->locale = 'es-ES';
 
 
 
+<div class="spinner"></div>
+<div class="loader"></div>
+
+
 <div itemscope itemtype="http://schema.org/Blog" class="masonry-wrapper">
 <a class="arrow-left visible"><?= Icon::show('angle-left')?> </a>
-    <div class="masonry">
-        <?php foreach($dataProvider->models as $model) : ?> 
-        <div class="masonry-item" id="<?=$model->id?>">
-            <div class="masonry-content">
+    <div class="masonry ">
+        <?php foreach ($dataProvider->models as $model) : ?> 
+        <div class="masonry-item item" id="<?=$model->id?>">
+            <div class="masonry-content ">
                 <div class="masonry-bar" id="masonry-bar<?=$model->id?>">
                     <?php $existe = ($model->existeIntegrante($model->id)) ? ['sign-out-alt', 'Salir'] : ['sign-in-alt', 'Unirse']; ?>
                     <?php $unirse = Url::to(['comunidades/unirse', 'id' => $model->id]); ?>
-                    <?= Html::a(Icon::show($existe[0], ['id' => 'acceso']), $unirse, ['class' => 'masonry-button login', 
+                    <?= Html::a(Icon::show($existe[0], ['id' => 'acceso']), $unirse, ['class' => 'masonry-button login',
                         'aria-label' => $existe[1], 'data-balloon-pos' => 'up',
-                        'onclick' =>"
+                        'onclick' => "
                             event.preventDefault();
                             var self = $(this);
                             $.ajax({
@@ -82,18 +96,18 @@ Yii::$app->formatter->locale = 'es-ES';
                                 $('#myModal').modal('show');
                             }).fail(function( data, textStatus, jqXHR ) {
                                 console.log('Error de la solicitud.');
-                            });"
-                    ]); 
+                            });",
+                    ]);
                     ?> 
                     <?php $id = html::encode($model->id)?>
                     <?php $tienelike = (Yii::$app->AdvHelper->tieneFavoritos($id, 'view')->exists()) ?
-                         ['heart-broken', 'No me gusta'] : 
-                         ['heart', 'Me gusta']; 
+                         ['heart-broken', 'No me gusta'] :
+                         ['heart', 'Me gusta'];
                     ?>
                     <?php $url = Url::to(['comunidades/like', 'id' => $model->id]); ?>
                     <?= Html::a(Icon::show($tienelike[0], ['id' => 'like', 'framework' => Icon::FAS]), $url, [
                         'aria-label' => $tienelike[1], 'data-balloon-pos' => 'up', 'class' => 'masonry-button login',
-                        'onclick' =>"
+                        'onclick' => "
                         event.preventDefault();
                         var self = $(this);
                         
@@ -114,23 +128,23 @@ Yii::$app->formatter->locale = 'es-ES';
                         }).fail(function(data, textStatus, jqXHR) {
                             console.log('Error de la solicitud.');
                             console.log(data);
-                        });",  
-                    ]); 
+                        });",
+                    ]);
                     ?> 
                     <?= Html::a(Icon::show('bar-chart'), ['comunidades/view', 'id' => $model->id], [
-                        'class' => 'masonry-button login', 
-                        'aria-label' => 'Estadísticas', 
-                        'data-balloon-pos' => 'up'
+                        'class' => 'masonry-button login',
+                        'aria-label' => 'Estadísticas',
+                        'data-balloon-pos' => 'up',
                     ]); ?>
                     <?= Html::a(Icon::show('pencil', ['framework' => Icon::FA]), ['comunidades/update', 'id' => $model->id], [
-                        'class' => 'masonry-button login', 
-                        'aria-label' => 'Modificar', 
-                        'data-balloon-pos' => 'up'
+                        'class' => 'masonry-button login',
+                        'aria-label' => 'Modificar',
+                        'data-balloon-pos' => 'up',
                     ]); ?>
-                    <?php if($user === 'admin') : ?>
+                    <?php if ($user === 'admin') : ?>
                     <?= Html::a(Icon::show('trash'), ['delete', 'id' => $model->id], [
                         'class' => 'masonry-button login',
-                        'aria-label' => 'Borrar', 
+                        'aria-label' => 'Borrar',
                         'data-balloon-pos' => 'up',
                                 'data' => [
                                         'confirm' => 'Are you sure you want to delete this item?',
@@ -139,8 +153,8 @@ Yii::$app->formatter->locale = 'es-ES';
                     ]) ?>
                     <?php endif;?>
                     </div>
-                <?php $fakeimg = "https://picsum.photos/800/800?random=".$model->id;  ?>
-                <?= Html::a(Html::img($fakeimg, ['class' => 'card-img-top masonry-img ']),  ['blogs/index',  'actual' => $model->id], ['class' => 'login']) ?>
+                <?php $fakeimg = 'https://picsum.photos/800/800?random=' . $model->id;  ?>
+                <?= Html::a(Html::img($fakeimg, ['class' => 'card-img-top masonry-img ']), ['blogs/index',  'actual' => $model->id], ['class' => 'login']) ?>
                 <h5 itemprop="title" class="masonry-title"><b><?= $model->denom  ?></b></h5>
                 <p itemprop="description" class="masonry-description"><b><?= $model->descripcion ?></b></p>
                 </div>
@@ -154,8 +168,8 @@ Yii::$app->formatter->locale = 'es-ES';
                         </i>
                             <?= Icon::show('heart')?>
                     </i>
-                    <i class='favdetail'>
-                        <i data-balloon-pos='up' aria-label='Integrantes'>
+                    <i class='favdetail' data-balloon-pos='up' aria-label='Integrantes'>
+                        <i >
                             <?= $model->members ?>
                         </i>
                             <?= Icon::show('user')?>
@@ -167,7 +181,9 @@ Yii::$app->formatter->locale = 'es-ES';
         </div>
         <a class="arrow-right visible" ><?= Icon::show('angle-right')?> </a>
     </div>
-
+    <?= LinkPager::widget([
+            'pagination' => $dataProvider->pagination,
+    ]);?>
 
 <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog ">
