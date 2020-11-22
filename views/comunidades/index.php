@@ -145,7 +145,7 @@ Yii::$app->formatter->locale = 'es-ES';
                 <p itemprop="description" class="masonry-description"><b><?= $model->descripcion ?></b></p>
                 </div>
                 <div class="masonry-details">
-                    <i itemprop="date" data-balloon-pos='up'aria-label='<?=Yii::$app->formatter->asDate($model->created_at)?>'>
+                    <i itemprop="date" data-balloon-pos='up' aria-label='<?=Yii::$app->formatter->asDate($model->created_at)?>'>
                         <?= Icon::show('clock')?>
                     </i> 
                     <i class='favdetail'>
@@ -155,7 +155,7 @@ Yii::$app->formatter->locale = 'es-ES';
                             <?= Icon::show('heart')?>
                     </i>
                     <i class='favdetail'>
-                        <i class='fav<?=$model->id?>'>
+                        <i data-balloon-pos='up' aria-label='Integrantes'>
                             <?= $model->members ?>
                         </i>
                             <?= Icon::show('user')?>
