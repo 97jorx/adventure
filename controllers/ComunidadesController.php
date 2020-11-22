@@ -2,8 +2,8 @@
 
 namespace app\controllers;
 
+use Yii; 
 use app\models\Bloqcomunidades;
-use Yii;
 use app\models\Comunidades;
 use app\models\ComunidadesSearch;
 use app\models\Favcomunidades;
@@ -113,9 +113,9 @@ class ComunidadesController extends Controller
     public function actionCreate()
     {
         $username = !Yii::$app->user->isGuest;
+        $model = new Comunidades();
         if ($username) {
             $uid = Yii::$app->user->id;
-            $model = new Comunidades();
             $model->propietario = $uid;
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 $integrantes = new Integrantes();

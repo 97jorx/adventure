@@ -5,6 +5,7 @@
 /* @var $model app\models\RegistrarForm */
 
 use kartik\date\DatePickerAsset;
+use kartik\icons\Icon;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Url;
@@ -19,7 +20,6 @@ $this->registerCssFile("@web/css/jquery-ui.css", [
 
 
 $js = <<< EOF
-
 $('#parsley').on('input', function(){
     $('#parsley').parsley().validate();
 });
@@ -63,12 +63,13 @@ $this->registerJs($js);
         ],
     ]); ?>
 
-        <?= $form->field($model, 'username')->textInput(['type' => 'text',
+    
+
+    <div class='fullname-group'>
+       <?= $form->field($model, 'username')->textInput(['type' => 'text',
             'class' => 'form-control input-lg parsley-validated',
             'placeholder' => 'Nombre de Usuario',
-         ])->label(false) ?>
-
-    <div class='password-group'>
+         ])->label(Icon::show('user', ['class' => 'icon-label'])) ?>    
         <?= $form->field($model, 'nombre')->textInput([
             'type' => 'text',
             'placeholder' => 'Nombre',
@@ -89,7 +90,7 @@ $this->registerJs($js);
                 'placeholder' => 'Contraseña',
                 'aria-label' => 'La contraseña debe contener 1 mayúscula, 1 carácter especial, 1 número como mínimo.!',
                 'data-balloon-pos' => 'right'
-            ])->label(false) ?>
+            ])->label(Icon::show('key', ['class' => 'icon-label'])) ?>
             <?= $form->field($model, 'password_repeat')->passwordInput([
                 'data-parsley-equalto' => '#password1',
                 'data-parsley-type' => 'password',
@@ -113,29 +114,34 @@ $this->registerJs($js);
                 'placeholder' => 'Fecha de nacimiento',
                 'autocomplete'=>'off',
                 ],
-        ])->label(false) ?>
+        ])->label(Icon::show('calendar', ['class' => 'icon-label'])) ?>
         <?= $form->field($model, 'email')->textInput([
             'id' => 'email', 
             'type' => 'email', 
             'data-parsley-type' => 'email',
             'data-parsley-error-message' => 'El email introducido es incorrecto.',
             'placeholder'=>'Correo eletrónico' 
-        ])->label(false) ?>
+        ])->label(Icon::show('envelope', ['class' => 'icon-label'])) ?>
         <p id="error-container"></p>
         <?= $form->field($model, 'poblacion')->hiddenInput(['id' => 'poblacion'])->label(false) ?>
         <?= $form->field($model, 'pais')->hiddenInput(['id' => 'pais'])->label(false) ?>
         <?= $form->field($model, 'provincia')->hiddenInput(['id' => 'provincia', 'value' => ''])->label(false) ?>
             <div class='form-group'>
-                <div class='offset-sm-2'>
-                    <?= Html::submitButton('Registrar',  [
-                        'value' => Url::to(['site/login']),
-                        'class' => 'btn btn-primary', 
-                        'type'=>'button', 
-                        'id' => 'login-button', 
-                        'name' => 'login-button'
-                    ]) ?>
+                <div class="row">
+                    <div class='col-6 text-center'>
+                        <?= Html::submitButton('Registrar',  [
+                            'class' => 'btn btn-primary', 
+                            'type'=>'button', 
+                            'id' => 'login-button', 
+                            'name' => 'login-button'
+                        ]) ?>
+                    </div>
+                    <div class='col-6'>
+                        <div class="options text-right">
+                            <p class="pt-1">¿ Tienes cuenta ya ? <a href='#' class="blue-text login">Accede aquí</a></p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        
     <?php ActiveForm::end(); ?>
     
