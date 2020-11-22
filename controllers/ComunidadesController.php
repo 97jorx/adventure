@@ -85,7 +85,6 @@ class ComunidadesController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            
         ]);
     }
 
@@ -207,7 +206,6 @@ class ComunidadesController extends Controller
 
         if ($exists) {
             $object::deleteAll(['comunidad_id' => $id]);
-            return true;
         } 
         
     }

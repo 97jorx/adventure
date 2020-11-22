@@ -23,6 +23,8 @@ class Comunidades extends \yii\db\ActiveRecord
 {
 
     private $_favs = null;
+    private $_members = null;
+
     /**
      * {@inheritdoc}
      */
@@ -112,11 +114,22 @@ class Comunidades extends \yii\db\ActiveRecord
         return $this->hasMany(Integrantes::class, ['comunidad_id' => 'id'])->inverseOf('comunidad');
     }
 
-    
+
+
+
+    /**
+     * Setter que añade a $favs el valor correspondiente.
+     * @param $favs recibe la variable favoritos.
+     * @return void.
+     */
     public function setFavs($favs) {
         $this->_favs = $favs;
     }
-    
+
+    /**
+     * Getter que devuelve  el valor correspondiente de $favs.
+     * @return string
+     */
     public function getFavs()
     {
         if ($this->_favs === null && !$this->isNewRecord) {
@@ -125,10 +138,24 @@ class Comunidades extends \yii\db\ActiveRecord
         return $this->_favs;
     }
     
+
+    public function setMembers($members) {
+        $this->_members = $members;
+    }
+
+    public function getMembers()
+    {
+        if ($this->_members === null && !$this->isNewRecord) {
+            $this->setMembers($this->getIntegrantes()->count());
+        }
+        return $this->_members;
+    }
+
     /**
      * Gets query for [[Integrantes]].
-     * Compruebo si existe el usuario dentro de la comunidad pasada como parámetro.
-     * @return \yii\db\ActiveQuery
+     * Compruebo si existe el usuario dentro de la comunidad.
+     * @param id el id de la comunidad.
+     * @return boolean
      */
     public function existeIntegrante($cid)
     {
@@ -167,9 +194,8 @@ class Comunidades extends \yii\db\ActiveRecord
 
 
     /**
-     * Consulta para mostrar Comunidad por su nombre 
-     * y el Usuario por su nombre en Blogs
-     *
+     * Consulta para las Comunidades en el index, se calcula el total de favoritos 
+     * y el total de integrantes de cada comunidad
      * @return \yii\db\ActiveQuery
      */
     public static function comunidadesQuery()
@@ -178,9 +204,11 @@ class Comunidades extends \yii\db\ActiveRecord
         return static::find()
             ->select([
                 'comunidades.*',
-                'COUNT(f.id) AS favs'
+                'COUNT(f.id) AS favs',
+                'COUNT(i.id) AS members'
              ])
             ->joinWith('favcomunidades f')
+            ->joinWith('integrantes i')
             ->groupBy('comunidades.id');
     }
   

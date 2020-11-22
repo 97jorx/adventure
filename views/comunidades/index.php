@@ -57,7 +57,7 @@ Yii::$app->formatter->locale = 'es-ES';
 <div itemscope itemtype="http://schema.org/Blog" class="masonry-wrapper">
 <a class="arrow-left visible"><?= Icon::show('angle-left')?> </a>
     <div class="masonry">
-        <?php foreach($dataProvider->models as $model) { ?> 
+        <?php foreach($dataProvider->models as $model) : ?> 
         <div class="masonry-item" id="<?=$model->id?>">
             <div class="masonry-content">
                 <div class="masonry-bar" id="masonry-bar<?=$model->id?>">
@@ -141,15 +141,29 @@ Yii::$app->formatter->locale = 'es-ES';
                     </div>
                 <?php $fakeimg = "https://picsum.photos/800/800?random=".$model->id;  ?>
                 <?= Html::a(Html::img($fakeimg, ['class' => 'card-img-top masonry-img ']),  ['blogs/index',  'actual' => $model->id], ['class' => 'login']) ?>
-                <h5 itemprop="tittle" class="masonry-title"><b><?= $model->denom  ?></b></h5>
+                <h5 itemprop="title" class="masonry-title"><b><?= $model->denom  ?></b></h5>
                 <p itemprop="description" class="masonry-description"><b><?= $model->descripcion ?></b></p>
                 </div>
                 <div class="masonry-details">
-                    <i itemprop="date" data-balloon-pos='up'aria-label='<?=Yii::$app->formatter->asDate($model->created_at)?>'><?= Icon::show('clock')?></i> 
-                    <i  class='favdetail' ><i class='fav<?=$model->id?>'><?= $model->favs ?></i><?= Icon::show('heart')?></i>
+                    <i itemprop="date" data-balloon-pos='up'aria-label='<?=Yii::$app->formatter->asDate($model->created_at)?>'>
+                        <?= Icon::show('clock')?>
+                    </i> 
+                    <i class='favdetail'>
+                        <i class='fav<?=$model->id?>'>
+                            <?= $model->favs ?>
+                        </i>
+                            <?= Icon::show('heart')?>
+                    </i>
+                    <i class='favdetail'>
+                        <i class='fav<?=$model->id?>'>
+                            <?= $model->members ?>
+                        </i>
+                            <?= Icon::show('user')?>
+                    </i>
+                    
                 </div>
             </div>
-            <?php } ?>
+            <?php endforeach; ?>
         </div>
         <a class="arrow-right visible" ><?= Icon::show('angle-right')?> </a>
     </div>

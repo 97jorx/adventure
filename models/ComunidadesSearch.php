@@ -19,7 +19,7 @@ class ComunidadesSearch extends Comunidades
         return [
             [['id', 'propietario'], 'integer'],
             [['denom', 'descripcion', 'created_at'], 'safe'],
-            [['favs'],'safe']
+            [['favs', 'members'],'safe']
         ];
     }
 
@@ -59,6 +59,12 @@ class ComunidadesSearch extends Comunidades
             'desc' => ['COUNT(f.id)' => SORT_DESC],
         ];
 
+        $dataProvider->sort->attributes['members'] = [
+            'asc' => ['COUNT(i.id)' => SORT_ASC],
+            'desc' => ['COUNT(i.id)' => SORT_DESC],
+        ];
+
+
         $this->load($params);
 
         if (!$this->validate()) {
@@ -76,6 +82,9 @@ class ComunidadesSearch extends Comunidades
 
         $query->andFilterWhere(['ilike', 'denom', $this->denom])
             ->andFilterWhere(['ilike', 'descripcion', $this->descripcion]);
+
+
+        // var_dump($query);
 
         return $dataProvider;
     }
