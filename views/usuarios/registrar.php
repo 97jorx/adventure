@@ -53,7 +53,7 @@ $this->registerJs($js);
 
 ?>
 
-<div class='site-login'>
+<div class='register-form'>
     <?php $form = ActiveForm::begin([
         'id' => 'parsley',
         'enableAjaxValidation' => true,
@@ -144,4 +144,5 @@ $this->registerJs($js);
                 </div>
             </div>
     <?php ActiveForm::end(); ?>
-    
+
+</div>

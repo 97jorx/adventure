@@ -171,18 +171,45 @@ class ComunidadesController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        if ($model->getIntegrantes()->exists()) {
-            Integrantes::find()
-            ->where(['comunidad_id' => $id])
-            ->one()
-            ->delete();
-            $model->delete();    
+        $this->borrarTodo($id, Integrantes::class);
+        $this->borrarTodo($id, Bloqcomunidades::class);
+        $this->borrarTodo($id, Favcomunidades::class);
+        if ($model->delete()) {
             Yii::$app->session->setFlash('success', 'Se ha borrado la comunidad y todos sus usuarios de ella.');
+            return $this->redirect(['index']);
         } else {
             Yii::$app->session->setFlash('success', 'No se ha borrado la comunidad.');
+            return $this->redirect(['index']);
         }
+    }
+
+
+    /**
+     * Borra si existe las tablas en las que este relacionado la comunidad a partir del id.
+     * @param integer $id.
+     * @param integer $object.
+     * @return true.
+     * @throws NotFoundHttpException Si el modelo no se encuentra.
+     */
+    public function borrarTodo($id, $object)
+    {
+        $model = $this->findModel($id);
+
+        $exists = true;
+        $inte = $model->getIntegrantes()->exists();
+        $fav = $model->getFavcomunidades()->exists();
+        $bloq = $model->getBloqcomunidades()->exists();
+
+        if($object instanceof Integrantes){$exists = $inte;}
+        if($object instanceof Favcomunidades){$exists = $fav;}
+        if($object instanceof Bloqcomunidades){$exists = $bloq;}
         
-        return $this->redirect(['index']);
+
+        if ($exists) {
+            $object::deleteAll(['comunidad_id' => $id]);
+            return true;
+        } 
+        
     }
 
     

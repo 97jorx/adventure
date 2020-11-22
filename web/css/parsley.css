@@ -43,31 +43,30 @@
 	text-transform: uppercase;
 	color: white;
   font-size: 20px;
-  z-index: 99999;
 }
 
 .modal .modal-body {
-  max-height: 600px;
+  max-height: 650px;
   overflow: auto;
 }
 
-.form-control {
+.register-form .form-control, .site-login .form-control {
 	font-size: 18px;
 	padding: 10px 10px 10px 5px;
 	-webkit-appearance: none;
 	display: block;
 	background: none;
 	color: #636363;
-	width: 100%;
+	width: 20rem;
 	border: none;
 	border-radius: 0;
   border-bottom: 1px solid #757575;
-  z-index: 1;
 }
 
-.site-login {
-  z-index: -1;
+.register-form input {
+  width: 5px;
 }
+
 
 .site-login button {
   border-radius:6px;
