@@ -47,7 +47,7 @@ Yii::$app->formatter->locale = 'es-ES';
 
     <h1><?= Html::encode($this->title) ?></h1>
     <p>
-        <?= Html::a('Create Comunidades', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Comunidades', ['create'], ['class' => 'btn btn-success login']) ?>
        
     </p>
     <?php echo $this->render('_search', ['model' => $searchModel]); ?>

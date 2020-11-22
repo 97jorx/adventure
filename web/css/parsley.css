@@ -47,7 +47,7 @@
 }
 
 .modal .modal-body {
-  max-height: 500px;
+  max-height: 600px;
   overflow: auto;
 }
 
@@ -65,7 +65,7 @@
   z-index: 1;
 }
 
-.site-login{
+.site-login {
   z-index: -1;
 }
 
@@ -93,7 +93,6 @@
 
 
 .password-group {
-  padding-top: 1rem;
   padding-bottom: 1rem;
 }
 
