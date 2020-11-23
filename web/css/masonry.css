@@ -22,6 +22,8 @@ body {
 }
 
 @media only screen and (max-width: 1022px) and (min-width: 0px) {
+  
+
   .masonry {
     display: grid;
     padding: 17px;
@@ -75,13 +77,13 @@ body {
     display: block;
   }
 
-  .p-l-r {
-    padding-left:  0.55rem;
-    padding-right: 0.55rem;
-  }
   
 
 }
+
+
+
+
 @media only screen and (min-width: 1024px) {
 
   .masonry {
@@ -118,6 +120,8 @@ body {
     position: absolute;
     text-align: center;
   }
+
+  
 
 }
 
@@ -186,7 +190,10 @@ body {
 
 /* BARRA  DE DETALLES*/
 
-
+.p-l-r {
+  padding-left:  .10rem;
+  padding-right: .10rem;
+}
 
 .masonry-details {
   display: grid;

@@ -95,8 +95,14 @@ $this->registerJs($js);
                       <div class="card-body">
                         <h5 class="card-title"><?= $model->titulo ?></h5>
                         <p class="card-text"><?= $model->descripcion ?></p>
-                        <p class="card-text"><small class="text-muted"><?= Icon::show('heart') . $model->favs ?></small></p>
-                      </div>
+                          <div class="row">
+                            <div class="col-md-6">
+                              <p class="card-text"><small><?= Icon::show('heart') . $model->favs ?></small></p>
+                            </div>
+                            <div class="col-md-6">
+                              <p class="card-text"><small><?= Html::a(Icon::show('pencil'), ['blogs/update', 'id' => $model->id]) ?></small></p>
+                            </div>
+                         </div>
                     </div>
                   </div>
                 </div>

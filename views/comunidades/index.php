@@ -177,7 +177,7 @@ Yii::$app->formatter->locale = 'es-ES';
                         </div>
                     </div>
                     <div class="favdetail col-1" data-balloon-pos='up' aria-label='Integrantes'>    
-                        <div class='px-md-1 p-l-r'>
+                        <div class='px-md-1'>
                             <?= $model->members ?>
                         </div>
                         <div>
