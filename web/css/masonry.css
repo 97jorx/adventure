@@ -21,7 +21,7 @@ body {
   object-fit: cover;
 }
 
-@media only screen and (max-width: 1022px) and (min-width: 0px){
+@media only screen and (max-width: 1022px) and (min-width: 0px) {
   .masonry {
     display: grid;
     padding: 17px;
@@ -60,6 +60,7 @@ body {
     position: absolute;
     top: 0px; 
   }
+
   
 
 }
@@ -74,8 +75,11 @@ body {
     display: block;
   }
 
- 
-
+  .p-l-r {
+    padding-left:  0.55rem;
+    padding-right: 0.55rem;
+  }
+  
 
 }
 @media only screen and (min-width: 1024px) {
@@ -180,18 +184,15 @@ body {
 }
 
 
-
-
-
 /* BARRA  DE DETALLES*/
-.favdetail i{
-  margin-right: .5rem;
-}
+
+
 
 .masonry-details {
   display: grid;
   grid-template-columns: auto auto auto auto; 
   width: 100%;
+  height: 2rem;
   text-align: center;
   position: absolute;
   font-size: 0.7rem;
@@ -202,7 +203,7 @@ body {
 }
 
 
-.masonry-details i {
+.masonry-details div {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -210,7 +211,7 @@ body {
 
 
 
-/* BARRA DE BOTONES */
+/* BOTONES */
 
 .masonry-button {
   font-size: 1.25rem;
@@ -222,27 +223,25 @@ body {
 
 
 
-
+/* LOADERS */
 .loader {
-	position: fixed;
-	top: 0;
-	background-color: #000;
-	opacity:0.90;
-	left: 0px;
-	width: 100%;
-	height: 100%;
-	z-index: 9999999;
+	visibility: hidden;
 }
 
+.loader-img {
+  opacity: 0;
+  -webkit-transition: all 2s ease; 
+  -moz-transition: all 2s ease; 
+  -ms-transition: all 2s ease; 
+  -o-transition: all 2s ease; 
+}
 
-
-#spinner {
-  background-image: url("../img/spinner.gif")  no-repeat center center;
-  position: fixed;
-	top: 0;
-	opacity:100;
-	left: 0px;
-	width: 100%;
-	height: 100%;
-  z-index: 9999999;
+/* SPINNER */
+@keyframes loader {
+  0% {
+    transform: translate(-50%,-50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%,-50%) rotate(360deg);
+  }
 }

@@ -28,9 +28,10 @@ class AppAsset extends AssetBundle
     ];
     public $js = [
         'js/imagesloaded.pkgd.js',
-        'js/masonry.js',
+        'js/masonry.pkgd.min.js',
         'js/parsley.js',
-        'js/jquery.efect.js'
+        'js/jquery.efect.js',
+        'js/masonrys.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

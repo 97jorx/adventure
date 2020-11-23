@@ -23,9 +23,8 @@ class HelperAdventure extends Component
      */
     public static function ordenarBlog($provider, $elem, $name)
     {
-        return $provider->sort->link(
-            $elem,
-            [
+        return $provider->sort->link($elem,
+        [
          'class' => 'sort',
          'label' => $name,
         ]
