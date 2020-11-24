@@ -1,7 +1,6 @@
 <?php
 
 use kartik\icons\Icon;
-use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
@@ -13,8 +12,6 @@ $blogs = $dataProvider->models;
     <p>
         <?= Html::a('Crear Blog', ['create', 'actual' => $actual],  ['class' => 'btn btn-success']) ?>
     </p>
-</head>
-
   
   <div itemscope itemtype="http://schema.org/Blog" class="container">
     <div class="row">
@@ -58,13 +55,13 @@ $blogs = $dataProvider->models;
               <div class="col-lg-6">
                 <ul class="list-unstyled mb-0">
                 <li>
-                  <?= Yii::$app->AdvHelper->ordenarBlog($dataProvider, 'titulo', 'Título'); ?>
+                   <?= Yii::$app->AdvHelper->ordenarBlog($dataProvider, 'titulo', 'Título'); ?>
                   </li>
                   <li>
-                  <?= Yii::$app->AdvHelper->ordenarBlog($dataProvider, 'created_at', 'Fecha'); ?>
+                    <?= Yii::$app->AdvHelper->ordenarBlog($dataProvider, 'created_at', 'Fecha'); ?>
                   </li>
                   <li>
-                  <?= Yii::$app->AdvHelper->ordenarBlog($dataProvider, 'favs', 'Favoritos'); ?>  
+                    <?= Yii::$app->AdvHelper->ordenarBlog($dataProvider, 'favs', 'Favoritos'); ?>  
                   </li>
                 </ul>
               </div>
@@ -81,4 +78,4 @@ $blogs = $dataProvider->models;
         </div>
       </div>
     </div>
-  </div>
+

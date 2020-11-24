@@ -27,7 +27,7 @@ $(".masonry-item").hover(
 
 $('.loader').imagesLoaded( {}, function() {
     $('.loader').attr("style", "visibility: visible")
-
+    $('.spinner-border').fadeOut("fast");
 });
 
 window.onload = (e) => { 
@@ -58,6 +58,17 @@ Yii::$app->formatter->locale = 'es-ES';
     
 </p>
 <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+
+
+
+
+
+<div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+</div>
+
+
+
 
 <div class="loader">
     <div itemscope itemtype="http://schema.org/Blog" class="masonry-wrapper">

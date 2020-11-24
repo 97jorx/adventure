@@ -9,9 +9,9 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Usuarios */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Comunidades', 'url' => ['comunidades/index']];
-$this->params['breadcrumbs'][] = $model->username;
+// $this->title = $model->id;
+// $this->params['breadcrumbs'][] = ['label' => 'Comunidades', 'url' => ['comunidades/index']];
+// $this->params['breadcrumbs'][] = $model->username;
 
 $this->registerCssFile("@web/css/perfil.css");
        
@@ -39,7 +39,7 @@ $this->registerJs($js);
 ?>
 
 
-<body>
+
 <div class="container-perfil">
   <header>
   </header>
@@ -96,10 +96,10 @@ $this->registerJs($js);
                         <h5 class="card-title"><?= $model->titulo ?></h5>
                         <p class="card-text"><?= $model->descripcion ?></p>
                           <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-2">
                               <p class="card-text"><small><?= Icon::show('heart') . $model->favs ?></small></p>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-2">
                               <p class="card-text"><small><?= Html::a(Icon::show('pencil'), ['blogs/update', 'id' => $model->id]) ?></small></p>
                             </div>
                          </div>
@@ -113,5 +113,5 @@ $this->registerJs($js);
     </div>
   </main>
 </div>
-</body>
+
 
