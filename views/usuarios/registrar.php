@@ -18,10 +18,17 @@ $this->registerCssFile("@web/css/jquery-ui.css", [
     'media' => 'print',
 ]);
 
+$url = Url::to(['site/login']);
 
 $js = <<< EOF
 $('#parsley').on('input', function(){
     $('#parsley').parsley().validate();
+});
+
+$('.login').click(function () {
+    $('#modal').modal('show')
+    $('#modal').find('#createContent').load('$url');
+    $('.modal-title').text('Acceder');
 });
 
 if (window.navigator.geolocation) {
@@ -138,7 +145,7 @@ $this->registerJs($js);
                     </div>
                     <div class='col-6'>
                         <div class="options text-right">
-                            <p class="pt-1">¿ Tienes cuenta ya ? <a href='#' class="blue-text login">Accede aquí</a></p>
+                            <p class="pt-1 open-login">¿ Tienes cuenta ya ? <a href='#' class='blue-text login'>Accede aquí</a></p>
                         </div>
                     </div>
                 </div>

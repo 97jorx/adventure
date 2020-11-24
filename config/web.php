@@ -18,7 +18,7 @@ $config = [
     'language' => 'es-ES',
     'components' => [
 
-        
+             
 
         'geoip' => ['class' => 'lysenkobv\GeoIP\GeoIP'],
         

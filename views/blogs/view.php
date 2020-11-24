@@ -4,6 +4,7 @@
 /* @var $model app\models\Blogs */
 
 use kartik\icons\Icon;
+use kartik\rating\StarRating;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -48,6 +49,12 @@ $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gust
               });", 'title' => $like[1]
           ]); 
           ?> 
+          </div>
+          <div class="col-2">
+          <?=  StarRating::widget([
+              'name' => 'rating_35',
+              'value' => 0,
+          ]); ?>
           </div>
           <div id='fav' class="col-1">
               <?= $model->favs ?>     
