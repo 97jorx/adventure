@@ -9,8 +9,6 @@ use yii\widgets\LinkPager;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ComunidadesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->params['breadcrumbs'][] = 'Comunidades';
-
 
 
 $username = !Yii::$app->user->isGuest;

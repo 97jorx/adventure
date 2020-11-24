@@ -7,9 +7,9 @@ use yii\helpers\Url;
 use yii\widgets\LinkPager;
 
     
-    // $this->title = 'Blogs';
-    // $this->params['breadcrumbs'][] = ['label' => 'Comunidad', 'url' => ['comunidades/index']];
-    // $this->params['breadcrumbs'][] = $this->title;
+    $this->title = 'Blogs';
+    $this->params['breadcrumbs'][] = ['label' => 'Comunidad', 'url' => ['comunidades/index']];
+    $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 

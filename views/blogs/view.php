@@ -16,11 +16,8 @@ $url = Url::to(['blogs/like', 'id' => $model->id]);
 $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gusta']);
 
 ?>
-<div class="blogs-view">
 
-
-<body>
-  <div class="container">
+<div class="container">
     <div class="row">
       <div class="col-lg-8">
         <h1 class="mt-4"><?= $model->titulo ?></h1>
@@ -102,19 +99,18 @@ $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gust
           </div>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="card my-4">
-          <h5 class="card-header">Buscar</h5>
-          <div class="card-body">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Buscar por...">
-              <span class="input-group-append">
-                <button class="btn btn-secondary" type="button">Aceptar!</button>
-              </span>
+        <div class="col-md-4">
+          <div class="card my-4">
+            <h5 class="card-header">Buscar</h5>
+            <div class="card-body">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Buscar por...">
+                <span class="input-group-append">
+                  <button class="btn btn-secondary" type="button">Aceptar!</button>
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-    </div>
+      </div>
   </div>
-</body>
 </div>
