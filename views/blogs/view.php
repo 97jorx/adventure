@@ -36,7 +36,7 @@ $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gust
               event.preventDefault();
               var self = $(this);
               $.ajax({
-                  type: 'POST',
+                  type: 'GET',
                   url: '$url',
                   dataType: 'json',
               }).done(function(data, textStatus, jqXHR) {

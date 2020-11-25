@@ -2,13 +2,13 @@
 
 use kartik\rating\StarRating;
 use yii\helpers\Url;
+use yii\web\Response;
 
-$url = Url::to(['/notas/darnota']);
+$url = Url::to(['/notas/darnota', 'id' => Yii::$app->request->get('id')]);
+
 
 ?>
-
-
-  <?=  StarRating::widget([
+<?=  StarRating::widget([
       'id' => 'star-rating',
       'value' => 0,
       'name' => 'rating',
@@ -16,17 +16,18 @@ $url = Url::to(['/notas/darnota']);
         'step' => 1,
       ] ,
       'pluginEvents' => [
-        'rating:change' => "function(e, val, cap){
+        'rating:change' => "function(e, value, cap){
             $.ajax({
                   url:  '$url',
-                  method: 'POST',
-                  data: { nota: val },
+                  type: 'post',
+                  data: {nota: value},
                   dataType: 'json',
               }).done(function(data, textStatus, jqXHR){
-                  console.log(data.nota);
-                  $(e.currentTarget).rating('update', data.nota);
+                  console.log(data);
+                  $(e.currentTarget).rating('update', data.valor);
               }).fail(function(data, textStatus, jqXHR){
                   console.log('Error de la solicitud.');
+                  console.log(data);
               });
         }"
     ]

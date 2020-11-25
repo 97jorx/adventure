@@ -130,7 +130,7 @@ class NotasController extends Controller
         ->andWhere(['usuario_id' => $uid]);
 
         $json = [];
-        if (Yii::$app->request->post) {
+       
             $nota = Yii::$app->request->post('nota');
             if (!$notaexist->exists()) {
                 $model->usuario_id = $uid;
@@ -138,15 +138,22 @@ class NotasController extends Controller
                 $model->nota = $nota;
                 $model->save();
                 $json = [
-                'mensaje' => 'Se ha guardado la nota.',
-            ];
+                    'mensaje' => 'Se ha guardado la nota.',
+                    'valor' => $model->nota,
+                    'uid' => $uid,
+                    'blogid' => $id
+                ];
             } else {
                 $notaexist->nota = $nota;
+                $model->save();
                 $json = [
-                'mensaje' => 'Se ha actualizado la nota.',
-            ];
+                     'mensaje' => 'Se ha actualizado la nota.',
+                     'valor' => $model->nota,
+                     'uid' => $uid,
+                     'blogid' => $id
+                ];
             }
-        }
+       
         return json_encode($json);
     }
 
