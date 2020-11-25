@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "notas".
  *
  * @property int $id
- * @property int $nota
+ * @property int|null $nota
  * @property int $blog_id
  * @property int $usuario_id
  *
@@ -31,9 +31,9 @@ class Notas extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nota', 'blog_id', 'usuario_id'], 'required'],
             [['nota', 'blog_id', 'usuario_id'], 'default', 'value' => null],
             [['nota', 'blog_id', 'usuario_id'], 'integer'],
+            [['blog_id', 'usuario_id'], 'required'],
             [['blog_id'], 'exist', 'skipOnError' => true, 'targetClass' => Blogs::class, 'targetAttribute' => ['blog_id' => 'id']],
             [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['usuario_id' => 'id']],
         ];
@@ -59,7 +59,7 @@ class Notas extends \yii\db\ActiveRecord
      */
     public function getBlog()
     {
-        return $this->hasOne(Blogs::class, ['id' => 'blog_id'])->inverseOf('notas');
+        return $this->hasOne(Blogs::class, ['id' => 'blog_id']);
     }
 
     /**
@@ -69,6 +69,6 @@ class Notas extends \yii\db\ActiveRecord
      */
     public function getUsuario()
     {
-        return $this->hasOne(Usuarios::class, ['id' => 'usuario_id'])->inverseOf('notas');
+        return $this->hasOne(Usuarios::class, ['id' => 'usuario_id']);
     }
 }

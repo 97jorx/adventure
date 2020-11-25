@@ -35,6 +35,7 @@ if (localStorage.getItem('$user') === null && Boolean($username)) {
 }
    
 // ARROW-LEFT-RIGHT
+
 $(".arrow-left").click(function(){
     $(".masonry").animate({scrollLeft: "-="+250});
 });
@@ -61,16 +62,9 @@ Yii::$app->formatter->locale = 'es-ES';
 </p>
 <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
-
-
-
-
 <div class="spinner-border" role="status">
     <span class="sr-only">Loading...</span>
 </div>
-
-
-
 
 <div class="loader">
     <div itemscope itemtype="http://schema.org/Blog" class="masonry-wrapper">

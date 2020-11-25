@@ -5,30 +5,20 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "usuarios".
+ * This is the model class for table "blogs".
  *
  * @property int $id
- * @property string $username
- * @property string $nombre
- * @property string $apellidos
- * @property string $email
- * @property string $rol
+ * @property string $titulo
+ * @property string $descripcion
+ * @property string $cuerpo
+ * @property int $comunidad_id
+ * @property int $usuario_id
  * @property string $created_at
- * @property string $fecha_nac
- * @property string|null $contrasena
- * @property string|null $auth_key
- * @property string|null $poblacion
- * @property string|null $provincia
- * @property string|null $pais
- * @property string|null $foto_perfil
- * @property string|null $bibliografia
- * @property int|null $valoracion
+ * @property int|null $visitas
  *
- * @property Blogs[] $blogs
- * @property Comunidades[] $comunidades
+ * @property Comunidades $comunidad
+ * @property Usuarios $usuario
  * @property Favblogs[] $favblogs
- * @property Favcomunidades[] $favcomunidades
- * @property Integrantes[] $integrantes
  * @property Notas[] $notas
  */
 class Blogs extends \yii\db\ActiveRecord

@@ -86,7 +86,7 @@ CREATE TABLE blogs (
 DROP TABLE IF EXISTS notas CASCADE;
 CREATE TABLE notas (
      id           bigserial    PRIMARY KEY
-   , nota         integer      NOT NULL
+   , nota         integer      DEFAULT 0
    , blog_id      bigint       NOT NULL REFERENCES blogs (id)   
    , usuario_id   bigint       NOT NULL REFERENCES usuarios (id)
 );
