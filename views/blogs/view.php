@@ -28,6 +28,7 @@ $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gust
         </p>
         <hr>
         <p>Posteado <?= $model->created_at?></p>
+        <?= $this->render('_viewNotas') ?>
         <div class="row">
           <div class="col-1">
           <?= Html::a(Icon::show($like[0], ['id' => 'like', 'framework' => Icon::FAS]), $url, [
@@ -50,12 +51,9 @@ $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gust
           ]); 
           ?> 
           </div>
-          <div class="col-2">
-          <?=  StarRating::widget([
-              'name' => 'rating_35',
-              'value' => 0,
-          ]); ?>
-          </div>
+          
+            
+          
           <div id='fav' class="col-1">
               <?= $model->favs ?>     
           </div>

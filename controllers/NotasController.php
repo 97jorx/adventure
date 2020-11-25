@@ -8,6 +8,7 @@ use app\models\NotasSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * NotasController implements the CRUD actions for Notas model.
@@ -109,8 +110,48 @@ class NotasController extends Controller
         return $this->redirect(['index']);
     }
 
+    /**
+     * Dar nota al usuario en un blog en concreto.
+     * 
+     * @param integer $id
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionDarnota()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        
 
-    
+        $uid = Yii::$app->user->id;
+        $id = Yii::$app->request->get('id');
+        $model = new Notas();    
+
+        $notaexist = Notas::find()
+        ->where(['blog_id' => $id])
+        ->andWhere(['usuario_id' => $uid]);
+
+        $json = [];
+        if (Yii::$app->request->post) {
+            $nota = Yii::$app->request->post('nota');
+            if (!$notaexist->exists()) {
+                $model->usuario_id = $uid;
+                $model->blog_id = $id;
+                $model->nota = $nota;
+                $model->save();
+                $json = [
+                'mensaje' => 'Se ha guardado la nota.',
+            ];
+            } else {
+                $notaexist->nota = $nota;
+                $json = [
+                'mensaje' => 'Se ha actualizado la nota.',
+            ];
+            }
+        }
+        return json_encode($json);
+    }
+
+
+
 
     /**
      * Finds the Notas model based on its primary key value.

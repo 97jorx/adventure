@@ -255,7 +255,7 @@ class ComunidadesController extends Controller
             ];
         }
         
-            return json_encode($json);
+        return json_encode($json);
     }
 
    
