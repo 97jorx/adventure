@@ -23,13 +23,14 @@ body {
 
 @media only screen and (max-width: 1022px) and (min-width: 0px) {
   
+  
 
   .masonry {
     display: grid;
     padding: 15px;
-    grid-template-columns: repeat(auto-fill,minmax(160px,1fr));
+    grid-template-columns: repeat(minmax(160px, 1fr));
     grid-auto-flow: column;
-    grid-auto-columns: minmax(160px,1fr);
+    grid-auto-columns: minmax(180px, 1fr);
     overflow-x: scroll;
   }
 
@@ -182,7 +183,7 @@ body {
 
 .masonry-details {
   display: grid;
-  grid-template-columns: auto auto auto auto; 
+  grid-template-columns: auto auto auto; 
   width: 100%;
   height: 2rem;
   text-align: center;

@@ -1,193 +1,193 @@
 html,
 body {
-    height: 100%;
+   height: 100%;
 }
 
 img{
-    border-radius: 8px;
+   border-radius: 8px;
 }
 
 
 .wrap {
-    min-height: 100%;
-    height: auto;
-    margin: 0 auto -60px;
-    padding: 0 0 60px;
+   min-height: 100%;
+   height: auto;
+   margin: 0 auto -60px;
+   padding: 0 0 60px;
 }
 
 .wrap > .container {
-    padding: 70px 15px 20px;
+   padding: 70px 15px 20px;
 }
 
 .footer {
-    height: 60px;
-    background-color: #f5f5f5;
-    border-top: 1px solid #ddd;
-    padding-top: 20px;
+   height: 60px;
+   background-color: #f5f5f5;
+   border-top: 1px solid #ddd;
+   padding-top: 20px;
 }
 
 .jumbotron {
-    text-align: center;
-    background-color: transparent;
+   text-align: center;
+   background-color: transparent;
 }
 
 .jumbotron .btn {
-    font-size: 21px;
-    padding: 14px 24px;
+   font-size: 21px;
+   padding: 14px 24px;
 }
 
 .not-set {
-    color: #c55;
-    font-style: italic;
+   color: #c55;
+   font-style: italic;
 }
 
 /* add sorting icons to gridview sort links */
 a.asc:after, a.desc:after {
-    position: relative;
-    top: 1px;
-    display: inline-block;
-    font-family: 'Glyphicons Halflings';
-    font-style: normal;
-    font-weight: normal;
-    line-height: 1;
-    padding-left: 5px;
+   position: relative;
+   top: 1px;
+   display: inline-block;
+   font-family: 'Glyphicons Halflings';
+   font-style: normal;
+   font-weight: normal;
+   line-height: 1;
+   padding-left: 5px;
 }
 
 a.asc:after {
-    content: /*"\e113"*/ "\e151";
+   content: /*"\e113"*/ "\e151";
 }
 
 a.desc:after {
-    content: /*"\e114"*/ "\e152";
+   content: /*"\e114"*/ "\e152";
 }
 
 .sort-numerical a.asc:after {
-    content: "\e153";
+   content: "\e153";
 }
 
 .sort-numerical a.desc:after {
-    content: "\e154";
+   content: "\e154";
 }
 
 .sort-ordinal a.asc:after {
-    content: "\e155";
+   content: "\e155";
 }
 
 .sort-ordinal a.desc:after {
-    content: "\e156";
+   content: "\e156";
 }
 
 .grid-view th {
-    white-space: nowrap;
+   white-space: nowrap;
 }
 
 .hint-block {
-    display: block;
-    margin-top: 5px;
-    color: #999;
+   display: block;
+   margin-top: 5px;
+   color: #999;
 }
 
 .error-summary {
-    color: #a94442;
-    background: #fdf7f7;
-    border-left: 3px solid #eed3d7;
-    padding: 10px 20px;
-    margin: 0 0 15px 0;
+   color: #a94442;
+   background: #fdf7f7;
+   border-left: 3px solid #eed3d7;
+   padding: 10px 20px;
+   margin: 0 0 15px 0;
 }
 
 /* align the logout "link" (button in form) of the navbar */
 .nav li > form > button.logout {
-    border: none;
+   border: none;
 }
 
 .nav > li > form > button.logout:focus,
 .nav > li > form > button.logout:hover {
-    background-color: transparent;
+   background-color: transparent;
 }
 
 .glyphicon {
-    font-family: "Font Awesome 5 Free";
+   font-family: "Font Awesome 5 Free";
 }
 
 .glyphicon-eye-open:before {
-    content: "\f06e";
-    color: var(--success);
+   content: "\f06e";
+   color: var(--success);
 }
 
 .glyphicon-pencil:before {
-    content: "\f044";
-    color: var(--primary);
+   content: "\f044";
+   color: var(--primary);
 }
 
 .glyphicon-trash:before {
-    content: "\f2ed";
-    color: var(--danger);
+   content: "\f2ed";
+   color: var(--danger);
 }
 
 
 .glyphicon-hand-up:before{
-    content: "\f164";
-    color: var(--primary);
+   content: "\f164";
+   color: var(--primary);
 }
 
 
 .glyphicon-heart:before{
-    content: "\f08a";
+   content: "\f08a";
 }
 
 .glyphicon-thumbs-up:before {
-    content: "\e125";
+   content: "\e125";
 }
 
 .fa-bar-chart:before {
-    content: "\f080";
-    color: aqua;
+   content: "\f080";
+   color: aqua;
 }
 
 .fa-heart:before {
-    color:red;
+   color:red;
 }
 
 .fa-trash:before {
-    color: rgba(128, 0, 6, 0.884);
+   color: rgba(128, 0, 6, 0.884);
 }
 
 .fa-pencil:before {
-    content: "\f303";
-    color:green;
+   content: "\f303";
+   color:green;
 }
 
 .fa-sign-in:before {
-    content: "\f090";
-    color:white;
+   content: "\f090";
+   color:white;
 }
 
 
 /* IMÁGENES */
 .overlay-div {
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  background-color: rgba(0, 0, 0, 0.61);
-  color: white;
-  opacity: .7;
+   height: 100%;
+   width: 100%;
+   position: absolute;
+   background-color: rgba(0, 0, 0, 0.61);
+   color: white;
+   opacity: .7;
 }
 
 .fluid-img > img {
-    object-fit: cover;
-    opacity: 0.7;
+  object-fit: cover;
+  opacity: 0.7;
  }
 
 
  /* CARDS */
 .card-details {
-    position:absolute;
-    left:40%;
-    top:-20px;
-    border-radius:50%;
+  position:absolute;
+  left:40%;
+  top:-20px;
+  border-radius:50%;
 }
 .card-font {
-    font-size: 0.6rem;
+  font-size: 0.6rem;
 }
 
 
@@ -195,20 +195,9 @@ a.desc:after {
 /* VENTANA MODAL REGISTRAR */
 
 
-/* .modal-header {
-  display: flex;
-  justify-content: center;
-
-
-} */
-
-/* .close {
- 
-
-} */
 
 .modal-content {
-    width: auto;
+  width: auto;
 } 
 #createContent{
   padding-right: 20%;
@@ -218,6 +207,29 @@ a.desc:after {
 }
 
 
+/* ARROW */
+html {
+    scroll-behavior: smooth;
+  }
+
+.arrow-left, .arrow-right {
+  cursor: pointer;
+  position: absolute;
+  margin-top: -45px;
+  margin-left: -35px;
+  font-size: 3.5rem;
+  z-index: 0;
+}
+
+.arrow-left {
+    top: 55%;
+    left: 10%;
+}
+
+.arrow-right {
+    top: 55%;
+    right: 1%;
+}
 
 
 
