@@ -209,26 +209,34 @@ a.desc:after {
 
 /* ARROW */
 html {
-    scroll-behavior: smooth;
-  }
-
-.arrow-left, .arrow-right {
-  cursor: pointer;
-  position: absolute;
-  margin-top: -45px;
-  margin-left: -35px;
-  font-size: 3.5rem;
-  z-index: 0;
+    scroll-behavior: smooth !important;
 }
 
+.arrow-left, .arrow-right {
+  position: absolute;
+  margin-left: -35px;
+  margin-top: -40px;
+  font-size: 4rem;
+  z-index: 9999;
+}
+
+.arrow-circle {
+    background: #999;
+    border-radius: 50%;
+}
+
+
 .arrow-left {
-    top: 55%;
-    left: 10%;
+  top: 55%;
+  left: 10%;
+  color: black;
+
 }
 
 .arrow-right {
-    top: 55%;
-    right: 1%;
+  top: 55%;
+  right: 1%;
+  color: black;
 }
 
 

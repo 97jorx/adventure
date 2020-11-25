@@ -23,7 +23,7 @@ body {
 
 @media only screen and (max-width: 1022px) and (min-width: 0px) {
   
-  
+
 
   .masonry {
     display: grid;
@@ -176,10 +176,6 @@ body {
 
 /* BARRA  DE DETALLES*/
 
-.p-l-r {
-  padding-left:  .10rem;
-  padding-right: .10rem;
-}
 
 .masonry-details {
   display: grid;

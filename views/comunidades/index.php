@@ -34,9 +34,13 @@ if (localStorage.getItem('$user') === null && Boolean($username)) {
     $("#myModal").modal('show');
 }
    
+// ARROW-LEFT-RIGHT
 $(".arrow-left").click(function(){
     $(".masonry").animate({scrollLeft: "-="+250});
 });
+
+
+
 $(".arrow-right").click(function(){
     $(".masonry").animate({scrollLeft: "+="+250});
 });        
@@ -70,7 +74,9 @@ Yii::$app->formatter->locale = 'es-ES';
 
 <div class="loader">
     <div itemscope itemtype="http://schema.org/Blog" class="masonry-wrapper">
-        <a class="arrow-left visible"><?= Icon::show('angle-left')?> </a>
+        
+            <a class="arrow-left visible"><?= Icon::show('angle-left')?> </a>
+        
         <div class="masonry ">
             <?php foreach ($dataProvider->models as $model) : ?> 
             <div class="masonry-item item " onload ='this.style.opacity=1' id="<?=$model->id?>"> 
@@ -197,7 +203,7 @@ Yii::$app->formatter->locale = 'es-ES';
             </div>
             <?php endforeach; ?>
         </div>
-        <a class="arrow-right visible" ><?= Icon::show('angle-right')?> </a>
+            <a class="arrow-right  visible" ><?= Icon::show('angle-right')?> </a>
     </div>
     <?= LinkPager::widget([
             'pagination' => $dataProvider->pagination,
