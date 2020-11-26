@@ -139,18 +139,17 @@ class NotasController extends Controller
                 $model->save();
                 $json = [
                     'mensaje' => 'Se ha guardado la nota.',
-                    'valor' => $model->nota,
+                    'nota' => $model->nota,
                     'uid' => $uid,
                     'blogid' => $id
                 ];
             } else {
-                $notaexist->nota = $nota;
+                $model = Notas::findOne(['blog_id' => $id]);
+                $model->nota = $nota;
                 $model->save();
                 $json = [
                      'mensaje' => 'Se ha actualizado la nota.',
-                     'valor' => $model->nota,
-                     'uid' => $uid,
-                     'blogid' => $id
+                     'nota' => $model->nota,
                 ];
             }
        

@@ -24,10 +24,10 @@ $url = Url::to(['/notas/darnota', 'id' => Yii::$app->request->get('id')]);
                   dataType: 'json',
               }).done(function(data, textStatus, jqXHR){
                   console.log(data);
-                  $(e.currentTarget).rating('update', data.valor);
+                  $(e.currentTarget).rating('update', data.nota);
               }).fail(function(data, textStatus, jqXHR){
                   console.log('Error de la solicitud.');
-                  console.log(data);
+                  console.log(data.valor);
               });
         }"
     ]
