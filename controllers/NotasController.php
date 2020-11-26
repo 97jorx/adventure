@@ -119,8 +119,6 @@ class NotasController extends Controller
     public function actionDarnota()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
-        
-
         $uid = Yii::$app->user->id;
         $id = Yii::$app->request->get('id');
         $model = new Notas();    
@@ -144,7 +142,7 @@ class NotasController extends Controller
                     'blogid' => $id
                 ];
             } else {
-                $model = Notas::findOne(['blog_id' => $id]);
+                $model = Notas::findOne(['blog_id' => $id, 'usuario_id' => $uid]);
                 $model->nota = $nota;
                 $model->save();
                 $json = [

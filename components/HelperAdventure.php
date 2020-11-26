@@ -8,6 +8,7 @@ use app\models\Bloqcomunidades;
 use app\models\Comunidades;
 use app\models\Favblogs;
 use app\models\Favcomunidades;
+use app\models\Notas;
 use yii\base\Component;
 use Yii;
 
@@ -73,6 +74,25 @@ class HelperAdventure extends Component
             ->where(['comunidad_id' => $id])
             ->andWhere(['bloqueado' => $uid])
             ->exists();
+        }
+    }
+
+
+     /**
+     * Devuelve un boolean si el usuario actualo esta bloqueado en esa comunidad.
+     * @return Boolean retorna un booleano.
+     */
+    public static function recibirNota($id){
+        
+        $nota = Notas::find('nota');
+        
+        if (!isset($id)) {
+            $uid = Yii::$app->user->id;
+            return $nota
+            ->where(['blog_id' => $id])
+            ->andWhere(['usuario_id' => $uid]);
+        } else {
+            return 0;
         }
     }
 }
