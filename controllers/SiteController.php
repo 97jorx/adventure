@@ -38,12 +38,12 @@ class SiteController extends Controller
                     ],
                 ],
             ],
-            'verbs' => [
-                'class' => VerbFilter::class,
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
+            // 'verbs' => [
+            //     'class' => VerbFilter::class,
+            //     'actions' => [
+            //         'logout' => ['post'],
+            //     ],
+            // ],
         ];
     }
 
@@ -90,22 +90,18 @@ class SiteController extends Controller
     {
 
         $model = new LoginForm();
-        
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         }
-
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+        if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
         }
-
         $model->contrasena = '';
-        if (Yii::$app->request->isAjax) {
-            return $this->renderAjax('login', [
-                'model' => $model,
-            ]);
-        } 
+        return $this->renderAjax('login', [
+            'model' => $model,
+        ]);
+        
     }
    
 
