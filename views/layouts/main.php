@@ -13,20 +13,23 @@ use yii\bootstrap4\Modal;
 use yii\helpers\Url;
 $guest = Yii::$app->user->isGuest;
 AppAsset::register($this);
-$js= <<<EOT
-if('$guest'){
-    $('.login').attr('href', '#');
-    $('.login').click(function (){
-        $('#modal').modal('show')
-        $('#modal').find('#createContent').load($('#login').attr('value'));
-        $('.modal-title').text('Acceder');
-    });
-}
+$js= <<< EOT
+$(document).ready(function () {
+    if ('$guest') {
+        $('.login').attr('href', '#');
+        $('.login').click(function () {
+            $('#modal').modal('show');
+            $('#modal').find('#createContent').load($('#login').attr('value'));
+            $('.modal-title').text('Acceder');
+        });
+    }
 
-$('#registrar').click(function (){
-    $('#modal').find('.site-login').remove()
-    $('#modal').modal('show').find('#createContent').load($(this).attr('value'));
-    $('.modal-title').text('Registrarse');
+    $('#registrar').click(function (){
+        $('#modal').find('.site-login').remove();
+        $('#modal').modal('show').find('#createContent').load($(this).attr('value'));
+        $('.modal-title').text('Registrarse');
+    });
+
 });
 EOT;
 $this->registerJs($js);
@@ -68,7 +71,7 @@ $this->registerJs($js);
         $items = [
             ['label' => Html::button('Login', 
             [   
-                'value' => Url::to(['site/login']),  
+                'value' => Url::to(['/site/login']),  
                 'class' => 'btn btn-info login', 
                 'id' => 'login'
             ]) ],

@@ -90,18 +90,25 @@ class SiteController extends Controller
     {
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
+
         if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
+        } else if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            return $this->goBack();
         }
+
+
         $model->contrasena = '';
-        return $this->renderAjax('login', [
-            'model' => $model,
-        ]);
-        
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('login', [
+                'model' => $model,
+            ]);
+        } else {
+            return $this->render('login', [
+                'model' => $model,
+            ]);
+        }
     }
    
 

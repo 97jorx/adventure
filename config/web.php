@@ -100,8 +100,8 @@ $config = [
                 '/comunidad/<actual:\d+>/blogs/update/<id:\d+>' => 'blogs/update',
                 '/comunidad/<actual:\d+>/blogs/view/<id:\d+>' => 'blogs/view',
                 '/perfil/usuario/<username:\w+>' => 'usuarios/view',
-                'usuarios/registrarse' => 'usuarios/registrar',
-                'usuarios/login' => 'site/login',
+                '/usuarios/registrarse' => 'usuarios/registrar',
+                '/usuarios/login' => 'site/login',
             ],
         ],
 
