@@ -16,20 +16,34 @@ AppAsset::register($this);
 $js= <<< EOT
 $(document).ready(function () {
     if ('$guest') {
-        $('.login').attr('href', '#');
-        $('.login').click(function () {
-            $('#modal').modal('show');
-            $('#modal').find('#createContent').load($('#login').attr('value'));
-            $('.modal-title').text('Acceder');
+       $('.login').attr('href', '#');
+       $('.login').click(function () {
+            var lo = $('#login').attr('value');
+            $.ajax({
+                type: 'POST',
+                url: lo,
+                success: function(data) {
+                    $('#modal').find('#createContent').html(data);
+                    $('#modal').modal('show');
+                    $('.modal-title').text('Acceder');
+                }
+            });
         });
     }
 
-    $('#registrar').click(function (){
-        $('#modal').find('.site-login').remove();
-        $('#modal').modal('show').find('#createContent').load($(this).attr('value'));
-        $('.modal-title').text('Registrarse');
-    });
 
+    $('#registrar').click(function () {
+        var lo = $('#registrar').attr('value');
+        $.ajax({
+            type: 'POST',
+            url: lo,
+            success: function(data) {
+                $('#modal').find('.site-login').remove();
+                $('#modal').modal('show').find('#createContent').html(data);
+                $('.modal-title').text('Registrarse');
+            }
+        });
+    });
 });
 EOT;
 $this->registerJs($js);
@@ -71,7 +85,7 @@ $this->registerJs($js);
         $items = [
             ['label' => Html::button('Login', 
             [   
-                'value' => Url::to(['/site/login']),  
+                'value' => Url::toRoute(['site/login']),  
                 'class' => 'btn btn-info login', 
                 'id' => 'login'
             ]) ],
