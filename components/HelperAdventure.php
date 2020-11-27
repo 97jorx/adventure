@@ -79,18 +79,16 @@ class HelperAdventure extends Component
 
 
      /**
-     * Devuelve un boolean si el usuario actualo esta bloqueado en esa comunidad.
-     * @return Boolean retorna un booleano.
+     * Devuelve la nota si existe en la tabla Notas del blog especificado y el usuario actual.
+     * @return Integer retorna un booleano.
      */
     public static function recibirNota($id){
-        
-        $nota = Notas::find('nota');
-        
-        if (!isset($id)) {
+
+        if (isset($id)) {
             $uid = Yii::$app->user->id;
-            return $nota
+            return Notas::find()
             ->where(['blog_id' => $id])
-            ->andWhere(['usuario_id' => $uid]);
+            ->andWhere(['usuario_id' => $uid])->one()->nota;
         } else {
             return 0;
         }

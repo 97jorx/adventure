@@ -3,12 +3,14 @@
 use kartik\rating\StarRating;
 use yii\helpers\Url;
 use yii\web\Response;
-
+$id = Yii::$app->request->get('id');
+$nota = Yii::$app->AdvHelper->recibirNota($id);
 $url = Url::to(['/notas/darnota', 'id' => Yii::$app->request->get('id')]);
 
 ?>
 <?=  StarRating::widget([
       'id' => 'star-rating',
+      'value' => $nota,
       'name' => 'rating',
       'pluginOptions' => [
         'step' => 1,
