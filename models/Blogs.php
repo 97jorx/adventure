@@ -25,7 +25,7 @@ class Blogs extends \yii\db\ActiveRecord
 {
    
     private $_favs = null;
-    private $_notamedia = null;
+    private $_valoracion = null;
 
     /**
      * {@inheritdoc}
@@ -139,16 +139,16 @@ class Blogs extends \yii\db\ActiveRecord
     }
 
 
-    public function setNotamedia($notamedia) {
-        $this->_notamedia = $notamedia;
+    public function setValoracion($valoracion) {
+        $this->_valoracion = $valoracion;
     }
 
-    public function getNotamedia()
+    public function getValoracion()
     {
-        if ($this->_notamedia === null && !$this->isNewRecord) {
-            $this->setFavs($this->average($this->getNotamedia()));
+        if ($this->_valoracion === null && !$this->isNewRecord) {
+            $this->setValoracion($this->getNotas()->sum('nota'));
         }
-        return $this->_favs;
+        return $this->_valoracion;
     }
 
 
@@ -169,7 +169,7 @@ class Blogs extends \yii\db\ActiveRecord
                 '"c".denom AS comunidad', 
                 '"c".descripcion AS eslogan', 
                 'COUNT(f.id) AS favs',
-                'AVG(n.nota) AS notamedia'
+                'SUM(n.nota) AS valoracion'
              ])
             ->joinWith('comunidad c')
             ->joinWith('usuario u')

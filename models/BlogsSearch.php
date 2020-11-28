@@ -22,7 +22,7 @@ class BlogsSearch extends Blogs
     public function rules()
     {
         return [
-            [['id', 'comunidad_id', 'usuario_id', 'favs'], 'integer'],
+            [['id', 'comunidad_id', 'usuario_id', 'favs', 'valoracion'], 'integer'],
             [['titulo', 'descripcion', 'cuerpo', 'created_at'], 'safe'],
             [['usuario.nombre', 'comunidad.denom'], 'safe'],
             [['busqueda'], 'safe'],
@@ -86,6 +86,12 @@ class BlogsSearch extends Blogs
             'asc' => ['COUNT(f.id)' => SORT_ASC],
             'desc' => ['COUNT(f.id)' => SORT_DESC],
         ];
+
+        $dataProvider->sort->attributes['valoracion'] = [
+            'asc' => ['sum(n.nota)' => SORT_ASC],
+            'desc' => ['sum(n.nota)' => SORT_DESC],
+        ];
+
 
         $this->load($params);
 
