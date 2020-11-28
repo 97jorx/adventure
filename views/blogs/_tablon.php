@@ -6,7 +6,7 @@ use yii\helpers\Url;
 use yii\widgets\LinkPager;
 
 $blogs = $dataProvider->models;
-  
+$name = Yii::$app->user->identity->username;
     
 ?>
     <p>

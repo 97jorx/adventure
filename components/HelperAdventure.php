@@ -67,8 +67,8 @@ class HelperAdventure extends Component
             $id = Yii::$app->request->get('id');
             return !$bloqueado
             ->where(['comunidad_id' => $id])
-            ->andWhere(['bloqueado' => $uid])->exists();
-            
+            ->andWhere(['bloqueado' => $uid])
+            ->exists();
         } else {
             return $bloqueado
             ->where(['comunidad_id' => $id])
@@ -82,13 +82,15 @@ class HelperAdventure extends Component
      * Devuelve la nota si existe en la tabla Notas del blog especificado y el usuario actual.
      * @return Integer retorna un booleano.
      */
-    public static function recibirNota($id){
+    public static function recibirNota($id = null){
+        
+        $uid = Yii::$app->user->id;
+        $existe = Notas::find()
+        ->where(['blog_id' => $id])
+        ->andWhere(['usuario_id' => $uid]);
 
-        if (isset($id)) {
-            $uid = Yii::$app->user->id;
-            return Notas::find()
-            ->where(['blog_id' => $id])
-            ->andWhere(['usuario_id' => $uid])->one()->nota;
+        if (isset($id) && $existe->exists()) {
+            return $existe->one()->nota;
         } else {
             return 0;
         }
