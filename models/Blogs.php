@@ -25,6 +25,8 @@ class Blogs extends \yii\db\ActiveRecord
 {
    
     private $_favs = null;
+    private $_notamedia = null;
+
     /**
      * {@inheritdoc}
      */
@@ -137,6 +139,20 @@ class Blogs extends \yii\db\ActiveRecord
     }
 
 
+    public function setNotamedia($notamedia) {
+        $this->_notamedia = $notamedia;
+    }
+
+    public function getNotamedia()
+    {
+        if ($this->_notamedia === null && !$this->isNewRecord) {
+            $this->setFavs($this->average($this->getNotamedia()));
+        }
+        return $this->_favs;
+    }
+
+
+
     /**
      * Consulta para mostrar Comunidad por su nombre 
      * y el Usuario por su nombre en Blogs
@@ -152,11 +168,13 @@ class Blogs extends \yii\db\ActiveRecord
                 '"u".nombre AS usuario', 
                 '"c".denom AS comunidad', 
                 '"c".descripcion AS eslogan', 
-                'COUNT(f.id) AS favs'
+                'COUNT(f.id) AS favs',
+                'AVG(n.nota) AS notamedia'
              ])
             ->joinWith('comunidad c')
             ->joinWith('usuario u')
             ->joinWith('favblogs f')
+            ->joinWith('notas n')
             ->groupBy('blogs.id, u.nombre, c.denom, c.descripcion');
     }
   
