@@ -6,7 +6,7 @@ use yii\helpers\Url;
 use yii\widgets\LinkPager;
 
 $blogs = $dataProvider->models;
-$name = Yii::$app->user->identity->username;
+
     
 ?>
     <p>
@@ -19,7 +19,6 @@ $name = Yii::$app->user->identity->username;
         <h1 class="my-4"><?= $this->title?></h1>
         <?php $index = 0; foreach($dataProvider->models as $model) : ?> 
           <?php if ($index == 0): ?>  
-            <?php $model->comunidad->denom;?>
           <h2><small><?= $model->comunidad->denom ?></small></h2> 
          <?php endif; ?> 
         <div class="card mb-4"> 

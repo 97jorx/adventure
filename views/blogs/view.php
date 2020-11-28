@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $url = Url::to(['blogs/like', 'id' => $model->id]);
 $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gusta']);
-
+$name = Yii::$app->user->identity->username;
 ?>
 
 <div class="container">
@@ -26,6 +26,11 @@ $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gust
          Creado por
             <a href="#"><?= $model->usuario->nombre ?></a>
         </p>
+        <?php if($model->usuario->nombre == $name) { ?>
+            <div class="col-md-2">
+              <p class="card-text"><small><?= Html::a(Icon::show('pencil'), ['blogs/update', 'id' => $model->id]) ?></small></p>
+            </div>
+        <?php } ?>
         <hr>
         <p>Posteado <?= $model->created_at?></p>
         <?= $this->render('_viewNotas') ?>
