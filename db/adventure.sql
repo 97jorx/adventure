@@ -251,8 +251,9 @@ VALUES (5, 1, 1);
 INSERT INTO favblogs (usuario_id, blog_id)
 VALUES (1, 1);    
 
-INSERT INTO favcomunidades (usuario_id, comunidad_id)
+INSERT INTO favcomunidades (usuario_id, comunidad_id, created_at)
 VALUES (1, 1);    
+       (1, 1);    
 
 
 INSERT INTO integrantes (usuario_id, comunidad_id)

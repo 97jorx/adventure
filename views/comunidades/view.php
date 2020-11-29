@@ -1,10 +1,10 @@
 <?php
 
-use app\models\Comunidades;
 use kartik\icons\Icon;
 use yii\bootstrap4\Html;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
+use dosamigos\chartjs\ChartJs;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Comunidades */
@@ -18,6 +18,60 @@ $url = Url::to(['comunidades/like', 'id' => $model->id]);
 $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gusta']);
 
 ?>
+
+<div class="chart-container" style="position: relative; height:40vh; width:40vw">
+  <canvas id="chart"></canvas>
+</div>
+
+<?= ChartJs::widget([
+    'type' => 'line',
+    'id' => 'chart',
+    'data' => [
+        'labels' => ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre'], 
+        'datasets' => [
+            [
+                'data' => ['35', '11', '36', '25', '15', '56', '5', '12', '8', '5', '27', '16'], 
+                'label' => '',
+                'backgroundColor' => [
+                        '#ADC3FF',
+                        '#FF9A9A',
+                    'rgba(190, 124, 145, 0.8)'
+                ],
+                'borderColor' =>  [
+                        '#fff',
+                        '#fff',
+                        '#fff'
+                ],
+                'borderWidth' => 1,
+                'hoverBorderColor'=>["#999","#999","#999"],                
+            ]
+        ]
+    ],
+    'clientOptions' => [
+        'legend' => [
+            'display' => false,
+            'position' => 'bottom',
+            'labels' => [
+                'fontSize' => 14,
+                'fontColor' => "#425062",
+            ]
+        ],
+        'tooltips' => [
+            'enabled' => true,
+            'intersect' => true
+        ],
+        'hover' => [
+            'mode' => false
+        ],
+        'maintainAspectRatio' => false,
+
+    ],
+]);
+
+?>
+
+
+
 <div class="comunidades-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
