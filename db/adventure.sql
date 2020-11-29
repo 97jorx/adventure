@@ -107,7 +107,8 @@ DROP TABLE IF EXISTS favblogs CASCADE;
 CREATE TABLE favblogs (
      id           bigserial      PRIMARY KEY
    , usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
-   , blog_id      bigint         NOT NULL REFERENCES blogs (id)        
+   , blog_id      bigint         NOT NULL REFERENCES blogs (id)
+   , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp        
 );
 
 
@@ -118,6 +119,7 @@ CREATE TABLE favcomunidades (
      id           bigserial      PRIMARY KEY
    , usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
    , comunidad_id bigint         NOT NULL REFERENCES comunidades (id)        
+   , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
 );
 
 -- TODO RESPONDER COMENTARIOS.
@@ -158,6 +160,7 @@ CREATE TABLE integrantes (
      id           bigserial      PRIMARY KEY 
    , usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
    , comunidad_id bigint         NOT NULL REFERENCES comunidades (id)
+   , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
 );
 
 
