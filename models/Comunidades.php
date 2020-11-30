@@ -204,8 +204,8 @@ class Comunidades extends \yii\db\ActiveRecord
         return static::find()
             ->select([
                 'comunidades.*',
-                'COUNT(f.id) AS favs',
-                'COUNT(i.id) AS members'
+                'COUNT(DISTINCT f.id) AS favs',
+                'COUNT(DISTINCT i.id) AS members'
              ])
             ->joinWith('favcomunidades f')
             ->joinWith('integrantes i')

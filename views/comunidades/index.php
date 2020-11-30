@@ -117,8 +117,8 @@ Yii::$app->formatter->locale = 'es-ES';
                                 dataType: 'json',
                             }).done(function(data, textStatus, jqXHR) {
                                 data = JSON.parse(data);
-                                $('.fav$id').html(data.fav);
                                 console.log(data.fav);
+                                $('.fav$id').html(data.fav);
                                 $('#like').efect();
                                 $(self).find('i').removeClass();
                                 $(self).find('i').addClass(data.iconclass[0]);

@@ -17,9 +17,8 @@ class ComunidadesSearch extends Comunidades
     public function rules()
     {
         return [
-            [['id', 'propietario'], 'integer'],
+            [['id', 'propietario', 'favs', 'members'], 'integer'],
             [['denom', 'descripcion', 'created_at'], 'safe'],
-            [['favs', 'members'],'safe']
         ];
     }
 
