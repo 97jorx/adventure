@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "favcomunidades".
@@ -69,4 +70,33 @@ class Favcomunidades extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Usuarios::class, ['id' => 'usuario_id'])->inverseOf('favcomunidades');
     }
+
+
+  /**
+     * Devuelve un array con los likes de las comunidades de cada mes 
+     * y el total de integrantes de cada comunidad
+     * @return Array
+     */
+    public static function likesEachMonth()
+    {
+        $id = Yii::$app->request->get('id');
+        
+        //    SELECT COUNT(id), TO_CHAR(TO_DATE(date_part('month', created_at)::text, 'MM'), 'Month') as date 
+        //      FROM favcomunidades 
+        //     WHERE comunidad_id = :id
+        // GROUP BY date_part('month', created_at);
+        
+        $likes_month =  static::find()
+        ->select([
+            'COUNT(id) as favs_count', 
+            "TO_CHAR(TO_DATE(DATE_PART('month', created_at)::text, 'MM'), 'Month') as mes",
+        ])
+        ->where(['comunidad_id' => $id])
+        ->groupBy('created_at')->asArray()->all();
+
+
+        return $likes_month;
+
+    }
+
 }

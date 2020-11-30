@@ -16,6 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $url = Url::to(['comunidades/like', 'id' => $model->id]); 
 $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gusta']);
+var_dump(print_r($likesEachMonth)); die();
 
 ?>
 
@@ -23,18 +24,19 @@ $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gust
   <canvas id="chart"></canvas>
 </div>
 
+
 <?= ChartJs::widget([
     'type' => 'line',
     'id' => 'chart',
     'data' => [
-        'labels' => ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre'], 
+        'labels' => ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'], 
         'datasets' => [
             [
                 'data' => ['35', '11', '36', '25', '15', '56', '5', '12', '8', '5', '27', '16'], 
                 'label' => '',
                 'backgroundColor' => [
-                        '#ADC3FF',
-                        '#FF9A9A',
+                    '#ADC3FF',
+                    '#FF9A9A',
                     'rgba(190, 124, 145, 0.8)'
                 ],
                 'borderColor' =>  [
@@ -72,7 +74,7 @@ $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gust
 
 
 
-<div class="comunidades-view">
+<!-- <div class="comunidades-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -111,4 +113,4 @@ $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gust
         ],
     ]) ?>
 
-</div>
+</div> -->

@@ -63,7 +63,7 @@ Yii::$app->formatter->locale = 'es-ES';
 <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
 <div class="spinner-border" role="status">
-    <span class="sr-only">Loading...</span>
+    <span class="sr-only">Si no aparece las imagenes, recarge la página.</span>
 </div>
 
 <div class="loader">

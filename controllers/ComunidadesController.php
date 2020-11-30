@@ -100,7 +100,8 @@ class ComunidadesController extends Controller
         $favoritos = Yii::$app->AdvHelper->tieneFavoritos($id, $this);
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'tienefavs' => !$favoritos->exists()
+            'tienefavs' => !$favoritos->exists(),
+            'likesEachMonth' => Favcomunidades::likesEachMonth()
         ]);
     }
 

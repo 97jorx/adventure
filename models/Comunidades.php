@@ -212,4 +212,7 @@ class Comunidades extends \yii\db\ActiveRecord
             ->groupBy('comunidades.id');
     }
   
+
+  
+
 }
