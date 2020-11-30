@@ -118,6 +118,7 @@ Yii::$app->formatter->locale = 'es-ES';
                             }).done(function(data, textStatus, jqXHR) {
                                 data = JSON.parse(data);
                                 $('.fav$id').html(data.fav);
+                                console.log(data.fav);
                                 $('#like').efect();
                                 $(self).find('i').removeClass();
                                 $(self).find('i').addClass(data.iconclass[0]);
@@ -187,7 +188,8 @@ Yii::$app->formatter->locale = 'es-ES';
                     </div>
                     <div class="favdetail col-1" data-balloon-pos='up' aria-label='Integrantes'>    
                         <div class='px-md-1'>
-                            <?= $model->members ?>
+                            <?= $model->members; ?>
+                            
                         </div>
                         <div>
                             <?= Icon::show('user')?>
