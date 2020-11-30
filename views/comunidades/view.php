@@ -29,7 +29,7 @@ var_dump(print_r($likesEachMonth)); die();
     'type' => 'line',
     'id' => 'chart',
     'data' => [
-        'labels' => ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'], 
+        'labels' => ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'], 
         'datasets' => [
             [
                 'data' => ['35', '11', '36', '25', '15', '56', '5', '12', '8', '5', '27', '16'], 

@@ -91,8 +91,11 @@ class Favcomunidades extends \yii\db\ActiveRecord
             'COUNT(id) as favs_count', 
             "TO_CHAR(TO_DATE(DATE_PART('month', created_at)::text, 'MM'), 'Month') as mes",
         ])
-        ->where(['comunidad_id' => $id])
-        ->groupBy('created_at')->asArray()->all();
+        // ->where(['comunidad_id' => $id])
+        ->groupBy('created_at')
+        ->orderBy('created_at')
+        ->asArray()
+        ->all();
 
 
         return $likes_month;

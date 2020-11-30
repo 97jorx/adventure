@@ -172,7 +172,7 @@ Yii::$app->formatter->locale = 'es-ES';
                             <div class='px-md-1 p-l-r'>
                                 <?= Icon::show('clock')?>
                             </div>
-                            <div class='fav<?=$model->id?>'>
+                            <div>
                                 <?=Yii::$app->formatter->asDate($model->created_at, 'php:Y')?>
                             </div>   
                         </div> 

@@ -186,61 +186,61 @@ VALUES (
          'foto.jpg', 'Soy un administrador de Adventure', 5
         );
 
-INSERT INTO comunidades (denom, descripcion, propietario)
-VALUES ('Escribir es para todos', 
-        'Estaís todos invitados formar parte de la comunidad para escritores animaté 
-         y comparte tus ideas a con todos nosotros', 1);
+INSERT INTO usuarios (username, nombre, apellidos, email, rol, fecha_nac, contrasena)
+VALUES ('Usuario1', 'Usuario1', 'Usuario1', 'usuario1@gmail.com', 'estandar', '1978-06-22', crypt('usuario1', gen_salt('bf', 10))),
+       ('Usuario2', 'Usuario2', 'Usuario2', 'usuario2@gmail.com', 'estandar', '1978-06-22', crypt('usuario2', gen_salt('bf', 10))), 
+       ('Usuario3', 'Usuario3', 'Usuario3', 'usuario3@gmail.com', 'estandar', '1978-06-22', crypt('usuario3', gen_salt('bf', 10))),
+       ('Usuario4', 'Usuario4', 'Usuario4', 'usuario4@gmail.com', 'estandar', '1978-06-22', crypt('usuario4', gen_salt('bf', 10))),
+       ('Usuario5', 'Usuario5', 'Usuario5', 'usuario5@gmail.com', 'estandar', '1978-06-22', crypt('usuario5', gen_salt('bf', 10))),
+       ('Usuario6', 'Usuario6', 'Usuario6', 'usuario6@gmail.com', 'estandar', '1978-06-22', crypt('usuario6', gen_salt('bf', 10))),
+       ('Usuario7', 'Usuario1', 'Usuario7', 'usuario7@gmail.com', 'estandar', '1978-06-22', crypt('usuario7', gen_salt('bf', 10))),
+       ('Usuario8', 'Usuario8', 'Usuario8', 'usuario8@gmail.com', 'estandar', '1978-06-22', crypt('usuario8', gen_salt('bf', 10))),
+       ('Usuario9', 'Usuario9', 'Usuario9', 'usuario9@gmail.com', 'estandar', '1978-06-22', crypt('usuario9', gen_salt('bf', 10))),
+       ('Usuario10', 'Usuario10', 'Usuario10','usuario10@gmail.com', 'estandar', '1978-06-22', crypt('usuario10', gen_salt('bf', 10))),
+       ('Usuario11', 'Usuario11', 'Usuario11','usuario11@gmail.com', 'estandar', '1978-06-22', crypt('usuario11', gen_salt('bf', 10))),
+       ('Usuario12', 'Usuario12', 'Usuario12','usuario12@gmail.com', 'estandar', '1978-06-22', crypt('usuario12', gen_salt('bf', 10)));
 
 
 INSERT INTO comunidades (denom, descripcion, propietario)
-VALUES ('Viajes', 
-        'Si te gusta viajar y comentar tus grandes aventuras esta es tu comunidad', 1);
-
-INSERT INTO comunidades (denom, descripcion, propietario)
-VALUES ('Videojuegos', 
-        'Los videojuegos estan a la orden del día disfruta con más personas de este hobbit', 1);
-
-INSERT INTO comunidades (denom, descripcion, propietario)
-VALUES ('Ciencialistas', 
-        '¿Buscas una comunidad de aficionados a la ciencia? Entra aquí y comenta tus conocimientos', 1);
+ VALUES 
+ ('Escribir es para todos', 'Estaís todos invitados formar parte de la comunidad para escritores animaté y comparte tus ideas a con todos nosotros', 1),
+ ('Viajes', 'Si te gusta viajar y comentar tus grandes aventuras esta es tu comunidad', 1),
+ ('Videojuegos', 'Los videojuegos estan a la orden del día disfruta con más personas de este hobbit', 1),
+ ('Ciencialistas', '¿Buscas una comunidad de aficionados a la ciencia? Entra aquí y comenta tus conocimientos', 1);
 
 INSERT INTO blogs (titulo, descripcion, cuerpo, comunidad_id, usuario_id)
-VALUES ('Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whiliam Shakespeare',  
-        'Lo mejor que me he leído hasta ahora de Shakespeare: 
-        conciso, sorprendente y para nada denso como muchas otras obras del escritor. 
-        La historia tiene su miga: un duque de Milán desterrado de sus posesiones por su propio hermano condenado a vagar sin rumbo por el mar. 
-        Pero haciendo servir sus dotes aprendidas en la corte como mago, logra dominar los elementos de la isla a la que llega y se convierte en una especie de Dios. 
-        A diferencia de muchos otros personajes del autor, este logra perdonar a sus adversarios en su venganza. 
-        Un cuento fantástico con espíritus de la naturaleza muy entretenido.', 1, 1);
+VALUES 
+        ('Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whiliam Shakespeare',  
+                'Lo mejor que me he leído hasta ahora de Shakespeare: 
+                conciso, sorprendente y para nada denso como muchas otras obras del escritor. 
+                La historia tiene su miga: un duque de Milán desterrado de sus posesiones por su propio hermano condenado a vagar sin rumbo por el mar. 
+                Pero haciendo servir sus dotes aprendidas en la corte como mago, logra dominar los elementos de la isla a la que llega y se convierte en una especie de Dios. 
+                A diferencia de muchos otros personajes del autor, este logra perdonar a sus adversarios en su venganza. 
+                Un cuento fantástico con espíritus de la naturaleza muy entretenido.', 1, 1),
 
+        ('1Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whiliam Shakespeare',  
+                'Lo mejor que me he leído hasta ahora de Shakespeare: 
+                conciso, sorprendente y para nada denso como muchas otras obras del escritor. 
+                La historia tiene su miga: un duque de Milán desterrado de sus posesiones por su propio hermano condenado a vagar sin rumbo por el mar. 
+                Pero haciendo servir sus dotes aprendidas en la corte como mago, logra dominar los elementos de la isla a la que llega y se convierte en una especie de Dios. 
+                A diferencia de muchos otros personajes del autor, este logra perdonar a sus adversarios en su venganza. 
+                Un cuento fantástico con espíritus de la naturaleza muy entretenido.', 1, 1),
 
-INSERT INTO blogs (titulo, descripcion, cuerpo, comunidad_id, usuario_id )
-VALUES ('1Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whiliam Shakespeare',  
-        'Lo mejor que me he leído hasta ahora de Shakespeare: 
-        conciso, sorprendente y para nada denso como muchas otras obras del escritor. 
-        La historia tiene su miga: un duque de Milán desterrado de sus posesiones por su propio hermano condenado a vagar sin rumbo por el mar. 
-        Pero haciendo servir sus dotes aprendidas en la corte como mago, logra dominar los elementos de la isla a la que llega y se convierte en una especie de Dios. 
-        A diferencia de muchos otros personajes del autor, este logra perdonar a sus adversarios en su venganza. 
-        Un cuento fantástico con espíritus de la naturaleza muy entretenido.', 1, 1);
+        ('2Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whiliam Shakespeare',  
+                'Lo mejor que me he leído hasta ahora de Shakespeare: 
+                conciso, sorprendente y para nada denso como muchas otras obras del escritor. 
+                La historia tiene su miga: un duque de Milán desterrado de sus posesiones por su propio hermano condenado a vagar sin rumbo por el mar. 
+                Pero haciendo servir sus dotes aprendidas en la corte como mago, logra dominar los elementos de la isla a la que llega y se convierte en una especie de Dios. 
+                A diferencia de muchos otros personajes del autor, este logra perdonar a sus adversarios en su venganza. 
+                Un cuento fantástico con espíritus de la naturaleza muy entretenido.', 1, 1),
 
-INSERT INTO blogs (titulo, descripcion, cuerpo, comunidad_id, usuario_id)
-VALUES ('2Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whiliam Shakespeare',  
-        'Lo mejor que me he leído hasta ahora de Shakespeare: 
-        conciso, sorprendente y para nada denso como muchas otras obras del escritor. 
-        La historia tiene su miga: un duque de Milán desterrado de sus posesiones por su propio hermano condenado a vagar sin rumbo por el mar. 
-        Pero haciendo servir sus dotes aprendidas en la corte como mago, logra dominar los elementos de la isla a la que llega y se convierte en una especie de Dios. 
-        A diferencia de muchos otros personajes del autor, este logra perdonar a sus adversarios en su venganza. 
-        Un cuento fantástico con espíritus de la naturaleza muy entretenido.', 1, 1);
-
-
-INSERT INTO blogs (titulo, descripcion, cuerpo, comunidad_id,  usuario_id)
-VALUES ('3Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whiliam Shakespeare',  
-        'Lo mejor que me he leído hasta ahora de Shakespeare: 
-        conciso, sorprendente y para nada denso como muchas otras obras del escritor. 
-        La historia tiene su miga: un duque de Milán desterrado de sus posesiones por su propio hermano condenado a vagar sin rumbo por el mar. 
-        Pero haciendo servir sus dotes aprendidas en la corte como mago, logra dominar los elementos de la isla a la que llega y se convierte en una especie de Dios. 
-        A diferencia de muchos otros personajes del autor, este logra perdonar a sus adversarios en su venganza. 
-        Un cuento fantástico con espíritus de la naturaleza muy entretenido.', 1, 1);
+        ('3Una obra de arte, Whiliam Shakespeare...', 'Opinion de la obra de Whiliam Shakespeare',  
+                'Lo mejor que me he leído hasta ahora de Shakespeare: 
+                conciso, sorprendente y para nada denso como muchas otras obras del escritor. 
+                La historia tiene su miga: un duque de Milán desterrado de sus posesiones por su propio hermano condenado a vagar sin rumbo por el mar. 
+                Pero haciendo servir sus dotes aprendidas en la corte como mago, logra dominar los elementos de la isla a la que llega y se convierte en una especie de Dios. 
+                A diferencia de muchos otros personajes del autor, este logra perdonar a sus adversarios en su venganza. 
+                Un cuento fantástico con espíritus de la naturaleza muy entretenido.', 1, 1);
 
 
 
@@ -252,8 +252,19 @@ INSERT INTO favblogs (usuario_id, blog_id)
 VALUES (1, 1);    
 
 INSERT INTO favcomunidades (usuario_id, comunidad_id, created_at)
-VALUES (1, 1);    
-       (1, 1);    
+VALUES (1, 1, '2020-01-29 18:52:16'),
+       (2, 1, '2020-02-29 18:52:16'),    
+       (3, 1, '2020-03-29 18:52:16'),    
+       (4, 1, '2020-04-29 18:52:16'),    
+       (5, 1, '2020-05-29 18:52:16'),    
+       (6, 1, '2020-06-29 18:52:16'),    
+       (7, 1, '2020-07-29 18:52:16'),    
+       (8, 1, '2020-08-29 18:52:16'),    
+       (9, 1, '2020-09-29 18:52:16'),   
+       (10, 1, '2020-10-29 18:52:16'),
+       (11, 1, '2020-11-29 18:52:16'),  
+       (12, 1, '2020-12-29 18:52:16');
+       
 
 
 INSERT INTO integrantes (usuario_id, comunidad_id)
