@@ -68,12 +68,12 @@ Yii::$app->formatter->locale = 'es-ES';
 
 <div class="loader">
     <div itemscope itemtype="http://schema.org/Blog" class="masonry-wrapper">
-        
             <a class="arrow-left visible"><?= Icon::show('angle-left')?> </a>
-        
-        <div class="masonry ">
+        <section>
+         <div class="masonry ">
             <?php foreach ($dataProvider->models as $model) : ?> 
-            <div class="masonry-item item " onload ='this.style.opacity=1' id="<?=$model->id?>"> 
+            <article>
+             <div class="masonry-item item " onload ='this.style.opacity=1' id="<?=$model->id?>"> 
                 <div class="masonry-content ">
                     <div class="masonry-bar" id="masonry-bar<?=$model->id?>">
                         <?php $existe = ($model->existeIntegrante($model->id)) ? ['sign-out-alt', 'Salir'] : ['sign-in-alt', 'Unirse']; ?>
@@ -196,9 +196,11 @@ Yii::$app->formatter->locale = 'es-ES';
                         </div>
                     </div>
                 </div>
-            </div>
+             </div>
+            </article>
             <?php endforeach; ?>
-        </div>
+         </div>
+        </section>
             <a class="arrow-right  visible" ><?= Icon::show('angle-right')?> </a>
     </div>
     <?= LinkPager::widget([
