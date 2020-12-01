@@ -16,23 +16,23 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $url = Url::to(['comunidades/like', 'id' => $model->id]); 
 $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gusta']);
-var_dump(print_r($likesEachMonth)); die();
+// var_dump(print_r($likesEachMonth)); die();
 
 ?>
 
 <div class="chart-container" style="position: relative; height:40vh; width:40vw">
   <canvas id="chart"></canvas>
 </div>
-
+    
 
 <?= ChartJs::widget([
-    'type' => 'line',
+    'type' => 'bar',
     'id' => 'chart',
     'data' => [
-        'labels' => ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'], 
+        'labels' => $likes, 
         'datasets' => [
             [
-                'data' => ['35', '11', '36', '25', '15', '56', '5', '12', '8', '5', '27', '16'], 
+                'data' => $month, 
                 'label' => '',
                 'backgroundColor' => [
                     '#ADC3FF',
