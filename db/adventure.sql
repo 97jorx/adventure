@@ -78,28 +78,18 @@ CREATE TABLE blogs (
    , comunidad_id bigint         NOT NULL REFERENCES comunidades (id)
    , usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
    , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
-   , visitas      bigint         DEFAULT 0       
 );
 
 
-
+-- NOTAS DE CADA BLOG Y NOTA MEDIA PARA EL USUARIO
 DROP TABLE IF EXISTS notas CASCADE;
 CREATE TABLE notas (
-     id           bigserial    PRIMARY KEY
-   , nota         integer      DEFAULT 0
-   , blog_id      bigint       NOT NULL REFERENCES blogs (id)   
-   , usuario_id   bigint       NOT NULL REFERENCES usuarios (id)
+     id           bigserial      PRIMARY KEY
+   , nota         integer        DEFAULT 0
+   , blog_id      bigint         NOT NULL REFERENCES blogs (id)   
+   , usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
+   , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
 );
-
- -- DROP TABLE IF EXISTS blogs_destacados CASCADE;
-
--- CREATE TABLE blogs_destacados (
---    id             bigserial      PRIMARY KEY
--- , titulo         varchar(255)   
--- , miniatura      text
--- , likes          bigint
--- , total_comments bigint
--- );
 
 -- TABLA DE LOS BLOGS FAVORITOS DE CADA USUARIO
 DROP TABLE IF EXISTS favblogs CASCADE;
@@ -121,6 +111,34 @@ CREATE TABLE favcomunidades (
    , comunidad_id bigint         NOT NULL REFERENCES comunidades (id)        
    , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
 );
+
+
+-- TABLA DE LAS VISITAS DE CADA BLOG 
+DROP TABLE IF EXISTS visitas CASCADE;
+
+CREATE TABLE visitas (
+     id           bigserial      PRIMARY KEY
+   , visitas      bigint         DEFAULT 0  
+   , usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
+   , blog_id      bigint         NOT NULL REFERENCES blogs (id)
+   , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp        
+);
+
+
+
+
+
+ -- DROP TABLE IF EXISTS blogs_destacados CASCADE;
+
+-- CREATE TABLE blogs_destacados (
+--    id             bigserial      PRIMARY KEY
+-- ,  titulo         varchar(255)   
+-- ,  miniatura      text
+-- ,  likes          bigint
+-- ,  total_comments bigint
+-- );
+
+
 
 -- TODO RESPONDER COMENTARIOS.
 
