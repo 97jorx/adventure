@@ -26,6 +26,7 @@ class Blogs extends \yii\db\ActiveRecord
    
     private $_favs = null;
     private $_valoracion = null;
+    private $_visits = null;
 
     /**
      * {@inheritdoc}
@@ -111,7 +112,17 @@ class Blogs extends \yii\db\ActiveRecord
         return $this->hasMany(Favblogs::class, ['blog_id' => 'id'])->inverseOf('blog');
     }
 
-   
+
+
+   /**
+     * Gets query for [[Visitas]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getVisitas()
+    {
+        return $this->hasMany(Visitas::class, ['blog_id' => 'id'])->inverseOf('blog');
+    }
 
 
     /**
@@ -125,11 +136,20 @@ class Blogs extends \yii\db\ActiveRecord
     }
 
 
-
+    /**
+     * Gets query for [[Notas]].
+     * SETTER DE @param favs
+     * @return \yii\db\ActiveQuery
+     */
     public function setFavs($favs) {
         $this->_favs = $favs;
     }
 
+    /**
+     * Gets query for [[Notas]].
+     * GETTER DE @param favs
+     * @return \yii\db\ActiveQuery
+     */
     public function getFavs()
     {
         if ($this->_favs === null && !$this->isNewRecord) {
@@ -139,10 +159,44 @@ class Blogs extends \yii\db\ActiveRecord
     }
 
 
+    /**
+     * Gets query for [[Notas]].
+     * SETTER DE @param visits
+     * @return \yii\db\ActiveQuery
+     */
+    public function setVisits($visits) {
+        $this->_visits = $visits;
+    }
+
+
+    /**
+     * Gets query for [[Notas]].
+     * GETTER DE @param visits
+     * @return \yii\db\ActiveQuery
+     */
+    public function getVisits()
+    {
+        if ($this->_visits === null && !$this->isNewRecord) {
+            $this->setVisits($this->getVisitas()->count());
+        }
+        return $this->_visits;
+    }
+
+
+    /**
+     * Gets query for [[Notas]].
+     * SETTER DE @param valoracion
+     * @return \yii\db\ActiveQuery
+     */
     public function setValoracion($valoracion) {
         $this->_valoracion = $valoracion;
     }
 
+    /**
+     * Gets query for [[Notas]].
+     * GETTER DE @param valoracion
+     * @return \yii\db\ActiveQuery
+     */
     public function getValoracion()
     {
         if ($this->_valoracion === null && !$this->isNewRecord) {
@@ -169,12 +223,14 @@ class Blogs extends \yii\db\ActiveRecord
                 '"c".denom AS comunidad', 
                 '"c".descripcion AS eslogan', 
                 'COUNT(f.id) AS favs',
+                'COUNT(v.id) AS visits',
                 'SUM(n.nota) AS valoracion'
              ])
             ->joinWith('comunidad c')
             ->joinWith('usuario u')
             ->joinWith('favblogs f')
             ->joinWith('notas n')
+            ->joinWith('visitas v')
             ->groupBy('blogs.id, u.nombre, c.denom, c.descripcion');
     }
   

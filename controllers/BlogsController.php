@@ -8,6 +8,7 @@ use app\models\BlogsSearch;
 use app\models\Comunidades;
 use app\models\Favblogs;
 use app\models\Integrantes;
+use app\models\Visitas;
 use yii\bootstrap4\ActiveForm;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -87,8 +88,22 @@ class BlogsController extends Controller
     public function actionView($id)
     {
         $fav = $this;
+        $visita = new Visitas();
+
         $favoritos = Yii::$app->AdvHelper->tieneFavoritos($id, $fav);
         $actual = Yii::$app->request->get('actual');
+        $usuarioid = Yii::$app->user->id;
+        
+        $existe = Visitas::find()
+        ->where(['or', ['usuario_id' => $usuarioid,'blog_id' => $id]])
+        ->exists();
+        
+        if(!$existe){
+            $visita->usuario_id = $usuarioid;
+            $visita->blog_id = $id;
+            $visita->save();
+        }
+
         return $this->render('view', [
             'model' => $this->findModel($id),
             'actual' => $actual,

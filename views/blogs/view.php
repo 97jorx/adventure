@@ -56,11 +56,11 @@ $name = Yii::$app->user->identity->username;
           ]); 
           ?> 
           </div>
-          
-            
-          
           <div id='fav' class="col-1">
               <?= $model->favs ?>     
+          </div>
+          <div class="col-1">
+              <?= Icon::show('eye')?><?= $model->visits ?>     
           </div>
         </div>
         <hr>

@@ -199,6 +199,17 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     }
 
 
+     /**
+     * Gets query for [[Visitas]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getVisitas()
+    {
+        return $this->hasMany(Visitas::class, ['usuario_id' => 'id'])->inverseOf('usuario');
+    }
+
+
 
     /** Gets query for [[Integrantes]].
     *

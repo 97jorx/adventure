@@ -34,6 +34,8 @@ $blogs = $dataProvider->models;
             <?php $like = Url::to(['blogs/like']); ?>
             <span temprop="favoritos" class="ml-4"><?= $model->favs ?></span>
             <?= Icon::show('thumbs-up', ['framework' => Icon::FAS]) ?> 
+            <span temprop="favoritos" class="ml-4"><?= $model->visits ?></span>
+            <?= Icon::show('eye', ['framework' => Icon::FAS]) ?> 
           </div>
         </div>
         <?php $index++; endforeach; ?>

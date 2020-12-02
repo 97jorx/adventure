@@ -56,16 +56,6 @@ CREATE TABLE comunidades (
 );
 
 
-
--- TABLA DE LOS USUARIOS BLOQUEADOS 
-DROP TABLE IF EXISTS bloqcomunidades CASCADE;
-
-CREATE TABLE bloqcomunidades (
-     id               bigserial     PRIMARY KEY
-   , bloqueado        bigint        NOT NULL REFERENCES usuarios (id)
-   , comunidad_id     bigint        NOT NULL REFERENCES comunidades (id)
-);
-
 -- TABLA DE LOS BLOGS
 DROP TABLE IF EXISTS blogs CASCADE;
 
@@ -78,6 +68,15 @@ CREATE TABLE blogs (
    , comunidad_id bigint         NOT NULL REFERENCES comunidades (id)
    , usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
    , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
+);
+
+-- TABLA DE LOS USUARIOS BLOQUEADOS POR COMUNIDADES
+DROP TABLE IF EXISTS bloqcomunidades CASCADE;
+
+CREATE TABLE bloqcomunidades (
+     id               bigserial     PRIMARY KEY
+   , bloqueado        bigint        NOT NULL REFERENCES usuarios (id)
+   , comunidad_id     bigint        NOT NULL REFERENCES comunidades (id)
 );
 
 
@@ -118,14 +117,10 @@ DROP TABLE IF EXISTS visitas CASCADE;
 
 CREATE TABLE visitas (
      id           bigserial      PRIMARY KEY
-   , visitas      bigint         DEFAULT 0  
    , usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
    , blog_id      bigint         NOT NULL REFERENCES blogs (id)
    , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp        
 );
-
-
-
 
 
  -- DROP TABLE IF EXISTS blogs_destacados CASCADE;
@@ -137,8 +132,6 @@ CREATE TABLE visitas (
 -- ,  likes          bigint
 -- ,  total_comments bigint
 -- );
-
-
 
 -- TODO RESPONDER COMENTARIOS.
 
