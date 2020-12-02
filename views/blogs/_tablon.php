@@ -67,6 +67,9 @@ $blogs = $dataProvider->models;
                   <li>
                     <?= Yii::$app->AdvHelper->ordenarBlog($dataProvider, 'valoracion', 'Valoración'); ?>  
                   </li>
+                  <li>
+                    <?= Yii::$app->AdvHelper->ordenarBlog($dataProvider, 'visits', 'Visitas'); ?>  
+                  </li>
                 </ul>
               </div>
             </div>
