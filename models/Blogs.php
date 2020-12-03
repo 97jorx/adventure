@@ -14,7 +14,7 @@ use Yii;
  * @property int $comunidad_id
  * @property int $usuario_id
  * @property string $created_at
- * @property int|null $visitas
+ 
  *
  * @property Comunidades $comunidad
  * @property Usuarios $usuario
@@ -44,8 +44,8 @@ class Blogs extends \yii\db\ActiveRecord
         return [
             [['titulo', 'comunidad_id', 'cuerpo', 'descripcion', 'usuario_id'], 'required'],
             [['cuerpo'], 'string'],
-            [['comunidad_id', 'usuario_id', 'visitas'], 'default', 'value' => null],
-            [['comunidad_id', 'usuario_id', 'visitas'], 'integer'],
+            [['comunidad_id', 'usuario_id'], 'default', 'value' => null],
+            [['comunidad_id', 'usuario_id'], 'integer'],
             [['created_at'], 'safe'],
             [['titulo', 'descripcion'], 'string', 'max' => 255],
             [['titulo'], 'unique'],
@@ -67,7 +67,6 @@ class Blogs extends \yii\db\ActiveRecord
             'comunidad_id' => 'Comunidad',
             'usuario_id' => 'Usuario',
             'created_at' => 'Created At',
-            'visitas' => 'Visitas', 
         ];
     }
 
@@ -222,9 +221,9 @@ class Blogs extends \yii\db\ActiveRecord
                 '"u".nombre AS usuario', 
                 '"c".denom AS comunidad', 
                 '"c".descripcion AS eslogan', 
-                'COUNT(f.id) AS favs',
-                'COUNT(v.id) AS visits',
-                'SUM(n.nota) AS valoracion'
+                'COUNT(DISTINCT f.id) AS favs',
+                'COUNT(DISTINCT v.id) AS visits',
+                'SUM(DISTINCT n.nota) AS valoracion'
              ])
             ->joinWith('comunidad c')
             ->joinWith('usuario u')

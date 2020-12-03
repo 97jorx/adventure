@@ -52,6 +52,17 @@ class LoginForm extends Model
         }
     }
 
+    public function validateSize($attribute, $params)
+    {
+        if(!$this->hasErrors())
+             $imagen = $this->imagen;
+         
+        if ($this->imagen->size > $this->imagen->maxSize ) {
+            $this->addError($attribute, 'La imagen que ha introducido pesa demasiado.');
+        }
+    }
+
+
     /**
      * Logs in a user using the provided username and password.
      * @return bool whether the user is logged in successfully

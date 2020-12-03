@@ -16,7 +16,6 @@ use yii\jui\DatePicker;
 
 <?php $form = ActiveForm::begin([
         'id' => 'blogs-form',
-        'enableAjaxValidation' => true,
       ]); ?> 
 
 

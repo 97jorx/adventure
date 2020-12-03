@@ -132,23 +132,16 @@ class BlogsController extends Controller
             if (!Yii::$app->user->isGuest) {
                 $model->usuario_id = $uid;
                 $model->comunidad_id = $actual;
-            } else {
-                return $this->redirect(['site/login']);
-            }    
+            } 
         } else {
             Yii::$app->session->setFlash('error', 'No te has unido a esta comunidad');
             return $this->redirect(['site/login']);
         }
-
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
-        }
         
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id, 'actual' => $actual]);
         }
-
 
         return $this->render('create', [
             'model' => $model,
