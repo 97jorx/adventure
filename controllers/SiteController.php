@@ -104,9 +104,7 @@ class SiteController extends Controller
                 'model' => $model,
             ]);
         } else {
-            return $this->render('login', [
-                'model' => $model,
-            ]);
+            return $this->redirect(['site/index']);
         }
     }
    

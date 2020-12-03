@@ -65,7 +65,7 @@ $this->registerJs($js);
 
 
 <div class="wrap">
-    <?php
+<?php
     NavBar::begin([
         'brandLabel' => 'ADVENTURE',
         'brandUrl' => Yii::$app->homeUrl,
@@ -122,8 +122,6 @@ $this->registerJs($js);
         ],
     ]);
     NavBar::end();
-
-
     ?>
 
     <div class="container">

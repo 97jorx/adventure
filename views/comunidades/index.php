@@ -72,7 +72,6 @@ Yii::$app->formatter->locale = 'es-ES';
         <section>
          <div class="masonry ">
             <?php foreach ($dataProvider->models as $model) : ?> 
-            <article>
              <div class="masonry-item item " onload ='this.style.opacity=1' id="<?=$model->id?>"> 
                 <div class="masonry-content ">
                     <div class="masonry-bar" id="masonry-bar<?=$model->id?>">
@@ -197,7 +196,6 @@ Yii::$app->formatter->locale = 'es-ES';
                     </div>
                 </div>
              </div>
-            </article>
             <?php endforeach; ?>
          </div>
         </section>
