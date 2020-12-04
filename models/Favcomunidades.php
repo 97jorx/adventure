@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\helpers\ArrayHelper;
+use \yii\db\Expression;
 
 /**
  * This is the model class for table "favcomunidades".
@@ -17,6 +18,9 @@ use yii\helpers\ArrayHelper;
  */
 class Favcomunidades extends \yii\db\ActiveRecord
 {
+
+    // private $_mes = null;
+
     /**
      * {@inheritdoc}
      */
@@ -72,7 +76,24 @@ class Favcomunidades extends \yii\db\ActiveRecord
     }
 
 
-  /**
+    // public  function setMes($mes) {
+    //     $this->_mes = $mes;
+    // }
+
+    // public function getMes()
+    // {
+    //     if ($this->_mes != null) {
+    //         $this->setMes(
+    //             self::find()
+    //             ->select(["TO_CHAR(TO_DATE(DATE_PART('month', created_at)::text, 'MM'), 'Month')"])
+
+    //         );
+    //     }
+    //     return $this->_mes;
+    // }
+
+
+    /**
      * Devuelve un array con la cuenta de los likes. Si @param condicion es 0.
      * Devuelve un array con los meses. Si @param condicion es 1.
      * @return Array
@@ -87,8 +108,8 @@ class Favcomunidades extends \yii\db\ActiveRecord
 
         $likes_month =  $var
         ->where(['comunidad_id' => $id])
-        ->groupBy('created_at')
-        ->orderBy('created_at')
+        ->groupBy([new Expression("DATE_PART('month', created_at)")])
+        ->orderBy([new Expression("DATE_PART('month', created_at)")])
         ->column();
         
         return  $likes_month;

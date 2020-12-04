@@ -77,6 +77,12 @@ $this->registerJs($js);
             'class' => 'form-control input-lg parsley-validated',
             'placeholder' => 'Nombre de Usuario',
          ])->label(Icon::show('user', ['class' => 'icon-label'])) ?>    
+
+       <?= $form->field($model, 'alias')->textInput(['type' => 'text',
+            'class' => 'form-control input-lg parsley-validated',
+            'placeholder' => 'Nick name',
+         ])->label(Icon::show('user', ['class' => 'icon-label'])) ?>    
+
         <?= $form->field($model, 'nombre')->textInput([
             'type' => 'text',
             'placeholder' => 'Nombre',

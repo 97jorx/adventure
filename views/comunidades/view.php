@@ -5,6 +5,7 @@ use yii\bootstrap4\Html;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
 use dosamigos\chartjs\ChartJs;
+use yii\web\JsExpression;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Comunidades */
@@ -16,7 +17,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $url = Url::to(['comunidades/like', 'id' => $model->id]); 
 $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gusta']);
-// var_dump(print_r($likesEachMonth)); die();
+// var_dump($likes); 
+// var_dump($month); die();
 
 ?>
 
@@ -29,44 +31,50 @@ $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gust
     'type' => 'bar',
     'id' => 'chart',
     'data' => [
-        'labels' => $likes, 
+        'labels' => $month,
+        //  ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
         'datasets' => [
             [
-                'data' => $month, 
-                'label' => '',
+                'data' => $likes, 
+                'label' => 'Likes',
                 'backgroundColor' => [
                     '#ADC3FF',
-                    '#FF9A9A',
-                    'rgba(190, 124, 145, 0.8)'
+                    '#ADC3FF',
+                    '#ADC3FF',
+                    '#ADC3FF',
+                    '#ADC3FF',
+                    '#ADC3FF',
+                    '#ADC3FF',
+                    '#ADC3FF',
+                    '#ADC3FF',
+                    '#ADC3FF',
+                    '#ADC3FF',
+                    '#ADC3FF',
+                    
                 ],
                 'borderColor' =>  [
                         '#fff',
                         '#fff',
                         '#fff'
                 ],
-                'borderWidth' => 1,
+                'borderWidth' => 2,
                 'hoverBorderColor'=>["#999","#999","#999"],                
             ]
         ]
     ],
     'clientOptions' => [
-        'legend' => [
-            'display' => false,
-            'position' => 'bottom',
-            'labels' => [
-                'fontSize' => 14,
-                'fontColor' => "#425062",
-            ]
-        ],
-        'tooltips' => [
-            'enabled' => true,
-            'intersect' => true
-        ],
-        'hover' => [
-            'mode' => false
-        ],
-        'maintainAspectRatio' => false,
-
+            'scales' => [
+                'yAxes' => new JsExpression(
+                    "
+                    [{
+                        ticks: {
+                            beginAtZero: true,
+                            min: 0
+                        }
+                    }]
+                    "
+                )
+           ],
     ],
 ]);
 

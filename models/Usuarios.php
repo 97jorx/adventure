@@ -55,14 +55,17 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'nombre', 'apellidos', 'email', 'fecha_nac', 'contrasena'], 'required', 'message' => 'El campo {attribute} es obligatorio, no puede estar vacío.'],
-            [['username', 'nombre', 'apellidos', 'email', 'poblacion', 'provincia', 'pais'], 'trim'],
+            [['username', 'nombre', 'apellidos', 'email', 'fecha_nac', 'contrasena', 'alias'], 'required', 'message' => 'El campo {attribute} es obligatorio, no puede estar vacío.'],
+            [['username', 'nombre', 'apellidos', 'email', 'poblacion', 'provincia', 'pais', 'alias'], 'trim'],
             [['created_at', 'fecha_nac'], 'safe'],
             [['valoracion'], 'default', 'value' => null],
             [['valoracion'], 'integer'],
-            [['username'], 'string', 'max' => 15],
+            [['alias'], 'unique'],
+            [['alias'], 'string', 'max' => 35],
+            [['alias'], 'checkAttributeName'],
             [['username'], 'unique'],
-            [['username'], 'checkUsername'],
+            [['username'], 'string', 'max' => 25],
+            [['username'], 'checkAttributeName'],
             [['nombre'], 'match', 'pattern' => '/^(?=.{3,8}$)[a-zñA-ZÑ]*$/', 'message' => 'El {attribute} es incorrecto, vuelva a intentarlo.'],
             [['apellidos'], 'match', 'pattern' => '/^(?=.{3,40}$)[A-Z][a-z]+(?: [A-Z][a-zñáéíóú]+)?$/'],
             [['nombre', 'apellidos', 'email', 'contrasena', 'auth_key', 'poblacion', 'provincia', 'pais', 'foto_perfil', 'bibliografia'], 'string', 'max' => 255],
@@ -103,6 +106,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         return [
             'id' => 'ID',
             'username' => 'Nombre de usuario',
+            'alias' => 'Alias',
             'nombre' => 'Nombre',
             'apellidos' => 'Apellidos',
             'fecha_nac' => 'Fecha Nacimiento', 
@@ -123,11 +127,11 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
 
 
 
-    public function checkUsername($attribute,$params)
+    public function checkAttributeName($attribute, $params)
 	{
-        $pattern = '/^[A-Za-z][A-Za-z0-9]{3,8}$/';
+        $pattern = '/^[A-Za-z][A-Za-z0-9]{3,25}$/';
          if(!preg_match($pattern, $this->$attribute)) {
-            $this->addError('username','El usermane es inválido.');
+            $this->addError($attribute, 'El '. $attribute .' es inválido.');
         }
         
 	}
