@@ -30,7 +30,7 @@ $blogs = $dataProvider->models;
           </div>
           <div class="card-footer text-muted ml-4">
             Creado <?= Yii::$app->formatter->asDate($model->created_at) ?> por
-            <a itemprop="creator" href="#"><?= $model->usuario->nombre ?></a>
+            <?= Html::a(''.html::encode($model->usuario->alias).'', ['usuarios/view', 'username' => $model->usuario->username]) ?>
             <?php $like = Url::to(['blogs/like']); ?>
             <span temprop="favoritos" class="ml-4"><?= $model->favs ?></span>
             <?= Icon::show('thumbs-up', ['framework' => Icon::FAS]) ?> 

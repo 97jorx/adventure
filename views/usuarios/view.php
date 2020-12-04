@@ -53,6 +53,7 @@ $this->registerJs($js);
         </div>
         <h4 class="nombre"><?= strtoupper($model->nombre) ?></h4>
         <p class="info"><?= $model->rol ?></p>
+        <p class="info"><?= $model->alias ?></p>
         <p class="info"><?= $model->email ?></p>
         <div class="stats row">
           <div class="stat col-xs-4" style="padding-right: 50px;">
