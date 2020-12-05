@@ -7,6 +7,7 @@ use app\models\Blogs;
 use app\models\Comunidades;
 use app\models\Usuarios;
 use app\models\UsuariosSearch;
+use yii\db\Query;
 use yii\bootstrap4\ActiveForm;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -146,6 +147,24 @@ class UsuariosController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+    }
+
+    public function actionSearch($q = null) {
+
+        Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
+        $out = ['results' => ['text' => '']];
+        if (!is_null($q)) {
+            $query = new Query;
+            $query->select('alias AS text')
+                ->from('usuarios')
+                ->where(['like', 'alias', $q])
+                ->limit(20);
+            $command = $query->createCommand();
+            $data = $command->queryAll();
+            $out['results'] = array_values($data);
+        }
+        
+        return $out;
     }
 
     

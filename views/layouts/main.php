@@ -18,8 +18,10 @@ $guest = Yii::$app->user->isGuest;
 $url = Url::to(['usuarios/search']);
 
 AppAsset::register($this);
-$js= <<< EOT
+
+$js = <<< EOT
 $(document).ready(function () {
+    
     if ('$guest') {
        $('.login').attr('href', '#');
        $('.login').click(function () {
@@ -36,8 +38,6 @@ $(document).ready(function () {
         });
     }
 
-    $("#select2").select2({ width: '50%' });       
-
     $('#registrar').click(function () {
         var lo = $('#registrar').attr('value');
         $.ajax({
@@ -50,6 +50,7 @@ $(document).ready(function () {
             }
         });
     });
+
 });
 EOT;
 $this->registerJs($js);
@@ -85,27 +86,27 @@ $this->registerJs($js);
 
   echo Select2::widget([
         'name' => 'kv-repo-template',
-        'options' => ['placeholder' => 'Search...'],
-        'id' => 'select2',
+        'options' => ['placeholder' => 'Buscar...'],
+        
         'pluginOptions' => [
             'allowClear' => true,
+            'width' => '50%',
             'language' => [
                 'errorLoading' => new JsExpression("
                     function () { 
                         return 'Esperando resultados...';
-                    }"),
+                }"),
             ],
             'ajax' => [
                 'url' => $url,
-                'type' => 'GET',
                 'dataType' => 'json',
-                'data' => new JsExpression('function(data) { 
-                    return {q:data};
-                 }'),
+                'data' => new JsExpression('function(params) { 
+                    return {q: params.term};
+                }'),
             ],
             'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
-            'templateResult' => new JsExpression('function(data) { console.log(data); return data.alias; }'),
-            'templateSelection' => new JsExpression('function (data) { return data.alias; }'),
+            'templateResult' => new JsExpression('function(params) { console.log(params.text); return params.text; }'),
+            'templateSelection' => new JsExpression('function (params) { return params.text; }'),
         ],
     ]);
     

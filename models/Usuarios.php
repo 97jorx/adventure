@@ -225,34 +225,6 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
    }
 
 
-
-    /** 
-     * Busca los Usuarios por su alias mediante AJAX.
-     * @return JSON
-     */
-    public function actionSearch($q = null) {
-
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        $out = ['results' => ['alias' => '']];
-        
-        if (!is_null($q)) {
-            $query = new Query;
-
-            $query
-            ->select('alias')
-            ->from('usuarios')
-            ->where(['like', 'alias', $q])
-            ->orderBy('alias');
-
-            $command = $query->createCommand();
-            $data = $command->queryAll();
-            $out['results'] = array_values($data);
-        }
-        
-        return json_encode($out);    
-    }
-
-
     public static function findIdentity($id)
     {
         return static::findOne($id);
