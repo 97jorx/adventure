@@ -9,9 +9,14 @@ use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
 use yii\bootstrap4\Breadcrumbs;
 use app\assets\AppAsset;
+use kartik\widgets\Select2;
 use yii\bootstrap4\Modal;
 use yii\helpers\Url;
+use yii\web\JsExpression;
+
 $guest = Yii::$app->user->isGuest;
+$url = Url::to(['usuarios/search']);
+
 AppAsset::register($this);
 $js= <<< EOT
 $(document).ready(function () {
@@ -31,6 +36,7 @@ $(document).ready(function () {
         });
     }
 
+    $("#select2").select2({ width: '50%' });       
 
     $('#registrar').click(function () {
         var lo = $('#registrar').attr('value');
@@ -77,8 +83,31 @@ $this->registerJs($js);
         ],
     ]);
 
-
-    
+  echo Select2::widget([
+        'name' => 'kv-repo-template',
+        'options' => ['placeholder' => 'Search...'],
+        'id' => 'select2',
+        'pluginOptions' => [
+            'allowClear' => true,
+            'language' => [
+                'errorLoading' => new JsExpression("
+                    function () { 
+                        return 'Esperando resultados...';
+                    }"),
+            ],
+            'ajax' => [
+                'url' => $url,
+                'type' => 'GET',
+                'dataType' => 'json',
+                'data' => new JsExpression('function(data) { 
+                    return {q:data};
+                 }'),
+            ],
+            'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+            'templateResult' => new JsExpression('function(data) { console.log(data); return data.alias; }'),
+            'templateSelection' => new JsExpression('function (data) { return data.alias; }'),
+        ],
+    ]);
     
     $items = [];
     if(Yii::$app->user->isGuest) {
@@ -107,12 +136,14 @@ $this->registerJs($js);
         
     }
 
+
+    
     
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
         'encodeLabels' => false,
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
+            // ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'Comunidades', 'url' => ['comunidades/index']],
             [
                 'label'=>  (!Yii::$app->user->isGuest) ? Yii::$app->user->identity->username : 'Iniciar sesión',
@@ -123,6 +154,8 @@ $this->registerJs($js);
     ]);
     NavBar::end();
     ?>
+
+
 
     <div class="container">
         <?= Breadcrumbs::widget([
