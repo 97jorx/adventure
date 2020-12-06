@@ -155,7 +155,7 @@ class UsuariosController extends Controller
      * @param q la busqueda introducida por el input.
      * @return Json
      */
-    public function actionSearch($q = null) {
+    public function actionSearch($q = null, $id = null) {
 
         Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
         $out = ['results' => ['text' => '', 'id' => '']];
@@ -168,8 +168,8 @@ class UsuariosController extends Controller
             $command = $query->createCommand();
             $data = $command->queryAll();
             $out['results'] = array_values($data);
-        } else {
-            return false;
+        } elseif ($id > 0) {
+            $out['results'] = ['id' => $id, 'text' => Usuarios::find($id)->alias];
         }
         
         return $out;

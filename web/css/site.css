@@ -258,6 +258,18 @@ html {
    padding-left: 5px;
 }
 
+select2-results__option:hover a {
+   color: #ffffff
+}
+
+.select2-selection__clear {
+   display:none !important;
+}
+
+                                       
+/* .enlace-select2:hover{
+   color: #ffffff;
+} */
 
 /* ANIMACIONES  */
 

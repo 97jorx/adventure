@@ -87,16 +87,8 @@ $this->registerJs($js);
 
   echo Select2::widget([
         'name' => 'kv-repo-template',
-        'bsVersion' => '4.x',
         'pluginOptions' => [
-            'allowClear' => true,
             'width' => '50%',
-            'language' => [
-                'errorLoading' => new JsExpression("
-                    function () { 
-                        return 'Esperando resultados...';
-                }"),
-            ],
             'ajax' => [
                 'url' => $url,
                 'dataType' => 'json',
@@ -104,15 +96,20 @@ $this->registerJs($js);
                     return {q: params.term};
                 }'),
             ],
-            'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+            'escapeMarkup' => new JsExpression('function (markup) { 
+               return markup;
+            }'),
             'templateResult' => new JsExpression('function(params) {
                 $var = params.id;
                 imgenlace = \'<span><img class="small-circular-photo" src="https://picsum.photos/100/100?random=\'+$var+\'"/></span>\'+
-                "<a class=\'enlace-select2\' href='.$url2.'" + params.text + ">" + params.text + "</a>";
+                "<i class=\'enlace-select2\'>" + params.text + "</i>";
                 return imgenlace;
-            }'
-            ),
-            'templateSelection' => new JsExpression('function (params) { return params.text }'),
+            }'),
+            'templateSelection' => new JsExpression('function(params) {
+                event.preventDefault()
+                // window.location.href = "'.$url2.'"+ params.text
+                console.log("'.$url2.'"+ params.text);
+            }'),
         ],
     ]);
     
