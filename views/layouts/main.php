@@ -17,6 +17,7 @@ use yii\web\JsExpression;
 $guest = Yii::$app->user->isGuest;
 $url = Url::to(['usuarios/search']);
 $url2 = Yii::$app->urlManager->createUrl(['usuarios/view', 'alias' => '']);
+$fakeimg = 'https://picsum.photos/100/1000?random=1';
 
 AppAsset::register($this);
 
@@ -104,7 +105,13 @@ $this->registerJs($js);
                 }'),
             ],
             'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
-            'templateResult' => new JsExpression('function(params) { return "<a href='.$url2.'" + params.text + ">" + params.text + "</a>" }'),
+            'templateResult' => new JsExpression('function(params) {
+                $var = params.id;
+                imgenlace = \'<span><img class="small-circular-photo" src="https://picsum.photos/100/100?random=\'+$var+\'"/></span>\'+
+                "<a class=\'enlace-select2\' href='.$url2.'" + params.text + ">" + params.text + "</a>";
+                return imgenlace;
+            }'
+            ),
             'templateSelection' => new JsExpression('function (params) { return params.text }'),
         ],
     ]);

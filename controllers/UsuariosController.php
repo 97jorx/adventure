@@ -158,16 +158,18 @@ class UsuariosController extends Controller
     public function actionSearch($q = null) {
 
         Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
-        $out = ['results' => ['text' => '']];
+        $out = ['results' => ['text' => '', 'id' => '']];
         if (!is_null($q)) {
             $query = new Query;
-            $query->select('alias AS text')
+            $query->select('id, alias AS text')
                 ->from('usuarios')
                 ->where(['ilike', 'alias', $q])
                 ->limit(20);
             $command = $query->createCommand();
             $data = $command->queryAll();
             $out['results'] = array_values($data);
+        } else {
+            return false;
         }
         
         return $out;
