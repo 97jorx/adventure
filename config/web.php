@@ -57,7 +57,7 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\Usuarios',
             'enableAutoLogin' => true,
-            'loginUrl' => '0'
+            'loginUrl' => '#'
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -99,7 +99,7 @@ $config = [
                 '/comunidad/estadisticas/<id:\d+>' => 'comunidades/view',
                 '/comunidad/<actual:\d+>/blogs/update/<id:\d+>' => 'blogs/update',
                 '/comunidad/<actual:\d+>/blogs/view/<id:\d+>' => 'blogs/view',
-                '/perfil/usuario/<username:\w+>' => 'usuarios/view',
+                'perfil/usuario/<alias:\w+>' => 'usuarios/view',
                 '/usuarios/registrarse' => 'usuarios/registrar',
                 '/usuarios/login' => 'site/login',
             ],

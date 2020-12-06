@@ -16,12 +16,12 @@ use yii\web\JsExpression;
 
 $guest = Yii::$app->user->isGuest;
 $url = Url::to(['usuarios/search']);
+$url2 = Yii::$app->urlManager->createUrl(['usuarios/view', 'alias' => '']);
 
 AppAsset::register($this);
 
 $js = <<< EOT
 $(document).ready(function () {
-    
     if ('$guest') {
        $('.login').attr('href', '#');
        $('.login').click(function () {
@@ -86,8 +86,7 @@ $this->registerJs($js);
 
   echo Select2::widget([
         'name' => 'kv-repo-template',
-        'options' => ['placeholder' => 'Buscar...'],
-        
+        'bsVersion' => '4.x',
         'pluginOptions' => [
             'allowClear' => true,
             'width' => '50%',
@@ -105,8 +104,8 @@ $this->registerJs($js);
                 }'),
             ],
             'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
-            'templateResult' => new JsExpression('function(params) { console.log(params.text); return params.text; }'),
-            'templateSelection' => new JsExpression('function (params) { return params.text; }'),
+            'templateResult' => new JsExpression('function(params) { return "<a href='.$url2.'" + params.text + ">" + params.text + "</a>" }'),
+            'templateSelection' => new JsExpression('function (params) { return params.text }'),
         ],
     ]);
     
@@ -132,7 +131,7 @@ $this->registerJs($js);
             Html::beginForm(['site/logout'], 'post').Html::submitButton(
             'Logout (' . Yii::$app->user->identity->username . ')',
             ['class' => 'dropdown-item'],).Html::endForm(),
-            ['label' => 'Perfil', 'url' => ['usuarios/view', 'username' => Yii::$app->user->identity->username]]
+            ['label' => 'Perfil', 'url' => ['usuarios/view', 'alias' => Yii::$app->user->identity->alias]]
         ];
         
     }

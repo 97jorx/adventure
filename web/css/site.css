@@ -240,6 +240,14 @@ html {
 }
 
 
+/* SELECT2 */
+.select2-selection__arrow b{
+   display:none !important;
+}
+
+/* .select2-results__option {
+   background-color:#ffffff !important;
+} */
 
 /* ANIMACIONES  */
 
