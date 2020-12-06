@@ -87,6 +87,8 @@ $this->registerJs($js);
 
   echo Select2::widget([
         'name' => 'kv-repo-template',
+        'class' => 'select2',
+        
         'pluginOptions' => [
             'width' => '50%',
             'ajax' => [
@@ -102,14 +104,16 @@ $this->registerJs($js);
             'templateResult' => new JsExpression('function(params) {
                 $var = params.id;
                 imgenlace = \'<span><img class="small-circular-photo" src="https://picsum.photos/100/100?random=\'+$var+\'"/></span>\'+
-                "<i class=\'enlace-select2\'>" + params.text + "</i>";
+                "<i class=\'enlace-select2\'>"+params.text+"</i>";
                 return imgenlace;
             }'),
-            'templateSelection' => new JsExpression('function(params) {
-                event.preventDefault()
-                // window.location.href = "'.$url2.'"+ params.text
-                console.log("'.$url2.'"+ params.text);
-            }'),
+        ],
+        'pluginEvents' => [
+            "select2:select" => "function(e) { 
+                e.preventDefault();
+                texto = $(this).text();
+                window.location.href = href='$url2'+texto;
+            }",
         ],
     ]);
     
