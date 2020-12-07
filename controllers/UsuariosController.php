@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Blogs;
 use app\models\Comunidades;
+use app\models\Seguidores;
 use app\models\Usuarios;
 use app\models\UsuariosSearch;
 use yii\db\Query;
@@ -150,7 +151,7 @@ class UsuariosController extends Controller
     }
 
 
- /**
+    /**
      * Busca el usuario por su alias mediante una consulta a la tabla usuarios.
      * @param q la busqueda introducida por el input.
      * @return Json
@@ -175,6 +176,44 @@ class UsuariosController extends Controller
         }
         
         return $out;
+    }
+
+    /**
+     * Seguir a un usuario con ajax desde el perfil.
+     * @param alias se pasa como parametro el alias.
+     * @return Json
+     */
+    public function actionSeguir($alias) {
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $usuarioid = Yii::$app->user->id;
+        $user = !Yii::$app->user->isGuest;
+        $idexist = Usuarios::find('id')
+        ->where(['alias' => $alias]);
+        
+        $json = [];
+            if($user) {
+                if(!$idexist->exists()){
+                    $usuario = new Seguidores();
+                    $usuario->usuario_id = $idexist->scalar();
+                    $usuario->seguidor = $usuarioid;
+                    $usuario->save();
+                    $json = [ 
+                            'button' => 'Dejar de seguir',
+                            'color'  => 'bg-danger',
+                            'mensaje' => 'Se ha seguido al usuario'
+                    ];
+                } else {
+                    $idexist->one()->delete();
+                    $json = [ 
+                        'button' => 'Seguir',
+                        'color'  => 'bg-success',
+                        'mensaje' => 'Se ha dejado de seguir al usuario'
+                    ];
+                }    
+            } 
+            
+            return json_encode($json);
     }
 
     

@@ -10,6 +10,7 @@ use yii\web\IdentityInterface;
  *
  * @property int $id
  * @property string $username
+ * @property string $alias
  * @property string $nombre
  * @property string $apellidos
  * @property string $email
@@ -27,11 +28,16 @@ use yii\web\IdentityInterface;
  *
  * @property Blogs[] $blogs
  * @property Bloqcomunidades[] $bloqcomunidades
+ * @property Bloqueados[] $bloqueados
+ * @property Bloqueados[] $bloqueados0
  * @property Comunidades[] $comunidades
  * @property Favblogs[] $favblogs
  * @property Favcomunidades[] $favcomunidades
  * @property Integrantes[] $integrantes
  * @property Notas[] $notas
+ * @property Seguidores[] $seguidores
+ * @property Seguidores[] $seguidores0
+ * @property Visitas[] $visitas
  */
 class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
 {
@@ -137,6 +143,29 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
 	}
 
 
+
+    /**
+     * Gets query for [[Bloqueados]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBloqueados()
+    {
+        return $this->hasMany(Bloqueados::class, ['usuario_id' => 'id'])->inverseOf('usuario');
+    }
+
+
+    /**
+     * Gets query for [[Seguidores]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSeguidores()
+    {
+        return $this->hasMany(Seguidores::class, ['usuario_id' => 'id'])->inverseOf('usuario');
+    }
+
+
     /**
      * Gets query for [[Comunidades]].
      *
@@ -189,7 +218,6 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return $this->hasMany(Favcomunidades::class, ['usuario_id' => 'id'])->inverseOf('usuario');
     }
-
 
 
     /**
