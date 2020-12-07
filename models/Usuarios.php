@@ -252,16 +252,16 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
 
 
     /**
-     * Gets query for [[Integrantes]].
+     * [[Seguidores]].
      * Compruebo si existe el seguidor del usuario actual.
      * @param alias el id de la comunidad.
      * @return boolean
      */
     public function existeSeguidor($alias)
     {
-        $usuarioid = Yii::$app->user->id;
-        $seguidor = self::find('id')->where(['alias' => $alias])->scalar();
-        return Seguidores::findOne([
+        $seguidor = Yii::$app->user->id;
+        $usuarioid = $this::find('id')->where(['alias' => $alias])->scalar();
+        return Seguidores::find([
          'seguidor' => $seguidor,
          'usuario_id' => $usuarioid
         ])->exists();        

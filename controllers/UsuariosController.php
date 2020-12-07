@@ -13,7 +13,6 @@ use yii\bootstrap4\ActiveForm;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\AccessControl;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 
@@ -186,18 +185,25 @@ class UsuariosController extends Controller
     public function actionSeguir($alias) {
 
         Yii::$app->response->format = Response::FORMAT_JSON;
-        $usuarioid = Yii::$app->user->id;
+        $seguidor = Yii::$app->user->id;
         $user = !Yii::$app->user->isGuest;
-        $idexist = Usuarios::find('id')
-        ->where(['alias' => $alias]);
+
+        $usuarioid = Usuarios::find('id')
+        ->where(['alias' => $alias])->scalar();
+
+        $idexist = Seguidores::find([
+           'seguidor' => $seguidor,
+           'usuario_id' => $usuarioid
+        ]); 
+        
         
         $json = [];
             if($user) {
                 if(!$idexist->exists()){
-                    $usuario = new Seguidores();
-                    $usuario->usuario_id = $idexist->scalar();
-                    $usuario->seguidor = $usuarioid;
-                    $usuario->save();
+                    $model = new Seguidores();
+                    $model->usuario_id = $usuarioid;
+                    $model->seguidor = $seguidor;
+                    $model->save();
                     $json = [ 
                             'button' => 'Dejar de seguir',
                             'color'  => 'bg-danger',
