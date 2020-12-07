@@ -23,6 +23,8 @@ $(".masonry-item").hover(
     } 
 );
 
+
+
 $('.loader').imagesLoaded( {}, function() {
     $('.loader').attr("style", "visibility: visible")
     $('.spinner-border').fadeOut("fast");
@@ -35,7 +37,6 @@ if (localStorage.getItem('$user') === null && Boolean($username)) {
 }
    
 // ARROW-LEFT-RIGHT
-
 $(".arrow-left").click(function(){
     $(".masonry").animate({scrollLeft: "-="+250});
 });
@@ -48,7 +49,6 @@ $(".arrow-right").click(function(){
     
 }
 EOF;
-
 $this->registerJs($js);
 
 
@@ -79,7 +79,7 @@ Yii::$app->formatter->locale = 'es-ES';
                         <?php $unirse = Url::to(['comunidades/unirse', 'id' => $model->id]); ?>
                         <?= Html::a(Icon::show($existe[0], ['id' => 'acceso']), $unirse, ['class' => 'masonry-button login',
                             'aria-label' => $existe[1], 'data-balloon-pos' => 'up',
-                            'onclick' => "
+                            'onclick' =>"
                                 event.preventDefault();
                                 var self = $(this);
                                 $.ajax({

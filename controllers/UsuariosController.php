@@ -7,6 +7,7 @@ use app\models\Blogs;
 use app\models\Comunidades;
 use app\models\Usuarios;
 use app\models\UsuariosSearch;
+use yii\db\Query;
 use yii\bootstrap4\ActiveForm;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -81,9 +82,9 @@ class UsuariosController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($username)
+    public function actionView($alias)
     {
-        $id = Usuarios::find('id')->where(['username' => $username])->scalar();
+        $id = Usuarios::find('id')->where(['alias' => $alias])->scalar();
         $blogs = Blogs::find()->where(['usuario_id' => $id]);  
         $comunidades = Comunidades::find()
         ->joinWith('blogs b')
@@ -146,6 +147,32 @@ class UsuariosController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+    }
+
+
+ /**
+     * Busca el usuario por su alias mediante una consulta a la tabla usuarios.
+     * @param q la busqueda introducida por el input.
+     * @return Json
+     */
+    public function actionSearch($q = null, $id = null) {
+
+        Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
+        $out = ['results' => ['text' => '', 'id' => '']];
+        if (!is_null($q)) {
+            $query = new Query;
+            $query->select('id, alias AS text')
+                ->from('usuarios')
+                ->where(['ilike', 'alias', $q])
+                ->limit(20);
+            $command = $query->createCommand();
+            $data = $command->queryAll();
+            $out['results'] = array_values($data);
+        } elseif ($id > 0) {
+            $out['results'] = ['id' => $id, 'text' => Usuarios::find($id)->alias];
+        }
+        
+        return $out;
     }
 
     

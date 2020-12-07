@@ -5,6 +5,7 @@ use yii\bootstrap4\Html;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
 use dosamigos\chartjs\ChartJs;
+use yii\web\JsExpression;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Comunidades */
@@ -16,7 +17,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $url = Url::to(['comunidades/like', 'id' => $model->id]); 
 $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gusta']);
-// var_dump(print_r($likesEachMonth)); die();
+// var_dump($likes); 
+// var_dump($month); die();
 
 ?>
 
@@ -29,44 +31,50 @@ $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gust
     'type' => 'bar',
     'id' => 'chart',
     'data' => [
-        'labels' => $likes, 
+        'labels' => $month,
+        //  ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
         'datasets' => [
             [
-                'data' => $month, 
-                'label' => '',
+                'data' => $likes, 
+                'label' => 'Likes',
                 'backgroundColor' => [
                     '#ADC3FF',
-                    '#FF9A9A',
-                    'rgba(190, 124, 145, 0.8)'
+                    '#ADC3FF',
+                    '#ADC3FF',
+                    '#ADC3FF',
+                    '#ADC3FF',
+                    '#ADC3FF',
+                    '#ADC3FF',
+                    '#ADC3FF',
+                    '#ADC3FF',
+                    '#ADC3FF',
+                    '#ADC3FF',
+                    '#ADC3FF',
+                    
                 ],
                 'borderColor' =>  [
                         '#fff',
                         '#fff',
                         '#fff'
                 ],
-                'borderWidth' => 1,
+                'borderWidth' => 2,
                 'hoverBorderColor'=>["#999","#999","#999"],                
             ]
         ]
     ],
     'clientOptions' => [
-        'legend' => [
-            'display' => false,
-            'position' => 'bottom',
-            'labels' => [
-                'fontSize' => 14,
-                'fontColor' => "#425062",
-            ]
-        ],
-        'tooltips' => [
-            'enabled' => true,
-            'intersect' => true
-        ],
-        'hover' => [
-            'mode' => false
-        ],
-        'maintainAspectRatio' => false,
-
+            'scales' => [
+                'yAxes' => new JsExpression(
+                    "
+                    [{
+                        ticks: {
+                            beginAtZero: true,
+                            min: 0
+                        }
+                    }]
+                    "
+                )
+           ],
     ],
 ]);
 
@@ -74,43 +82,3 @@ $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gust
 
 
 
-<!-- <div class="comunidades-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-      <div class="ml-3">
-        <?= Html::a(Icon::show($like[0], ['id' => 'like', 'framework' => Icon::FAS]), $url, [
-                'onclick' =>"
-                event.preventDefault();
-                var self = $(this);
-                $.ajax({
-                    type: 'POST',
-                    url: '$url',
-                    dataType: 'json',
-                }).done(function(data, textStatus, jqXHR) {
-                    data = JSON.parse(data);
-                    $('#fav').html(data.fav);
-                    $('#like').efect();
-                    $('#like').attr('class', (data.icono) ? ('fas fa-thumbs-down') : ('fas fa-thumbs-up'))
-                    $('#like').attr('title', (data.icono) ? ('No me gusta') : ('Me gusta'))
-                }).fail(function(data, textStatus, jqXHR) {
-                    console.log('Error de la solicitud.');
-                });", 'title' => $like[1]
-            ]); 
-            ?> 
-        <span id="fav" class="ml-3"><?= $model->favs ?></span>
-    </div>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'denom',
-            'propietario',
-            'descripcion:ntext',
-            'created_at',
-            
-        ],
-    ]) ?>
-
-</div> -->

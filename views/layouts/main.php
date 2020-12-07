@@ -9,11 +9,19 @@ use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
 use yii\bootstrap4\Breadcrumbs;
 use app\assets\AppAsset;
+use kartik\widgets\Select2;
 use yii\bootstrap4\Modal;
 use yii\helpers\Url;
+use yii\web\JsExpression;
+
 $guest = Yii::$app->user->isGuest;
+$url = Url::to(['usuarios/search']);
+$url2 = Yii::$app->urlManager->createUrl(['usuarios/view', 'alias' => '']);
+$fakeimg = 'https://picsum.photos/100/1000?random=1';
+
 AppAsset::register($this);
-$js= <<< EOT
+
+$js = <<< EOT
 $(document).ready(function () {
     if ('$guest') {
        $('.login').attr('href', '#');
@@ -31,7 +39,6 @@ $(document).ready(function () {
         });
     }
 
-
     $('#registrar').click(function () {
         var lo = $('#registrar').attr('value');
         $.ajax({
@@ -44,6 +51,7 @@ $(document).ready(function () {
             }
         });
     });
+
 });
 EOT;
 $this->registerJs($js);
@@ -77,8 +85,37 @@ $this->registerJs($js);
         ],
     ]);
 
-
-    
+  echo Select2::widget([
+        'name' => 'kv-repo-template',
+        'class' => 'select2',
+        
+        'pluginOptions' => [
+            'width' => '50%',
+            'ajax' => [
+                'url' => $url,
+                'dataType' => 'json',
+                'data' => new JsExpression('function(params) { 
+                    return {q: params.term};
+                }'),
+            ],
+            'escapeMarkup' => new JsExpression('function (markup) { 
+               return markup;
+            }'),
+            'templateResult' => new JsExpression('function(params) {
+                $var = params.id;
+                imgenlace = \'<span><img class="small-circular-photo" src="https://picsum.photos/100/100?random=\'+$var+\'"/></span>\'+
+                "<i class=\'enlace-select2\'>"+params.text+"</i>";
+                return imgenlace;
+            }'),
+        ],
+        'pluginEvents' => [
+            "select2:select" => "function(e) { 
+                e.preventDefault();
+                texto = $(this).text();
+                window.location.href = href='$url2'+texto;
+            }",
+        ],
+    ]);
     
     $items = [];
     if(Yii::$app->user->isGuest) {
@@ -102,17 +139,19 @@ $this->registerJs($js);
             Html::beginForm(['site/logout'], 'post').Html::submitButton(
             'Logout (' . Yii::$app->user->identity->username . ')',
             ['class' => 'dropdown-item'],).Html::endForm(),
-            ['label' => 'Perfil', 'url' => ['usuarios/view', 'username' => Yii::$app->user->identity->username]]
+            ['label' => 'Perfil', 'url' => ['usuarios/view', 'alias' => Yii::$app->user->identity->alias]]
         ];
         
     }
 
+
+    
     
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
         'encodeLabels' => false,
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
+            // ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'Comunidades', 'url' => ['comunidades/index']],
             [
                 'label'=>  (!Yii::$app->user->isGuest) ? Yii::$app->user->identity->username : 'Iniciar sesión',
@@ -123,6 +162,8 @@ $this->registerJs($js);
     ]);
     NavBar::end();
     ?>
+
+
 
     <div class="container">
         <?= Breadcrumbs::widget([
