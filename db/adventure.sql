@@ -123,6 +123,33 @@ CREATE TABLE visitas (
    , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp        
 );
 
+-- TABLA DE LOS SEGUIDORES 
+DROP TABLE IF EXISTS seguidores CASCADE;
+
+CREATE TABLE seguidores (
+     id               bigserial     PRIMARY KEY
+   , usuario_id       bigint        NOT NULL REFERENCES usuarios (id)
+   , seguidor         bigint        NOT NULL REFERENCES usuarios (id)
+);
+
+-- TABLA DE LOS BLOQUEOS A USUARIOS
+DROP TABLE IF EXISTS bloqueados CASCADE;
+
+CREATE TABLE bloqueados (
+     id               bigserial     PRIMARY KEY
+   , usuario_id       bigint        NOT NULL REFERENCES usuarios (id)
+   , bloqueado        bigint        NOT NULL REFERENCES usuarios (id)
+);
+
+DROP TABLE IF EXISTS integrantes CASCADE;
+
+
+CREATE TABLE integrantes (
+     id           bigserial      PRIMARY KEY 
+   , usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
+   , comunidad_id bigint         NOT NULL REFERENCES comunidades (id)
+   , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
+);
 
  -- DROP TABLE IF EXISTS blogs_destacados CASCADE;
 
@@ -139,48 +166,19 @@ CREATE TABLE visitas (
 -- DROP TABLE IF EXISTS comentarios CASCADE;
 
 -- CREATE TABLE comentarios (
---   id                 bigserial      PRIMARY KEY 
--- , usuario_id         bigint         NOT NULL REFERENCES usuarios (id)
--- , blog_id            bigint         NOT NULL REFERENCES blogs (id)
--- , reply_id           bigint         NOT NULL REFERENCES comentarios (id)
--- , texto              varchar(255)   NOT NULL
--- , created_at         timestamp(0)   NOT NULL DEFAULT current_timestamp
+ --   id                 bigserial      PRIMARY KEY 
+ -- , usuario_id         bigint         NOT NULL REFERENCES usuarios (id)
+ -- , blog_id            bigint         NOT NULL REFERENCES blogs (id)
+ -- , reply_id           bigint         NOT NULL REFERENCES comentarios (id) 
+ -- , texto              varchar(255)   NOT NULL
+ -- , created_at         timestamp(0)   NOT NULL DEFAULT current_timestamp
 -- );
-
-
--- DROP TABLE IF EXISTS seguidores CASCADE;
-
--- CREATE TABLE seguidores (
---      id               bigserial     PRIMARY KEY
--- , usuario_id       bigint        NOT NULL REFERENCES usuarios (id)
--- , seguidor         bigint        NOT NULL REFERENCES usuarios (id)
--- );
-
-
--- DROP TABLE IF EXISTS bloqueados CASCADE;
-
--- CREATE TABLE bloqueados (
---      id               bigserial     PRIMARY KEY
--- , usuario_id       bigint        NOT NULL REFERENCES usuarios (id)
--- , bloqueado        bigint        NOT NULL REFERENCES usuarios (id)
--- );
-
-DROP TABLE IF EXISTS integrantes CASCADE;
-
-
-CREATE TABLE integrantes (
-     id           bigserial      PRIMARY KEY 
-   , usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
-   , comunidad_id bigint         NOT NULL REFERENCES comunidades (id)
-   , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
-);
-
 
 
 -- DROP TABLE IF EXISTS chats CASCADE;
 
 -- CREATE TABLE chats (
---      id                bigserial PRIMARY KEY 
+--    id                bigserial PRIMARY KEY 
 --  , user_id_chat      bigint    NOT NULL REFERENCES noticias (id)
 --  , emisor_response   text
 --  , receptor_response text  
