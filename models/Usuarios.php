@@ -241,8 +241,6 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->hasMany(Visitas::class, ['usuario_id' => 'id'])->inverseOf('usuario');
     }
 
-
-
     /** Gets query for [[Integrantes]].
     *
     * @return \yii\db\ActiveQuery
@@ -251,6 +249,23 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
    {
        return $this->hasMany(Integrantes::class, ['usuario_id' => 'id'])->inverseOf('usuario');
    }
+
+
+    /**
+     * Gets query for [[Integrantes]].
+     * Compruebo si existe el seguidor del usuario actual.
+     * @param alias el id de la comunidad.
+     * @return boolean
+     */
+    public function existeSeguidor($alias)
+    {
+        $usuarioid = Yii::$app->user->id;
+        $seguidor = self::find('id')->where(['alias' => $alias])->scalar();
+        return Seguidores::findOne([
+         'seguidor' => $seguidor,
+         'usuario_id' => $usuarioid
+        ])->exists();        
+    }
 
 
     public static function findIdentity($id)

@@ -52,6 +52,25 @@ $this->registerJs($js);
            <?= Html::a(Html::img($fakeimg, ['class' => 'photo'])) ?>
         </div>
         <h4 class="nombre"><?= strtoupper($model->nombre) ?></h4>
+        <?php $existe = ($model->existeSeguidor($model->id)) ? ('Dejar de seguir') : ('Seguir'); ?>
+        <?php $seguir = Url::to(['usuarios/seguir', 'alias' => $model->alias]); ?>
+        <?= Html::a('Seguir', $seguir, ['class' => 'masonry-button login',
+            'aria-label' => $existe[1], 'data-balloon-pos' => 'up',
+            'onclick' =>"
+                event.preventDefault();
+                var self = $(this);
+                $.ajax({
+                    type: 'GET',
+                    url: '$unirse',
+                    dataType: 'json',
+                }).done(function( data, textStatus, jqXHR ) {
+                    data = JSON.parse(data);
+                    
+                }).fail(function( data, textStatus, jqXHR ) {
+                    console.log('Error de la solicitud.');
+                });",
+        ]);
+        ?> 
         <p class="info"><?= $model->rol ?></p>
         <p class="info"><?= $model->alias ?></p>
         <p class="info"><?= $model->email ?></p>
