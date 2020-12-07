@@ -241,10 +241,6 @@ html {
 
 
 /* SELECT2 */
-.select2-selection__arrow b{
-   display:none !important;
-}
-
 
 .small-circular-photo{
    position: relative;
@@ -262,9 +258,11 @@ select2-results__option:hover a {
    color: #ffffff
 }
 
-.select2-selection__clear {
-   display:none !important;
+.select2-container--krajee-bs4 .select2-results__option.loading-results, .select2-container--krajee-bs4 .load-more {
+   display: none  !important;
 }
+
+
 
                                        
 /* .enlace-select2:hover{

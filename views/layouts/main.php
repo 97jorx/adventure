@@ -9,6 +9,7 @@ use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
 use yii\bootstrap4\Breadcrumbs;
 use app\assets\AppAsset;
+use kartik\icons\Icon;
 use kartik\widgets\Select2;
 use yii\bootstrap4\Modal;
 use yii\helpers\Url;
@@ -88,9 +89,9 @@ $this->registerJs($js);
   echo Select2::widget([
         'name' => 'kv-repo-template',
         'class' => 'select2',
-        
         'pluginOptions' => [
-            'width' => '50%',
+            'placeholder' => Icon::show('search')."Buscar usuario",
+            'width' => '30%',
             'ajax' => [
                 'url' => $url,
                 'dataType' => 'json',
@@ -113,6 +114,11 @@ $this->registerJs($js);
                 e.preventDefault();
                 texto = $(this).text();
                 window.location.href = href='$url2'+texto;
+            }",
+            "select2:open" => "function(e) { 
+                e.preventDefault();
+                texto = $(this).text('');
+                $(this).hide();
             }",
         ],
     ]);

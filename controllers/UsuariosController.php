@@ -170,6 +170,8 @@ class UsuariosController extends Controller
             $out['results'] = array_values($data);
         } elseif ($id > 0) {
             $out['results'] = ['id' => $id, 'text' => Usuarios::find($id)->alias];
+        } else {
+            return false;
         }
         
         return $out;
