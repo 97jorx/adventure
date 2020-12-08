@@ -45,7 +45,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     const SCENARIO_CREAR = 'crear';
 
     public $password_repeat;
-
+    private $_followers = null;
 
     /**
      * {@inheritdoc}
@@ -249,6 +249,29 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
    {
        return $this->hasMany(Integrantes::class, ['usuario_id' => 'id'])->inverseOf('usuario');
    }
+
+
+
+    /**
+     * SETTER DE @param followers
+     * @return \yii\db\ActiveQuery
+     */
+    public function setFollowers($followers) {
+        $this->_followers = $followers;
+    }
+
+    /**
+     * GETTER DE @param followers
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFollowers()
+    {
+        if ($this->_followers === null && !$this->isNewRecord) {
+            $this->setFollowers($this->getFollowers()->count());
+        }
+        return $this->_followers;
+    }
+
 
 
     /**

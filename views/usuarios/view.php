@@ -95,49 +95,53 @@ $this->registerJs($js);
         <p class="desc"><?= $model->bibliografia ?></p>
        
       </div>
-      <div class="right col-lg-8">
-          <nav class='tabs' id='activeTab'>
-            <ul class="nav nav-tabs only-profile">
-              <?php foreach($dataProvider2->models as $model) : ?>
-              <li  class="nav-link active"><a data-toggle="tab" href=".<?=$model->id?>"><?= $model->denom ?></a></li>
-              <?php endforeach; ?>              
-            </ul>
-          </nav> 
-          <div class="tab-content border-class scroll-vertical">
-          <a href="#top"><button class="top" aria-label='Volver arriba' data-balloon-pos="right"><?= Icon::show('arrow-up') ?></button></a>
-            <?php foreach($dataProvider->models as $model) : ?>
-              <div id="<?=$model->comunidad_id?>" class='tab-pane active in <?=$model->comunidad_id?>'>
-              <a name="top"></a>
-                <div class="card mb-3" style="max-width: 540px;" >
-                  <div class="row no-gutters">
-                    <div class="col-md-4">
-                      <div class='img-holder'>
-                        <?php $fakeimg = "https://picsum.photos/250/250?random=".$model->id;  ?>
-                        <?= Html::a(Html::img($fakeimg)) ?>
+      <?php if($count > 0) : ?> 
+        <div class="right col-lg-8">
+            <nav class='tabs' id='activeTab'>
+              <ul class="nav nav-tabs only-profile">
+                <?php foreach($dataProvider2->models as $model) : ?>
+                <li  class="nav-link active"><a data-toggle="tab" href=".<?=$model->id?>"><?= $model->denom ?></a></li>
+                <?php endforeach; ?>              
+              </ul>
+            </nav> 
+            <div class="tab-content border-class scroll-vertical">
+            <a href="#top"><button class="top" aria-label='Volver arriba' data-balloon-pos="right"><?= Icon::show('arrow-up') ?></button></a>
+              <?php foreach($dataProvider->models as $model) : ?>
+                <div id="<?=$model->comunidad_id?>" class='tab-pane active in <?=$model->comunidad_id?>'>
+                <a name="top"></a>
+                  <div class="card mb-3" style="max-width: 540px;" >
+                    <div class="row no-gutters">
+                      <div class="col-md-4">
+                        <div class='img-holder'>
+                          <?php $fakeimg = "https://picsum.photos/250/250?random=".$model->id;  ?>
+                          <?= Html::a(Html::img($fakeimg)) ?>
+                        </div>
                       </div>
-                    </div>
-                    <div class="col-md-8">
-                      <div class="card-body">
-                        <h5 class="card-title"><?= $model->titulo ?></h5>
-                        <p class="card-text"><?= $model->descripcion ?></p>
-                          <div class="row">
-                            <div class="col-md-2">
-                              <p class="card-text"><small><?= Icon::show('heart') . $model->favs ?></small></p>
-                            </div>
-                            <?php if($model->usuario->nombre == $name) { ?>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <h5 class="card-title"><?= $model->titulo ?></h5>
+                          <p class="card-text"><?= $model->descripcion ?></p>
+                            <div class="row">
                               <div class="col-md-2">
-                                <p class="card-text"><small><?= Html::a(Icon::show('pencil'), ['blogs/update', 'id' => $model->id]) ?></small></p>
+                                <p class="card-text"><small><?= Icon::show('heart') . $model->favs ?></small></p>
                               </div>
-                            <?php } ?>
-                         </div>
+                              <?php if($model->usuario->nombre == $name) { ?>
+                                <div class="col-md-2">
+                                  <p class="card-text"><small><?= Html::a(Icon::show('pencil'), ['blogs/update', 'id' => $model->id]) ?></small></p>
+                                </div>
+                              <?php } ?>
+                          </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <?php endforeach; ?>
+                <?php endforeach; ?>
+            </div>
           </div>
-        </div>
-    </div>
+      </div>
+    <?php elseif($count == 0) : ?>
+      
+    <?php endif;?>
   </main>
 </div>
 

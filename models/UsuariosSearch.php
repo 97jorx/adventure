@@ -20,6 +20,7 @@ class UsuariosSearch extends Usuarios
         return [
             [['id'], 'integer'],
             [['username', 'nombre', 'apellidos', 'email', 'rol', 'created_at', 'contrasena', 'auth_key', 'poblacion', 'provincia', 'pais'], 'safe'],
+            [['followers'], 'safe']
         ];
     }
 
