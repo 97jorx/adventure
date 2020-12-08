@@ -260,7 +260,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     public function existeSeguidor($alias)
     {
         $seguidor = Yii::$app->user->id;
-        $usuarioid = $this::find('id')->where(['alias' => $alias])->scalar();
+        $usuarioid = self::find('id')->where(['alias' => $alias])->scalar();
         return Seguidores::find([
          'seguidor' => $seguidor,
          'usuario_id' => $usuarioid

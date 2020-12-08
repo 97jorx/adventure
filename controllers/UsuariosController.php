@@ -191,11 +191,9 @@ class UsuariosController extends Controller
         $usuarioid = Usuarios::find('id')
         ->where(['alias' => $alias])->scalar();
 
-        $idexist = Seguidores::find([
-           'seguidor' => $seguidor,
-           'usuario_id' => $usuarioid
-        ]); 
-        
+        $idexist = Seguidores::find()
+           ->where(['usuario_id' => $usuarioid])
+           ->andWhere(['seguidor' => $seguidor]);
         
         $json = [];
             if($user) {
@@ -210,7 +208,8 @@ class UsuariosController extends Controller
                             'mensaje' => 'Se ha seguido al usuario'
                     ];
                 } else {
-                    $idexist->one()->delete();
+                    Seguidores::findOne(['usuario_id' => $usuarioid])
+                    ->delete();
                     $json = [ 
                         'button' => 'Seguir',
                         'color'  => 'bg-success',
