@@ -208,7 +208,7 @@ class UsuariosController extends Controller
                             'mensaje' => 'Se ha seguido al usuario'
                     ];
                 } else {
-                    Seguidores::findOne(['usuario_id' => $usuarioid])
+                    Seguidores::findOne(['usuario_id' => $usuarioid, 'seguidor' => $seguidor])
                     ->delete();
                     $json = [ 
                         'button' => 'Seguir',

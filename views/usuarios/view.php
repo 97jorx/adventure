@@ -68,6 +68,7 @@ $this->registerJs($js);
                       data = JSON.parse(data);
                       console.log(data);
                       $(self).text(data.button);
+                      $(self).attr('aria-label', data.button);
                   }).fail(function( data, textStatus, jqXHR ) {
                       console.log('Error de la solicitud.');
                   });",
