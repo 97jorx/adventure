@@ -85,6 +85,7 @@ class UsuariosController extends Controller
     public function actionView($alias)
     {
         $id = Usuarios::find('id')->where(['alias' => $alias])->scalar();
+        
         $blogs = Blogs::find()->where(['usuario_id' => $id]);  
         $comunidades = Comunidades::find()
         ->joinWith('blogs b')
@@ -102,7 +103,7 @@ class UsuariosController extends Controller
         if(!Yii::$app->user->isGuest){
             return $this->render('view', [
                 'model' => $this->findModel($id),
-                'count' => $blogs->count(),
+                'blogs_count' => $blogs->count(),
                 'dataProvider' => $dataProvider,
                 'dataProvider2' => $dataProvider2,
                 'comunidades' => $comunidades

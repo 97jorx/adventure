@@ -267,7 +267,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     public function getFollowers()
     {
         if ($this->_followers === null && !$this->isNewRecord) {
-            $this->setFollowers($this->getFollowers()->count());
+            $this->setFollowers($this->getSeguidores()->count());
         }
         return $this->_followers;
     }

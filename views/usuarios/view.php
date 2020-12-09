@@ -15,7 +15,8 @@ use yii\widgets\DetailView;
 
 $name = Yii::$app->user->identity->username;
 $this->registerCssFile("@web/css/perfil.css");
-       
+
+
 $js = <<< EOT
 $(document).ready(function(){    
   $('.nav-link').click(function(){
@@ -38,8 +39,6 @@ $this->registerJs($js);
 
 
 ?>
-
-
 
 <div class="container-perfil">
   <header>
@@ -84,18 +83,18 @@ $this->registerJs($js);
             <p class="desc-stat">Puntuación</p>
           </div>
           <div class="stat col-xs-4">
-            <p class="number-stat"><?= $count ?></p>
+            <p class="number-stat"><?= $blogs_count ?></p>
             <p class="desc-stat">Blogs creados</p>
           </div>
           <div class="stat col-xs-4" style="padding-left: 50px;">
-            <p class="number-stat">38</p>
+            <p class="number-stat"><?= $model->followers ?></p>
             <p class="desc-stat">Seguidores</p>
           </div>
         </div>
         <p class="desc"><?= $model->bibliografia ?></p>
        
       </div>
-      <?php if($count > 0) : ?> 
+      <?php if($blogs_count > 0) : ?> 
         <div class="right col-lg-8">
             <nav class='tabs' id='activeTab'>
               <ul class="nav nav-tabs only-profile">
@@ -139,7 +138,7 @@ $this->registerJs($js);
             </div>
           </div>
       </div>
-    <?php elseif($count == 0) : ?>
+    <?php elseif($blogs_count == 0) : ?>
       
     <?php endif;?>
   </main>
