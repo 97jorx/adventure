@@ -36,6 +36,7 @@
         "kartik-v/yii2-icons": "@dev",
         "kartik-v/yii2-widget-rating": "dev-master",
         "kartik-v/yii2-widget-select2": "dev-master",
+        "kartik-v/yii2-widget-sidenav": "*",
         "2amigos/yii2-chartjs-widget" : "~2.0"
     },
     "require-dev": {

@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Blogs;
+use app\models\Bloqueados;
 use app\models\Comunidades;
 use app\models\Seguidores;
 use app\models\Usuarios;
@@ -77,8 +78,8 @@ class UsuariosController extends Controller
     }
 
     /**
-     * Displays a single Usuarios model.
-     * @param integer $id
+     * Muestra el perfil del usuario.
+     * @param string $alias
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -215,6 +216,52 @@ class UsuariosController extends Controller
                         'button' => 'Seguir',
                         'color'  => 'bg-success',
                         'mensaje' => 'Se ha dejado de seguir al usuario'
+                    ];
+                }    
+            } 
+            
+            return json_encode($json);
+    }
+
+     /**
+     * $bloqueado es el usuario que esta en la base de datos.
+     * $bloqueador es el usuario actual que va a bloquear al usuario seleccionado.
+     * Seguir a un usuario con ajax desde el perfil.
+     * @param alias se pasa como parametro el alias.
+     * @return Json
+     */
+    public function actionBloquear($alias) {
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $user = !Yii::$app->user->isGuest;
+        
+        $bloqueador = Yii::$app->user->id;
+        $bloqueado = Usuarios::find('id')
+        ->where(['alias' => $alias])->scalar();
+
+        $idexist = Seguidores::find()
+           ->where(['bloqueado' => $bloqueado])
+           ->andWhere(['usuario_id' => $bloqueador]);
+        
+        $json = [];
+            if($user) {
+                if(!$idexist->exists()){
+                    $model = new Bloqueados();
+                    $model->bloqueado = $bloqueado;
+                    $model->usuario_id = $bloqueador;
+                    $model->save();
+                    $json = [ 
+                            'button' => 'Bloquear usuario',
+                            'color'  => 'bg-danger',
+                            'mensaje' => 'Se ha bloqueado al usuario'
+                    ];
+                } else {
+                    Bloqueados::findOne(['bloqueado' => $bloqueado, 'usuario_id' => $bloqueador])
+                    ->delete();
+                    $json = [ 
+                        'button' => 'Desbloquear usuario',
+                        'color'  => 'bg-success',
+                        'mensaje' => 'Se ha dejado de bloquear al usuario'
                     ];
                 }    
             } 

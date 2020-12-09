@@ -23,6 +23,15 @@ $fakeimg = 'https://picsum.photos/100/1000?random=1';
 AppAsset::register($this);
 
 $js = <<< EOT
+
+$('.open').on('click', function () {
+    document.getElementById("sidenav-left").style.width = "250px";
+});
+
+$('.close').on('click', function () {
+    document.getElementById("sidenav-left").style.width = "0px";
+});
+
 $(document).ready(function () {
     if ('$guest') {
        $('.login').attr('href', '#');
@@ -72,8 +81,18 @@ $this->registerJs($js);
 <body>
 <?php $this->beginBody() ?>
 
-
 <div class="wrap">
+
+<div class="container">
+    <button class="btn btn-info open"><?= Icon::show('bars') ?></button>
+</div>
+
+<div class="sidenav" id='sidenav-left' >
+    <button class="btn btn-info close"><?= Icon::show('times') ?></button>
+    <?php $this->beginContent('@app/views/layouts/sidebar.php'); ?>
+    <?php $this->endContent(); ?>
+</div>
+
 <?php
     NavBar::begin([
         'brandLabel' => 'ADVENTURE',
@@ -123,6 +142,11 @@ $this->registerJs($js);
         ],
     ]);
     
+
+  
+  
+
+
     $items = [];
     if(Yii::$app->user->isGuest) {
         $items = [
@@ -149,8 +173,6 @@ $this->registerJs($js);
         ];
         
     }
-
-
     
     
     echo Nav::widget([
@@ -169,6 +191,7 @@ $this->registerJs($js);
     NavBar::end();
     ?>
 
+     
 
 
     <div class="container">
@@ -183,6 +206,9 @@ $this->registerJs($js);
         <?= $content ?>
     </div>
 </div>
+
+
+
 
 <footer class="footer">
     <div class="container">

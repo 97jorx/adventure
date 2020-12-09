@@ -37,7 +37,6 @@ EOT;
 
 $this->registerJs($js);
 
-
 ?>
 
 <div class="container-perfil">

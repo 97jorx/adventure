@@ -22,7 +22,7 @@ $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gust
 
 ?>
 
-<div class="chart-container" style="position: relative; height:40vh; width:40vw">
+<div class="chart-container" style="height:40vh; width:40vw">
   <canvas id="chart"></canvas>
 </div>
     
@@ -32,7 +32,6 @@ $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gust
     'id' => 'chart',
     'data' => [
         'labels' => $month,
-        //  ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
         'datasets' => [
             [
                 'data' => $likes, 
