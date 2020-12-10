@@ -91,7 +91,7 @@ $this->registerJs($js);
 <?php } ?>
 <?php
     NavBar::begin([
-        // 'brandLabel' => 'ADVENTURE',
+        'brandLabel' => 'ADVENTURE',
         'brandUrl' => Yii::$app->homeUrl,
         'innerContainerOptions' => ['class' => 'container-fluid'],
         'options' => [
@@ -109,7 +109,7 @@ $this->registerJs($js);
         'class' => 'select2',
         'pluginOptions' => [
             'placeholder' => Icon::show('search')."Buscar usuario",
-            'width' => '30%',
+            'width' => '20%',
             'ajax' => [
                 'url' => $url,
                 'dataType' => 'json',
@@ -166,7 +166,7 @@ $this->registerJs($js);
     } else  {
         $items = [
             Html::beginForm(['site/logout'], 'post').Html::submitButton(
-            'Logout (' . Yii::$app->user->identity->username . ')',
+            'Logout ' . Html::tag('i', Icon::show('power-off'), ['class' => '']).'',
             ['class' => 'dropdown-item'],).Html::endForm(),
             ['label' => 'Perfil', 'url' => ['usuarios/view', 'alias' => Yii::$app->user->identity->alias]]
         ];
@@ -179,15 +179,29 @@ $this->registerJs($js);
         'encodeLabels' => false,
         'items' => [
             [
-                'label' => 'Comunidades', 
+                'label' => 'Comunidades',
+                'options' => ['style' => 'padding-left:10px;'],
                 'url' => ['comunidades/index'],
             ],
             [
-                'label' => Html::tag('i',Icon::show('bars'), ['class' => 'button-side-nav open',]),
+                'label' => Html::tag('i', Icon::show('bar')),
+                'visible' => !$guest,
+            ],
+            [
+                'label' => Html::tag('i', Icon::show('bars'), ['class' => 'button-side-nav open',]),
                 'visible' => !$guest,
             ],          
             [
-                'label' =>  (!Yii::$app->user->isGuest) ? Yii::$app->user->identity->username : 'Iniciar sesión',
+                'label' => Html::tag('i', Icon::show('envelope'), ['class' => '',]),
+                'visible' => !$guest,
+            ],
+            [
+                'label' => Html::tag('i', Icon::show('bell'), ['class' => '',]),
+                'visible' => !$guest,
+            ],
+            [
+                'label' =>  (!Yii::$app->user->isGuest) ? ucfirst(Yii::$app->user->identity->alias) .' '. 
+                 Html::tag('i', Icon::show('user'), ['class' => '',]) : 'Iniciar sesión',
                 'items' => $items,
             ],
             

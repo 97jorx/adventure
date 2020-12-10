@@ -5,6 +5,7 @@ namespace app\components;
 use app\controllers\BlogsController;
 use app\controllers\ComunidadesController;
 use app\models\Bloqcomunidades;
+use app\models\Bloqueados;
 use app\models\Comunidades;
 use app\models\Favblogs;
 use app\models\Favcomunidades;
@@ -75,6 +76,16 @@ class HelperAdventure extends Component
             ->andWhere(['bloqueado' => $uid])
             ->exists();
         }
+    }
+
+   /**
+     * Devuelve un boolean si el usuario actualo esta bloqueado en esa comunidad.
+     * @return Boolean retorna un booleano.
+     */
+    public static function usuarioBloqueado($id){
+        
+        return Bloqueados::findOne($id)->exists();
+        
     }
 
 

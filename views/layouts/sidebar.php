@@ -24,23 +24,23 @@ use yii\helpers\Html;
                 <li>
                 <i><?= Icon::show('users');?></i>
                     <span class="nav-text">
-                        Mis seguidores
+                        Seguidores
                     </span>
                 </li>
                 <li>
-                <i class="fa fa-home fa-2x"></i>
+                <i><?= Icon::show('clipboard-check');?></i>
                     <span class="nav-text">
-                        Mis blogs favoritos
+                        Blogs favoritos
                     </span>
                 </li>
                 <li>
-                <i class="fa fa-home fa-2x"></i>
+                <i><?= Icon::show('user-times');?></i>
                     <span class="nav-text">
-                        Lista de bloqueados
+                        Bloqueados
                     </span>
                 </li>
                 <li>
-                <i class="fa fa-home fa-2x"></i>
+                <i><?= Icon::show('images');?></i>
                     <span class="nav-text">
                         Galerias
                     </span>

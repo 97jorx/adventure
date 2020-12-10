@@ -357,22 +357,34 @@ select2-results__option:hover a {
       vertical-align: center;
       align-items: center;
       text-align: center;
-      padding-left: 1em;
+      padding-left: 5em;
       font-size: 2em;      
       position: absolute;   
       left: 0;
       bottom: 0;
-      
    }
  }
 
 
-.nav-right-items {
-   left: 99%;
+.dropdown-menu { 
+   right: 0 !important; 
+   left: auto !important; 
 }
 
 .masonry-menu li {
    padding-top: 15%;
+   color: #ffffff;
+}
+
+.masonry-menu li:hover {
+   background-color: #a94442;
+}
+
+.masonry-menu > ul {
+   font-size: 0.8em;
+   font-family: "PT Sans"; 
+   text-transform: uppercase;
+   list-style-type: none;
 }
 
 .sidenav {
@@ -399,6 +411,8 @@ select2-results__option:hover a {
    display: block;
    transition: 0.3s;
  }
+
+
  
  .close{
     color: white;
@@ -416,9 +430,6 @@ select2-results__option:hover a {
    .sidenav a {font-size: 18px;}
  }
 
- .right-items {
-    float: left;
- }
 
 .img-container {
    width: 100%;
