@@ -239,7 +239,7 @@ class UsuariosController extends Controller
         $bloqueado = Usuarios::find('id')
         ->where(['alias' => $alias])->scalar();
 
-        $idexist = Seguidores::find()
+        $idexist = Bloqueados::find()
            ->where(['bloqueado' => $bloqueado])
            ->andWhere(['usuario_id' => $bloqueador]);
         

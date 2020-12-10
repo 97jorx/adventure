@@ -94,7 +94,7 @@ $this->registerJs($js);
         // 'brandLabel' => 'ADVENTURE',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar-dark bg-dark navbar-expand-md fixed-top',
+            'class' => 'navbar-custom bg-dark navbar-expand-md py-1 fixed-top',
         ],
         'collapseOptions' => [
             'class' => 'justify-content-end',
@@ -174,9 +174,9 @@ $this->registerJs($js);
         'encodeLabels' => false,
         'items' => [
             ['label' => 'Comunidades', 'url' => ['comunidades/index']],
-            ['label' => Html::button(Icon::show('bars'), 
+            ['label' => Html::tag('i',Icon::show('bars'), 
                 [   
-                    'class' => 'btn btn-info button-side-nav open', 
+                    'class' => 'button-side-nav open', 
                 ]),
                 'visible' => !$guest,
             ],          

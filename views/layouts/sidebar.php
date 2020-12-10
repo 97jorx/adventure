@@ -33,8 +33,8 @@ use yii\helpers\Html;
         </div>
     </div>
     <div class="row">
-        <div class="masonry-title">
-            <h5 itemprop="title">
+        <div class="masonry-title text-center">
+            <h5 itemprop="title" class="masonry-title">
                 <?= ucfirst(Yii::$app->user->identity->alias) ?>
             </h5>
         </div>
@@ -43,7 +43,7 @@ use yii\helpers\Html;
         <div class="masonry-menu">
             <ul>
                 <li>
-                <i class="fa fa-home fa-2x"></i>
+                <i><?= Icon::show('users');?></i>
                     <span class="nav-text">
                         Mis seguidores
                     </span>

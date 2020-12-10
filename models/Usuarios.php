@@ -291,6 +291,23 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     }
 
 
+    /**
+     * [[Seguidores]].
+     * Compruebo si existe el usuario bloqueado por el usuario actual.
+     * @param alias el id de la comunidad.
+     * @return boolean
+     */
+    public function existeBloqueado($alias)
+    {
+        $bloqueador = Yii::$app->user->id;
+        $bloqueado = self::find('id')->where(['alias' => $alias])->scalar();
+        return Bloqueados::find()
+        ->where(['bloqueado' => $bloqueado])
+        ->andWhere(['usuario_id' => $bloqueador])
+        ->exists();        
+    }
+
+
     public static function findIdentity($id)
     {
         return static::findOne($id);

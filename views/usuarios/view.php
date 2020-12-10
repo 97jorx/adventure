@@ -49,6 +49,36 @@ $this->registerJs($js);
            <?php $fakeimg = "https://picsum.photos/300/300?random=".$model->id;  ?>
            <?= Html::a(Html::img($fakeimg, ['class' => 'photo'])) ?>
         </div>
+        <div class="btn-group">
+            <a class="btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             <?= Icon::show('ellipsis-h') ?>
+            </a>
+          <div class="dropdown-menu">
+          <?php if(Yii::$app->user->identity->alias !== $model->alias) : ?>
+          <?php $existe = ($model->existeBloqueado($model->alias)) ? ('Dejar de bloquear') : ('Bloquear usuario') ?>
+          <?php $bloquear = Url::to(['usuarios/bloquear', 'alias' => $model->alias]); ?>
+          <?= Html::a($existe, $bloquear, ['class' => 'login',
+              'aria-label' => $existe, 'data-balloon-pos' => 'up',
+              'onclick' =>"
+                  event.preventDefault();
+                  var self = $(this);
+                  $.ajax({
+                      type: 'GET',
+                      url: '$bloquear',
+                      dataType: 'json',
+                  }).done(function( data, textStatus, jqXHR ) {
+                      data = JSON.parse(data);
+                      console.log(data);
+                      $(self).text(data.button);
+                      $(self).attr('aria-label', data.button);
+                  }).fail(function( data, textStatus, jqXHR ) {
+                      console.log('Error de la solicitud.');
+                  });",
+          ]);
+          ?> 
+        <?php endif; ?>
+          </div>
+        </div>
         <h4 class="nombre"><?= strtoupper($model->nombre) ?></h4>
         <?php if(Yii::$app->user->identity->alias !== $model->alias) : ?>
           <?php $existe = ($model->existeSeguidor($model->alias)) ? ('Dejar de seguir') : ('Seguir') ?>

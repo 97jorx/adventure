@@ -8,6 +8,14 @@ img{
 }
 
 
+.navbar-custom {
+   background-color: #313131 !important;
+}
+
+.navbar-custom .navbar-nav > li > a {
+   color: white;
+ }
+
 .wrap {
    min-height: 100%;
    height: auto;
@@ -344,29 +352,46 @@ select2-results__option:hover a {
   
 
   /* SIDE LEFT NAVBAR  'PT Sans' */
+@media screen and (min-width: 768px) {
+   .button-side-nav {
+      vertical-align: center;
+      align-items: center;
+      text-align: center;
+      padding-left: 1em;
+      font-size: 2em;      
+      position: absolute;   
+      left: 0;
+      bottom: 0;
+      
+   }
+ }
 
-.button-side-nav {
-   align-items: left;
-   position: absolute;   
-   left: 0;
-   
+.masonry-menu ul {
+   list-style: none; /* Remove HTML bullets */
+   color: #ffffff;
 }
 
-  .sidenav {
+.masonry-menu li {
+   padding-top: 15%;
+}
+
+
+
+.sidenav {
    border-radius: 5px;
-   height: 90%;
+   height: 85%;
    width: 0;
    position: fixed;
-   z-index: 1;
+   z-index: 99999;
    top: 0;
    left: 0;
-   background-color: #1E1E1E;
+   background-color: #313131;
    overflow-x: hidden;
    transition: 0.5s;
    margin-top: 4%;
    margin-left: 1%;
-   padding-top: 60px;
- }
+   padding-top: 50px;
+}
  
  .sidenav a {
    padding: 8px 8px 8px 32px;
@@ -392,6 +417,8 @@ select2-results__option:hover a {
    .sidenav {padding-top: 15px;}
    .sidenav a {font-size: 18px;}
  }
+
+
 
 .img-container {
    width: 100%;
