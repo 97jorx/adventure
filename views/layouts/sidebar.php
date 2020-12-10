@@ -1,28 +1,7 @@
 <?php
 
-use kartik\sidenav\SideNav;
 use kartik\icons\Icon;
 use yii\helpers\Html;
-
-// echo SideNav::widget([
-//     'type' => SideNav::TYPE_PRIMARY,
-//     'heading' => 'Operations',
-//     'items' => [
-//         [
-//             'url' => '#',
-//             'label' => 'Search',
-//             'icon' => 'search'
-//         ],
-//         [
-//             'label' => 'Edit',
-//             'icon' => 'edit',
-//             'items' => [
-//                 ['label' => 'About', 'icon'=>'info-sign', 'url'=>'#'],
-//                 ['label' => 'Contact', 'icon'=>'phone', 'url'=>'#'],
-//             ],
-//         ],
-//     ],
-// ]);
 
 ?>
     

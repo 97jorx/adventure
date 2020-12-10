@@ -93,12 +93,14 @@ $this->registerJs($js);
     NavBar::begin([
         // 'brandLabel' => 'ADVENTURE',
         'brandUrl' => Yii::$app->homeUrl,
+        'innerContainerOptions' => ['class' => 'container-fluid'],
         'options' => [
-            'class' => 'navbar-custom bg-dark navbar-expand-md py-1 fixed-top',
+            'class' => 'navbar-dark navbar-custom navbar-inverse navbar-expand-md py-1 fixed-top',
         ],
         'collapseOptions' => [
             'class' => 'justify-content-end',
         ],
+        
     ]);
 
 
@@ -144,18 +146,21 @@ $this->registerJs($js);
     $items = [];
     if(Yii::$app->user->isGuest) {
         $items = [
-            ['label' => Html::button('Login', 
-            [   
-                'value' => Url::toRoute(['site/login']),  
-                'class' => 'btn btn-info login', 
-                'id' => 'login'
-            ]) ],
-            ['label' => Html::button('Registrar', 
-                [   
-                    'value' => Url::to(['usuarios/registrar']),  
-                    'class' => 'btn btn-info', 
-                    'id' => 'registrar'
-                ]) 
+            [
+                'label' => Html::button('Login', 
+                    [   
+                        'value' => Url::toRoute(['site/login']),  
+                        'class' => 'btn btn-info login', 
+                        'id' => 'login'
+                    ]) 
+            ],
+            [
+                'label' => Html::button('Registrar', 
+                    [   
+                        'value' => Url::to(['usuarios/registrar']),  
+                        'class' => 'btn btn-info', 
+                        'id' => 'registrar'
+                    ]) 
             ]
         ];
     } else  {
@@ -170,18 +175,19 @@ $this->registerJs($js);
     
     
     echo Nav::widget([
-        'options' => ['class' => 'navbar-nav'],
+        'options' => ['class' => 'navbar-nav navbar-right'],
         'encodeLabels' => false,
         'items' => [
-            ['label' => 'Comunidades', 'url' => ['comunidades/index']],
-            ['label' => Html::tag('i',Icon::show('bars'), 
-                [   
-                    'class' => 'button-side-nav open', 
-                ]),
+            [
+                'label' => 'Comunidades', 
+                'url' => ['comunidades/index'],
+            ],
+            [
+                'label' => Html::tag('i',Icon::show('bars'), ['class' => 'button-side-nav open',]),
                 'visible' => !$guest,
             ],          
             [
-                'label'=>  (!Yii::$app->user->isGuest) ? Yii::$app->user->identity->username : 'Iniciar sesión',
+                'label' =>  (!Yii::$app->user->isGuest) ? Yii::$app->user->identity->username : 'Iniciar sesión',
                 'items' => $items,
             ],
             

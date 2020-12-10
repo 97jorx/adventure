@@ -366,16 +366,14 @@ select2-results__option:hover a {
    }
  }
 
-.masonry-menu ul {
-   list-style: none; /* Remove HTML bullets */
-   color: #ffffff;
+
+.nav-right-items {
+   left: 99%;
 }
 
 .masonry-menu li {
    padding-top: 15%;
 }
-
-
 
 .sidenav {
    border-radius: 5px;
@@ -418,7 +416,9 @@ select2-results__option:hover a {
    .sidenav a {font-size: 18px;}
  }
 
-
+ .right-items {
+    float: left;
+ }
 
 .img-container {
    width: 100%;
