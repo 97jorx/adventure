@@ -82,20 +82,16 @@ $this->registerJs($js);
 <?php $this->beginBody() ?>
 
 <div class="wrap">
-
-<div class="container">
-    <button class="btn btn-info open"><?= Icon::show('bars') ?></button>
-</div>
-
-<div class="sidenav" id='sidenav-left' >
-    <button class="btn btn-info close"><?= Icon::show('times') ?></button>
-    <?php $this->beginContent('@app/views/layouts/sidebar.php'); ?>
-    <?php $this->endContent(); ?>
-</div>
-
+<?php if(!$guest) { ?>
+    <div class="sidenav" id='sidenav-left' >
+        <button class="close"><?= Icon::show('times') ?></button>
+        <?php $this->beginContent('@app/views/layouts/sidebar.php'); ?>
+        <?php $this->endContent(); ?>
+    </div>
+<?php } ?>
 <?php
     NavBar::begin([
-        'brandLabel' => 'ADVENTURE',
+        // 'brandLabel' => 'ADVENTURE',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-dark bg-dark navbar-expand-md fixed-top',
@@ -104,6 +100,7 @@ $this->registerJs($js);
             'class' => 'justify-content-end',
         ],
     ]);
+
 
   echo Select2::widget([
         'name' => 'kv-repo-template',
@@ -143,9 +140,6 @@ $this->registerJs($js);
     ]);
     
 
-  
-  
-
 
     $items = [];
     if(Yii::$app->user->isGuest) {
@@ -179,8 +173,13 @@ $this->registerJs($js);
         'options' => ['class' => 'navbar-nav'],
         'encodeLabels' => false,
         'items' => [
-            // ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'Comunidades', 'url' => ['comunidades/index']],
+            ['label' => Html::button(Icon::show('bars'), 
+                [   
+                    'class' => 'btn btn-info button-side-nav open', 
+                ]),
+                'visible' => !$guest,
+            ],          
             [
                 'label'=>  (!Yii::$app->user->isGuest) ? Yii::$app->user->identity->username : 'Iniciar sesión',
                 'items' => $items,
