@@ -65,7 +65,7 @@ use yii\helpers\Html;
                             <a class="nav-text">
                                 Galerias
                             </a>
-                    </div>
+                        </div>
                 </li>
             </ul>
         </div>
