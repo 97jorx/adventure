@@ -1,3 +1,8 @@
+@font-face {
+   font-family: "PT Sans"; 
+   src: url('https://fonts.googleapis.com/css?family=PT+Sans');
+}
+
 html,
 body {
    height: 100%;
@@ -14,6 +19,7 @@ img{
 
 .navbar-custom .navbar-nav > li > a {
    color: white;
+   z-index: 2;
  }
 
 .wrap {
@@ -223,7 +229,7 @@ html {
   margin-left: -35px;
   margin-top: -40px;
   font-size: 4rem;
-  z-index: 9999;
+  z-index: 1;
 }
 
 .arrow-circle {
@@ -247,6 +253,14 @@ html {
 
 
 /* SELECT2 */
+
+@media screen and (max-width: 768px) {
+   #select2 {
+      display: none;
+   }
+ }
+
+
 
 .small-circular-photo {
    position: relative;
@@ -352,6 +366,10 @@ select2-results__option:hover a {
   
 
   /* SIDE LEFT NAVBAR  'PT Sans' */
+
+
+
+
 @media screen and (min-width: 768px) {
    .button-side-nav {
       vertical-align: center;
@@ -371,54 +389,81 @@ select2-results__option:hover a {
    left: auto !important; 
 }
 
-.masonry-menu li {
-   padding-top: 15%;
-   color: #ffffff;
+
+.masonry-menu {
+   font-family: 'PT Sans'; 
+   margin: 0 auto;
+   width: 100%;
 }
+
+
+.masonry-menu li {
+   cursor: pointer;
+   padding: 5% 0% 5% 5%;
+   color: #ffffff;
+   border-top: 1px solid #ffffff;
+}
+
 
 .masonry-menu li:hover {
    background-color: #a94442;
 }
 
+.masonry-menu li a {
+   margin-left: -250px;
+}
+
 .masonry-menu > ul {
-   font-size: 0.8em;
-   font-family: "PT Sans"; 
    text-transform: uppercase;
    list-style-type: none;
+   padding-inline-start: 0;
+   margin-bottom: 0;
 }
+
+.wrap.abierto .masonry-menu li a {
+   margin-left: 0;
+}
+
+.wrap.abierto #nav-title { 
+   display: block; 
+}
+
+#nav-title {
+   display: none;
+}
+
+.wrap.abierto #sidenav-left {
+   width: 250px;
+}
+
 
 .sidenav {
    border-radius: 5px;
-   height: 85%;
-   width: 0;
+   width: 50px;
+   height: auto;
    position: fixed;
    z-index: 99999;
-   top: 0;
+   top: 40px;
    left: 0;
    background-color: #313131;
    overflow-x: hidden;
    transition: 0.5s;
    margin-top: 4%;
-   margin-left: 1%;
-   padding-top: 50px;
 }
  
  .sidenav a {
-   padding: 8px 8px 8px 32px;
-   text-decoration: none;
-   font-size: 25px;
-   color: #818181;
    display: block;
+   text-decoration: none;
+   font-size: 0.8em;
+   color: #818181;
    transition: 0.3s;
  }
 
-
  
  .close{
-    color: white;
-    margin-right: 5%;
-    margin-bottom: 5%;
-    z-index: 999999;
+    position: absolute;
+    left: 10px;
+    background-color: white;
  }
 
  .sidenav a:hover {

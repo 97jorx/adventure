@@ -23,13 +23,8 @@ $fakeimg = 'https://picsum.photos/100/1000?random=1';
 AppAsset::register($this);
 
 $js = <<< EOT
-
-$('.open').on('click', function () {
-    document.getElementById("sidenav-left").style.width = "250px";
-});
-
-$('.close').on('click', function () {
-    document.getElementById("sidenav-left").style.width = "0px";
+$('#sidenav-left').hover(function() {
+      $('.wrap').toggleClass('abierto');
 });
 
 $(document).ready(function () {
@@ -76,6 +71,7 @@ $this->registerJs($js);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php $this->registerCsrfMetaTags() ?>
     <title> <?= Html::encode($this->title) ?></title>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=PT+Sans" />
     <?php $this->head() ?>
 </head>
 <body>
@@ -84,9 +80,10 @@ $this->registerJs($js);
 <div class="wrap">
 <?php if(!$guest) { ?>
     <div class="sidenav" id='sidenav-left' >
-        <button class="close"><?= Icon::show('times') ?></button>
-        <?php $this->beginContent('@app/views/layouts/sidebar.php'); ?>
-        <?php $this->endContent(); ?>
+        <div class="container">
+            <?php $this->beginContent('@app/views/layouts/sidebar.php'); ?>
+            <?php $this->endContent(); ?>
+        </div>
     </div>
 <?php } ?>
 <?php
@@ -103,13 +100,12 @@ $this->registerJs($js);
         
     ]);
 
-
+?> <div id="select2"> <?php
   echo Select2::widget([
         'name' => 'kv-repo-template',
-        'class' => 'select2',
         'pluginOptions' => [
             'placeholder' => Icon::show('search')."Buscar usuario",
-            'width' => '20%',
+            // 'width' => '20%',
             'ajax' => [
                 'url' => $url,
                 'dataType' => 'json',
@@ -140,8 +136,7 @@ $this->registerJs($js);
             }",
         ],
     ]);
-    
-
+?> </div> <?php 
 
     $items = [];
     if(Yii::$app->user->isGuest) {
@@ -187,10 +182,6 @@ $this->registerJs($js);
                 'label' => Html::tag('i', Icon::show('bar')),
                 'visible' => !$guest,
             ],
-            [
-                'label' => Html::tag('i', Icon::show('bars'), ['class' => 'button-side-nav open',]),
-                'visible' => !$guest,
-            ],          
             [
                 'label' => Html::tag('i', Icon::show('envelope'), ['class' => '',]),
                 'visible' => !$guest,

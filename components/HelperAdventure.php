@@ -83,9 +83,7 @@ class HelperAdventure extends Component
      * @return Boolean retorna un booleano.
      */
     public static function usuarioBloqueado($id){
-        
         return Bloqueados::findOne($id)->exists();
-        
     }
 
 
