@@ -46,6 +46,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
 
     public $password_repeat;
     private $_followers = null;
+    private $_following = null;
 
     /**
      * {@inheritdoc}
@@ -167,6 +168,20 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
 
 
     /**
+     * Gets query for [[Seguidores]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSiguiendo()
+    {
+        return $this->hasMany(Seguidores::class, ['seguidor' => 'id'])
+        ->onCondition(['seguidor' => Yii::$app->user->id])
+        ->inverseOf('usuario');
+    }
+
+
+
+    /**
      * Gets query for [[Comunidades]].
      *
      * @return \yii\db\ActiveQuery
@@ -274,6 +289,33 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
 
 
 
+
+    /**
+     * SETTER DE @param followers
+     * @return \yii\db\ActiveQuery
+     */
+    public function setFollowing($following) {
+        $this->_following = $following;
+    }
+
+    /**
+     * GETTER DE @param followers
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFollowing()
+    {
+        if ($this->_following === null && !$this->isNewRecord) {
+            // $alias = Yii::$app->request->get('alias');
+            // $usuarioid = Usuarios::find('id')
+            // ->where(['alias' => $alias])->scalar();
+            $this->setFollowing($this->getSiguiendo()->count());
+        }
+        return $this->_following;
+    }
+
+
+
+
     /**
      * [[Seguidores]].
      * Compruebo si existe el seguidor del usuario actual.
@@ -353,7 +395,6 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
                 $security = Yii::$app->security;
                 $this->auth_key = $security->generateRandomString();
                 $this->contrasena = $security->generatePasswordHash($this->contrasena);
-                
             }
         }
 

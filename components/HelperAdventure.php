@@ -79,8 +79,14 @@ class HelperAdventure extends Component
     }
 
    /**
-     * Devuelve un boolean si el usuario actualo esta bloqueado en esa comunidad.
-     * @return Boolean retorna un booleano.
+     * Devuelve un boolean si el usuario actual esta bloqueado por el
+     * usuario que se quiere buscar o ver.
+     * 
+     * Devuelve un array de los usuarios que han bloqueado al usuario 
+     * actual. Ejemplo: En el buscar usuarios no aparezca dichos usuarios.
+     * 
+     * @return Boolean retorna un booleano si @param id no es nulo.
+     * @return Arry retorna un array si @param id es nulo.
      */
     public static function usuarioBloqueado($id = null) {
         

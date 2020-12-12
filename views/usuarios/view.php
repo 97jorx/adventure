@@ -108,8 +108,8 @@ $this->registerJs($js);
         <p class="info"><?= $model->email ?></p>
         <div class="stats row">
           <div class="stat col-xs-4" style="padding-right: 50px;">
-            <p class="number-stat">5</p>
-            <p class="desc-stat">Puntuación</p>
+            <p class="number-stat"><?= $model->following ?></p>
+            <p class="desc-stat">Siguiendo</p>
           </div>
           <div class="stat col-xs-4">
             <p class="number-stat"><?= $blogs_count ?></p>
