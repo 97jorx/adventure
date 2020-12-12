@@ -165,12 +165,14 @@ class UsuariosController extends Controller
     public function actionSearch($q = null, $id = null) {
 
         Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
+        $bloqueados = Yii::$app->AdvHelper->usuarioBloqueado();
         $out = ['results' => ['text' => '', 'id' => '']];
         if (!is_null($q)) {
             $query = new Query;
             $query->select('id, alias AS text')
                 ->from('usuarios')
                 ->where(['ilike', 'alias', $q])
+                ->andWhere(['not in', 'id', $bloqueados])
                 ->limit(20);
             $command = $query->createCommand();
             $data = $command->queryAll();

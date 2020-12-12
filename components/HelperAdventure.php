@@ -82,12 +82,25 @@ class HelperAdventure extends Component
      * Devuelve un boolean si el usuario actualo esta bloqueado en esa comunidad.
      * @return Boolean retorna un booleano.
      */
-    public static function usuarioBloqueado($id) {
+    public static function usuarioBloqueado($id = null) {
+        
         $uid = Yii::$app->user->id;
-        return Bloqueados::find()
-        ->where(['usuario_id' => $id])
-        ->andWhere(['bloqueado' => $uid])
-        ->exists();
+        
+        if (isset($id)) {
+
+            return Bloqueados::find()
+            ->where(['usuario_id' => $id])
+            ->andWhere(['bloqueado' => $uid])
+            ->exists();
+
+        } else {
+
+            return Bloqueados::find()
+            ->select('usuario_id')
+            ->andWhere(['bloqueado' => $uid])
+            ->column();
+
+        }
     }
 
 
