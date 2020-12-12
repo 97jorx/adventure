@@ -105,7 +105,7 @@ $this->registerJs($js);
         <?php endif; ?>
         <p class="info"><?= $model->rol ?></p>
         <p class="info"><?= $model->alias ?></p>
-        <p class="info"><?= $model->email ?></p>
+        <p class="info"><?= (empty($model->valoracion)) ? (0) : ($model->valoracion) ?><?= Icon::show('star') ?></p>
         <div class="stats row">
           <div class="stat col-xs-4" style="padding-right: 50px;">
             <p class="number-stat"><?= $model->following ?></p>

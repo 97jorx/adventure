@@ -47,6 +47,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     public $password_repeat;
     private $_followers = null;
     private $_following = null;
+    private $_valoracion = null;
 
     /**
      * {@inheritdoc}
@@ -65,8 +66,6 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
             [['username', 'nombre', 'apellidos', 'email', 'fecha_nac', 'contrasena', 'alias'], 'required', 'message' => 'El campo {attribute} es obligatorio, no puede estar vacío.'],
             [['username', 'nombre', 'apellidos', 'email', 'poblacion', 'provincia', 'pais', 'alias'], 'trim'],
             [['created_at', 'fecha_nac'], 'safe'],
-            [['valoracion'], 'default', 'value' => null],
-            [['valoracion'], 'integer'],
             [['alias'], 'unique'],
             [['alias'], 'string', 'max' => 35],
             [['alias'], 'checkAttributeName'],
@@ -143,8 +142,6 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         
 	}
 
-
-
     /**
      * Gets query for [[Bloqueados]].
      *
@@ -175,7 +172,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     public function getSiguiendo()
     {
         return $this->hasMany(Seguidores::class, ['seguidor' => 'id'])
-        ->onCondition(['seguidor' => Yii::$app->user->id])
+        ->onCondition(['seguidor' => $this->id])
         ->inverseOf('usuario');
     }
 
@@ -245,6 +242,16 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->hasMany(Notas::class, ['usuario_id' => 'id'])->inverseOf('usuario');
     }
 
+     /**
+     * Gets query for [[Notas]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSumaNotas()
+    {
+        return Notas::find('nota')->where(['usuario_id' => $this->id]);
+    }
+
 
      /**
      * Gets query for [[Visitas]].
@@ -288,8 +295,6 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     }
 
 
-
-
     /**
      * SETTER DE @param followers
      * @return \yii\db\ActiveQuery
@@ -305,16 +310,34 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     public function getFollowing()
     {
         if ($this->_following === null && !$this->isNewRecord) {
-            // $alias = Yii::$app->request->get('alias');
-            // $usuarioid = Usuarios::find('id')
-            // ->where(['alias' => $alias])->scalar();
             $this->setFollowing($this->getSiguiendo()->count());
         }
         return $this->_following;
     }
 
 
+ 
+    /**
+     * Gets query for [[Notas]].
+     * SETTER DE @param valoracion
+     * @return \yii\db\ActiveQuery
+     */
+    public function setValoracion($valoracion) {
+        $this->_valoracion = $valoracion;
+    }
 
+    /**
+     * Gets query for [[Notas]].
+     * GETTER DE @param valoracion
+     * @return \yii\db\ActiveQuery
+     */
+    public function getValoracion()
+    {
+        if ($this->_valoracion === null && !$this->isNewRecord) {
+            $this->setValoracion($this->getSumaNotas()->SUM('nota'));
+        }
+        return $this->_valoracion;
+    }
 
     /**
      * [[Seguidores]].

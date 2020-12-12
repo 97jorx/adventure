@@ -31,7 +31,6 @@ CREATE TABLE usuarios
    , pais varchar(255)
    , foto_perfil  varchar(255)
    , bibliografia varchar(255)
-   , valoracion   bigint 
 );
 
 
@@ -187,13 +186,13 @@ CREATE TABLE integrantes (
 
 
 
-INSERT INTO usuarios (username, nombre, alias,apellidos, email, rol, fecha_nac, contrasena, poblacion, provincia, pais, foto_perfil, bibliografia, valoracion)
+INSERT INTO usuarios (username, nombre, alias,apellidos, email, rol, fecha_nac, contrasena, poblacion, provincia, pais, foto_perfil, bibliografia)
 VALUES (
          'admin', 'admin', 'admin', 'admin',
          'adventure@gmail.com', 'administrador', '1978-06-22',
           crypt('admin', gen_salt('bf', 10)), 
          'Sanlúcar de Barrameda', 'Cádiz' ,'España', 
-         'foto.jpg', 'Soy un administrador de Adventure', 5
+         'foto.jpg', 'Soy un administrador de Adventure'
         );
 
 INSERT INTO usuarios (username, nombre, alias, apellidos, email, rol, fecha_nac, contrasena)

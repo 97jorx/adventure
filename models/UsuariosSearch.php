@@ -20,7 +20,7 @@ class UsuariosSearch extends Usuarios
         return [
             [['id'], 'integer'],
             [['username', 'nombre', 'apellidos', 'email', 'rol', 'created_at', 'contrasena', 'auth_key', 'poblacion', 'provincia', 'pais'], 'safe'],
-            [['followers', 'following'], 'safe']
+            [['followers', 'following', 'valoracion'], 'safe']
         ];
     }
 
@@ -48,9 +48,11 @@ class UsuariosSearch extends Usuarios
             ->select([
                         'usuarios.*', 
                         'DISTINCT COUNT(s.id) AS followers', 
-                        'DISTINCT COUNT(s.id) AS following'
+                        'DISTINCT COUNT(s.id) AS following',
+                        'DISTINCT SUM(n.nota) AS valoracion'
             ])
             ->joinWith('seguidores s')
+            ->joinWith('notas n')
             ->groupBy('usuarios.id');
         } else {
             $query = Usuarios::find()
