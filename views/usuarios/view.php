@@ -55,7 +55,7 @@ $this->registerJs($js);
             </a>
           <div class="dropdown-menu">
           <?php if(Yii::$app->user->identity->alias !== $model->alias) : ?>
-          <?php $existe = ($model->existeBloqueado($model->alias)) ? ('Dejar de bloquear') : ('Bloquear usuario') ?>
+          <?php $existe = ($model->existeBloqueado($model->alias)) ? ('Desbloquear usuario') : ('Bloquear usuario') ?>
           <?php $bloquear = Url::to(['usuarios/bloquear', 'alias' => $model->alias]); ?>
           <?= Html::a($existe, $bloquear, ['class' => 'login',
               'aria-label' => $existe, 'data-balloon-pos' => 'up',

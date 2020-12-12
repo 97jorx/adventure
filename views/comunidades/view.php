@@ -22,7 +22,7 @@ $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gust
 
 ?>
 
-<div class="chart-container" style="height:40vh; width:40vw">
+<div class="chart-container" style="position: relative; height:40vh; width:65vw">
   <canvas id="chart"></canvas>
 </div>
     
@@ -62,6 +62,8 @@ $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gust
         ]
     ],
     'clientOptions' => [
+        'responsive' => true,
+        'maintainAspectRatio' => false,
             'scales' => [
                 'yAxes' => new JsExpression(
                     "
