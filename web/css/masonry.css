@@ -22,8 +22,6 @@ body {
 }
 
 @media only screen and (max-width: 1022px) and (min-width: 0px) {
-  
-
 
   .masonry {
     display: grid;

@@ -9,7 +9,6 @@ return [
     'icon-framework' => \kartik\icons\Icon::FAS,  // Font Awesome Icon framework
     // 'icon-framework' => \kartik\icons\Icon::FAR,  // Font Awesome Icon framework
     'bsVersion' => '4.x',
-    
 ];
 
 

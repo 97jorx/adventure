@@ -20,6 +20,7 @@ class UsuariosSearch extends Usuarios
         return [
             [['id'], 'integer'],
             [['username', 'nombre', 'apellidos', 'email', 'rol', 'created_at', 'contrasena', 'auth_key', 'poblacion', 'provincia', 'pais'], 'safe'],
+            [['followers', 'following'], 'safe']
         ];
     }
 
@@ -43,7 +44,14 @@ class UsuariosSearch extends Usuarios
     {
         $propietario = Yii::$app->user->id;
         if (!isset($id)) {
-            $query = Usuarios::find();
+            $query = Usuarios::find()
+            ->select([
+                        'usuarios.*', 
+                        'DISTINCT COUNT(s.id) AS followers', 
+                        'DISTINCT COUNT(s.id) AS following'
+            ])
+            ->joinWith('seguidores s')
+            ->groupBy('usuarios.id');
         } else {
             $query = Usuarios::find()
             ->joinWith('integrantes i')

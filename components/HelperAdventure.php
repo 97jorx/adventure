@@ -5,6 +5,7 @@ namespace app\components;
 use app\controllers\BlogsController;
 use app\controllers\ComunidadesController;
 use app\models\Bloqcomunidades;
+use app\models\Bloqueados;
 use app\models\Comunidades;
 use app\models\Favblogs;
 use app\models\Favcomunidades;
@@ -74,6 +75,37 @@ class HelperAdventure extends Component
             ->where(['comunidad_id' => $id])
             ->andWhere(['bloqueado' => $uid])
             ->exists();
+        }
+    }
+
+   /**
+     * Devuelve un boolean si el usuario actual esta bloqueado por el
+     * usuario que se quiere buscar o ver.
+     * 
+     * Devuelve un array de los usuarios que han bloqueado al usuario 
+     * actual. Ejemplo: En el buscar usuarios no aparezca dichos usuarios.
+     * 
+     * @return Boolean retorna un booleano si @param id no es nulo.
+     * @return Arry retorna un array si @param id es nulo.
+     */
+    public static function usuarioBloqueado($id = null) {
+        
+        $uid = Yii::$app->user->id;
+        
+        if (isset($id)) {
+
+            return Bloqueados::find()
+            ->where(['usuario_id' => $id])
+            ->andWhere(['bloqueado' => $uid])
+            ->exists();
+
+        } else {
+
+            return Bloqueados::find()
+            ->select('usuario_id')
+            ->andWhere(['bloqueado' => $uid])
+            ->column();
+
         }
     }
 

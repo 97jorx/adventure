@@ -23,8 +23,6 @@ $(".masonry-item").hover(
     } 
 );
 
-
-
 $('.loader').imagesLoaded( {}, function() {
     $('.loader').attr("style", "visibility: visible")
     $('.spinner-border').fadeOut("fast");

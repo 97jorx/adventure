@@ -10,6 +10,7 @@ use yii\web\IdentityInterface;
  *
  * @property int $id
  * @property string $username
+ * @property string $alias
  * @property string $nombre
  * @property string $apellidos
  * @property string $email
@@ -27,11 +28,16 @@ use yii\web\IdentityInterface;
  *
  * @property Blogs[] $blogs
  * @property Bloqcomunidades[] $bloqcomunidades
+ * @property Bloqueados[] $bloqueados
+ * @property Bloqueados[] $bloqueados0
  * @property Comunidades[] $comunidades
  * @property Favblogs[] $favblogs
  * @property Favcomunidades[] $favcomunidades
  * @property Integrantes[] $integrantes
  * @property Notas[] $notas
+ * @property Seguidores[] $seguidores
+ * @property Seguidores[] $seguidores0
+ * @property Visitas[] $visitas
  */
 class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
 {
@@ -39,7 +45,8 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     const SCENARIO_CREAR = 'crear';
 
     public $password_repeat;
-
+    private $_followers = null;
+    private $_following = null;
 
     /**
      * {@inheritdoc}
@@ -137,6 +144,43 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
 	}
 
 
+
+    /**
+     * Gets query for [[Bloqueados]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBloqueados()
+    {
+        return $this->hasMany(Bloqueados::class, ['usuario_id' => 'id'])->inverseOf('usuario');
+    }
+
+
+    /**
+     * Gets query for [[Seguidores]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSeguidores()
+    {
+        return $this->hasMany(Seguidores::class, ['usuario_id' => 'id'])->inverseOf('usuario');
+    }
+
+
+    /**
+     * Gets query for [[Seguidores]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSiguiendo()
+    {
+        return $this->hasMany(Seguidores::class, ['seguidor' => 'id'])
+        ->onCondition(['seguidor' => Yii::$app->user->id])
+        ->inverseOf('usuario');
+    }
+
+
+
     /**
      * Gets query for [[Comunidades]].
      *
@@ -191,7 +235,6 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     }
 
 
-
     /**
      * Gets query for [[Notas]].
      *
@@ -213,8 +256,6 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->hasMany(Visitas::class, ['usuario_id' => 'id'])->inverseOf('usuario');
     }
 
-
-
     /** Gets query for [[Integrantes]].
     *
     * @return \yii\db\ActiveQuery
@@ -223,6 +264,90 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
    {
        return $this->hasMany(Integrantes::class, ['usuario_id' => 'id'])->inverseOf('usuario');
    }
+
+
+
+    /**
+     * SETTER DE @param followers
+     * @return \yii\db\ActiveQuery
+     */
+    public function setFollowers($followers) {
+        $this->_followers = $followers;
+    }
+
+    /**
+     * GETTER DE @param followers
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFollowers()
+    {
+        if ($this->_followers === null && !$this->isNewRecord) {
+            $this->setFollowers($this->getSeguidores()->count());
+        }
+        return $this->_followers;
+    }
+
+
+
+
+    /**
+     * SETTER DE @param followers
+     * @return \yii\db\ActiveQuery
+     */
+    public function setFollowing($following) {
+        $this->_following = $following;
+    }
+
+    /**
+     * GETTER DE @param followers
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFollowing()
+    {
+        if ($this->_following === null && !$this->isNewRecord) {
+            // $alias = Yii::$app->request->get('alias');
+            // $usuarioid = Usuarios::find('id')
+            // ->where(['alias' => $alias])->scalar();
+            $this->setFollowing($this->getSiguiendo()->count());
+        }
+        return $this->_following;
+    }
+
+
+
+
+    /**
+     * [[Seguidores]].
+     * Compruebo si existe el seguidor del usuario actual.
+     * @param alias el id de la comunidad.
+     * @return boolean
+     */
+    public function existeSeguidor($alias)
+    {
+        $seguidor = Yii::$app->user->id;
+        $usuarioid = self::find('id')->where(['alias' => $alias])->scalar();
+        return Seguidores::find()
+        ->where(['seguidor' => $seguidor])
+        ->andWhere(['usuario_id' => $usuarioid])
+        ->exists();        
+    }
+
+
+    /**
+     * [[Seguidores]].
+     * Compruebo si existe el usuario bloqueado por el usuario actual.
+     * @param alias el id de la comunidad.
+     * @return boolean
+     */
+    public function existeBloqueado($alias)
+    {
+        $bloqueador = Yii::$app->user->id;
+        $bloqueado = self::find('id')->where(['alias' => $alias])->scalar();
+        return Bloqueados::find()
+        ->where(['bloqueado' => $bloqueado])
+        ->andWhere(['usuario_id' => $bloqueador])
+        ->exists();        
+    }
 
 
     public static function findIdentity($id)
@@ -270,7 +395,6 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
                 $security = Yii::$app->security;
                 $this->auth_key = $security->generateRandomString();
                 $this->contrasena = $security->generatePasswordHash($this->contrasena);
-                
             }
         }
 

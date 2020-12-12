@@ -4,7 +4,9 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Blogs;
+use app\models\Bloqueados;
 use app\models\Comunidades;
+use app\models\Seguidores;
 use app\models\Usuarios;
 use app\models\UsuariosSearch;
 use yii\db\Query;
@@ -12,7 +14,6 @@ use yii\bootstrap4\ActiveForm;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\AccessControl;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 
@@ -77,38 +78,44 @@ class UsuariosController extends Controller
     }
 
     /**
-     * Displays a single Usuarios model.
-     * @param integer $id
+     * Muestra el perfil del usuario.
+     * @param string $alias
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($alias)
     {
         $id = Usuarios::find('id')->where(['alias' => $alias])->scalar();
-        $blogs = Blogs::find()->where(['usuario_id' => $id]);  
-        $comunidades = Comunidades::find()
-        ->joinWith('blogs b')
-        ->where(['b.usuario_id' => $id])
-        ->groupBy('comunidades.id');  
-        
-        $dataProvider = new ActiveDataProvider([
-            'query' => $blogs,
-        ]);
+        if (!Yii::$app->AdvHelper->usuarioBloqueado($id)) {
 
-        $dataProvider2 = new ActiveDataProvider([
-            'query' => $comunidades,
-        ]);
+            $blogs = Blogs::find()->where(['usuario_id' => $id]);
+            $comunidades = Comunidades::find()
+            ->joinWith('blogs b')
+            ->where(['b.usuario_id' => $id])
+            ->groupBy('comunidades.id');
 
-        if(!Yii::$app->user->isGuest){
-            return $this->render('view', [
-                'model' => $this->findModel($id),
-                'count' => $blogs->count(),
-                'dataProvider' => $dataProvider,
-                'dataProvider2' => $dataProvider2,
-                'comunidades' => $comunidades
+            $dataProvider = new ActiveDataProvider([
+                'query' => $blogs,
             ]);
+
+            $dataProvider2 = new ActiveDataProvider([
+                'query' => $comunidades,
+            ]);
+
+            if (!Yii::$app->user->isGuest) {
+                return $this->render('view', [
+                    'model' => $this->findModel($id),
+                    'blogs_count' => $blogs->count(),
+                    'dataProvider' => $dataProvider,
+                    'dataProvider2' => $dataProvider2,
+                    'comunidades' => $comunidades,
+                ]);
+            }
+
+            return $this->redirect(['site/login']);
         }
-        return $this->redirect(['site/login']);
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 
     /**
@@ -150,7 +157,7 @@ class UsuariosController extends Controller
     }
 
 
- /**
+    /**
      * Busca el usuario por su alias mediante una consulta a la tabla usuarios.
      * @param q la busqueda introducida por el input.
      * @return Json
@@ -158,12 +165,14 @@ class UsuariosController extends Controller
     public function actionSearch($q = null, $id = null) {
 
         Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
+        $bloqueados = Yii::$app->AdvHelper->usuarioBloqueado();
         $out = ['results' => ['text' => '', 'id' => '']];
         if (!is_null($q)) {
             $query = new Query;
             $query->select('id, alias AS text')
                 ->from('usuarios')
                 ->where(['ilike', 'alias', $q])
+                ->andWhere(['not in', 'id', $bloqueados])
                 ->limit(20);
             $command = $query->createCommand();
             $data = $command->queryAll();
@@ -175,6 +184,96 @@ class UsuariosController extends Controller
         }
         
         return $out;
+    }
+
+    /**
+     * Seguir a un usuario con ajax desde el perfil.
+     * @param alias se pasa como parametro el alias.
+     * @return Json
+     */
+    public function actionSeguir($alias) {
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $seguidor = Yii::$app->user->id;
+        $user = !Yii::$app->user->isGuest;
+
+        $usuarioid = Usuarios::find('id')
+        ->where(['alias' => $alias])->scalar();
+
+        $idexist = Seguidores::find()
+           ->where(['usuario_id' => $usuarioid])
+           ->andWhere(['seguidor' => $seguidor]);
+        
+        $json = [];
+            if($user) {
+                if(!$idexist->exists()){
+                    $model = new Seguidores();
+                    $model->usuario_id = $usuarioid;
+                    $model->seguidor = $seguidor;
+                    $model->save();
+                    $json = [ 
+                            'button' => 'Dejar de seguir',
+                            'color'  => 'bg-danger',
+                            'mensaje' => 'Se ha seguido al usuario'
+                    ];
+                } else {
+                    Seguidores::findOne(['usuario_id' => $usuarioid, 'seguidor' => $seguidor])
+                    ->delete();
+                    $json = [ 
+                        'button' => 'Seguir',
+                        'color'  => 'bg-success',
+                        'mensaje' => 'Se ha dejado de seguir al usuario'
+                    ];
+                }    
+            } 
+            
+            return json_encode($json);
+    }
+
+     /**
+     * $bloqueado es el usuario que esta en la base de datos.
+     * $bloqueador es el usuario actual que va a bloquear al usuario seleccionado.
+     * Seguir a un usuario con ajax desde el perfil.
+     * @param alias se pasa como parametro el alias.
+     * @return Json
+     */
+    public function actionBloquear($alias) {
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $user = !Yii::$app->user->isGuest;
+        
+        $bloqueador = Yii::$app->user->id;
+        $bloqueado = Usuarios::find('id')
+        ->where(['alias' => $alias])->scalar();
+
+        $idexist = Bloqueados::find()
+           ->where(['bloqueado' => $bloqueado])
+           ->andWhere(['usuario_id' => $bloqueador]);
+        
+        $json = [];
+            if($user) {
+                if(!$idexist->exists()){
+                    $model = new Bloqueados();
+                    $model->bloqueado = $bloqueado;
+                    $model->usuario_id = $bloqueador;
+                    $model->save();
+                    $json = [ 
+                            'button' => 'Desbloquear usuario',
+                            'color'  => 'bg-danger',
+                            'mensaje' => 'Se ha bloqueado al usuario'
+                    ];
+                } else {
+                    Bloqueados::findOne(['bloqueado' => $bloqueado, 'usuario_id' => $bloqueador])
+                    ->delete();
+                    $json = [ 
+                        'button' => 'Bloquear usuario',
+                        'color'  => 'bg-success',
+                        'mensaje' => 'Se ha dejado de bloquear al usuario'
+                    ];
+                }    
+            } 
+            
+            return json_encode($json);
     }
 
     

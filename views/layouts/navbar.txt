@@ -1,94 +1,4 @@
 <?php
-
-/* @var $this \yii\web\View */
-/* @var $content string */
-
-use app\widgets\Alert;
-use yii\helpers\Html;
-use yii\bootstrap4\Nav;
-use yii\bootstrap4\NavBar;
-use yii\bootstrap4\Breadcrumbs;
-use app\assets\AppAsset;
-use kartik\icons\Icon;
-use kartik\widgets\Select2;
-use yii\bootstrap4\Modal;
-use yii\helpers\Url;
-use yii\web\JsExpression;
-
-$guest = Yii::$app->user->isGuest;
-$url = Url::to(['usuarios/search']);
-$url2 = Yii::$app->urlManager->createUrl(['usuarios/view', 'alias' => '']);
-$fakeimg = 'https://picsum.photos/100/1000?random=1';
-
-AppAsset::register($this);
-
-$js = <<< EOT
-$('#sidenav-left').hover(function() {
-      $('.wrap').toggleClass('abierto');
-});
-
-$(document).ready(function () {
-    if ('$guest') {
-       $('.login').attr('href', '#');
-       $('.login').click(function () {
-            var lo = $('#login').attr('value');
-            $.ajax({
-                type: 'POST',
-                url: lo,
-                success: function(data) {
-                    $('#modal').find('#createContent').html(data);
-                    $('#modal').modal('show');
-                    $('.modal-title').text('Acceder');
-                }
-            });
-        });
-    }
-
-    $('#registrar').click(function () {
-        var lo = $('#registrar').attr('value');
-        $.ajax({
-            type: 'POST',
-            url: lo,
-            success: function(data) {
-                $('#modal').find('.site-login').remove();
-                $('#modal').modal('show').find('#createContent').html(data);
-                $('.modal-title').text('Registrarse');
-            }
-        });
-    });
-
-});
-EOT;
-$this->registerJs($js);
-
-?>
-<?php $this->beginPage() ?>
-<!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>">
-<head>
-    <meta charset="<?= Yii::$app->charset ?>">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?php $this->registerCsrfMetaTags() ?>
-    <title> <?= Html::encode($this->title) ?></title>
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=PT+Sans" />
-    <?php $this->head() ?>
-</head>
-<body>
-<?php $this->beginBody() ?>
-
-<div class="wrap">
-<?php if(!$guest) { ?>
-    <div class="sidenav" id='sidenav-left' >
-        <div class="container">
-            <?php $this->beginContent('@app/views/layouts/sidebar.php'); ?>
-            <?php $this->endContent(); ?>
-        </div>
-    </div>
-<?php } ?>
-
-     
-<?php
     NavBar::begin([
         'brandLabel' => 'ADVENTURE',
         'brandUrl' => Yii::$app->homeUrl,
@@ -100,8 +10,6 @@ $this->registerJs($js);
             'class' => 'justify-content-end',
         ],
     ]);
-
-
 
 ?> <div id="select2"> <?php
   echo Select2::widget([
@@ -204,51 +112,53 @@ $this->registerJs($js);
     ]);
     NavBar::end();
     ?>
-  
-    <div class="container">
-        <?= Breadcrumbs::widget([
-             'homeLink' => [
-                'label' => 'Inicio',
-                'url' => '/site/index',
-            ],
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
+
+
+
+<nav id="w0" class="navbar-dark navbar-custom navbar-expand-lg py-1 fixed-top navbar">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">ADVENTURE</a>
+           
+        
+        <ul id="w2" class="navbar-nav navbar-right nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="">
+                        <i class="fas fa-envelope"></i> 
+                    </i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="">
+                        <i class="fas fa-bell"></i>
+                     </i>
+                </a>
+            </li>
+            <li class="label-vertical-minus nav-item">
+                <a class="nav-link" href="#">
+                    <div class="vertical-minus">
+                        <i>
+                            <i class="fas fa-minus"></i>
+                        </i>
+                    </div>
+                </a>
+            </li>
+            <li class="nav-item" style="padding-left:10px;">
+                <a class="nav-link" href="/comunidad/inicio">Comunidades</a>
+            </li>
+            <li class="dropdown nav-item">
+                <a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown">
+                    Admin <i class=""> <i class="fas fa-user"></i></i>
+                </a>
+                <div id="w3" class="dropdown-menu">
+                    <form action="/site/logout" method="post">
+                        <input type="hidden" name="_csrf" value="puTrCw7uRFfwcV3Zjf_VU3dcmzcAxgfXIV-w60UUdaD8ktJFT9wIDbYHK5Kgq4wcRBDfdGacXZQRHoCvMlc-kA==">
+                        <button type="submit" class="dropdown-item">Logout <i class=""><i class="fas fa-power-off"></i></i></button>
+                    </form>
+                        <a class="dropdown-item" href="/perfil/usuario/admin">Perfil</a>
+                </div>
+            </li>
+        </ul>
     </div>
-</div>
-
-
-
-
-<footer class="footer">
-    <div class="container">
-        <p class="float-left">&copy; Adventure <?= date('Y') ?></p>
-
-        <p class="float-right"><?= Yii::powered() ?></p>
-    </div>
-</footer>
-
-
-<?php Modal::begin([
-    'headerOptions' => [
-        'class' => 'text-center'
-    ],
-    'titleOptions' => [
-        'class' => 'modal-title text-center col-md-11',
-    ],
-    'title' => '',
-    'id' => 'modal',
-    'size' => 'modal-md',
-]);?>
-    <?="<div id='createContent'></div>"?>
-<?php Modal::end();?>
-
-
-
-
-<?php $this->endBody() ?>
-</body>
-
-</html>
-<?php $this->endPage() ?>
+</nav>
