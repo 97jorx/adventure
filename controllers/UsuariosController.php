@@ -6,9 +6,11 @@ use Yii;
 use app\models\Blogs;
 use app\models\Bloqueados;
 use app\models\Comunidades;
+use app\models\ImagenForm;
 use app\models\Seguidores;
 use app\models\Usuarios;
 use app\models\UsuariosSearch;
+use yii\web\UploadedFile;
 use yii\db\Query;
 use yii\bootstrap4\ActiveForm;
 use yii\data\ActiveDataProvider;
@@ -276,7 +278,32 @@ class UsuariosController extends Controller
             return json_encode($json);
     }
 
-    
+    /**
+     * Crea un modelo de ImagenForm y se le añade el nombre a partir de id.
+     * @param integer $id el id del usuario
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionImagen()
+    {
+        $alias = Yii::$app->request->get('alias');
+        $id = Usuarios::find('id')
+        ->where(['alias' => $alias])->scalar();
+
+        $model = new ImagenForm();
+
+        if (Yii::$app->request->isPost || !isset($id)) {
+            $model->foto_perfil = UploadedFile::getInstance($model, 'imagen');
+            if ($model->upload($id)) {
+                return $this->redirect(['usuarios/view', 'alias' => $alias]);
+            }
+        }
+     
+        return $this->renderAjax('imagen', [
+            'model' => $model,
+        ]);
+    }
+
     
     /**
      * Deletes an existing Usuarios model.
