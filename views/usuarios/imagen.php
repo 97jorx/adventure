@@ -23,7 +23,7 @@ $this->title = 'Cambiar foto perfil';
 </div> -->
 
 
-<?= $form->field($model, 'foto_perfil')->widget(FileInput::class, [
+<?= $form->field($model, 'imagen')->widget(FileInput::class, [
     'options' => ['accept' => 'imagen/*', 
     'data-allowed-file-extensions' => ["png", "jpg"]],
 ]); ?>

@@ -21,7 +21,7 @@ class ImagenForm extends Model
         if ($this->validate()) {
             $filename = $id;
             $origen = Yii::getAlias('@uploads/' . $filename . '.' . $this->imagen->extension);
-            $destino = Yii::getAlias('@img/' . $filename . '.jpg');
+            $destino = Yii::getAlias('@img/' . $filename . '.' . $this->imagen->extension);
             $this->imagen->saveAs($origen);
             \yii\imagine\Image::resize($origen, 400, null)->save($destino);
             unlink($origen);

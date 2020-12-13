@@ -7,6 +7,7 @@ use app\models\Blogs;
 use app\models\Bloqueados;
 use app\models\Comunidades;
 use app\models\ImagenForm;
+use \yii\imagine\Image;
 use app\models\Seguidores;
 use app\models\Usuarios;
 use app\models\UsuariosSearch;
@@ -287,15 +288,19 @@ class UsuariosController extends Controller
     {
         $alias = Yii::$app->request->get('alias');
         $id = Usuarios::find('id')->where(['alias' => $alias])->scalar();
-        $model = $this->findModel($id);
+        $usuario = $this->findModel($id);
         
+        $model = new ImagenForm();
+
         if ($model->load(Yii::$app->request->post())) {
-            $fotoperfil =  UploadedFile::getInstance($model, 'foto_perfil');
-            $origen = Yii::getAlias('@uploads/' . $id . '.' . $fotoperfil->extension);
-            if (isset($fotoperfil->size)) {
-                $fotoperfil->saveAs($origen);
+            
+            $model->imagen = UploadedFile::getInstance($model, 'imagen');
+            $usuario->foto_perfil = $model->imagen->name;
+            
+            $usuario->save(false);
+            if ($model->upload($id)) {
+                return $this->redirect(['usuarios/view', 'alias' => $alias]);
             }
-            $model->save();
         } 
 
         return $this->render('imagen', [
