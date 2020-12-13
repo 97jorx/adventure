@@ -48,7 +48,7 @@ $this->registerJs($js);
         <div class="photo-left">
            <?php $fakeimg = "https://picsum.photos/300/300?random=".$model->id;  ?>
            <?= Html::a(Html::img($fakeimg, ['class' => 'photo'])) ?>
-           <?= Html::a(Icon::show('camera'), ['usuarios/imagen']) ?>
+           <?= Html::a(Icon::show('camera'), ['usuarios/imagen', 'alias' => $model->alias]) ?>
         </div>
         <div class="btn-group">
             <a class="btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

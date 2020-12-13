@@ -48,6 +48,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     private $_followers = null;
     private $_following = null;
     private $_valoracion = null;
+    public $foto_perfil;
 
     /**
      * {@inheritdoc}
@@ -75,6 +76,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
             [['nombre'], 'match', 'pattern' => '/^(?=.{3,8}$)[a-zñA-ZÑ]*$/', 'message' => 'El {attribute} es incorrecto, vuelva a intentarlo.'],
             [['apellidos'], 'match', 'pattern' => '/^(?=.{3,40}$)[A-Z][a-z]+(?: [A-Z][a-zñáéíóú]+)?$/'],
             [['nombre', 'apellidos', 'email', 'contrasena', 'auth_key', 'poblacion', 'provincia', 'pais', 'foto_perfil', 'bibliografia'], 'string', 'max' => 255],
+            [['foto_perfil'], 'image', 'skipOnEmpty' => false, 'extensions' => ['png', 'jpg']],
             [['rol'], 'string', 'max' => 30],
             [['email'],'unique'],
             ['fecha_nac', 'date', 'format' => 'php:d/m/Y'],
@@ -372,6 +374,22 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         ->exists();        
     }
 
+
+    // /**
+    //  * Sube una imagen a partir del id del usuario.
+    //  * @param [type] $id
+    //  * @return void
+    //  */
+    // public function upload($id)
+    // {
+    //     if ($this->validate()) {
+    //         $filename = $id;
+    //         $origen = Yii::getAlias('@uploads/' . $filename . '.' . $this->imagen->extension);
+    //         $foto_perfil->saveAs($origen);
+    //         return true;
+    //     }
+    //     return false;
+    // }
 
     public static function findIdentity($id)
     {
