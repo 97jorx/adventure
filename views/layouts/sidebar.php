@@ -36,11 +36,21 @@ use yii\helpers\Html;
                 <li>
                     <div class="row">
                         <div class="col-1">
+                            <i><?= Icon::show('columns');?></i>
+                        </div>
+                        <div class="col-6">
+                            <?= Html::a('Comunidades', ['comunidades/index']) ?>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="row">
+                        <div class="col-1">
                             <i><?= Icon::show('clipboard-check');?></i>
                         </div>
                         <div class="col-6">
                             <a class="nav-text">
-                                Blogs
+                               Blogs que me gustan
                             </a>
                         </div>
                     </div>

@@ -159,9 +159,9 @@ main {
 
 
 .top {
-  position: sticky !important;
+  display: none;
+  position: sticky !important; 
   top: 0;
-  z-index: 9999;
   font-size: 12px;
   border-radius: 50%;
   text-align: center;

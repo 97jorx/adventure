@@ -30,7 +30,7 @@ return [
         ],
         'request' => [
             'cookieValidationKey' => 'test',
-            'enableCsrfValidation' => false,
+            'enableCsrfValidation' => true,
             // but if you absolutely need it set cookie domain to localhost
             /*
             'csrfCookie' => [

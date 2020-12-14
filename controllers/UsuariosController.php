@@ -299,7 +299,9 @@ class UsuariosController extends Controller
             
             $usuario->save(false);
             if ($model->upload($id)) {
-                return $this->redirect(['usuarios/view', 'alias' => $alias]);
+                Yii::$app->session->setFlash('success', 'Se ha añadido la foto de perfil.');
+            } else {
+                Yii::$app->session->setFlash('error', 'La imagen no se ha añadido correctamente.');
             }
         } 
 

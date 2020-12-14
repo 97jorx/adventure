@@ -19,13 +19,33 @@ $this->registerCssFile("@web/css/perfil.css");
 
 
 $js = <<< EOT
+
 $(document).ready(function(){    
-  $('.nav-link').click(function(){
+  
+  $('.nav-link').click(function(e){
+    e.preventDefault();
     $('.nav-link').removeClass('active');    
     $(this).addClass('active');
   });
 
-  $('.tabs a').click(function(){
+  $('.tab-content').scroll(function(e){
+      e.preventDefault();
+      if ($(this).scrollTop() > 100) {
+          $('.top').show().fadeIn();
+      } else {
+          $('.top').fadeOut().hide();
+      }
+  });
+
+  $('.top').click(function(e){
+      e.preventDefault();
+      $(".tab-content").animate({scrollTop : 0}, 360);
+      return false;
+  });
+
+
+  $('.tabs a').click(function(e){
+      e.preventDefault();
       $('.tab-content div').removeClass('active');
       $(this).addClass('active');
       $(this).removeClass('active');
@@ -33,23 +53,18 @@ $(document).ready(function(){
       $(hr).addClass('active');
     });
 
+    // $('#imagen').click(function (e) {
+    //   e.preventDefault();
+    //   $('#modal').modal('show').find('#createContent').load($(this).attr('value'));
+    //   $('.modal-title').text('Añadir imagen');
+    // }); 
 
-
-    
   });
 
-  $('#imagen').click(function () {
-    var lo = $('#imagen').attr('value');
-    $.ajax({
-        type: 'GET',
-        url: lo,
-        success: function(data) {
-            $('#modal').find('.site-login').remove();
-            $('#modal').modal('show').find('#createContent').html(data);
-        }
-    });
-  });
+
+
 EOT;
+$this->registerJs($js);
 
 
 ?>
@@ -63,8 +78,15 @@ EOT;
         <div class="photo-left">
            <?php $fakeimg = "https://picsum.photos/300/300?random=".$model->id;  ?>
             <?php $imagen = Yii::getAlias('@imgUrl') . '/' . $model->foto_perfil?>
-           <?= Html::a(Html::img((isset($model->foto_perfil) || file_exists($model->foto_perfil)) ? ($imagen) : ($fakeimg), ['class' => 'photo'])) ?>
-           <?= Html::a(Icon::show('camera'), '#', ['id' => 'imagen', 'value' => Url::to(['usuarios/imagen', 'alias' => $model->alias])]) ?>
+           <?= Html::a(Html::img((isset($model->foto_perfil) || file_exists($model->foto_perfil)) ?
+            ($imagen) : ($fakeimg), ['class' => 'photo'])) ?>
+
+          <?= Yii::$app->runAction('usuarios/imagen', ['alias' => Yii::$app->request->get('alias')]) ?>
+          
+           <!-- ?= Html::a(Icon::show('camera'), 'javascript:void(0);', [
+                    'id' => 'imagen', 
+                    'value' => Url::to(['usuarios/imagen', 'alias' => $model->alias])
+            ]) ?> -->
         </div>
         <?php if(Yii::$app->user->identity->alias !== $model->alias) : ?>
           <div class="btn-group">
@@ -150,10 +172,9 @@ EOT;
               </ul>
             </nav> 
             <div class="tab-content border-class scroll-vertical">
-            <a href="#top"><button class="top" aria-label='Volver arriba' data-balloon-pos="right"><?= Icon::show('arrow-up') ?></button></a>
+            <button class="top" id='top' aria-label='Volver arriba' data-balloon-pos="right"><?= Icon::show('arrow-up') ?></button>
               <?php foreach($dataProvider->models as $model) : ?>
                 <div id="<?=$model->comunidad_id?>" class='tab-pane active in <?=$model->comunidad_id?>'>
-                <a name="top"></a>
                   <div class="card mb-3" style="max-width: 540px;" >
                     <div class="row no-gutters">
                       <div class="col-md-4">
@@ -182,6 +203,7 @@ EOT;
                 </div>
                 <?php endforeach; ?>
             </div>
+          
           </div>
       </div>
     <?php elseif($blogs_count == 0) : ?>
@@ -190,17 +212,3 @@ EOT;
   </main>
 </div>
 
-
-<?php Modal::begin([
-    'headerOptions' => [
-        'class' => 'text-center'
-    ],
-    'titleOptions' => [
-        'class' => 'modal-title text-center col-md-11',
-    ],
-    'title' => '',
-    'id' => 'modal',
-    'size' => 'modal-md',
-]);?>
-    <?="<div id='createContent'></div>"?>
-<?php Modal::end();?>

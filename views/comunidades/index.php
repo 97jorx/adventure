@@ -38,9 +38,6 @@ if (localStorage.getItem('$user') === null && Boolean($username)) {
 $(".arrow-left").click(function(){
     $(".masonry").animate({scrollLeft: "-="+250});
 });
-
-
-
 $(".arrow-right").click(function(){
     $(".masonry").animate({scrollLeft: "+="+250});
 });        
