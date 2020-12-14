@@ -172,3 +172,9 @@ main {
 }
 
 
+.cambiar-imagen {
+  position: absolute;
+  z-index: 4;
+  top: 10px;
+  right: 70px;
+}

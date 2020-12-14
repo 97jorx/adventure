@@ -22,11 +22,6 @@ $js = <<< EOT
 
 $(document).ready(function(){    
 
-// IMAGE CHANGE
-
-
-
-  
 // TABS LINK 
 
   $('.nav-link').click(function(e){
@@ -81,11 +76,8 @@ $this->registerJs($js);
             <?php $imagen = Yii::getAlias('@imgUrl') . '/' . $model->foto_perfil?>
            <?= Html::a(Html::img((isset($model->foto_perfil) || file_exists($model->foto_perfil)) ?
             ($imagen) : ($fakeimg), ['class' => 'photo'])) ?>
-          <?= Html::a(Icon::show('camera'), 'javascript:void(0);', [
-                    'id' => 'imagen', 
-          ]) ?>
           <div class='cambiar-imagen'>
-            <?= Yii::$app->runAction('usuarios/imagen', ['alias' => Yii::$app->request->get('alias')]) ?>
+            <?= Yii::$app->runAction('usuarios/imagen', ['alias' => $model->alias]) ?>
           </div>
         </div>
         <?php if(Yii::$app->user->identity->alias !== $model->alias) : ?>
