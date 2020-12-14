@@ -21,12 +21,31 @@ $this->registerCssFile("@web/css/perfil.css");
 $js = <<< EOT
 
 $(document).ready(function(){    
+
+// IMAGE CHANGE
+
+
+
   
+// TABS LINK 
+
   $('.nav-link').click(function(e){
     e.preventDefault();
     $('.nav-link').removeClass('active');    
     $(this).addClass('active');
   });
+
+  $('.tabs a').click(function(e){
+    e.preventDefault();
+    $('.tab-content div').removeClass('active');
+    $(this).addClass('active');
+    $(this).removeClass('active');
+    var hr = $(this).attr("href");
+    $(hr).addClass('active');
+  });
+
+
+  // SCROLL BUTTON TOP //
 
   $('.tab-content').scroll(function(e){
       e.preventDefault();
@@ -44,25 +63,7 @@ $(document).ready(function(){
   });
 
 
-  $('.tabs a').click(function(e){
-      e.preventDefault();
-      $('.tab-content div').removeClass('active');
-      $(this).addClass('active');
-      $(this).removeClass('active');
-      var hr = $(this).attr("href");
-      $(hr).addClass('active');
-    });
-
-    // $('#imagen').click(function (e) {
-    //   e.preventDefault();
-    //   $('#modal').modal('show').find('#createContent').load($(this).attr('value'));
-    //   $('.modal-title').text('Añadir imagen');
-    // }); 
-
-  });
-
-
-
+});
 EOT;
 $this->registerJs($js);
 
@@ -80,13 +81,12 @@ $this->registerJs($js);
             <?php $imagen = Yii::getAlias('@imgUrl') . '/' . $model->foto_perfil?>
            <?= Html::a(Html::img((isset($model->foto_perfil) || file_exists($model->foto_perfil)) ?
             ($imagen) : ($fakeimg), ['class' => 'photo'])) ?>
-
-          <?= Yii::$app->runAction('usuarios/imagen', ['alias' => Yii::$app->request->get('alias')]) ?>
-          
-           <!-- ?= Html::a(Icon::show('camera'), 'javascript:void(0);', [
+          <?= Html::a(Icon::show('camera'), 'javascript:void(0);', [
                     'id' => 'imagen', 
-                    'value' => Url::to(['usuarios/imagen', 'alias' => $model->alias])
-            ]) ?> -->
+          ]) ?>
+          <div class='cambiar-imagen'>
+            <?= Yii::$app->runAction('usuarios/imagen', ['alias' => Yii::$app->request->get('alias')]) ?>
+          </div>
         </div>
         <?php if(Yii::$app->user->identity->alias !== $model->alias) : ?>
           <div class="btn-group">

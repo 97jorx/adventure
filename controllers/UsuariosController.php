@@ -293,21 +293,26 @@ class UsuariosController extends Controller
         $model = new ImagenForm();
 
         if ($model->load(Yii::$app->request->post())) {
-            
             $model->imagen = UploadedFile::getInstance($model, 'imagen');
-            $usuario->foto_perfil = $id.'.'.$model->imagen->extension;
-            
-            $usuario->save(false);
             if ($model->upload($id)) {
+                $usuario->foto_perfil = $id.'.'.$model->imagen->extension;
+                $usuario->save(false);
+                $this->redirect(['usuarios/view', 'alias' => $alias]);
                 Yii::$app->session->setFlash('success', 'Se ha añadido la foto de perfil.');
             } else {
                 Yii::$app->session->setFlash('error', 'La imagen no se ha añadido correctamente.');
             }
         } 
 
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+
         return $this->renderAjax('imagen', [
             'model' => $model,
         ]);
+
     }
 
     

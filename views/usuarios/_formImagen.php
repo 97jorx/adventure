@@ -9,13 +9,17 @@ use yii\helpers\Html;
 
 ?>
 
-<?php $form = ActiveForm::begin(['enableAjaxValidation' => true, 'options' => ['enctype' => 'multipart/form-data']]) ?>
+    <?php $form = ActiveForm::begin([
+        'enableClientValidation' => true,
+        'enableAjaxValidation' => true,
+        'options' => ['enctype' => 'multipart/form-data'
+    ]]) ?>
 
 
- <?= $form->field($model, 'imagen')->fileInput();  ?>
+    <?= $form->field($model, 'imagen' 
+    )->fileInput(['onchange' => "this.form.submit()"])->label(false); ?> 
 
-<button class='btn btn-primary'>Enviar</button>
-<?= Html::a('Cancelar', ['usuarios/view', 'alias' => Yii::$app->request->get('alias')], ['type'=>'button', 'class' => 'btn btn-light',]) ?>
-<?php ActiveForm::end(); ?>
+
+    <?php ActiveForm::end(); ?>
 
 
