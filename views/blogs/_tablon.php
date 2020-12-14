@@ -22,7 +22,8 @@ $blogs = $dataProvider->models;
           <h2><small><?= $model->comunidad->denom ?></small></h2> 
          <?php endif; ?> 
         <div class="card mb-4"> 
-          <img itemprop="image" class="card-img-top img-thumbnail" src="<?= Yii::$app->request->baseUrl . '/uploads/test.jpg'?>" alt="Card image cap">
+          <img itemprop="image" class="card-img-top img-thumbnail" src="<?= Yii::getAlias('@uploadsUrl') . '/test.jpg'?>" alt="Card image cap">
+
           <div class="card-body">
             <h2 temprop="title" class="card-title"><?= Html::encode($model->titulo); ?></h2>
             <p class="card-text"></p>

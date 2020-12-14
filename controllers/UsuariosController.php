@@ -295,7 +295,7 @@ class UsuariosController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             
             $model->imagen = UploadedFile::getInstance($model, 'imagen');
-            $usuario->foto_perfil = $model->imagen->name;
+            $usuario->foto_perfil = $id.'.'.$model->imagen->extension;
             
             $usuario->save(false);
             if ($model->upload($id)) {
@@ -303,7 +303,7 @@ class UsuariosController extends Controller
             }
         } 
 
-        return $this->render('imagen', [
+        return $this->renderAjax('imagen', [
             'model' => $model,
         ]);
     }

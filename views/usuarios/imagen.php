@@ -1,6 +1,7 @@
 <?php
 use yii\bootstrap4\ActiveForm;
 use kartik\file\FileInput;
+use yii\bootstrap4\Modal;
 use yii\helpers\Html;
 
 
@@ -8,10 +9,9 @@ $this->title = 'Cambiar foto perfil';
 
 ?>
 
-<?php $form = ActiveForm::begin() ?>
+<?php $form = ActiveForm::begin(['enableAjaxValidation' => true]) ?>
 
-
-<!-- <div class=container>
+<div class=container>
   <div class="alert alert-warning alert-dismissable">
       <div class="col-">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -20,14 +20,19 @@ $this->title = 'Cambiar foto perfil';
         Sólo están permitidas las extensiones de <strong>.jpg y .png.</strong>
       </div>
   </div>
-</div> -->
+</div>
+
+ <?= $form->field($model, 'imagen')->widget(FileInput::class, [
+      'options' => ['accept' => 'imagen/*', 
+      'enctype'=>'multipart/form-data',
+      'data-allowed-file-extensions' => ["png", "jpg"]],
+      'pluginOptions' => [
+        'maxFileSize'=>2800
+      ]
+  ]);  ?>
+
+  <button class='btn btn-primary'>Enviar</button>
+  <?= Html::a('Cancelar', ['usuarios/view', 'alias' => Yii::$app->request->get('alias')], ['type'=>'button', 'class' => 'btn btn-light',]) ?>
+  <?php ActiveForm::end(); ?>
 
 
-<?= $form->field($model, 'imagen')->widget(FileInput::class, [
-    'options' => ['accept' => 'imagen/*', 
-    'data-allowed-file-extensions' => ["png", "jpg"]],
-]); ?>
-
-    <button class='btn btn-primary'>Enviar</button>
-    <?= Html::a('Cancelar', ['usuarios/view', 'alias' => Yii::$app->request->get('alias')], ['type'=>'button', 'class' => 'btn btn-light',]) ?>
-<?php ActiveForm::end() ?>

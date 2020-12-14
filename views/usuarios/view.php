@@ -3,6 +3,7 @@
 
 use kartik\icons\Icon;
 use yii\bootstrap4\Html;
+use yii\bootstrap4\Modal;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
 
@@ -31,11 +32,25 @@ $(document).ready(function(){
       var hr = $(this).attr("href");
       $(hr).addClass('active');
     });
-});
 
+
+
+    
+  });
+
+  $('#imagen').click(function () {
+    var lo = $('#imagen').attr('value');
+    $.ajax({
+        type: 'GET',
+        url: lo,
+        success: function(data) {
+            $('#modal').find('.site-login').remove();
+            $('#modal').modal('show').find('#createContent').html(data);
+        }
+    });
+  });
 EOT;
 
-$this->registerJs($js);
 
 ?>
 
@@ -47,39 +62,40 @@ $this->registerJs($js);
       <div class="left col-lg-4">
         <div class="photo-left">
            <?php $fakeimg = "https://picsum.photos/300/300?random=".$model->id;  ?>
-           <?= Html::a(Html::img($fakeimg, ['class' => 'photo'])) ?>
-           <?= Html::a(Icon::show('camera'), ['usuarios/imagen', 'alias' => $model->alias]) ?>
+            <?php $imagen = Yii::getAlias('@imgUrl') . '/' . $model->foto_perfil?>
+           <?= Html::a(Html::img((isset($model->foto_perfil) || file_exists($model->foto_perfil)) ? ($imagen) : ($fakeimg), ['class' => 'photo'])) ?>
+           <?= Html::a(Icon::show('camera'), '#', ['id' => 'imagen', 'value' => Url::to(['usuarios/imagen', 'alias' => $model->alias])]) ?>
         </div>
-        <div class="btn-group">
-            <a class="btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-             <?= Icon::show('ellipsis-h') ?>
-            </a>
-          <div class="dropdown-menu">
-              <?php if(Yii::$app->user->identity->alias !== $model->alias) : ?>
-              <?php $existe = ($model->existeBloqueado($model->alias)) ? ('Desbloquear usuario') : ('Bloquear usuario') ?>
-              <?php $bloquear = Url::to(['usuarios/bloquear', 'alias' => $model->alias]); ?>
-              <?= Html::a($existe, $bloquear, ['class' => 'login',
-                  'aria-label' => $existe, 'data-balloon-pos' => 'up',
-                  'onclick' =>"
-                      event.preventDefault();
-                      var self = $(this);
-                      $.ajax({
-                          type: 'GET',
-                          url: '$bloquear',
-                          dataType: 'json',
-                      }).done(function( data, textStatus, jqXHR ) {
-                          data = JSON.parse(data);
-                          console.log(data);
-                          $(self).text(data.button);
-                          $(self).attr('aria-label', data.button);
-                      }).fail(function( data, textStatus, jqXHR ) {
-                          console.log('Error de la solicitud.');
-                      });",
-              ]);
-              ?> 
-            <?php endif; ?>
-          </div>
-        </div>
+        <?php if(Yii::$app->user->identity->alias !== $model->alias) : ?>
+          <div class="btn-group">
+              <a class="btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <?= Icon::show('ellipsis-h') ?>
+              </a>
+                  <div class="dropdown-menu">
+                  <?php $existe = ($model->existeBloqueado($model->alias)) ? ('Desbloquear usuario') : ('Bloquear usuario') ?>
+                  <?php $bloquear = Url::to(['usuarios/bloquear', 'alias' => $model->alias]); ?>
+                  <?= Html::a($existe, $bloquear, ['class' => 'login',
+                      'aria-label' => $existe, 'data-balloon-pos' => 'up',
+                      'onclick' =>"
+                          event.preventDefault();
+                          var self = $(this);
+                          $.ajax({
+                              type: 'GET',
+                              url: '$bloquear',
+                              dataType: 'json',
+                          }).done(function( data, textStatus, jqXHR ) {
+                              data = JSON.parse(data);
+                              console.log(data);
+                              $(self).text(data.button);
+                              $(self).attr('aria-label', data.button);
+                          }).fail(function( data, textStatus, jqXHR ) {
+                              console.log('Error de la solicitud.');
+                          });",
+                  ]);
+                  ?> 
+                </div>
+            </div>
+        <?php endif; ?>
         <h4 class="nombre"><?= strtoupper($model->nombre) ?></h4>
         <?php if(Yii::$app->user->identity->alias !== $model->alias) : ?>
           <?php $existe = ($model->existeSeguidor($model->alias)) ? ('Dejar de seguir') : ('Seguir') ?>
@@ -175,3 +191,16 @@ $this->registerJs($js);
 </div>
 
 
+<?php Modal::begin([
+    'headerOptions' => [
+        'class' => 'text-center'
+    ],
+    'titleOptions' => [
+        'class' => 'modal-title text-center col-md-11',
+    ],
+    'title' => '',
+    'id' => 'modal',
+    'size' => 'modal-md',
+]);?>
+    <?="<div id='createContent'></div>"?>
+<?php Modal::end();?>
