@@ -190,11 +190,6 @@ $this->registerJs($js);
                 'options' => ['class' => 'label-vertical-minus']
             ],
             [
-                'label' => 'Comunidades',
-                'options' => ['style' => 'padding-left:10px;'],
-                'url' => ['comunidades/index'],
-            ],
-            [
                 'label' =>  (!Yii::$app->user->isGuest) ? ucfirst(Yii::$app->user->identity->alias) .' '. 
                  Html::tag('i', Icon::show('user'), ['class' => '',]) : 'Iniciar sesión',
                 'items' => $items,

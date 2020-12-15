@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use SplFixedArray;
 use Yii;
 use yii\helpers\ArrayHelper;
 use \yii\db\Expression;
@@ -76,43 +77,37 @@ class Favcomunidades extends \yii\db\ActiveRecord
     }
 
 
-    // public  function setMes($mes) {
-    //     $this->_mes = $mes;
-    // }
-
-    // public function getMes()
-    // {
-    //     if ($this->_mes != null) {
-    //         $this->setMes(
-    //             self::find()
-    //             ->select(["TO_CHAR(TO_DATE(DATE_PART('month', created_at)::text, 'MM'), 'Month')"])
-
-    //         );
-    //     }
-    //     return $this->_mes;
-    // }
-
-
     /**
      * Devuelve un array con la cuenta de los likes. Si @param condicion es 0.
      * Devuelve un array con los meses. Si @param condicion es 1.
      * @return Array
      */
-    public static function likesEachMonth($condicion)
+    public static function likesEachMonth()
     {
         $id = Yii::$app->request->get('id');
 
-        $var =  ($condicion) ? 
-        (static::find()->select(["TO_CHAR(TO_DATE(DATE_PART('month', created_at)::text, 'MM'), 'Month') as mes"])) : 
-        (static::find()->select(['COUNT(id) as favs_count']));
-
-        $likes_month =  $var
-        ->where(['comunidad_id' => $id])
-        ->groupBy([new Expression("DATE_PART('month', created_at)")])
+        $likes_month =
+        (new \yii\db\Query())
+        ->select(["TO_CHAR(i, 'YY') as Year, DATE_PART('month', i) as mes, COUNT(favcomunidades.id) as favs_count"]) 
+        ->from([new Expression("generate_series(NOW() - INTERVAL '1 year', NOW(), '1 month') as i")])
+        ->leftJoin("favcomunidades", "TO_CHAR(i, 'YY') = TO_CHAR(favcomunidades.created_at, 'YY') AND TO_CHAR(i, 'MM') = TO_CHAR(favcomunidades.created_at, 'MM')")
+        ->where(['favcomunidades.comunidad_id' => $id])
         ->orderBy([new Expression("DATE_PART('month', created_at)")])
-        ->column();
+        ->groupBy([new Expression("DATE_PART('month', created_at), i.i")])
+        ->createCommand()
+        ->queryAll();
         
-        return  $likes_month;
+           $likes = new SplFixedArray(12); 
+           foreach($likes as $k => $val){
+                $likes[$k] = 0;
+           } 
+
+           for ($i = 0; $i < count($likes_month); $i++) {
+                $likes[$likes_month[$i]['mes']-1] = $likes_month[$i]['favs_count'];
+           }
+
+
+           return array_values($likes->toArray()); 
     }
   
 }

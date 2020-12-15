@@ -17,8 +17,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $url = Url::to(['comunidades/like', 'id' => $model->id]); 
 $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gusta']);
-// var_dump($likes); 
-// var_dump($month); die();
+Yii::debug($likes_month); 
+
+
+$month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 ?>
 
@@ -34,7 +36,7 @@ $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gust
         'labels' => $month,
         'datasets' => [
             [
-                'data' => $likes, 
+                'data' => $likes_month, 
                 'label' => 'Likes',
                 'backgroundColor' => [
                     '#ADC3FF',

@@ -92,7 +92,7 @@ class HelperAdventure extends Component
         
         $uid = Yii::$app->user->id;
         
-        if (isset($id)) {
+        if (isset($id) && $id != 0) {
 
             return Bloqueados::find()
             ->where(['usuario_id' => $id])

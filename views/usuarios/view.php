@@ -3,6 +3,7 @@
 
 use kartik\icons\Icon;
 use yii\bootstrap4\Html;
+use yii\bootstrap4\Modal;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
 
@@ -18,24 +19,49 @@ $this->registerCssFile("@web/css/perfil.css");
 
 
 $js = <<< EOT
+
 $(document).ready(function(){    
-  $('.nav-link').click(function(){
+
+// TABS LINK 
+
+  $('.nav-link').click(function(e){
+    e.preventDefault();
     $('.nav-link').removeClass('active');    
     $(this).addClass('active');
   });
 
-  $('.tabs a').click(function(){
-      $('.tab-content div').removeClass('active');
-      $(this).addClass('active');
-      $(this).removeClass('active');
-      var hr = $(this).attr("href");
-      $(hr).addClass('active');
-    });
+  $('.tabs a').click(function(e){
+    e.preventDefault();
+    $('.tab-content div').removeClass('active');
+    $(this).addClass('active');
+    $(this).removeClass('active');
+    var hr = $(this).attr("href");
+    $(hr).addClass('active');
+  });
+
+
+  // SCROLL BUTTON TOP //
+
+  $('.tab-content').scroll(function(e){
+      e.preventDefault();
+      if ($(this).scrollTop() > 100) {
+          $('.top').show().fadeIn();
+      } else {
+          $('.top').fadeOut().hide();
+      }
+  });
+
+  $('.top').click(function(e){
+      e.preventDefault();
+      $(".tab-content").animate({scrollTop : 0}, 360);
+      return false;
+  });
+
+
 });
-
 EOT;
-
 $this->registerJs($js);
+
 
 ?>
 
@@ -47,38 +73,44 @@ $this->registerJs($js);
       <div class="left col-lg-4">
         <div class="photo-left">
            <?php $fakeimg = "https://picsum.photos/300/300?random=".$model->id;  ?>
-           <?= Html::a(Html::img($fakeimg, ['class' => 'photo'])) ?>
+            <?php $imagen = Yii::getAlias('@imgUrl') . '/' . $model->foto_perfil?>
+           <?= Html::a(Html::img((isset($model->foto_perfil) || file_exists($model->foto_perfil)) ?
+            ($imagen) : ($fakeimg), ['class' => 'photo'])) ?>
         </div>
-        <div class="btn-group">
-            <a class="btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-             <?= Icon::show('ellipsis-h') ?>
-            </a>
-          <div class="dropdown-menu">
-          <?php if(Yii::$app->user->identity->alias !== $model->alias) : ?>
-          <?php $existe = ($model->existeBloqueado($model->alias)) ? ('Desbloquear usuario') : ('Bloquear usuario') ?>
-          <?php $bloquear = Url::to(['usuarios/bloquear', 'alias' => $model->alias]); ?>
-          <?= Html::a($existe, $bloquear, ['class' => 'login',
-              'aria-label' => $existe, 'data-balloon-pos' => 'up',
-              'onclick' =>"
-                  event.preventDefault();
-                  var self = $(this);
-                  $.ajax({
-                      type: 'GET',
-                      url: '$bloquear',
-                      dataType: 'json',
-                  }).done(function( data, textStatus, jqXHR ) {
-                      data = JSON.parse(data);
-                      console.log(data);
-                      $(self).text(data.button);
-                      $(self).attr('aria-label', data.button);
-                  }).fail(function( data, textStatus, jqXHR ) {
-                      console.log('Error de la solicitud.');
-                  });",
-          ]);
-          ?> 
+          <?php if(Yii::$app->user->identity->id == $model->id) : ?>
+            <div class="element cambiar-imagen">
+              <?= Html::a(Icon::show('camera'), ['usuarios/imagen', 'alias' => Yii::$app->user->identity->alias]) ?>
+            </div>
+          <?php elseif(Yii::$app->user->identity->id !== $model->id) : ?>
+          <div class="btn-group">
+              <a class="btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <?= Icon::show('ellipsis-h') ?>
+              </a>
+                  <div class="dropdown-menu">
+                  <?php $existe = ($model->existeBloqueado($model->alias)) ? ('Desbloquear usuario') : ('Bloquear usuario') ?>
+                  <?php $bloquear = Url::to(['usuarios/bloquear', 'alias' => $model->alias]); ?>
+                  <?= Html::a($existe, $bloquear, ['class' => 'login',
+                      'aria-label' => $existe, 'data-balloon-pos' => 'up',
+                      'onclick' =>"
+                          event.preventDefault();
+                          var self = $(this);
+                          $.ajax({
+                              type: 'GET',
+                              url: '$bloquear',
+                              dataType: 'json',
+                          }).done(function( data, textStatus, jqXHR ) {
+                              data = JSON.parse(data);
+                              console.log(data);
+                              $(self).text(data.button);
+                              $(self).attr('aria-label', data.button);
+                          }).fail(function( data, textStatus, jqXHR ) {
+                              console.log('Error de la solicitud.');
+                          });",
+                  ]);
+                  ?> 
+                </div>
+            </div>
         <?php endif; ?>
-          </div>
-        </div>
         <h4 class="nombre"><?= strtoupper($model->nombre) ?></h4>
         <?php if(Yii::$app->user->identity->alias !== $model->alias) : ?>
           <?php $existe = ($model->existeSeguidor($model->alias)) ? ('Dejar de seguir') : ('Seguir') ?>
@@ -133,10 +165,9 @@ $this->registerJs($js);
               </ul>
             </nav> 
             <div class="tab-content border-class scroll-vertical">
-            <a href="#top"><button class="top" aria-label='Volver arriba' data-balloon-pos="right"><?= Icon::show('arrow-up') ?></button></a>
+            <button class="top" id='top' aria-label='Volver arriba' data-balloon-pos="right"><?= Icon::show('arrow-up') ?></button>
               <?php foreach($dataProvider->models as $model) : ?>
                 <div id="<?=$model->comunidad_id?>" class='tab-pane active in <?=$model->comunidad_id?>'>
-                <a name="top"></a>
                   <div class="card mb-3" style="max-width: 540px;" >
                     <div class="row no-gutters">
                       <div class="col-md-4">
@@ -165,6 +196,7 @@ $this->registerJs($js);
                 </div>
                 <?php endforeach; ?>
             </div>
+          
           </div>
       </div>
     <?php elseif($blogs_count == 0) : ?>
@@ -172,5 +204,4 @@ $this->registerJs($js);
     <?php endif;?>
   </main>
 </div>
-
 

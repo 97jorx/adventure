@@ -48,7 +48,8 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     private $_followers = null;
     private $_following = null;
     private $_valoracion = null;
-
+    private $_imagen = null;
+    private $_imagenUrl = null;
     /**
      * {@inheritdoc}
      */
@@ -75,6 +76,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
             [['nombre'], 'match', 'pattern' => '/^(?=.{3,8}$)[a-zñA-ZÑ]*$/', 'message' => 'El {attribute} es incorrecto, vuelva a intentarlo.'],
             [['apellidos'], 'match', 'pattern' => '/^(?=.{3,40}$)[A-Z][a-z]+(?: [A-Z][a-zñáéíóú]+)?$/'],
             [['nombre', 'apellidos', 'email', 'contrasena', 'auth_key', 'poblacion', 'provincia', 'pais', 'foto_perfil', 'bibliografia'], 'string', 'max' => 255],
+            [['foto_perfil'], 'string', 'max' => 255],
             [['rol'], 'string', 'max' => 30],
             [['email'],'unique'],
             ['fecha_nac', 'date', 'format' => 'php:d/m/Y'],
@@ -370,6 +372,39 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         ->where(['bloqueado' => $bloqueado])
         ->andWhere(['usuario_id' => $bloqueador])
         ->exists();        
+    }
+
+
+
+    public function getImagen()
+    {
+        if ($this->_imagen !== null) {
+            return $this->_imagen;
+        }
+
+        $this->setImagen(Yii::getAlias('@img/' . $this->id . '.jpg'));
+        return $this->_imagen;
+    }
+
+
+    public function setImagen($imagen)
+    {
+        $this->_imagen = $imagen;
+    }
+
+    public function getImagenUrl()
+    {
+        if ($this->_imagenUrl !== null) {
+            return $this->_imagenUrl;
+        }
+
+        $this->setImagenUrl(Yii::getAlias('@imgUrl/' . $this->id . '.jpg'));
+        return $this->_imagenUrl;
+    }
+
+    public function setImagenUrl($imagenUrl)
+    {
+        $this->_imagenUrl = $imagenUrl;
     }
 
 

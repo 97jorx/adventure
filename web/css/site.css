@@ -385,10 +385,6 @@ select2-results__option:hover a {
       margin-top: 30%;
    }
 
-   /* .navbar-dark .navbar-toggler {
-      display: none;
-   } */
-   
    .navbar-nav {
       flex-direction: row;
    }
@@ -396,10 +392,6 @@ select2-results__option:hover a {
    .navbar-nav .nav-link {
       padding-right: 10px;
    }
-   
-   /* .navbar-collapse.collapse {
-     display: block !important;
-   } */
    
    .navbar-nav > li, .navbar-nav {
      float: left !important;
@@ -414,12 +406,6 @@ select2-results__option:hover a {
    }
    
  }
-
-
-
-
-
-
 
 
 .vertical-minus {
@@ -504,11 +490,6 @@ select2-results__option:hover a {
  }
 
  
- .close{
-    position: absolute;
-    left: 10px;
-    background-color: white;
- }
 
  .sidenav a:hover {
    color: #f1f1f1;
