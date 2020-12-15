@@ -89,6 +89,7 @@ class UsuariosController extends Controller
     public function actionView($alias)
     {
         $id = Usuarios::find('id')->where(['alias' => $alias])->scalar();
+
         if (!Yii::$app->AdvHelper->usuarioBloqueado($id)) {
 
             $blogs = Blogs::find()->where(['usuario_id' => $id]);

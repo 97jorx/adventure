@@ -3,9 +3,9 @@ use yii\bootstrap4\ActiveForm;
 use kartik\icons\Icon;
 
 $js = <<< EOT
-$(document).ready(function(){ 
-    e.preventDefault();   
-    $("i").click(function () {
+$(document).ready(function(e){ 
+    $("i").click(function (e) {
+        e.preventDefault();   
         $("input[type='file']").trigger('click');
       });
       
@@ -48,14 +48,13 @@ $this->registerCss($css);
 
 ?>
 
-    <?php $form = ActiveForm::begin([
-        'enableClientValidation' => true,
-        'enableAjaxValidation' => true,
-        'options' => ['enctype' => 'multipart/form-data'
-    ]]) ?>
+    <?php $form = ActiveForm::begin() ?>
 
     <div class="element">
-        <?= $form->field($model, 'imagen')->fileInput(['onchange' => "this.form.submit()", 
+        <?= $form->field($model, 'imagen')->fileInput(['onchange(e)' => "
+            e.preventDefault()
+            this.form.submit()
+        ", 
         'style' => 'display:none'])->label(Icon::show('camera')); ?> 
     </div>
 

@@ -101,8 +101,7 @@ class ComunidadesController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
             'tienefavs' => !$favoritos->exists(),
-            'month' => Favcomunidades::likesEachMonth(1),
-            'likes' => Favcomunidades::likesEachMonth(0)
+            'likes_month' => Favcomunidades::likesEachMonth(),
         ]);
     }
 
