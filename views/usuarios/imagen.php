@@ -26,7 +26,10 @@ $this->title = 'Cambiar foto perfil';
 <?= $form->field($model, 'imagen')->widget(FileInput::class, [
     'options' => ['accept' => 'imagen/*', 
     'data-allowed-file-extensions' => ["png", "jpg"]],
-]); ?>
+    'pluginOptions' => [
+        'maxFileSize' => 2048,
+    ]
+])->label(false); ?>
 
     <button class='btn btn-primary'>Enviar</button>
     <?= Html::a('Cancelar', ['usuarios/view', 'alias' => Yii::$app->request->get('alias')], ['type'=>'button', 'class' => 'btn btn-light',]) ?>
