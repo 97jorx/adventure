@@ -88,7 +88,7 @@ class UsuariosController extends Controller
      */
     public function actionView($alias)
     {
-        $id = Usuarios::find('id')->where(['alias' => $alias])->scalar();
+        $id = $this->findIdByAlias($alias);
 
         if (!Yii::$app->AdvHelper->usuarioBloqueado($id)) {
 
@@ -196,13 +196,12 @@ class UsuariosController extends Controller
      * @return Json
      */
     public function actionSeguir($alias) {
-
+        
         Yii::$app->response->format = Response::FORMAT_JSON;
         $seguidor = Yii::$app->user->id;
         $user = !Yii::$app->user->isGuest;
 
-        $usuarioid = Usuarios::find('id')
-        ->where(['alias' => $alias])->scalar();
+        $usuarioid = $this->findIdByAlias($alias);
 
         $idexist = Seguidores::find()
            ->where(['usuario_id' => $usuarioid])
@@ -247,8 +246,7 @@ class UsuariosController extends Controller
         $user = !Yii::$app->user->isGuest;
         
         $bloqueador = Yii::$app->user->id;
-        $bloqueado = Usuarios::find('id')
-        ->where(['alias' => $alias])->scalar();
+        $bloqueado = $this->findIdByAlias($alias);
 
         $idexist = Bloqueados::find()
            ->where(['bloqueado' => $bloqueado])
@@ -285,14 +283,14 @@ class UsuariosController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionImagen()
+    public function actionImagen($alias)
     {
-        $alias = Yii::$app->request->get('alias');
-        $id = Usuarios::find('id')->where(['alias' => $alias])->scalar();
-        $usuario = $this->findModel($id);
-        
+        $id = $this->findIdByAlias($alias);
+        if($alias !== null){
+            $usuario = $this->findModel($id);
+        }
         $model = new ImagenForm();
-
+        
         if ($model->load(Yii::$app->request->post())) {
             $model->imagen = UploadedFile::getInstance($model, 'imagen');
             if ($model->upload($id)) {
@@ -304,16 +302,10 @@ class UsuariosController extends Controller
                 Yii::$app->session->setFlash('error', 'La imagen no se ha añadido correctamente.');
             }
         } 
-
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
-        }
-
-        return $this->renderAjax('imagen', [
+        
+        return $this->render('imagen', [
             'model' => $model,
         ]);
-
     }
 
     
@@ -341,6 +333,21 @@ class UsuariosController extends Controller
     {
         if (($model = Usuarios::findOne($id)) !== null) {
             return $model;
+        }
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+
+     /**
+     * Busca un id de un usuario en la base de datos a partir del alias.
+     * @param string $alias.
+     * @return Integer el id del usuario.
+     * @throws NotFoundHttpException Si no se encuentra.
+     */
+    protected function findIdByAlias($alias)
+    {
+        if (($id = Usuarios::find('id')->where(['alias' => $alias])->scalar()) != 0) {
+            return $id;
         }
         throw new NotFoundHttpException('The requested page does not exist.');
     }

@@ -76,11 +76,12 @@ $this->registerJs($js);
             <?php $imagen = Yii::getAlias('@imgUrl') . '/' . $model->foto_perfil?>
            <?= Html::a(Html::img((isset($model->foto_perfil) || file_exists($model->foto_perfil)) ?
             ($imagen) : ($fakeimg), ['class' => 'photo'])) ?>
-          <div class='cambiar-imagen'>
-            <?= Yii::$app->runAction('usuarios/imagen') ?>
-          </div>
         </div>
-        <?php if(Yii::$app->user->identity->id !== $model->id) : ?>
+          <?php if(Yii::$app->user->identity->id == $model->id) : ?>
+            <div class="element cambiar-imagen">
+              <?= Html::a(Icon::show('camera'), ['usuarios/imagen', 'alias' => Yii::$app->user->identity->alias]) ?>
+            </div>
+          <?php elseif(Yii::$app->user->identity->id !== $model->id) : ?>
           <div class="btn-group">
               <a class="btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <?= Icon::show('ellipsis-h') ?>

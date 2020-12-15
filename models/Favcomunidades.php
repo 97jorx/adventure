@@ -77,23 +77,6 @@ class Favcomunidades extends \yii\db\ActiveRecord
     }
 
 
-    // public  function setMes($mes) {
-    //     $this->_mes = $mes;
-    // }
-
-    // public function getMes()
-    // {
-    //     if ($this->_mes != null) {
-    //         $this->setMes(
-    //             self::find()
-    //             ->select(["TO_CHAR(TO_DATE(DATE_PART('month', created_at)::text, 'MM'), 'Month')"])
-
-    //         );
-    //     }
-    //     return $this->_mes;
-    // }
-
-
     /**
      * Devuelve un array con la cuenta de los likes. Si @param condicion es 0.
      * Devuelve un array con los meses. Si @param condicion es 1.
@@ -103,21 +86,6 @@ class Favcomunidades extends \yii\db\ActiveRecord
     {
         $id = Yii::$app->request->get('id');
 
-        // $var =  ($condicion) ? 
-        // (static::find()->select(["TO_CHAR(TO_DATE(DATE_PART('month', created_at)::text, 'MM'), 'Month') as mes"])) : 
-        // (static::find()->select(['COALESCE(COUNT(id),0) as favs_count']));
-
-        // $likes_month =  $var
-        // ->where(['comunidad_id' => $id])
-        // ->groupBy([new Expression("DATE_PART('month', created_at)")])
-        // ->orderBy([new Expression("DATE_PART('month', created_at)")])
-        // ->column();
-        
-        // SELECT to_char(i, 'YY') as year, to_char(i, 'MM') as month, count(id) as likes
-        // FROM generate_series(now() - INTERVAL '1 year', now(), '1 month') as i
-        // left join favcomunidades on (to_char(i, 'YY') = to_char(created_at, 'YY')  and to_char(i, 'MM') = to_char(created_at, 'MM'))
-        // GROUP BY 1,2 ORDER BY month;
-        
         $likes_month =
         (new \yii\db\Query())
         ->select(["TO_CHAR(i, 'YY') as Year, DATE_PART('month', i) as mes, COUNT(favcomunidades.id) as favs_count"]) 

@@ -48,7 +48,8 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     private $_followers = null;
     private $_following = null;
     private $_valoracion = null;
-
+    private $_imagen = null;
+    private $_imagenUrl = null;
     /**
      * {@inheritdoc}
      */
@@ -373,6 +374,38 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         ->exists();        
     }
 
+
+
+    public function getImagen()
+    {
+        if ($this->_imagen !== null) {
+            return $this->_imagen;
+        }
+
+        $this->setImagen(Yii::getAlias('@img/' . $this->id . '.jpg'));
+        return $this->_imagen;
+    }
+
+
+    public function setImagen($imagen)
+    {
+        $this->_imagen = $imagen;
+    }
+
+    public function getImagenUrl()
+    {
+        if ($this->_imagenUrl !== null) {
+            return $this->_imagenUrl;
+        }
+
+        $this->setImagenUrl(Yii::getAlias('@imgUrl/' . $this->id . '.jpg'));
+        return $this->_imagenUrl;
+    }
+
+    public function setImagenUrl($imagenUrl)
+    {
+        $this->_imagenUrl = $imagenUrl;
+    }
 
 
     public static function findIdentity($id)
