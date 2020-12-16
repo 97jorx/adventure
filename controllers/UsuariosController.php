@@ -7,10 +7,10 @@ use app\models\Blogs;
 use app\models\Bloqueados;
 use app\models\Comunidades;
 use app\models\ImagenForm;
-use \yii\imagine\Image;
 use app\models\Seguidores;
 use app\models\Usuarios;
 use app\models\UsuariosSearch;
+use yii\helpers\Url;
 use yii\web\UploadedFile;
 use yii\db\Query;
 use yii\bootstrap4\ActiveForm;
@@ -296,8 +296,8 @@ class UsuariosController extends Controller
             if ($model->upload($id)) {
                 $usuario->foto_perfil = $id.'.'.$model->imagen->extension;
                 $usuario->save(false);
-                $this->redirect(['usuarios/view', 'alias' => $alias]);
-                Yii::$app->session->setFlash('success', 'Se ha añadido la foto de perfil.');
+                Yii::$app->session->setFlash('success', 'Se ha añadido la foto de perfil.', false);
+                return Yii::$app->response->redirect(Url::to(['usuarios/view', 'alias' => $alias]));
             } else {
                 Yii::$app->session->setFlash('error', 'La imagen no se ha añadido correctamente.');
             }

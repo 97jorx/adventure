@@ -8,6 +8,7 @@ use yii\base\Model;
 class ImagenForm extends Model
 {
     public $imagen;
+        
 
     public function rules()
     {

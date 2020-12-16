@@ -489,7 +489,6 @@ select2-results__option:hover a {
    transition: 0.3s;
  }
 
- 
 
  .sidenav a:hover {
    color: #f1f1f1;
@@ -502,6 +501,18 @@ select2-results__option:hover a {
  .img {
    max-width: 100%;
    z-index: 1;
+ }
+
+ #w5-success-0 {
+   position: fixed;
+   color: #ffffff;
+   z-index: 0;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: #313131;
+   color: white;
+   text-align: center;
  }
  
 

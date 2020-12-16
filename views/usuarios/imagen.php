@@ -8,6 +8,7 @@ $this->title = 'Cambiar foto perfil';
 
 ?>
 
+
 <?php $form = ActiveForm::begin() ?>
 
 
