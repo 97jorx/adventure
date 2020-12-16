@@ -13,9 +13,6 @@ use Yii;
 class BlogsSearch extends Blogs
 {
 
-  
-    
-
     /**
      * {@inheritdoc}
      */

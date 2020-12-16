@@ -106,6 +106,7 @@ $config = [
                 'perfil/usuario/<alias:\w+>' => 'usuarios/view',
                 '/usuarios/registrarse' => 'usuarios/registrar',
                 '/usuarios/login' => 'site/login',
+                '/blogs/blogsfavoritos/' => 'blogs/Blogsfavoritos',
             ],
         ],
 

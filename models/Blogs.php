@@ -234,6 +234,32 @@ class Blogs extends \yii\db\ActiveRecord
     }
   
 
+ /**
+     * Consulta para mostrar Comunidad por su nombre 
+     * y el Usuario por su nombre en Blogs
+     *
+     * @return query
+     */
+    public static function blogsUserLikes()
+    {
+
+        return static::find()
+            ->select([
+                'blogs.*', 
+                '"u".nombre AS usuario', 
+                'COUNT(DISTINCT f.id) AS favs',
+                'COUNT(DISTINCT v.id) AS visits',
+                'SUM(DISTINCT n.nota) AS valoracion'
+             ])
+            ->joinWith('usuario u')
+            ->joinWith('favblogs f')
+            ->joinWith('notas n')
+            ->joinWith('visitas v')
+            ->where(['u.id' => Yii::$app->user->id])
+            ->groupBy('blogs.id, u.nombre');
+    }
+
+
     
  
 }

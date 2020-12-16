@@ -50,7 +50,7 @@ use yii\helpers\Html;
                         </div>
                         <div class="col-6">
                             <a class="nav-text">
-                               Blogs que me gustan
+                            <?= Html::a('Blogs que me gustan', ['blogs/viewfavoritos']) ?>
                             </a>
                         </div>
                     </div>

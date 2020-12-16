@@ -10,6 +10,8 @@ use app\models\Favblogs;
 use app\models\Integrantes;
 use app\models\Visitas;
 use yii\bootstrap4\ActiveForm;
+use yii\data\ActiveDataProvider;
+use yii\debug\models\timeline\DataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -40,7 +42,10 @@ class BlogsController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index','update', 'create', 'view', 'like'],
+                        'actions' => [
+                                      'index','update', 'create',
+                                      'view', 'like', 'viewfavoritos'
+                        ],
                         'roles' => ['@'],
                     ],
                     [
@@ -48,7 +53,7 @@ class BlogsController extends Controller
                         'actions' => [
                             'index', 'create',
                             'update', 'delete', 
-                            'view', 'like'],
+                            'view', 'like', 'viewfavoritos'],
                         'roles' => ['@'],
                         'matchCallback' => function ($rules, $action) {
                            return Yii::$app->user->identity->username === 'admin';
@@ -69,6 +74,9 @@ class BlogsController extends Controller
         $searchModel = new BlogsSearch();
         $busqueda = Yii::$app->request->get('busqueda', '');
         $actual = Yii::$app->request->get('actual');
+        $this->findActualById($actual);
+
+
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $busqueda, $actual);
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -232,7 +240,23 @@ class BlogsController extends Controller
     
     
 
+    /**
+     * Genero un DataProvider para mostrar los Blogs favoritos del usuario actual.
+     * @return DataProvider
+     */
+    public function actionViewfavoritos()
+    {
+     
+        $query = Blogs::blogsUserLikes();
 
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+        return $this->render('viewfavoritos', [
+            'dataProvider' => $dataProvider,
+        ]);
+
+    }
 
 
     /**
@@ -263,6 +287,22 @@ class BlogsController extends Controller
     protected function findBlogs($comunidad_id)
     {
         if (($model = Blogs::find(['comunidad_id' => $comunidad_id])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+
+    /**
+     * Actual es el id de la comunidad actual.
+     * @param integer $id
+     * @return Comunidades the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findActualById($actual)
+    {
+        if (($model = Comunidades::findOne($actual)) !== null) {
             return $model;
         }
 
