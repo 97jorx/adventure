@@ -18,6 +18,9 @@ $name = Yii::$app->user->identity->username;
 $this->registerCssFile("@web/css/perfil.css");
 
 
+
+
+
 $js = <<< EOT
 
 $(document).ready(function(){    
@@ -74,7 +77,7 @@ $this->registerJs($js);
         <div class="photo-left">
            <?php $fakeimg = "https://picsum.photos/300/300?random=".$model->id;  ?>
             <?php $imagen = Yii::getAlias('@imgUrl') . '/' . $model->foto_perfil?>
-           <?= Html::a(Html::img((isset($model->foto_perfil) || file_exists($model->foto_perfil)) ?
+           <?= Html::a(Html::img(( file_exists(Yii::getAlias('@img'). '/' . $model->foto_perfil) && isset($model->foto_perfil )) ?
             ($imagen) : ($fakeimg), ['class' => 'photo'])) ?>
         </div>
           <?php if(Yii::$app->user->identity->id == $model->id) : ?>

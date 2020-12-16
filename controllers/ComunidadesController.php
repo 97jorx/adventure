@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Blogs;
 use app\models\Bloqcomunidades;
 use Yii;
 use app\models\Comunidades;
@@ -160,58 +161,21 @@ class ComunidadesController extends Controller
             throw new ForbiddenHttpException(Yii::t('yii', 'You are not allowed to perform this action.')); 
         }
     }
-
     /**
-     * Borra la comunidad por el id pasado como parametro.
-     * Si se borra correctamente la fila se redireccionará hacia el index.
+     * Deletes an existing Comunidades model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)
     {
-        $model = $this->findModel($id);
-        $this->borrarTodo($id, Integrantes::class);
-        $this->borrarTodo($id, Bloqcomunidades::class);
-        $this->borrarTodo($id, Favcomunidades::class);
-        if ($model->delete()) {
-            Yii::$app->session->setFlash('success', 'Se ha borrado la comunidad y todos sus usuarios de ella.');
-            return $this->redirect(['index']);
-        } else {
-            Yii::$app->session->setFlash('success', 'No se ha borrado la comunidad.');
-            return $this->redirect(['index']);
-        }
+        $this->findModel($id)->delete();
+        Yii::$app->session->setFlash('success', 'Se ha borrado la comunidad y todos sus usuarios de ella.');
+        return $this->redirect(['index']);
     }
 
 
-    /**
-     * Borra si existe las tablas en las que este relacionado la comunidad a partir del id.
-     * @param integer $id.
-     * @param integer $object.
-     * @return true.
-     * @throws NotFoundHttpException Si el modelo no se encuentra.
-     */
-    public function borrarTodo($id, $object)
-    {
-        $model = $this->findModel($id);
-
-        $exists = true;
-        $inte = $model->getIntegrantes()->exists();
-        $fav = $model->getFavcomunidades()->exists();
-        $bloq = $model->getBloqcomunidades()->exists();
-
-        if($object instanceof Integrantes){$exists = $inte;}
-        if($object instanceof Favcomunidades){$exists = $fav;}
-        if($object instanceof Bloqcomunidades){$exists = $bloq;}
-        
-
-        if ($exists) {
-            $object::deleteAll(['comunidad_id' => $id]);
-        } 
-        
-    }
-
-    
 
     /**
      * Permite al usuario logueado unirse a la comunidad elegida mediante un botón o salirse.

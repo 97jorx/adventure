@@ -65,7 +65,7 @@ CREATE TABLE blogs (
 -- , imagen       text
    , descripcion  varchar(255)   NOT NULL
    , cuerpo       text           NOT NULL
-   , comunidad_id bigint         NOT NULL REFERENCES comunidades (id)
+   , comunidad_id bigint         NOT NULL REFERENCES comunidades (id) ON DELETE CASCADE ON UPDATE CASCADE 
    , usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
    , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
 );
@@ -75,8 +75,8 @@ DROP TABLE IF EXISTS bloqcomunidades CASCADE;
 
 CREATE TABLE bloqcomunidades (
      id               bigserial     PRIMARY KEY
-   , bloqueado        bigint        NOT NULL REFERENCES usuarios (id)
-   , comunidad_id     bigint        NOT NULL REFERENCES comunidades (id)
+   , bloqueado        bigint        NOT NULL REFERENCES usuarios (id) ON DELETE CASCADE ON UPDATE CASCADE
+   , comunidad_id     bigint        NOT NULL REFERENCES comunidades (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
@@ -85,8 +85,8 @@ DROP TABLE IF EXISTS notas CASCADE;
 CREATE TABLE notas (
      id           bigserial      PRIMARY KEY
    , nota         integer        DEFAULT 0
-   , blog_id      bigint         NOT NULL REFERENCES blogs (id)   
-   , usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
+   , blog_id      bigint         NOT NULL REFERENCES blogs (id) ON DELETE CASCADE ON UPDATE CASCADE
+   , usuario_id   bigint         NOT NULL REFERENCES usuarios (id) ON DELETE CASCADE ON UPDATE CASCADE
    , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
 );
 
@@ -95,8 +95,8 @@ DROP TABLE IF EXISTS favblogs CASCADE;
 
 CREATE TABLE favblogs (
      id           bigserial      PRIMARY KEY
-   , usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
-   , blog_id      bigint         NOT NULL REFERENCES blogs (id)
+   , usuario_id   bigint         NOT NULL REFERENCES usuarios (id) ON DELETE CASCADE ON UPDATE CASCADE
+   , blog_id      bigint         NOT NULL REFERENCES blogs (id) ON DELETE CASCADE ON UPDATE CASCADE
    , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp        
 );
 
@@ -105,9 +105,9 @@ CREATE TABLE favblogs (
 DROP TABLE IF EXISTS favcomunidades CASCADE;
 
 CREATE TABLE favcomunidades (
-     id           bigserial      PRIMARY KEY
-   , usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
-   , comunidad_id bigint         NOT NULL REFERENCES comunidades (id)        
+     id           bigserial      PRIMARY KEY 
+   , usuario_id   bigint         NOT NULL REFERENCES usuarios (id) ON DELETE CASCADE ON UPDATE CASCADE
+   , comunidad_id bigint         NOT NULL REFERENCES comunidades (id) ON DELETE CASCADE ON UPDATE CASCADE     
    , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
 );
 
@@ -117,8 +117,8 @@ DROP TABLE IF EXISTS visitas CASCADE;
 
 CREATE TABLE visitas (
      id           bigserial      PRIMARY KEY
-   , usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
-   , blog_id      bigint         NOT NULL REFERENCES blogs (id)
+   , usuario_id   bigint         NOT NULL REFERENCES usuarios (id) ON DELETE CASCADE ON UPDATE CASCADE
+   , blog_id      bigint         NOT NULL REFERENCES blogs (id) ON DELETE CASCADE ON UPDATE CASCADE
    , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp        
 );
 
@@ -127,8 +127,8 @@ DROP TABLE IF EXISTS seguidores CASCADE;
 
 CREATE TABLE seguidores (
      id               bigserial     PRIMARY KEY
-   , usuario_id       bigint        NOT NULL REFERENCES usuarios (id)
-   , seguidor         bigint        NOT NULL REFERENCES usuarios (id)
+   , usuario_id       bigint        NOT NULL REFERENCES usuarios (id) ON DELETE CASCADE ON UPDATE CASCADE
+   , seguidor         bigint        NOT NULL REFERENCES usuarios (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- TABLA DE LOS BLOQUEOS A USUARIOS
@@ -136,8 +136,8 @@ DROP TABLE IF EXISTS bloqueados CASCADE;
 
 CREATE TABLE bloqueados (
      id               bigserial     PRIMARY KEY
-   , usuario_id       bigint        NOT NULL REFERENCES usuarios (id)
-   , bloqueado        bigint        NOT NULL REFERENCES usuarios (id)
+   , usuario_id       bigint        NOT NULL REFERENCES usuarios (id) ON DELETE CASCADE ON UPDATE CASCADE
+   , bloqueado        bigint        NOT NULL REFERENCES usuarios (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 DROP TABLE IF EXISTS integrantes CASCADE;
@@ -145,8 +145,8 @@ DROP TABLE IF EXISTS integrantes CASCADE;
 
 CREATE TABLE integrantes (
      id           bigserial      PRIMARY KEY 
-   , usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
-   , comunidad_id bigint         NOT NULL REFERENCES comunidades (id)
+   , usuario_id   bigint         NOT NULL REFERENCES usuarios (id) ON DELETE CASCADE ON UPDATE CASCADE
+   , comunidad_id bigint         NOT NULL REFERENCES comunidades (id) ON DELETE CASCADE ON UPDATE CASCADE
    , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
 );
 
@@ -276,7 +276,10 @@ VALUES  (1, 1, '2020-01-29 18:52:16'),
 
 
 INSERT INTO integrantes (usuario_id, comunidad_id)
-VALUES (1, 1);         
+VALUES (1, 1),
+       (1, 2),
+       (1, 3),
+       (1, 4);         
 
 
 
