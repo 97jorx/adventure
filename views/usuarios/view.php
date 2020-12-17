@@ -17,10 +17,6 @@ use yii\widgets\DetailView;
 $name = Yii::$app->user->identity->username;
 $this->registerCssFile("@web/css/perfil.css");
 
-
-
-
-
 $js = <<< EOT
 
 $(document).ready(function(){    
@@ -92,7 +88,7 @@ $this->registerJs($js);
                   <div class="dropdown-menu">
                   <?php $existe = ($model->existeBloqueado($model->alias)) ? ('Desbloquear usuario') : ('Bloquear usuario') ?>
                   <?php $bloquear = Url::to(['usuarios/bloquear', 'alias' => $model->alias]); ?>
-                  <?= Html::a($existe, $bloquear, ['class' => 'login',
+                  <?= Html::a($existe, '#', ['class' => 'login',
                       'aria-label' => $existe, 'data-balloon-pos' => 'up',
                       'onclick' =>"
                           event.preventDefault();
@@ -118,7 +114,7 @@ $this->registerJs($js);
         <?php if(Yii::$app->user->identity->alias !== $model->alias) : ?>
           <?php $existe = ($model->existeSeguidor($model->alias)) ? ('Dejar de seguir') : ('Seguir') ?>
           <?php $seguir = Url::to(['usuarios/seguir', 'alias' => $model->alias]); ?>
-          <?= Html::a($existe, $seguir, ['class' => 'btn btn-info login',
+          <?= Html::a($existe, '#', ['class' => 'btn btn-info login',
               'aria-label' => $existe, 'data-balloon-pos' => 'up',
               'onclick' =>"
                   event.preventDefault();

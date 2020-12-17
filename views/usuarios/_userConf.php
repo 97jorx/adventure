@@ -37,7 +37,7 @@ $this->registerJs($js);
                     'bloquear' => function ($url, $model) {
                         $bloquear = Url::to(['comunidades/bloquear', 'uid' => $model->id, 'id' => Yii::$app->request->get('id')]);
                         $existe = (Yii::$app->AdvHelper->estaBloqueado($model->id, Yii::$app->request->get('id'))) ? ('Desbloquear') : ('Bloquear'); 
-                        return  Html::a($existe, $bloquear, ['class' => 'btn btn-danger',
+                        return  Html::a($existe, '#', ['class' => 'btn btn-danger',
                             'onclick' =>"
                                 event.preventDefault();
                                 var self = $(this);

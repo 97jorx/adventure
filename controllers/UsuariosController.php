@@ -15,6 +15,7 @@ use yii\web\UploadedFile;
 use yii\db\Query;
 use yii\bootstrap4\ActiveForm;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -28,6 +29,17 @@ class UsuariosController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['login', 'logout'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['registrar'],
+                        'roles' => ['?'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
@@ -41,8 +53,8 @@ class UsuariosController extends Controller
     {
             
             $model = new Usuarios(['scenario' => Usuarios::SCENARIO_CREAR]);
-          
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            
+            if ($model->load(Yii::$app->request->post()) && $model->save() ) {
                 Yii::$app->session->setFlash('success', 'Se ha creado el usuario.');
                 return $this->redirect(['site/index']);
             }
@@ -51,9 +63,17 @@ class UsuariosController extends Controller
                 return ActiveForm::validate($model);
             }
 
-            return $this->renderAjax('registrar', [
-                'model' => $model,
-            ]);
+
+            if(Yii::$app->request->isAjax){
+                return $this->renderAjax('registrar', [
+                    'model' => $model,
+                ]);                
+            } else {
+                return $this->render('registrar', [
+                    'model' => $model,
+                ]);
+            }
+            
 
     }
     

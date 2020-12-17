@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use yii\bootstrap4\ActiveForm;
-
+use yii\helpers\Url;
 class SiteController extends Controller
 {
     /**
@@ -94,7 +94,7 @@ class SiteController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
         } else if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return Yii::$app->response->redirect(Url::to(['site/index']));
         }
 
 
@@ -104,7 +104,9 @@ class SiteController extends Controller
                 'model' => $model,
             ]);
         } else {
-            return $this->redirect(['site/index']);
+            return $this->render('login', [
+                'model' => $model,
+            ]);
         }
     }
    
@@ -130,17 +132,12 @@ class SiteController extends Controller
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
             Yii::$app->session->setFlash('contactFormSubmitted');
-
             return $this->refresh();
         }
         return $this->render('contact', [
             'model' => $model,
         ]);
     }
-
-
-
-
 
     /**
      * Displays about page.

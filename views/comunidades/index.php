@@ -72,7 +72,7 @@ Yii::$app->formatter->locale = 'es-ES';
                     <div class="masonry-bar" id="masonry-bar<?=$model->id?>">
                         <?php $existe = ($model->existeIntegrante($model->id)) ? ['sign-out-alt', 'Salir'] : ['sign-in-alt', 'Unirse']; ?>
                         <?php $unirse = Url::to(['comunidades/unirse', 'id' => $model->id]); ?>
-                        <?= Html::a(Icon::show($existe[0], ['id' => 'acceso']), $unirse, ['class' => 'masonry-button login',
+                        <?= Html::a(Icon::show($existe[0], ['id' => 'acceso']), '#', ['class' => 'masonry-button login',
                             'aria-label' => $existe[1], 'data-balloon-pos' => 'up',
                             'onclick' =>"
                                 event.preventDefault();
@@ -100,7 +100,7 @@ Yii::$app->formatter->locale = 'es-ES';
                             ['heart', 'Me gusta'];
                         ?>
                         <?php $url = Url::to(['comunidades/like', 'id' => $model->id]); ?>
-                        <?= Html::a(Icon::show($tienelike[0], ['id' => 'like', 'framework' => Icon::FAS]), $url, [
+                        <?= Html::a(Icon::show($tienelike[0], ['id' => 'like', 'framework' => Icon::FAS]), '#', [
                             'aria-label' => $tienelike[1], 'data-balloon-pos' => 'up', 'class' => 'masonry-button login',
                             'onclick' => "
                             event.preventDefault();

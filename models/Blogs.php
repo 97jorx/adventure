@@ -242,21 +242,23 @@ class Blogs extends \yii\db\ActiveRecord
      */
     public static function blogsUserLikes()
     {
+        $uid = Yii::$app->user->id;
+        
+        $query =  static::find()
+        ->select([
+            'blogs.*', 
+            '"u".nombre AS usuario', 
+            'COUNT(DISTINCT f.id) AS favs',
+            'COUNT(DISTINCT v.id) AS visits',
+            'SUM(DISTINCT n.nota) AS valoracion'
+         ])
+        ->joinWith('usuario u')
+        ->joinWith('favblogs f')
+        ->joinWith('notas n')
+        ->joinWith('visitas v')
+        ->groupBy('blogs.id, u.nombre');
 
-        return static::find()
-            ->select([
-                'blogs.*', 
-                '"u".nombre AS usuario', 
-                'COUNT(DISTINCT f.id) AS favs',
-                'COUNT(DISTINCT v.id) AS visits',
-                'SUM(DISTINCT n.nota) AS valoracion'
-             ])
-            ->joinWith('usuario u')
-            ->joinWith('favblogs f')
-            ->joinWith('notas n')
-            ->joinWith('visitas v')
-            ->where(['f.id' => Yii::$app->user->id])
-            ->groupBy('blogs.id, u.nombre');
+        return ($uid == 1) ? ($query) : ($query->where(['f.id' => $uid]));
     }
 
 

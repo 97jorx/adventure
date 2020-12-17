@@ -35,6 +35,7 @@ class ComunidadesController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            
             // 'access' => [
             //     'class' => AccessControl::class,
             //     'only' => ['unirse','view','like','bloquear'],
@@ -51,10 +52,11 @@ class ComunidadesController extends Controller
             // ],
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['view','unirse','like','bloquear','update'],
+                'only' => ['view', 'likes', 'unirse', 'bloquear', 'update'],
                 'rules' => [
                     [
                         'allow' => true,
+                        'actions' => 'delete',
                         'roles' => ['@'],
                         'matchCallback' => function ($rules, $action) {
                            return Yii::$app->user->identity->username === 'admin';
@@ -218,12 +220,11 @@ class ComunidadesController extends Controller
             $json = [ 
                 'mensaje' => 'Tienes que estar logueado.',
             ];
+            return $this->redirect(['site/login']);
         }
         
         return json_encode($json);
     }
-
-   
 
 
  /**
@@ -233,12 +234,13 @@ class ComunidadesController extends Controller
      */
     public function actionLike($id)
     {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        $usuarioid = Yii::$app->user->id;
-        $fav = new Favcomunidades();
-        $favoritos = Yii::$app->AdvHelper->tieneFavoritos($id, $this);
+        
         $json = [];
         if (!Yii::$app->user->isGuest) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $usuarioid = Yii::$app->user->id;
+            $fav = new Favcomunidades();
+            $favoritos = Yii::$app->AdvHelper->tieneFavoritos($id, $this);
             if(!$favoritos->exists()){
                 $fav->comunidad_id = $id;
                 $fav->usuario_id = $usuarioid;
@@ -246,7 +248,6 @@ class ComunidadesController extends Controller
                 $json = [
                     'mensaje' => 'Se ha dado like a la comunidad',
                     'iconclass' => ['fas fa-heart-broken', 'No me gusta']
-                    
                 ];
             } else {
                 $favoritos->one()->delete();
@@ -255,8 +256,10 @@ class ComunidadesController extends Controller
                     'iconclass' => ['fas fa-heart', 'Me gusta']
                 ];
             }
+            return json_encode(array_merge($json, ['fav' => $this->findModel($id)->favs]));
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
         }
-        return json_encode(array_merge($json, ['fav' => $this->findModel($id)->favs]));
     }
 
 

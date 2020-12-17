@@ -48,6 +48,7 @@ class BlogsController extends Controller
                         ],
                         'roles' => ['@'],
                     ],
+
                     [
                         'allow' => true,
                         'actions' => [
@@ -205,16 +206,13 @@ class BlogsController extends Controller
      */
     public function actionLike()
     {
-        
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        $usuarioid = Yii::$app->user->id;
-        $blogid = Yii::$app->request->get('id');
-        $fav = new Favblogs();
-        $favoritos = Yii::$app->AdvHelper->tieneFavoritos($blogid, $this);
-
         $json = [];
         if (!Yii::$app->user->isGuest) {
-
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $usuarioid = Yii::$app->user->id;
+            $blogid = Yii::$app->request->get('id');
+            $fav = new Favblogs();
+            $favoritos = Yii::$app->AdvHelper->tieneFavoritos($blogid, $this);
             if(!$favoritos->exists()){
                 $fav->blog_id = $blogid;
                 $fav->usuario_id = $usuarioid;
@@ -231,11 +229,12 @@ class BlogsController extends Controller
                     'icono' => 0
                 ];
             }
+            return json_encode(array_merge($json, ['fav' => $this->findModel($blogid)->favs]));
         } else {
-            return $this->redirect(['site/login']);
+            throw new NotFoundHttpException('The requested page does not exist.');
         }
         
-        return json_encode(array_merge($json, ['fav' => $this->findModel($blogid)->favs]));
+
     }
     
     
@@ -251,10 +250,21 @@ class BlogsController extends Controller
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
         ]);
-        return $this->render('viewfavoritos', [
-            'dataProvider' => $dataProvider,
-        ]);
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('viewfavoritos', [
+                'dataProvider' => $dataProvider,
+            ]);
+        } else {
+            return $this->render('viewfavoritos', [
+                'dataProvider' => $dataProvider,
+            ]);
+        }
+
 
     }
 
