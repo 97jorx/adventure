@@ -255,7 +255,7 @@ class Blogs extends \yii\db\ActiveRecord
             ->joinWith('favblogs f')
             ->joinWith('notas n')
             ->joinWith('visitas v')
-            ->where(['u.id' => Yii::$app->user->id])
+            ->where(['f.id' => Yii::$app->user->id])
             ->groupBy('blogs.id, u.nombre');
     }
 
