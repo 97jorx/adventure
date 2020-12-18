@@ -21,6 +21,7 @@ $this->registerJs($js);
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'id' => 'bloqueados',
         'columns' => [
             'alias',
             'created_at:date',
@@ -30,7 +31,7 @@ $this->registerJs($js);
                 'buttons' => [
                     'bloquear' => function ($url, $model) {
                         $bloquear = Url::to(['usuarios/bloquear', 'alias' => $model->alias]);
-                        $existe = (Yii::$app->AdvHelper->usuarioBloqueado($model->alias)) ? ('Desbloquear') : ('Bloquear'); 
+                        $existe = ($model->existeBloqueado($model->alias)) ? ('Desbloquear') : ('Bloquear'); 
                         return Html::a($existe, '#', ['class' => 'btn btn-danger login', 'aria-label' => $existe, 'data-balloon-pos' => 'up',
                             'onclick' =>"
                             event.preventDefault();
@@ -44,6 +45,7 @@ $this->registerJs($js);
                                 console.log(data);
                                 $(self).text(data.button);
                                 $(self).attr('aria-label', data.button);
+                                $('#bloqueados').load(location.href + ' #bloqueados');
                             }).fail(function( data, textStatus, jqXHR ) {
                                 console.log('Error de la solicitud.');
                             });",

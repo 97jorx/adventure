@@ -127,4 +127,10 @@ class HelperAdventure extends Component
             return 0;
         }
     }
+
+
+   
 }
+
+
+
