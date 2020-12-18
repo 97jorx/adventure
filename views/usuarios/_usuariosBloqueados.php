@@ -24,35 +24,34 @@ $this->registerJs($js);
         'columns' => [
             'alias',
             'created_at:date',
-            [
+           [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{bloquear}',
                 'buttons' => [
                     'bloquear' => function ($url, $model) {
-                        $bloquear = Url::to(['usuarios/bloquear', 'uid' => $model->id, 'id' => Yii::$app->request->get('id')]);
-                        $existe = (Yii::$app->AdvHelper->estaBloqueado($model->id, Yii::$app->request->get('id'))) ? ('Desbloquear') : ('Bloquear'); 
-                        return  Html::a($existe, '#', ['class' => 'btn btn-danger',
+                        $bloquear = Url::to(['usuarios/bloquear', 'alias' => $model->alias]);
+                        $existe = (Yii::$app->AdvHelper->usuarioBloqueado($model->alias)) ? ('Desbloquear') : ('Bloquear'); 
+                        return Html::a($existe, '#', ['class' => 'btn btn-danger login', 'aria-label' => $existe, 'data-balloon-pos' => 'up',
                             'onclick' =>"
-                                event.preventDefault();
-                                var self = $(this);
-                                $.ajax({
-                                    type: 'GET',
-                                    url: '$bloquear',
-                                    dataType: 'json',
-                                }).done(function(data, textStatus, jqXHR) {
-                                    data = JSON.parse(data);
-                                    $(self).text(data.button);             
-                                    $(body).append(data.modal);
-                                    $('#myModal').modal('show');
-                                }).fail(function( data, textStatus, jqXHR ) {
-                                    console.log('Error de la solicitud.');
-                                });"
+                            event.preventDefault();
+                            var self = $(this);
+                            $.ajax({
+                                type: 'GET',
+                                url: '$bloquear',
+                                dataType: 'json',
+                            }).done(function( data, textStatus, jqXHR ) {
+                                data = JSON.parse(data);
+                                console.log(data);
+                                $(self).text(data.button);
+                                $(self).attr('aria-label', data.button);
+                            }).fail(function( data, textStatus, jqXHR ) {
+                                console.log('Error de la solicitud.');
+                            });",
                         ]); 
                     },
                 ],
             ],
         ],
-
         
     ]); ?>
 
