@@ -258,7 +258,8 @@ class Blogs extends \yii\db\ActiveRecord
         ->joinWith('visitas v')
         ->groupBy('blogs.id, u.nombre');
 
-        return ($uid == 1) ? ($query) : ($query->where(['f.id' => $uid]));
+        return ($uid == 1) ? ($query) : 
+               ($query->where(['f.id' => $uid]));
     }
 
 

@@ -6,7 +6,7 @@ use yii\bootstrap4\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
 
-$this->title = 'Configuración de usuario';
+$this->title = 'Mis bloqueados';
 $this->params['breadcrumbs'][] = $this->title;
 
 $js = <<< EOT
@@ -15,26 +15,21 @@ $this->registerJs($js);
 
 ?>
 
-<div class="userconf-view">
+<div class="mis-bloqueados">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            'id',
-            'username',
-            'nombre',
-            'apellidos',
-            'email:email',
-            'rol',
-            'created_at',
+            'alias',
+            'created_at:date',
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{bloquear}',
                 'buttons' => [
                     'bloquear' => function ($url, $model) {
-                        $bloquear = Url::to(['comunidades/bloquear', 'uid' => $model->id, 'id' => Yii::$app->request->get('id')]);
+                        $bloquear = Url::to(['usuarios/bloquear', 'uid' => $model->id, 'id' => Yii::$app->request->get('id')]);
                         $existe = (Yii::$app->AdvHelper->estaBloqueado($model->id, Yii::$app->request->get('id'))) ? ('Desbloquear') : ('Bloquear'); 
                         return  Html::a($existe, '#', ['class' => 'btn btn-danger',
                             'onclick' =>"

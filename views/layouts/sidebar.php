@@ -49,9 +49,7 @@ use yii\helpers\Html;
                             <i><?= Icon::show('clipboard-check');?></i>
                         </div>
                         <div class="col-6">
-                            <a class="nav-text">
                             <?= Html::a('Blogs que me gustan', ['blogs/viewfavoritos']) ?>
-                            </a>
                         </div>
                     </div>
                 </li>
@@ -61,9 +59,7 @@ use yii\helpers\Html;
                             <i><?= Icon::show('user-times');?></i>
                         </div>
                         <div class="col-6">
-                            <a class="nav-text">
-                                Bloqueados
-                            </a>
+                            <?= Html::a('Bloqueados', ['usuarios/userbloqueados']) ?>
                         </div>
                     </div>
                 </li>

@@ -120,7 +120,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
             'fecha_nac' => 'Fecha Nacimiento', 
             'email' => 'Correo Electrónico',
             'rol' => 'Rol',
-            'created_at' => 'Created At',
+            'created_at' => 'Cuenta creada en',
             'contrasena' => 'Contraseña',
             'password_repeat' => 'Repetir contraseña',
             'auth_key' => 'Auth Key',
@@ -152,6 +152,16 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     public function getBloqueados()
     {
         return $this->hasMany(Bloqueados::class, ['usuario_id' => 'id'])->inverseOf('usuario');
+    }
+
+    /**
+     * Gets query for [[Bloqueados0]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBloqueados0()
+    {
+        return $this->hasMany(Bloqueados::class, ['bloqueado' => 'id'])->inverseOf('bloqueado0');
     }
 
 
@@ -460,5 +470,19 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     }
 
 
+    /**
+     * Consulta para mostrar Comunidad por su nombre 
+     * y el Usuario por su nombre en Blogs
+     *
+     * @return query
+     */
+    public static function usuariosBloqueados()
+    {
+        $uid = Yii::$app->user->id;
+        $query =  static::find()
+        ->joinWith('bloqueados0 b')
+        ->where(['b.usuario_id' => $uid]);
+        return $query;
 
+    }
 }

@@ -33,8 +33,8 @@ class Bloqueados extends \yii\db\ActiveRecord
             [['usuario_id', 'bloqueado'], 'required'],
             [['usuario_id', 'bloqueado'], 'default', 'value' => null],
             [['usuario_id', 'bloqueado'], 'integer'],
-            [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['usuario_id' => 'id']],
-            [['bloqueado'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['bloqueado' => 'id']],
+            [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['usuario_id' => 'id']],
+            [['bloqueado'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['bloqueado' => 'id']],
         ];
     }
 
@@ -57,7 +57,7 @@ class Bloqueados extends \yii\db\ActiveRecord
      */
     public function getUsuario()
     {
-        return $this->hasOne(Usuarios::className(), ['id' => 'usuario_id'])->inverseOf('bloqueados');
+        return $this->hasOne(Usuarios::class, ['id' => 'usuario_id'])->inverseOf('bloqueados');
     }
 
     /**
@@ -67,6 +67,9 @@ class Bloqueados extends \yii\db\ActiveRecord
      */
     public function getBloqueado0()
     {
-        return $this->hasOne(Usuarios::className(), ['id' => 'bloqueado'])->inverseOf('bloqueados0');
+        return $this->hasOne(Usuarios::class, ['id' => 'bloqueado'])->inverseOf('bloqueados0');
     }
+
+
+ 
 }
