@@ -27,9 +27,7 @@ use yii\helpers\Html;
                             <i><?= Icon::show('users');?></i>
                         </div>
                         <div class="col-6">
-                            <a class="nav-text">
-                                Seguidores
-                            </a>
+                        <?= Html::a('Seguidores', ['usuarios/userseguidores']) ?>
                         </div>
                     </div>
                 </li>

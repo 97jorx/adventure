@@ -352,6 +352,27 @@ class UsuariosController extends Controller
         ]);
     }
 
+     /**
+     * Genero un DataProvider para mostrar los Blogs favoritos del usuario actual.
+     * @return DataProvider
+     */
+    public function actionUserseguidores()
+    {
+     
+        $query = Usuarios::usuariosSeguidores();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
+
+        
+        return $this->render('_usuariosSeguidores', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
     
     /**
      * Deletes an existing Usuarios model.

@@ -165,15 +165,26 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     }
 
 
-    /**
+     /**
      * Gets query for [[Seguidores]].
      *
      * @return \yii\db\ActiveQuery
      */
     public function getSeguidores()
     {
-        return $this->hasMany(Seguidores::class, ['usuario_id' => 'id'])->inverseOf('usuario');
+        return $this->hasMany(Seguidores::className(), ['usuario_id' => 'id'])->inverseOf('usuario');
     }
+
+    /**
+     * Gets query for [[Seguidores0]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSeguidores0()
+    {
+        return $this->hasMany(Seguidores::className(), ['seguidor' => 'id'])->inverseOf('seguidor0');
+    }
+
 
 
     /**
@@ -471,9 +482,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
 
 
     /**
-     * Consulta para mostrar Comunidad por su nombre 
-     * y el Usuario por su nombre en Blogs
-     *
+     * Consulta para mostrar Los bloqueados del usuarios actual
      * @return query
      */
     public static function usuariosBloqueados()
@@ -483,6 +492,18 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         ->joinWith('bloqueados0 b')
         ->where(['b.usuario_id' => $uid]);
         return $query;
-
+    }
+    
+    /**
+     * Consulta para mostrar Los seguidores del usuarios actual.
+     * @return query
+     */
+    public static function usuariosSeguidores()
+    {
+        $uid = Yii::$app->user->id;
+        $query =  static::find()
+        ->joinWith('seguidores0 s')
+        ->where(['s.usuario_id' => $uid]);
+        return $query;
     }
 }
