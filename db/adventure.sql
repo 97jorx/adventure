@@ -12,53 +12,47 @@
 -- );
 
 DROP TABLE IF EXISTS usuarios CASCADE;
-
 CREATE TABLE usuarios
  (
-     id bigserial PRIMARY KEY
-   , username varchar(25) NOT NULL UNIQUE
-   , alias varchar(35) NOT NULL UNIQUE
-   , nombre varchar(255) NOT NULL
-   , apellidos varchar(255) NOT NULL
-   , email varchar(255) NOT NULL UNIQUE
-   , rol varchar(30) NOT NULL DEFAULT 'estandar'
-   , created_at timestamp(0) NOT NULL DEFAULT current_timestamp
-   , fecha_nac timestamp(0) NOT NULL
-   , contrasena varchar(255) NOT NULL
-   , auth_key varchar(255)
-   , poblacion varchar(255)
-   , provincia varchar(255)
-   , pais varchar(255)
+     id           bigserial      PRIMARY KEY
+   , username     varchar(25)    NOT NULL UNIQUE
+   , alias        varchar(35)    NOT NULL UNIQUE
+   , nombre       varchar(255)   NOT NULL
+   , apellidos    varchar(255)   NOT NULL
+   , email        varchar(255)   NOT NULL UNIQUE
+   , rol          varchar(30)    NOT NULL DEFAULT 'estandar'
+   , estado_id    bigint         REFERENCES estados (id) DEFAULT 4
+   , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
+   , fecha_nac    timestamp(0)   NOT NULL
+   , contrasena   varchar(255)   NOT NULL
+   , auth_key     varchar(255)
+   , poblacion    varchar(255)
+   , provincia    varchar(255)
+   , pais         varchar(255)
    , foto_perfil  varchar(255)
    , bibliografia varchar(255)
 );
 
-
-
--- DROP TABLE IF EXISTS categorias CASCADE;
--- CREATE TABLE categorias (
---      id           bigserial    PRIMARY KEY
---      categoria    varchar(25)  NOT NULL
---);
+DROP TABLE IF EXISTS estados CASCADE;
+CREATE TABLE estados (
+     id          bigserial      PRIMARY KEY 
+   , estado      text           NOT NULL
+);
 
 
 -- TABLA DE LAS COMUNIDADES
 DROP TABLE IF EXISTS comunidades CASCADE;
-
 CREATE TABLE comunidades (
-     id              bigserial      PRIMARY KEY 
-   , denom           varchar(255)   NOT NULL UNIQUE    
-   , descripcion     text           NOT NULL    
-   , created_at      timestamp(0)   NOT NULL DEFAULT current_timestamp
-   , propietario     bigint         NOT NULL REFERENCES usuarios (id)
--- , categoria_id    bigint         REFERENCES categorias (id)
--- , galeria_id      bigint         REFERENCES galerias (id)
+     id           bigserial      PRIMARY KEY 
+   , denom        varchar(255)   NOT NULL UNIQUE    
+   , descripcion  text           NOT NULL    
+   , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
+   , propietario  bigint         NOT NULL REFERENCES usuarios (id)
 );
 
 
 -- TABLA DE LOS BLOGS
 DROP TABLE IF EXISTS blogs CASCADE;
-
 CREATE TABLE blogs (
      id           bigserial      PRIMARY KEY 
    , titulo       varchar(255)   NOT NULL UNIQUE
@@ -70,13 +64,35 @@ CREATE TABLE blogs (
    , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
 );
 
+
+
+DROP TABLE IF EXISTS notificaciones CASCADE;
+CREATE TABLE notificaciones (
+     id           bigserial      PRIMARY KEY
+   , usuario_id   bigint         NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE ON UPDATE CASCADE
+   , mensaje      bigint         NOT NULL
+   , leido        boolean        DEFAULT false
+   , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
+);
+
+
+DROP TABLE IF EXISTS comentarios CASCADE;
+CREATE TABLE comentarios (
+     id          bigserial      PRIMARY KEY 
+   , usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
+   , blog_id      bigint         REFERENCES blogs (id)
+   , reply_id     bigint         NOT NULL REFERENCES comentarios (id) 
+   , texto        varchar(255)   NOT NULL
+   , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
+);
+
+
 -- TABLA DE LOS USUARIOS BLOQUEADOS POR COMUNIDADES
 DROP TABLE IF EXISTS bloqcomunidades CASCADE;
-
 CREATE TABLE bloqcomunidades (
-     id               bigserial     PRIMARY KEY
-   , bloqueado        bigint        NOT NULL REFERENCES usuarios (id) ON DELETE CASCADE ON UPDATE CASCADE
-   , comunidad_id     bigint        NOT NULL REFERENCES comunidades (id) ON DELETE CASCADE ON UPDATE CASCADE
+     id           bigserial      PRIMARY KEY
+   , bloqueado    bigint         NOT NULL REFERENCES usuarios (id) ON DELETE CASCADE ON UPDATE CASCADE
+   , comunidad_id bigint         NOT NULL REFERENCES comunidades (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
@@ -92,7 +108,6 @@ CREATE TABLE notas (
 
 -- TABLA DE LOS BLOGS FAVORITOS DE CADA USUARIO
 DROP TABLE IF EXISTS favblogs CASCADE;
-
 CREATE TABLE favblogs (
      id           bigserial      PRIMARY KEY
    , usuario_id   bigint         NOT NULL REFERENCES usuarios (id) ON DELETE CASCADE ON UPDATE CASCADE
@@ -103,7 +118,6 @@ CREATE TABLE favblogs (
 
 -- TABLA DE LAS COMUNIDADES FAVORITAS DE CADA USUARIO
 DROP TABLE IF EXISTS favcomunidades CASCADE;
-
 CREATE TABLE favcomunidades (
      id           bigserial      PRIMARY KEY 
    , usuario_id   bigint         NOT NULL REFERENCES usuarios (id) ON DELETE CASCADE ON UPDATE CASCADE
@@ -114,7 +128,6 @@ CREATE TABLE favcomunidades (
 
 -- TABLA DE LAS VISITAS DE CADA BLOG 
 DROP TABLE IF EXISTS visitas CASCADE;
-
 CREATE TABLE visitas (
      id           bigserial      PRIMARY KEY
    , usuario_id   bigint         NOT NULL REFERENCES usuarios (id) ON DELETE CASCADE ON UPDATE CASCADE
@@ -124,31 +137,39 @@ CREATE TABLE visitas (
 
 -- TABLA DE LOS SEGUIDORES 
 DROP TABLE IF EXISTS seguidores CASCADE;
-
 CREATE TABLE seguidores (
-     id               bigserial     PRIMARY KEY
-   , usuario_id       bigint        NOT NULL REFERENCES usuarios (id) ON DELETE CASCADE ON UPDATE CASCADE
-   , seguidor         bigint        NOT NULL REFERENCES usuarios (id) ON DELETE CASCADE ON UPDATE CASCADE
+     id           bigserial      PRIMARY KEY
+   , usuario_id   bigint         NOT NULL REFERENCES usuarios (id) ON DELETE CASCADE ON UPDATE CASCADE
+   , seguidor     bigint         NOT NULL REFERENCES usuarios (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- TABLA DE LOS BLOQUEOS A USUARIOS
 DROP TABLE IF EXISTS bloqueados CASCADE;
-
 CREATE TABLE bloqueados (
-     id               bigserial     PRIMARY KEY
-   , usuario_id       bigint        NOT NULL REFERENCES usuarios (id) ON DELETE CASCADE ON UPDATE CASCADE
-   , bloqueado        bigint        NOT NULL REFERENCES usuarios (id) ON DELETE CASCADE ON UPDATE CASCADE
+     id           bigserial      PRIMARY KEY
+   , usuario_id   bigint         NOT NULL REFERENCES usuarios (id) ON DELETE CASCADE ON UPDATE CASCADE
+   , bloqueado    bigint         NOT NULL REFERENCES usuarios (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 DROP TABLE IF EXISTS integrantes CASCADE;
-
-
 CREATE TABLE integrantes (
      id           bigserial      PRIMARY KEY 
    , usuario_id   bigint         NOT NULL REFERENCES usuarios (id) ON DELETE CASCADE ON UPDATE CASCADE
    , comunidad_id bigint         NOT NULL REFERENCES comunidades (id) ON DELETE CASCADE ON UPDATE CASCADE
    , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
 );
+
+
+DROP TABLE IF EXISTS session CASCADE;
+CREATE TABLE session
+(
+    id CHAR(40) NOT NULL PRIMARY KEY,
+    expire INTEGER,
+    data BLOB,
+    user_id INTEGER,
+    last_write TIMESTAMP
+)
+
 
  -- DROP TABLE IF EXISTS blogs_destacados CASCADE;
 
@@ -161,17 +182,6 @@ CREATE TABLE integrantes (
 -- );
 
 -- TODO RESPONDER COMENTARIOS.
-
--- DROP TABLE IF EXISTS comentarios CASCADE;
-
--- CREATE TABLE comentarios (
- --   id                 bigserial      PRIMARY KEY 
- -- , usuario_id         bigint         NOT NULL REFERENCES usuarios (id)
- -- , blog_id            bigint         NOT NULL REFERENCES blogs (id)
- -- , reply_id           bigint         NOT NULL REFERENCES comentarios (id) 
- -- , texto              varchar(255)   NOT NULL
- -- , created_at         timestamp(0)   NOT NULL DEFAULT current_timestamp
--- );
 
 
 -- DROP TABLE IF EXISTS chats CASCADE;
@@ -272,7 +282,11 @@ VALUES  (1, 1, '2020-01-29 18:52:16'),
         (2, 1, '2020-07-29 18:52:16');
 
         
-       
+INSERT INTO estados (estado)       
+VALUES ('Conectado'),
+       ('Ausente'),
+       ('Ocupado'),
+       ('Desconectado');
 
 
 INSERT INTO integrantes (usuario_id, comunidad_id)

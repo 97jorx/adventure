@@ -22,7 +22,10 @@ $config = [
     'language' => 'es-ES',
     'components' => [
 
-             
+        'session' => [
+            'class' => 'bscheshirwork\redis\Session',
+            // 'redis' => 'redis' // id of the connection application component
+        ],
 
         'geoip' => ['class' => 'lysenkobv\GeoIP\GeoIP'],
         
