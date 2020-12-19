@@ -160,16 +160,6 @@ CREATE TABLE integrantes (
 );
 
 
-DROP TABLE IF EXISTS session CASCADE;
-CREATE TABLE session
-(
-    id CHAR(40) NOT NULL PRIMARY KEY,
-    expire INTEGER,
-    data BLOB,
-    user_id INTEGER,
-    last_write TIMESTAMP
-)
-
 
  -- DROP TABLE IF EXISTS blogs_destacados CASCADE;
 
