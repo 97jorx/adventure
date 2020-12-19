@@ -11,6 +11,14 @@
 --     , fotos           text      
 -- );
 
+
+DROP TABLE IF EXISTS estados CASCADE;
+CREATE TABLE estados (
+     id          bigserial      PRIMARY KEY 
+   , estado      text           NOT NULL
+);
+
+
 DROP TABLE IF EXISTS usuarios CASCADE;
 CREATE TABLE usuarios
  (
@@ -33,11 +41,8 @@ CREATE TABLE usuarios
    , bibliografia varchar(255)
 );
 
-DROP TABLE IF EXISTS estados CASCADE;
-CREATE TABLE estados (
-     id          bigserial      PRIMARY KEY 
-   , estado      text           NOT NULL
-);
+
+
 
 
 -- TABLA DE LAS COMUNIDADES
@@ -183,7 +188,11 @@ CREATE TABLE integrantes (
 --  , receptor_response text  
 -- );
 
-
+INSERT INTO estados (estado)       
+VALUES ('Conectado'),
+       ('Ausente'),
+       ('Ocupado'),
+       ('Desconectado');
 
 
 INSERT INTO usuarios (username, nombre, alias,apellidos, email, rol, fecha_nac, contrasena, poblacion, provincia, pais, foto_perfil, bibliografia)
@@ -272,11 +281,6 @@ VALUES  (1, 1, '2020-01-29 18:52:16'),
         (2, 1, '2020-07-29 18:52:16');
 
         
-INSERT INTO estados (estado)       
-VALUES ('Conectado'),
-       ('Ausente'),
-       ('Ocupado'),
-       ('Desconectado');
 
 
 INSERT INTO integrantes (usuario_id, comunidad_id)

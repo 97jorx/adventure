@@ -16,6 +16,7 @@ use yii\widgets\DetailView;
 
 $name = Yii::$app->user->identity->username;
 $this->registerCssFile("@web/css/perfil.css");
+
 $js = <<< EOT
 
 $(document).ready(function(){    

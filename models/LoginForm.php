@@ -72,6 +72,16 @@ class LoginForm extends Model
         if ($this->validate()) {
             return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
         }
+            
+        $session = (new Query())
+        ->select(['user_id'])
+        ->from('session')
+        ->scalar();
+        
+        $model = Usuarios::find()->where(['id' => $session]);
+        $model->estado_id = 1;
+        $model->save();
+
         return false;
     }
 

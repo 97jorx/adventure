@@ -70,6 +70,8 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
             [['alias'], 'unique'],
             [['alias'], 'string', 'max' => 35],
             [['alias'], 'checkAttributeName'],
+            [['estado_id'], 'default', 'value' => 4],
+            [['estado_id'], 'integer'],
             [['username'], 'unique'],
             [['username'], 'string', 'max' => 25],
             [['username'], 'checkAttributeName'],
@@ -81,6 +83,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
             [['email'],'unique'],
             ['fecha_nac', 'date', 'format' => 'php:d/m/Y'],
             ['email', 'email'],
+            [['estado_id'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::class, 'targetAttribute' => ['estado_id' => 'id']],
             
             [
                 ['contrasena'],
@@ -143,6 +146,17 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         }
         
 	}
+
+    /**
+     * Gets query for [[Estado]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEstado()
+    {
+        return $this->hasOne(Estados::class, ['id' => 'estado_id'])->inverseOf('usuarios');
+    }
+
 
     /**
      * Gets query for [[Bloqueados]].
@@ -469,6 +483,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
             return false;
         }
 
+
         if ($insert) {
             if ($this->scenario === self::SCENARIO_CREAR) {
                 $security = Yii::$app->security;
@@ -506,4 +521,8 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         ->where(['s.usuario_id' => $uid]);
         return $query;
     }
+
+
+
+
 }

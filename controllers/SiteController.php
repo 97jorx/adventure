@@ -11,7 +11,9 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Usuarios;
 use yii\bootstrap4\ActiveForm;
+use yii\db\Query;
 use yii\helpers\Url;
 class SiteController extends Controller
 {
@@ -94,9 +96,11 @@ class SiteController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
         } else if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            
+            
+            
             return Yii::$app->response->redirect(Url::to(['site/index']));
         }
-
 
         $model->contrasena = '';
         if (Yii::$app->request->isAjax) {
@@ -108,6 +112,8 @@ class SiteController extends Controller
                 'model' => $model,
             ]);
         }
+
+
     }
    
 
@@ -166,5 +172,30 @@ class SiteController extends Controller
             $cookieValue = $cookie->getValue('');
         return $cookieValue;
     }
+
+
+    // /**
+    //  * Este metodo es invocado después de ejecutar una acción.
+    //  * @param $action la acción que se ejecuta.
+    //  * Your custom code here, if you want the code to run before action filters,
+    //  * Which are triggered on the [[EVENT_BEFORE_ACTION]] event, e.g. PageCache or AccessControl
+    //  */
+    // public function afterAction($action, $result)
+    // {
+    //     $result = parent::afterAction($action, $result);
+    
+    //     if($action->id == 'login') {
+    //         $session = (new Query())
+    //         ->select(['user_id'])
+    //         ->from('session')
+    //         ->scalar();
+            
+    //         $model = Usuarios::find()->where(['id' => $session]);
+    //         $model->estado_id = 1;
+    //         $model->save();
+    //     }
+        
+    //     return $result;
+    // }
 
 }
