@@ -23,8 +23,12 @@ $config = [
     'components' => [
 
         'session' => [
-            'class' => 'bscheshirwork\redis\Session',
-            // 'redis' => 'redis' // id of the connection application component
+            'class' => 'yii\web\DbSession',
+            'writeCallback' => function ($session) {
+                return [
+                   'user_id' => Yii::$app->user->id,
+               ];
+            },
         ],
 
         'geoip' => ['class' => 'lysenkobv\GeoIP\GeoIP'],
