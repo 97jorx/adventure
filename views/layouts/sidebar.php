@@ -15,6 +15,9 @@ use yii\helpers\Html;
         <div class="masonry-title text-center" id="nav-title">
             <h5 itemprop="title">
                 <?= ucfirst(Yii::$app->user->identity->alias) ?>
+                <?= (Yii::$app->user->identity->estado_id == 1) ?
+                  (Icon::show('circle',['style' => 'color:green'])) 
+                : (Icon::show('circle', ['style' => 'color:red'])) ?>
             </h5>
         </div>
     </div>

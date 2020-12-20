@@ -43,6 +43,8 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
 {
 
     const SCENARIO_CREAR = 'crear';
+    const SCENARIO_UPDATE = 'update';
+
 
     public $password_repeat;
     private $_followers = null;
@@ -64,20 +66,25 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'nombre', 'apellidos', 'email', 'fecha_nac', 'contrasena', 'alias'], 'required', 'message' => 'El campo {attribute} es obligatorio, no puede estar vacío.'],
+            [['username', 'nombre', 'apellidos', 'email', 'alias'], 'required', 'message' => 'El campo {attribute} es obligatorio, no puede estar vacío.'],
+            [
+                ['contrasena'],
+                'required',
+                'on' => [self::SCENARIO_DEFAULT, self::SCENARIO_CREAR],
+            ],
             [['username', 'nombre', 'apellidos', 'email', 'poblacion', 'provincia', 'pais', 'alias'], 'trim'],
             [['created_at', 'fecha_nac'], 'safe'],
             [['alias'], 'unique'],
             [['alias'], 'string', 'max' => 35],
             [['alias'], 'checkAttributeName'],
-            [['estado_id'], 'default', 'value' => 4],
             [['estado_id'], 'integer'],
             [['username'], 'unique'],
             [['username'], 'string', 'max' => 25],
+            [['biografia'], 'string', 'max' => 255],
             [['username'], 'checkAttributeName'],
             [['nombre'], 'match', 'pattern' => '/^(?=.{3,8}$)[a-zñA-ZÑ]*$/', 'message' => 'El {attribute} es incorrecto, vuelva a intentarlo.'],
             [['apellidos'], 'match', 'pattern' => '/^(?=.{3,40}$)[A-Z][a-z]+(?: [A-Z][a-zñáéíóú]+)?$/'],
-            [['nombre', 'apellidos', 'email', 'contrasena', 'auth_key', 'poblacion', 'provincia', 'pais', 'foto_perfil', 'bibliografia'], 'string', 'max' => 255],
+            [['nombre', 'apellidos', 'email', 'contrasena', 'auth_key', 'poblacion', 'provincia', 'pais', 'foto_perfil'], 'string', 'max' => 255],
             [['foto_perfil'], 'string', 'max' => 255],
             [['rol'], 'string', 'max' => 30],
             [['email'],'unique'],
@@ -86,25 +93,29 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
             [['estado_id'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::class, 'targetAttribute' => ['estado_id' => 'id']],
             
             [
-                ['contrasena'],
-                'trim',
+                ['fecha_nac'],
+                'required',
                 'on' => [self::SCENARIO_CREAR],
             ],
             [
                 ['contrasena'],
-                'match', 'pattern' => '/((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!?¿()=.@#$%]).{8,15})/',
+                'trim',
+                'on' => [self::SCENARIO_CREAR, self::SCENARIO_UPDATE],
+            ],
+            [
+                ['contrasena'],
+                'match', 'pattern' => '/((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!{}?¿()=.@#$%]).{8,15})/',
+                'on' => [self::SCENARIO_CREAR, self::SCENARIO_UPDATE],
             ],
             [['password_repeat'], 
-
                 'compare', 
                 'compareAttribute' => 'contrasena',
-                'on' => self::SCENARIO_CREAR,
                 'skipOnEmpty' => false,
-
+                'on' => [self::SCENARIO_CREAR, self::SCENARIO_UPDATE],
             ],
             [['password_repeat'],
-            
-                'required'
+                'required',
+                'on' => [self::SCENARIO_DEFAULT, self::SCENARIO_CREAR],
             ],
         ];
     }
@@ -131,7 +142,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
             'provincia' => 'Provincia',
             'pais' => 'Pais',
             'foto_perfil' => 'Foto Perfil', 
-            'bibliografia' => 'Bibliografia', 
+            'biografia' => 'Biografía', 
             'valoracion' => 'Valoracion', 
         ];
     }
@@ -186,7 +197,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function getSeguidores()
     {
-        return $this->hasMany(Seguidores::className(), ['usuario_id' => 'id'])->inverseOf('usuario');
+        return $this->hasMany(Seguidores::class, ['usuario_id' => 'id'])->inverseOf('usuario');
     }
 
     /**
@@ -196,7 +207,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function getSeguidores0()
     {
-        return $this->hasMany(Seguidores::className(), ['seguidor' => 'id'])->inverseOf('seguidor0');
+        return $this->hasMany(Seguidores::class, ['seguidor' => 'id'])->inverseOf('seguidor0');
     }
 
 
@@ -483,12 +494,19 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
             return false;
         }
 
-
+        $security = Yii::$app->security;
         if ($insert) {
             if ($this->scenario === self::SCENARIO_CREAR) {
-                $security = Yii::$app->security;
                 $this->auth_key = $security->generateRandomString();
                 $this->contrasena = $security->generatePasswordHash($this->contrasena);
+            }
+        } else {
+            if ($this->scenario === self::SCENARIO_UPDATE) {
+                if ($this->contrasena === '') {
+                    $this->contrasena = $this->getOldAttribute('contrasena');
+                } else {
+                    $this->contrasena = $security->generatePasswordHash($this->contrasena);
+                }
             }
         }
 

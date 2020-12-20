@@ -166,7 +166,8 @@ $this->registerJs($js);
             Html::beginForm(['site/logout'], 'post').Html::submitButton(
             'Logout ' . Html::tag('i', Icon::show('power-off'), ['class' => '']).'',
             ['class' => 'dropdown-item'],).Html::endForm(),
-            ['label' => 'Perfil', 'url' => ['usuarios/view', 'alias' => Yii::$app->user->identity->alias]]
+            ['label' => 'Perfil', 'url' => ['usuarios/view', 'alias' => Yii::$app->user->identity->alias]],
+            ['label' => 'Editar cuenta', 'url' => ['usuarios/update', 'id' => Yii::$app->user->identity->id]]
         ];
         
     }

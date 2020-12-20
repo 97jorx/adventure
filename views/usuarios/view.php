@@ -107,6 +107,7 @@ $this->registerJs($js);
                           });",
                   ]);
                   ?> 
+                  
                 </div>
             </div>
         <?php endif; ?>
@@ -151,7 +152,7 @@ $this->registerJs($js);
             <p class="desc-stat">Seguidores</p>
           </div>
         </div>
-        <p class="desc"><?= $model->bibliografia ?></p>
+        <p class="desc"><?= $model->biografia ?></p>
        
       </div>
       <?php if($blogs_count > 0) : ?> 

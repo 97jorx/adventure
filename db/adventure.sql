@@ -38,7 +38,7 @@ CREATE TABLE usuarios
    , provincia    varchar(255)
    , pais         varchar(255)
    , foto_perfil  varchar(255)
-   , bibliografia varchar(255)
+   , biografia    varchar(255)
 );
 
 
@@ -195,7 +195,7 @@ VALUES ('Conectado'),
        ('Desconectado');
 
 
-INSERT INTO usuarios (username, nombre, alias,apellidos, email, rol, fecha_nac, contrasena, poblacion, provincia, pais, foto_perfil, bibliografia)
+INSERT INTO usuarios (username, nombre, alias,apellidos, email, rol, fecha_nac, contrasena, poblacion, provincia, pais, foto_perfil, biografia)
 VALUES (
          'admin', 'admin', 'admin', 'admin',
          'adventure@gmail.com', 'administrador', '1978-06-22',

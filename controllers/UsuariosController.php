@@ -167,13 +167,19 @@ class UsuariosController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id = null)
     {
-        $model = $this->findModel($id);
+        $model = Usuarios::findOne($id);
+        $model->scenario = Usuarios::SCENARIO_UPDATE;
 
+        // var_dump($model->validate()); die();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            Yii::$app->session->setFlash('success', 'Se ha modificado correctamente.');
+            return $this->goHome();
         }
+
+        $model->contrasena = '';
+        $model->password_repeat = '';
 
         return $this->render('update', [
             'model' => $model,
@@ -372,6 +378,18 @@ class UsuariosController extends Controller
         return $this->render('_usuariosSeguidores', [
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+
+
+    public function actionStatus($estado)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $estados = Estados::find()
+        ->indexBy('id')
+        ->column();
+        return $estados;
     }
     
     /**

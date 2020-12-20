@@ -24,15 +24,7 @@ class m200922_181405_user_admin_insert extends Migration
             'auth_key' => Yii::$app->security->generateRandomString(60),
         ]);
     }
-    // , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
-    // , fecha_nac    timestamp(0)   NOT NULL
-    // , contrasena   varchar(255)   NOT NULL
-    // , auth_key     varchar(255)
-    // , poblacion    varchar(255)
-    // , provincia    varchar(255)
-    // , pais         varchar(255)
-    // , foto_perfil  varchar(255)
-    // , bibliografia varchar(255)
+
     /**
      * {@inheritdoc}
      */

@@ -43,13 +43,13 @@ class UsuariosSearch extends Usuarios
     public function search($params, $id = null)
     {
         $propietario = Yii::$app->user->id;
-        if (!isset($id)) {
+        if ($id == null) {
             $query = Usuarios::find()
             ->select([
                         'usuarios.*', 
-                        'DISTINCT COUNT(s.id) AS followers', 
-                        'DISTINCT COUNT(s.id) AS following',
-                        'DISTINCT SUM(n.nota) AS valoracion'
+                        // 'DISTINCT COUNT(s.id) AS followers', 
+                        // 'DISTINCT COUNT(s.id) AS following',
+                        // 'DISTINCT SUM(n.nota) AS valoracion'
             ])
             ->joinWith('seguidores s')
             ->joinWith('notas n')

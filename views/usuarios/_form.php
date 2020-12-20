@@ -14,28 +14,17 @@ use yii\bootstrap4\ActiveForm;
 
     <?php $form = ActiveForm::begin([ 
         'id' => 'usuarios-form',
-        'enableAjaxValidation' => true,
-        ]); ?>
+    ]); ?>
     
 
-    <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
-
-
+    <?= $form->field($model, 'alias')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'biografia')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'foto_perfil')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'fecha_nac')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'apellidos')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'contrasena')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'auth_key')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'poblacion')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'provincia')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'pais')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'contrasena')->passwordInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'password_repeat')->passwordInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

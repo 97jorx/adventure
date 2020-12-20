@@ -96,9 +96,7 @@ class SiteController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
         } else if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            
-            
-            
+            $this->sessionStatus('login');            
             return Yii::$app->response->redirect(Url::to(['site/index']));
         }
 
@@ -115,7 +113,43 @@ class SiteController extends Controller
 
 
     }
-   
+
+    
+
+
+    /**
+     * Si el usuario logueado esta en la tabla de session entonces el 
+     * estado pasa a ser 'Conectado'.
+     * 
+     * Si el usuario se desloguea y ya no esta en la tabla de session el 
+     * estado pasa a ser 'Desconectado'
+     * 
+     * 1 => Conectado.
+     * 2 => Ausente.
+     * 3 => Ocupado.
+     * 4 => Desconectado.
+     * @param $accion 
+     */
+    public function sessionStatus($accion){
+        $session = (new Query())
+        ->select('user_id')
+        ->from('session')
+        ->where(['user_id' => Yii::$app->user->id])
+        ->scalar();
+
+        
+        $model = Usuarios::findOne($session);
+        if($session && $accion == 'login') {
+            $model->estado_id = 1;
+        } else if($accion == 'logout') {
+            $model->estado_id = 4;
+        } else if($session == null) {
+            $model->estado_id = 4;
+        }
+        
+        $model->save(false);
+    }
+
 
     /**
      * Logout action.
@@ -124,7 +158,9 @@ class SiteController extends Controller
      */
     public function actionLogout()
     {
+        $this->sessionStatus('logout');
         Yii::$app->user->logout();
+        
         return $this->goHome();
     }
 
