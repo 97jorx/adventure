@@ -52,27 +52,27 @@ class UsuariosController extends Controller
     public function actionRegistrar()
     {
             
-            $model = new Usuarios(['scenario' => Usuarios::SCENARIO_CREAR]);
-            
-            if ($model->load(Yii::$app->request->post()) && $model->save() ) {
-                Yii::$app->session->setFlash('success', 'Se ha creado el usuario.');
-                return $this->redirect(['site/index']);
-            }
-            if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-                Yii::$app->response->format = Response::FORMAT_JSON;
-                return ActiveForm::validate($model);
-            }
+        $model = new Usuarios(['scenario' => Usuarios::SCENARIO_CREAR]);
+        
+        if ($model->load(Yii::$app->request->post()) && $model->save() ) {
+            Yii::$app->session->setFlash('success', 'Se ha creado el usuario.');
+            return $this->redirect(['site/index']);
+        }
+        if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
 
 
-            if(Yii::$app->request->isAjax){
-                return $this->renderAjax('registrar', [
-                    'model' => $model,
-                ]);                
-            } else {
-                return $this->render('registrar', [
-                    'model' => $model,
-                ]);
-            }
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('registrar', [
+                'model' => $model,
+            ]);                
+        } else {
+            return $this->render('registrar', [
+                'model' => $model,
+            ]);
+        }
             
 
     }

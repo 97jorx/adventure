@@ -92,11 +92,11 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
             ['email', 'email'],
             [['estado_id'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::class, 'targetAttribute' => ['estado_id' => 'id']],
             
-            [
-                ['fecha_nac'],
-                'required',
-                'on' => [self::SCENARIO_CREAR],
-            ],
+            // [
+            //     ['fecha_nac'],
+            //     'required',
+            //     'on' => [self::SCENARIO_CREAR],
+            // ],
             [
                 ['contrasena'],
                 'trim',
