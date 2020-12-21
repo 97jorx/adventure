@@ -30,7 +30,7 @@ use yii\helpers\Html;
                             <i><?= Icon::show('users');?></i>
                         </div>
                         <div class="col-6">
-                        <?= Html::a('Seguidores', ['usuarios/userseguidores']) ?>
+                        <?= Html::a('Seguidos', ['usuarios/userseguidos']) ?>
                         </div>
                     </div>
                 </li>

@@ -6,7 +6,7 @@ use yii\bootstrap4\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
 
-$this->title = 'Mis seguidores';
+$this->title = 'Mis amigos';
 $this->params['breadcrumbs'][] = $this->title;
 
 $js = <<< EOT
@@ -31,7 +31,7 @@ $this->registerJs($js);
                 'buttons' => [
                     'seguir' => function ($url, $model) {
                         $seguir = Url::to(['usuarios/seguir', 'alias' => $model->alias]);
-                        $existe = ($model->existeBloqueado($model->alias)) ? ('Dejar de seguir') : ('Seguir'); 
+                        $existe = ($model->existeSeguidor($model->alias)) ? ('Dejar de seguir') : ('Seguir'); 
                         return Html::a($existe, '#', ['class' => 'btn btn-danger login', 'aria-label' => $existe, 'data-balloon-pos' => 'up',
                             'onclick' =>"
                             event.preventDefault();

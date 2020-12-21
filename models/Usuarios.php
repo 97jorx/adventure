@@ -478,9 +478,9 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->auth_key === $authKey;
     }
 
-    public static function findPorNombre($nombre)
+    public static function findPorNombre($username)
     {
-        return static::findOne(['nombre' => $nombre]);
+        return static::findOne(['username' => $username]);
     }
 
     public function validateContrasena($contrasena)
@@ -531,12 +531,12 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
      * Consulta para mostrar Los seguidores del usuarios actual.
      * @return query
      */
-    public static function usuariosSeguidores()
+    public static function usuariosSeguidos()
     {
         $uid = Yii::$app->user->id;
         $query =  static::find()
-        ->joinWith('seguidores0 s')
-        ->where(['s.usuario_id' => $uid]);
+        ->joinWith('seguidores s')
+        ->where(['s.seguidor' => $uid]);
         return $query;
     }
 

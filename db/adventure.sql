@@ -195,7 +195,7 @@ VALUES ('Conectado'),
        ('Desconectado');
 
 
-INSERT INTO usuarios (username, nombre, alias,apellidos, email, rol, fecha_nac, contrasena, poblacion, provincia, pais, foto_perfil, biografia)
+INSERT INTO usuarios (username, nombre, alias, apellidos, email, rol, fecha_nac, contrasena, poblacion, provincia, pais, foto_perfil, biografia)
 VALUES (
          'admin', 'admin', 'admin', 'admin',
          'adventure@gmail.com', 'administrador', '1978-06-22',

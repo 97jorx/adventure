@@ -362,10 +362,10 @@ class UsuariosController extends Controller
      * Genero un DataProvider para mostrar los Blogs favoritos del usuario actual.
      * @return DataProvider
      */
-    public function actionUserseguidores()
+    public function actionUserseguidos()
     {
      
-        $query = Usuarios::usuariosSeguidores();
+        $query = Usuarios::usuariosSeguidos();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -375,7 +375,7 @@ class UsuariosController extends Controller
         ]);
 
         
-        return $this->render('_usuariosSeguidores', [
+        return $this->render('_usuariosSeguidos', [
             'dataProvider' => $dataProvider,
         ]);
     }
