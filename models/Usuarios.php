@@ -515,6 +515,16 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
 
 
     /**
+     * Lista de los estados que puede tener el usuario
+     */
+    public function estados() {
+        $estados = Estados::find()->select('estado')
+        ->indexBy('id')
+        ->column();
+        return $estados;
+    }
+    
+    /**
      * Consulta para mostrar Los bloqueados del usuarios actual
      * @return query
      */

@@ -6,6 +6,7 @@ use Yii;
 use app\models\Blogs;
 use app\models\Bloqueados;
 use app\models\Comunidades;
+use app\models\Estados;
 use app\models\ImagenForm;
 use app\models\Seguidores;
 use app\models\Usuarios;
@@ -29,21 +30,23 @@ class UsuariosController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::class,
-                'only' => ['login', 'logout'],
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'actions' => ['registrar'],
-                        'roles' => ['?'],
-                    ],
-                ],
-            ],
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['index'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rules, $action) {
+                           return Yii::$app->user->identity->username === 'admin';
+                        },
+                    ],
                 ],
             ],
         ];
@@ -382,14 +385,34 @@ class UsuariosController extends Controller
 
 
 
-    public function actionStatus($estado)
+    public function actionStatus($estado = null)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
-
+        
         $estados = Estados::find()
-        ->indexBy('id')
-        ->column();
-        return $estados;
+            ->select('estado')
+            ->indexBy('id')
+            ->column();
+
+        if($estado != null) {
+            if(is_numeric($estado) && in_array($estados[$estado], $estados) ){
+                $model = Usuarios::findOne(Yii::$app->user->id);
+                $model->estado_id = $estado;
+                $model->save(false);
+            } else {
+                $json = [
+                    'message' => 'Error: se ha producido un error inesperado',
+                ];
+                return json_encode($json);
+            }
+        } else {
+            $json = [
+                'estados' => $estados,
+                'estado' => Yii::$app->user->identity->estado_id,
+            ];
+            return json_encode($json);
+        }
+
     }
     
     /**
