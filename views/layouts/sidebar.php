@@ -15,7 +15,9 @@ $.ajax({
     url: '$url',
     success: function (data, code, jqXHR) {
         data = JSON.parse(data);
-        
+        var color = data.color;
+        var icon = $('#color');
+        icon.attr('style', 'color:'+color);
         var sel = $('#estados');
         var estado = data.estado;
         sel.empty();

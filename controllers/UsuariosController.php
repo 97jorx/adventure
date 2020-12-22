@@ -405,16 +405,16 @@ class UsuariosController extends Controller
 
         if($estado != null) {
             if(is_numeric($estado) && in_array($estados[$estado], $estados) ){
-                $json = [
+                $color = [
                     'color' => ($estado == 1) ? ('green') : 
-                    (($estado == 2) ? ('yellow') : 
-                    (($estado == 3) ? ('orange') : 
-                     ('red'))),
+                              (($estado == 2) ? ('yellow') : 
+                              (($estado == 3) ? ('orange') : 
+                               ('red'))),
                 ];
                 $model = Usuarios::findOne(Yii::$app->user->id);
                 $model->estado_id = $estado;
                 $model->save(false);
-                return json_encode($json);
+                return json_encode($color);
             } else {
                 $json = [
                     'message' => 'Error: se ha producido un error inesperado',
@@ -424,8 +424,11 @@ class UsuariosController extends Controller
         } else {
             $json = [
                 'estados' => $estados,
-                'estado' => $status,
-
+                'estado' =>  $status,
+                'color' =>  ($status == 1) ? ('green') : 
+                           (($status == 2) ? ('yellow') : 
+                           (($status == 3) ? ('orange') : 
+                            ('red'))),
             ];
             return json_encode($json);
         }
