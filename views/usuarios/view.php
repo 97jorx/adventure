@@ -14,7 +14,7 @@ use yii\widgets\DetailView;
 // $this->params['breadcrumbs'][] = ['label' => 'Comunidades', 'url' => ['comunidades/index']];
 // $this->params['breadcrumbs'][] = $model->username;
 
-$name = Yii::$app->user->identity->username;
+$name = Yii::$app->user->identity->alias;
 $this->registerCssFile("@web/css/perfil.css");
 
 $js = <<< EOT
@@ -184,7 +184,7 @@ $this->registerJs($js);
                               <div class="col-md-2">
                                 <p class="card-text"><small><?= Icon::show('heart') . $model->favs ?></small></p>
                               </div>
-                              <?php if($model->usuario->nombre == $name) { ?>
+                              <?php if($model->usuario->alias == $name) { ?>
                                 <div class="col-md-2">
                                   <p class="card-text"><small><?= Html::a(Icon::show('pencil'), ['blogs/update', 'id' => $model->id]) ?></small></p>
                                 </div>
