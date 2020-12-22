@@ -321,6 +321,16 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
    }
 
 
+    /**
+     * Gets query for [[Comentarios]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getComentarios()
+    {
+        return $this->hasMany(Comentarios::class, ['usuario_id' => 'id'])->inverseOf('usuario');
+    }
+
 
     /**
      * SETTER DE @param followers

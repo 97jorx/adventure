@@ -86,7 +86,7 @@ CREATE TABLE comentarios (
      id          bigserial      PRIMARY KEY 
    , usuario_id   bigint         NOT NULL REFERENCES usuarios (id)
    , blog_id      bigint         REFERENCES blogs (id)
-   , reply_id     bigint         NOT NULL REFERENCES comentarios (id) 
+   , reply_id     bigint         REFERENCES comentarios (id) 
    , texto        varchar(255)   NOT NULL
    , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
 );

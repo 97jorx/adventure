@@ -8,13 +8,16 @@ use Yii;
  * This is the model class for table "comentarios".
  *
  * @property int $id
- * @property int $user_id_comment
- * @property int $id_comment_blog
- * @property string|null $texto
+ * @property int $usuario_id
+ * @property int|null $blog_id
+ * @property int $reply_id
+ * @property string $texto
  * @property string $created_at
  *
- * @property Blogs $commentBlog
- * @property Usuarios $userIdComment
+ * @property Blogs $blog
+ * @property Comentarios $reply
+ * @property Comentarios[] $comentarios
+ * @property Usuarios $usuario
  */
 class Comentarios extends \yii\db\ActiveRecord
 {
@@ -32,13 +35,14 @@ class Comentarios extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id_comment', 'id_comment_blog'], 'required'],
-            [['user_id_comment', 'id_comment_blog'], 'default', 'value' => null],
-            [['user_id_comment', 'id_comment_blog'], 'integer'],
+            [['usuario_id', 'texto'], 'required'],
+            [['usuario_id', 'blog_id', 'reply_id'], 'default', 'value' => null],
+            [['usuario_id', 'blog_id', 'reply_id'], 'integer'],
             [['created_at'], 'safe'],
             [['texto'], 'string', 'max' => 255],
-            [['id_comment_blog'], 'exist', 'skipOnError' => true, 'targetClass' => Blogs::class, 'targetAttribute' => ['id_comment_blog' => 'id']],
-            [['user_id_comment'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['user_id_comment' => 'id']],
+            [['blog_id'], 'exist', 'skipOnError' => true, 'targetClass' => Blogs::class, 'targetAttribute' => ['blog_id' => 'id']],
+            [['reply_id'], 'exist', 'skipOnError' => true, 'targetClass' => Comentarios::class, 'targetAttribute' => ['reply_id' => 'id']],
+            [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['usuario_id' => 'id']],
         ];
     }
 
@@ -49,30 +53,51 @@ class Comentarios extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'user_id_comment' => 'User Id Comment',
-            'id_comment_blog' => 'Id Comment Blog',
+            'usuario_id' => 'Usuario ID',
+            'blog_id' => 'Blog comentado',
+            'reply_id' => 'Usuario respuesta',
             'texto' => 'Texto',
             'created_at' => 'Created At',
         ];
     }
 
     /**
-     * Gets query for [[CommentBlog]].
+     * Gets query for [[Blog]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCommentBlog()
+    public function getBlog()
     {
-        return $this->hasOne(Blogs::class, ['id' => 'id_comment_blog'])->inverseOf('comentarios');
+        return $this->hasOne(Blogs::class, ['id' => 'blog_id'])->inverseOf('comentarios');
     }
 
     /**
-     * Gets query for [[UserIdComment]].
+     * Gets query for [[Reply]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUserIdComment()
+    public function getReply()
     {
-        return $this->hasOne(Usuarios::class, ['id' => 'user_id_comment'])->inverseOf('comentarios');
+        return $this->hasOne(Comentarios::class, ['id' => 'reply_id'])->inverseOf('comentarios');
+    }
+
+    /**
+     * Gets query for [[Comentarios]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getComentarios()
+    {
+        return $this->hasMany(Comentarios::class, ['reply_id' => 'id'])->inverseOf('reply');
+    }
+
+    /**
+     * Gets query for [[Usuario]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUsuario()
+    {
+        return $this->hasOne(Usuarios::class, ['id' => 'usuario_id'])->inverseOf('comentarios');
     }
 }

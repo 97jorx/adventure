@@ -16,6 +16,29 @@ $this->params['breadcrumbs'][] = $this->title;
 $url = Url::to(['blogs/like', 'id' => $model->id]);
 $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gusta']);
 $name = Yii::$app->user->identity->username;
+
+$js = <<< EOT
+$('body').on('beforeSubmit', ‘form#formId', function () {
+
+  var form = $(this);
+
+  if (form.find('.has-error').length) {
+       return false;
+  }
+
+  $.ajax({
+       url: form.attr('action'),
+       type: 'post',
+       data: form.serialize(),
+       success: function (response) {
+            // do something with response
+       }
+  });
+  return false;
+});
+EOT;
+$this->registerJs($js);
+
 ?>
 
 <div class="container">
@@ -72,12 +95,12 @@ $name = Yii::$app->user->identity->username;
         <div class="card my-4">
           <h5 class="card-header">Dejar comentario:</h5>
           <div class="card-body">
-            <form>
-              <div class="form-group">
-                <textarea class="form-control" rows="3"></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary">Aceptar</button>
-            </form>
+            <?= Html::beginForm('comentarios/comentar') ?>
+            <div class="form-group">
+              <?= Html::textArea('comentar', '', ['class' => 'form-control', 'rows' => "3"])?>
+            </div>
+            <?= Html::submitButton('Comentar', ['class' => 'btn btn-info']) ?>
+           <?= Html::endForm() ?>
           </div>
         </div>
         <div class="media mb-4">
