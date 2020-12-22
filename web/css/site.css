@@ -200,6 +200,7 @@ a.desc:after {
   top:-20px;
   border-radius:50%;
 }
+
 .card-font {
   font-size: 0.6rem;
 }
@@ -271,6 +272,8 @@ html {
    .vertical-minus {
       display: none;
    }
+
+   
  }
 
 
@@ -381,9 +384,6 @@ select2-results__option:hover a {
 /* SIDE LEFT NAVBAR  'PT Sans' */
   
 @media screen and (max-width: 991px) {
-   #sidenav-left {
-      margin-top: 30%;
-   }
 
    .navbar-nav {
       flex-direction: row;
@@ -401,9 +401,12 @@ select2-results__option:hover a {
      margin-right: -15px !important;
    }
    
-    .navbar-right {
+   .navbar-right {
      float: right !important;
    }
+
+  
+
    
  }
 
@@ -476,7 +479,7 @@ select2-results__option:hover a {
    top: 40px;
    left: 0;
    background-color: #313131;
-   overflow-x: hidden;
+   overflow: hidden;
    transition: 0.5s;
    margin-top: 4%;
 }
@@ -517,3 +520,44 @@ div[id*="success-0"] {
    text-align: center;
 }
  
+
+
+/* DROPDOWN MENU */
+
+
+ .box {
+   position: relative;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+ }
+ 
+
+ .box select {
+   background-color: #ffffff;
+   color: #1d1d1d;
+   padding: 12px;
+   width: 200px;
+   border: none;
+   font-size: 20px;
+   box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+   outline: none;
+ }
+
+
+ .box::before {
+   font-family: 'PT Sans';
+   position: absolute;
+   text-align: center;
+   font-size: 28px;
+   line-height: 45px;
+   pointer-events: none;
+ }
+ 
+
+ .box select option {
+   padding: 30px;
+ }
+
+ 
+

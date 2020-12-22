@@ -384,11 +384,20 @@ class UsuariosController extends Controller
     }
 
 
-
+    /**
+     * Acción que permite mediante AJAX cambiar el estado del usuario actual
+     * y guardarlo en la base de datos.
+     * 
+     * Si el usuario cierra sesión estará en Desconectado.
+     * Si el usuario inicia sesión estará en Desconectado.
+     *
+     * @param [integer] $estado es el ID del estado en la tabla de Estados.
+     * @return JSON
+     */
     public function actionStatus($estado = null)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
-        
+        $status = Yii::$app->user->identity->estado_id;
         $estados = Estados::find()
             ->select('estado')
             ->indexBy('id')
@@ -396,9 +405,16 @@ class UsuariosController extends Controller
 
         if($estado != null) {
             if(is_numeric($estado) && in_array($estados[$estado], $estados) ){
+                $json = [
+                    'color' => ($estado == 1) ? ('green') : 
+                    (($estado == 2) ? ('yellow') : 
+                    (($estado == 3) ? ('orange') : 
+                     ('red'))),
+                ];
                 $model = Usuarios::findOne(Yii::$app->user->id);
                 $model->estado_id = $estado;
                 $model->save(false);
+                return json_encode($json);
             } else {
                 $json = [
                     'message' => 'Error: se ha producido un error inesperado',
@@ -408,7 +424,8 @@ class UsuariosController extends Controller
         } else {
             $json = [
                 'estados' => $estados,
-                'estado' => Yii::$app->user->identity->estado_id,
+                'estado' => $status,
+
             ];
             return json_encode($json);
         }

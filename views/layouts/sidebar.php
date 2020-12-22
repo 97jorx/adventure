@@ -15,20 +15,21 @@ $.ajax({
     url: '$url',
     success: function (data, code, jqXHR) {
         data = JSON.parse(data);
+        
         var sel = $('#estados');
         var estado = data.estado;
-        console.log(data);
         sel.empty();
         
         for (var i in data.estados) {
             console.log(data.estados[i]);
             if(i == estado) {
-                sel.append(`<option selected value="\${i}">\${data.estados[i]}</option>`);
+                sel.append(`<option class='dropdown-item' selected value="\${i}">\${data.estados[i]}</option>`);
             } else {
-                sel.append(`<option value="\${i}">\${data.estados[i]}</option>`);
+                sel.append(`<option class='dropdown-item' value="\${i}">\${data.estados[i]}</option>`);
             }
-            
         }
+
+        
     }   
 });
 
@@ -44,7 +45,10 @@ $('#estados').on('change', function (ev) {
         }
         }).done(function(data, textStatus, jqXHR) {
             data = JSON.parse(data);
-        }).fail(function( data, textStatus, jqXHR ) {
+            var color = data.color;
+            var icon = $('#color');
+            icon.attr('style', 'color:'+color);
+        }).fail(function(data, textStatus, jqXHR) {
             console.log(data.message);
         });  
 });
@@ -59,18 +63,21 @@ $this->registerJs($js);
             <?php $imagen = Yii::getAlias('@imgUrl') . '/' . Yii::$app->user->identity->foto_perfil?>
             <?= Html::a(Html::img(isset(Yii::$app->user->identity->foto_perfil) ? ($imagen) : ($fakeimg), ['class' => 'img'])) ?>
         </div>
+        <div class="masonry-title text-center" id="nav-title">
+            <?= ucfirst(Yii::$app->user->identity->alias) ?>
+            <?= Icon::show('circle', ['id' => 'color']) ?>
+        </div>
     </div>
     <div class="row">
         <div class="masonry-title text-center" id="nav-title">
-            <h5 itemprop="title">
-            <?= ucfirst(Yii::$app->user->identity->alias) ?>
-            <?= Html::dropDownList('estados', '', $estados, 
-                [
-                    'id' => 'estados',
-                    'options' => [ 'selected' => Yii::$app->user->identity->estado_id]
-                ], 
-             ) ?>
-            </h5>
+            <div class="box">
+                <?= Html::dropDownList('estados', '', $estados, 
+                    [
+                        'id' => 'estados',
+                        'options' => [ 'selected' => Yii::$app->user->identity->estado_id]
+                    ], 
+                ) ?>
+             </div>
         </div>
     </div>
     <div class="row">
