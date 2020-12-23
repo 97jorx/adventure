@@ -47,9 +47,21 @@ $('body').on('submit', 'form#comentar', function(event) {
                   <div class="media mb-4">
                     <img class="d-flex mr-3 rounded-circle" src='https://picsum.photos/50/50?random=1' alt="">
                     <div class="media-body">
-                      <h5 class="mt-0">\${data.alias}</h5>
-                      <span>\${data.fecha}</span>
+                    <div class='row'>
+                      <h5 class="mt-0 ml-3 pr-2"> \${data.alias} </h5>
+                      <i class="minutes" style="color:grey"> \${data.fecha} </i>
+                    </div>
                       <div>\${data.texto}</div>
+                        <div class='container mt-2'>
+                        <div class='row'>
+                          <div class='col-3'>
+                            <a href="#" style="color:grey; font-size:0.9rem"><i class="fas fa-thumbs-up"></i> </a>
+                          </div>
+                          <div class='col-3'>
+                            <div style="color:grey; font-size:0.9rem">RESPONDER</div>
+                          </div>
+                        </div>
+                        </div>
                     </div>
                   </div>
                 </div>
@@ -136,15 +148,17 @@ $this->registerJs($js);
               <div class="media mb-4">
                 <img class="d-flex mr-3 rounded-circle" src='https://picsum.photos/50/50?random=1' alt="">
                 <div class="media-body">
-                  <h5 class="mt-0"><?= ucfirst($comentario->usuario->alias) ?></h5>
-                  <span class='minutes' style='color:grey'><?= Yii::$app->AdvHelper->toMinutes($comentario->created_at) ?></span>
+                <div class='row'>
+                  <i class="ml-3 pr-2" style='font-size:0.8rem' ><?= ucfirst($comentario->usuario->alias) ?></i>
+                  <i class='minutes' style='color:grey; font-size:0.8rem'><?= Yii::$app->AdvHelper->toMinutes($comentario->created_at) ?></i>
+                </div>
                   <div class='texto' ><?= $comentario->texto ?></div>
                 <div class='container mt-2'>
                   <div class='row'>
-                    <div class='col-6'>
+                    <div class='col-3'>
                       <?= Html::a(Icon::show('thumbs-up'), '#', ['style' => 'color:grey; font-size:0.9rem']); ?>
                     </div>
-                    <div class='col-6'>
+                    <div class='col-3'>
                     <?= Html::tag('div', 'RESPONDER', ['style' => 'color:grey; font-size:0.9rem']); ?>
                     </div>
                   </div>
