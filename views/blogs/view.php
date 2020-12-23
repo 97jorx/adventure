@@ -18,7 +18,7 @@ $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gust
 $name = Yii::$app->user->identity->username;
 
 $js = <<< EOT
-$('body').on('beforeSubmit', ‘form#formId', function () {
+$('body').on('submit', 'form#comentar', function () {
 
   var form = $(this);
 
@@ -28,10 +28,10 @@ $('body').on('beforeSubmit', ‘form#formId', function () {
 
   $.ajax({
        url: form.attr('action'),
-       type: 'post',
+       type: 'POST',
        data: form.serialize(),
-       success: function (response) {
-            // do something with response
+       success: function (data) {
+            console.log(data);
        }
   });
   return false;
@@ -95,9 +95,9 @@ $this->registerJs($js);
         <div class="card my-4">
           <h5 class="card-header">Dejar comentario:</h5>
           <div class="card-body">
-            <?= Html::beginForm('comentarios/comentar') ?>
+            <?= Html::beginForm(['comentarios/comentar', 'blogid' => $model->id], 'post', ['id' => 'comentar']) ?>
             <div class="form-group">
-              <?= Html::textArea('comentar', '', ['class' => 'form-control', 'rows' => "3"])?>
+              <?= Html::textArea('texto', '', ['class' => 'form-control', 'rows' => "3"]) ?>
             </div>
             <?= Html::submitButton('Comentar', ['class' => 'btn btn-info']) ?>
            <?= Html::endForm() ?>

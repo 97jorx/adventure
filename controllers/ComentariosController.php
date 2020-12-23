@@ -4,10 +4,10 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Comentarios;
-use app\models\ComentariosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * ComentariosController implements the CRUD actions for Comentarios model.
@@ -41,32 +41,42 @@ class ComentariosController extends Controller
      * texto ->  El texto del comentario.
      * 
      */
-    public function actionComentar()
+    public function actionComentar($blogid = null)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
 
         $uid = Yii::$app->user->id;
-        $blogid = Yii::$app->request->get('id');
         $texto = Yii::$app->request->post('texto');
         $model = new Comentarios();    
 
-        $json = [];
+        $json = ['hola'];
        
-            
-            if ($blogid != null) {
-                $model->usuario_id = $uid;
-                $model->blog_id = $blogid;
-                $model->texto = $texto;
-                $model->save();
-                $json = [
-                    'mensaje' => 'Se ha creado el comentario',
-                    'texto' => $texto,
-                    'usuario_id' => $uid,
-                    'blogid' => $blogid,
-                ];
-            } 
-       
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+
+     
+        if ($blogid != null) {
+            $model->usuario_id = $uid;
+            $model->blog_id = $blogid;
+            $model->texto = $texto;
+            $model->save();
+            $json = [
+                'mensaje' => 'Se ha creado el comentario',
+                'texto' => $texto,
+                'usuario_id' => $uid,
+                'blogid' => $blogid,
+            ];
+        } else if ($texto == null || $texto == '') {
+            $json = [
+                'mensaje' => 'No debe estar vacio',
+                'id' => $blogid,
+            ];
+        }
+        
         return json_encode($json);
+
     }
 
 

@@ -97,7 +97,7 @@ class Blogs extends \yii\db\ActiveRecord
      */
     public function getComentarios()
     {
-        return $this->hasMany(Comentarios::className(), ['blog_id' => 'id'])->inverseOf('blog');
+        return $this->hasMany(Comentarios::class, ['blog_id' => 'id'])->inverseOf('blog');
     }
 
 
