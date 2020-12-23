@@ -19,19 +19,24 @@ $name = Yii::$app->user->identity->username;
 
 $js = <<< EOT
 $('body').on('submit', 'form#comentar', function () {
-
   var form = $(this);
-
-  if (form.find('.has-error').length) {
-       return false;
-  }
-
+  var div = $('#comentarios');
   $.ajax({
        url: form.attr('action'),
        type: 'POST',
        data: form.serialize(),
        success: function (data) {
-            console.log(data);
+         data = JSON.parse(data);
+         console.log(data);
+        div.append(
+          `<div class="media mb-4">
+             <img class="d-flex mr-3 rounded-circle" src='https://picsum.photos/100/100?random=1' alt="">
+            <div class="media-body">
+              <h5 class="mt-0">\${data.alias}</h5>
+              <span>\${data.fecha}</span>
+              <div>\${data.texto}</div>
+            </div>
+          </div>`)
        }
   });
   return false;
@@ -95,7 +100,10 @@ $this->registerJs($js);
         <div class="card my-4">
           <h5 class="card-header">Dejar comentario:</h5>
           <div class="card-body">
-            <?= Html::beginForm(['comentarios/comentar', 'blogid' => $model->id], 'post', ['id' => 'comentar']) ?>
+            <?= Html::beginForm(['comentarios/comentar', 'blogid' => $model->id], 'post', [
+              'id' => 'comentar',
+              'enableAjaxValidation' => true
+            ]) ?>
             <div class="form-group">
               <?= Html::textArea('texto', '', ['class' => 'form-control', 'rows' => "3"]) ?>
             </div>
@@ -103,14 +111,15 @@ $this->registerJs($js);
            <?= Html::endForm() ?>
           </div>
         </div>
-        <div class="media mb-4">
+       <div id='comentarios'>
+        <!-- <div class="media mb-4">
           <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
           <div class="media-body">
             <h5 class="mt-0">Nombre del comentador</h5>
             Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-          </div>
+          </div> -->
         </div>
-        <div class="media mb-4">
+        <!-- <div class="media mb-4">
           <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
           <div class="media-body">
             <h5 class="mt-0">Nombre del comentador</h5>
@@ -130,7 +139,8 @@ $this->registerJs($js);
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
+       </div>
       </div>
   </div>
 </div>

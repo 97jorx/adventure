@@ -48,32 +48,36 @@ class ComentariosController extends Controller
         $uid = Yii::$app->user->id;
         $texto = Yii::$app->request->post('texto');
         $model = new Comentarios();    
+        $alias = ucfirst(Yii::$app->user->identity->alias);
 
-        $json = ['hola'];
-       
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
-        }
-
-     
+        $json = [];
+        
         if ($blogid != null) {
             $model->usuario_id = $uid;
             $model->blog_id = $blogid;
             $model->texto = $texto;
+            if(!$model->validate()) {
+                $json = [
+                    'mensaje' => 'No debe estar vacio',
+                    'code' => 1,
+                ];
+                return json_encode($json);
+            }
+    
             $model->save();
+            $fecha = Comentarios::find()
+            ->select('created_at')
+            ->where(['id' => $model->id])
+            ->scalar();
             $json = [
                 'mensaje' => 'Se ha creado el comentario',
+                'foto' => Yii::$app->user->identity->foto_perfil,
+                'alias' => $alias,
+                'fecha' => $fecha,
                 'texto' => $texto,
-                'usuario_id' => $uid,
-                'blogid' => $blogid,
             ];
-        } else if ($texto == null || $texto == '') {
-            $json = [
-                'mensaje' => 'No debe estar vacio',
-                'id' => $blogid,
-            ];
-        }
+        } 
+
         
         return json_encode($json);
 
