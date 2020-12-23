@@ -20,8 +20,14 @@ Yii::$app->formatter->locale = 'es-ES';
 
 $js = <<< EOT
 
-$('text-area').on('input', (event) => {
-  console.log('hola');
+$('#area-texto').on('input', (event) => {
+  var self = $(this);
+  console.log();
+  if($('#area-texto').val().length > 0){
+      $('#submitComent').fadeIn();
+  } else {
+      $('#submitComent').fadeOut();
+  }
 });
 
 $('body').on('submit', 'form#comentar', function(event) {
@@ -33,9 +39,10 @@ $('body').on('submit', 'form#comentar', function(event) {
        data: form.serialize(),
        success: function (data) {
          data = JSON.parse(data);
-         console.log(data);
+         $('#submitComent').fadeOut();
+         $('#area-texto').val('');
         if(!data.code) {
-            div.append(`
+            div.prepend(`
                 <div class='row'>
                   <div class="media mb-4">
                     <img class="d-flex mr-3 rounded-circle" src='https://picsum.photos/50/50?random=1' alt="">
@@ -116,9 +123,9 @@ $this->registerJs($js);
               'enableAjaxValidation' => true
             ]) ?>
             <div class="form-group">
-              <?= Html::textArea('texto', '', ['class' => 'form-control text-area', 'rows' => "3"]) ?>
+              <?= Html::textArea('texto', '', ['class' => 'form-control', 'id' => 'area-texto', 'rows' => "3"]) ?>
             </div>
-            <?= Html::submitButton('Comentar', ['class' => 'btn btn-info']) ?>
+            <?= Html::submitButton('Comentar', ['class' => 'btn btn-info', 'id' => 'submitComent', 'style' => 'display:none']) ?>
            <?= Html::endForm() ?>
           </div>
         </div>
@@ -130,17 +137,28 @@ $this->registerJs($js);
                 <img class="d-flex mr-3 rounded-circle" src='https://picsum.photos/50/50?random=1' alt="">
                 <div class="media-body">
                   <h5 class="mt-0"><?= ucfirst($comentario->usuario->alias) ?></h5>
-                  <span class='minutes'><?= Yii::$app->AdvHelper->toMinutes($comentario->created_at) ?></span>
+                  <span class='minutes' style='color:grey'><?= Yii::$app->AdvHelper->toMinutes($comentario->created_at) ?></span>
                   <div class='texto' ><?= $comentario->texto ?></div>
+                <div class='container mt-2'>
+                  <div class='row'>
+                    <div class='col-6'>
+                      <?= Html::a(Icon::show('thumbs-up'), '#', ['style' => 'color:grey; font-size:0.9rem']); ?>
+                    </div>
+                    <div class='col-6'>
+                    <?= Html::tag('div', 'RESPONDER', ['style' => 'color:grey; font-size:0.9rem']); ?>
+                    </div>
+                  </div>
+                </div>
                   <?php if($comentario->reply_id != null) : ?>
                     <div class='row'>
-                      <div class="media mt-4">
-                        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                      <div class="media mb-4">
+                        <img class="d-flex mr-3 rounded-circle" src='https://picsum.photos/50/50?random=1' alt="">
                         <div class="media-body">
-                          <h5 class="mt-0">Nombre del comentador</h5>
-                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                          </div>
+                          <h5 class="mt-0"><?= ucfirst($comentario->usuario->alias) ?></h5>
+                          <span class='minutes'><?= Yii::$app->AdvHelper->toMinutes($comentario->created_at) ?></span>
+                            <div class='texto' ><?= $comentario->texto ?></div>
                         </div>
+                      </div>
                     </div>
                   <?php endif; ?>
                 </div>

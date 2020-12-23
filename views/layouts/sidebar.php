@@ -4,7 +4,6 @@
 use kartik\icons\Icon;
 use yii\helpers\Html;
 use yii\helpers\Url;
-// var_dump(Yii::$app->user->identity->estado_id); die();
 
 $url = Url::to(['usuarios/status']);
 $estados = [1 => 'Conectado', 2 => 'Ausente', 3 => 'Ocupado', 4 => 'Desconectado'];
@@ -23,7 +22,6 @@ $.ajax({
         sel.empty();
         
         for (var i in data.estados) {
-            console.log(data.estados[i]);
             if(i == estado) {
                 sel.append(`<option class='dropdown-item' selected value="\${i}">\${data.estados[i]}</option>`);
             } else {

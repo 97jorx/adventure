@@ -41,7 +41,7 @@ class ComentariosController extends Controller
      * texto ->  El texto del comentario.
      * 
      */
-    public function actionComentar($blogid = null)
+    public function actionComentar($blogid = null, $reply = null)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
 
@@ -56,6 +56,13 @@ class ComentariosController extends Controller
             $model->usuario_id = $uid;
             $model->blog_id = $blogid;
             $model->texto = $texto;
+            if($reply != null){
+                $model->reply_id = $reply;
+            } else {
+                $json = [
+                    'mensaje' => 'Ha ocurrido un error inesperado.',
+                ];
+            }
             if(!$model->validate()) {
                 $json = [
                     'mensaje' => 'No debe estar vacio',
@@ -73,7 +80,7 @@ class ComentariosController extends Controller
                 'mensaje' => 'Se ha creado el comentario',
                 'foto' => Yii::$app->user->identity->foto_perfil,
                 'alias' => $alias,
-                'fecha' => $fecha,
+                'fecha' => Yii::$app->AdvHelper->toMinutes($fecha),
                 'texto' => $texto,
             ];
         } 
