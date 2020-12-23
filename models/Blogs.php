@@ -97,7 +97,7 @@ class Blogs extends \yii\db\ActiveRecord
      */
     public function getComentarios()
     {
-        return $this->hasMany(Comentarios::class, ['blog_id' => 'id'])->inverseOf('blog');
+        return $this->hasMany(Comentarios::class, ['blog_id' => 'id'])->inverseOf('blog')->orderBy(['created_at' => SORT_DESC]);
     }
 
 
@@ -230,8 +230,8 @@ class Blogs extends \yii\db\ActiveRecord
             ->joinWith('favblogs f')
             ->joinWith('notas n')
             ->joinWith('visitas v')
-            ->joinWith('comentarios co')
-            ->groupBy('blogs.id, co.id, u.nombre, c.denom, c.descripcion');
+            // ->joinWith('comentarios co')
+            ->groupBy('blogs.id, u.nombre, c.denom, c.descripcion');
     }
   
 

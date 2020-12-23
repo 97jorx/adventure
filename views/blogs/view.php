@@ -16,9 +16,15 @@ $this->params['breadcrumbs'][] = $this->title;
 $url = Url::to(['blogs/like', 'id' => $model->id]);
 $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gusta']);
 $name = Yii::$app->user->identity->username;
+Yii::$app->formatter->locale = 'es-ES';
 
 $js = <<< EOT
-$('body').on('submit', 'form#comentar', function () {
+
+$('text-area').on('input', (event) => {
+  console.log('hola');
+});
+
+$('body').on('submit', 'form#comentar', function(event) {
   var form = $(this);
   var div = $('#comentarios');
   $.ajax({
@@ -28,16 +34,21 @@ $('body').on('submit', 'form#comentar', function () {
        success: function (data) {
          data = JSON.parse(data);
          console.log(data);
-        div.append(
-          `<div class="media mb-4">
-             <img class="d-flex mr-3 rounded-circle" src='https://picsum.photos/100/100?random=1' alt="">
-            <div class="media-body">
-              <h5 class="mt-0">\${data.alias}</h5>
-              <span>\${data.fecha}</span>
-              <div>\${data.texto}</div>
-            </div>
-          </div>`)
-       }
+        if(!data.code) {
+            div.append(`
+                <div class='row'>
+                  <div class="media mb-4">
+                    <img class="d-flex mr-3 rounded-circle" src='https://picsum.photos/50/50?random=1' alt="">
+                    <div class="media-body">
+                      <h5 class="mt-0">\${data.alias}</h5>
+                      <span>\${data.fecha}</span>
+                      <div>\${data.texto}</div>
+                    </div>
+                  </div>
+                </div>
+            `);
+        }
+      }
   });
   return false;
 });
@@ -105,41 +116,38 @@ $this->registerJs($js);
               'enableAjaxValidation' => true
             ]) ?>
             <div class="form-group">
-              <?= Html::textArea('texto', '', ['class' => 'form-control', 'rows' => "3"]) ?>
+              <?= Html::textArea('texto', '', ['class' => 'form-control text-area', 'rows' => "3"]) ?>
             </div>
             <?= Html::submitButton('Comentar', ['class' => 'btn btn-info']) ?>
            <?= Html::endForm() ?>
           </div>
         </div>
        <div id='comentarios'>
-        <!-- <div class="media mb-4">
-          <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-          <div class="media-body">
-            <h5 class="mt-0">Nombre del comentador</h5>
-            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-          </div> -->
-        </div>
-        <!-- <div class="media mb-4">
-          <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-          <div class="media-body">
-            <h5 class="mt-0">Nombre del comentador</h5>
-            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-            <div class="media mt-4">
-              <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-              <div class="media-body">
-                <h5 class="mt-0">Nombre del comentador</h5>
-                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-              </div>
-            </div>
-            <div class="media mt-4">
-              <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-              <div class="media-body">
-                <h5 class="mt-0">Nombre del comentador</h5>
-                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-              </div>
+         <?php foreach($model->comentarios as $comentario) : ?> 
+          <?php if($comentario->reply_id == null) : ?>
+            <div class='row'>
+              <div class="media mb-4">
+                <img class="d-flex mr-3 rounded-circle" src='https://picsum.photos/50/50?random=1' alt="">
+                <div class="media-body">
+                  <h5 class="mt-0"><?= ucfirst($comentario->usuario->alias) ?></h5>
+                  <span class='minutes'><?= Yii::$app->AdvHelper->toMinutes($comentario->created_at) ?></span>
+                  <div class='texto' ><?= $comentario->texto ?></div>
+                  <?php if($comentario->reply_id != null) : ?>
+                    <div class='row'>
+                      <div class="media mt-4">
+                        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                        <div class="media-body">
+                          <h5 class="mt-0">Nombre del comentador</h5>
+                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                          </div>
+                        </div>
+                    </div>
+                  <?php endif; ?>
+                </div>
             </div>
           </div>
-        </div> -->
+          <?php endif; ?>
+        <?php endforeach; ?>
        </div>
       </div>
   </div>

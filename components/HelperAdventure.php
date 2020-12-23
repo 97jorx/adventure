@@ -10,6 +10,7 @@ use app\models\Comunidades;
 use app\models\Favblogs;
 use app\models\Favcomunidades;
 use app\models\Notas;
+use DateTime;
 use yii\base\Component;
 use Yii;
 
@@ -128,6 +129,39 @@ class HelperAdventure extends Component
         }
     }
 
+    /**
+     * Devuelve la fecha en minutos que han transcurrido desde 
+     * la fecha en la que se realizó la acción.
+     * @return String
+     */
+    public function toMinutes($datetime, $full = false) {
+        $now = new DateTime();
+        $ago = new DateTime($datetime);
+        $diff = $now->diff($ago);
+    
+        $diff->w = floor($diff->d / 7);
+        $diff->d -= $diff->w * 7;
+    
+        $string = array(
+            'y' => 'año',
+            'm' => 'mese',
+            'w' => 'semana',
+            'd' => 'dia',
+            'h' => 'hora',
+            'i' => 'minuto',
+            's' => 'segundo',
+        );
+        foreach ($string as $k => &$v) {
+            if ($diff->$k) {
+                $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+            } else {
+                unset($string[$k]);
+            }
+        }
+    
+        if (!$full) $string = array_slice($string, 0, 1);
+        return $string ? 'hace ' . implode(', ', $string)  : 'justo ahora';
+    }
 
    
 }
