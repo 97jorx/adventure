@@ -81,6 +81,7 @@ class ComentariosController extends Controller
                 'foto' => Yii::$app->user->identity->foto_perfil,
                 'alias' => $alias,
                 'fecha' => Yii::$app->AdvHelper->toMinutes($fecha),
+                'reply' => $reply,
                 'texto' => $texto,
             ];
         } 

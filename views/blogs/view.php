@@ -20,6 +20,14 @@ Yii::$app->formatter->locale = 'es-ES';
 
 $js = <<< EOT
 
+$('.responder-click').on('click', (event) => {
+  event.preventDefault();
+  var self = $(this);
+  var reply_id = self.find("#reply-class").attr('class');
+  console.log(reply_id);
+  $('#'+reply_id).show();
+});
+
 $('#area-texto').on('input', (event) => {
   var self = $(this);
   var length = $('#area-texto').val().length;
@@ -41,24 +49,25 @@ $('#area-texto').on('input', (event) => {
 
 $('body').on('submit', 'form#comentar', function(event) {
   var form = $(this);
-  var div = $('#comentarios');
   $.ajax({
-       url: form.attr('action'),
-       type: 'POST',
-       data: form.serialize(),
-       success: function (data) {
-         data = JSON.parse(data);
-         $('#submitComent').fadeOut();
-         $('#area-texto').val('');
+    url: form.attr('action'),
+    type: 'POST',
+    data: form.serialize(),
+    success: function (data) {
+      data = JSON.parse(data);
+      $('#submitComent').fadeOut();
+      $('#area-texto').val('');
+      var div = (data.reply == null) ? $('#comentarios') : $('#reply-div');
+      var reply = (data.reply == null) ? "mb-4" : "mt-4";
         if(!data.code) {
             div.prepend(`
                 <div class='row'>
-                  <div class="media mb-4">
+                  <div class="media"+\${reply}>
                     <img class="d-flex mr-3 rounded-circle" src='https://picsum.photos/50/50?random=1' alt="">
                     <div class="media-body">
                     <div class='row'>
-                      <h5 class="mt-0 ml-3 pr-2"> \${data.alias} </h5>
-                      <i class="minutes" style="color:grey"> \${data.fecha} </i>
+                      <h5 class="mt-0 ml-3 pr-2" style="font-size:0.9rem"> \${data.alias} </h5>
+                      <i class="minutes" style="color:grey; font-size:0.9rem"> \${data.fecha} </i>
                     </div>
                       <div>\${data.texto}</div>
                         <div class='container mt-2'>
@@ -170,10 +179,13 @@ $this->registerJs($js);
                       <?= Html::a(Icon::show('thumbs-up'), '#', ['style' => 'color:grey; font-size:0.9rem']); ?>
                     </div>
                     <div class='col-3'>
-                    <?= Html::tag('div', 'RESPONDER', ['style' => 'color:grey; font-size:0.9rem']); ?>
+                    <?= Html::tag('div', 'RESPONDER', [
+                      'style' => 'color:grey; font-size:0.9rem; cursor:pointer;', 
+                      'class' => 'responder-click'
+                    ]); ?>
                     </div>
                     <!-- --- REPLY -->
-                    <div class="card my-4 reply-class" style='display:none'>
+                    <div class="card my-4 <?= $comentario->id ?>" id="reply-class" style='display:none'>
                       <div class="row">
                         <div class='col-6'>
                           <h5 class="card-header">Dejar comentario:</h5>
@@ -206,13 +218,15 @@ $this->registerJs($js);
                   </div>
                 </div>
                   <?php if($comentario->reply_id != null) : ?>
-                    <div class='row'>
-                      <div class="media mb-4">
-                        <img class="d-flex mr-3 rounded-circle" src='https://picsum.photos/50/50?random=1' alt="">
-                        <div class="media-body">
-                          <h5 class="mt-0"><?= ucfirst($comentario->usuario->alias) ?></h5>
-                          <span class='minutes'><?= Yii::$app->AdvHelper->toMinutes($comentario->created_at) ?></span>
-                            <div class='texto' ><?= $comentario->texto ?></div>
+                    <div class="reply-div">
+                      <div class='row'>
+                        <div class="media mt-4">
+                          <img class="d-flex mr-3 rounded-circle" src='https://picsum.photos/50/50?random=1' alt="">
+                          <div class="media-body">
+                            <h5 class="mt-0"><?= ucfirst($comentario->usuario->alias) ?></h5>
+                            <span class='minutes'><?= Yii::$app->AdvHelper->toMinutes($comentario->created_at) ?></span>
+                              <div class='texto' ><?= $comentario->texto ?></div>
+                          </div>
                         </div>
                       </div>
                     </div>
