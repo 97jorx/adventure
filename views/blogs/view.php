@@ -22,12 +22,21 @@ $js = <<< EOT
 
 $('#area-texto').on('input', (event) => {
   var self = $(this);
-  console.log();
+  var length = $('#area-texto').val().length;
+  $("#length-area-texto").text("Carácteres restantes: " + (255 - length));
+
+  
   if($('#area-texto').val().length > 0){
+    if(length > 255){
+      $('#submitComent').fadeOut();
+      $("#length-area-texto").text("Carácteres restantes: " + (0));
+    } else {
       $('#submitComent').fadeIn();
+    }
   } else {
       $('#submitComent').fadeOut();
   }
+
 });
 
 $('body').on('submit', 'form#comentar', function(event) {
@@ -128,8 +137,9 @@ $this->registerJs($js);
         <p class="lead"><?= $model->cuerpo ?></p>
         <hr>
         <div class="card my-4">
-          <h5 class="card-header">Dejar comentario:</h5>
-          <div class="card-body">
+            <h5 class="card-header">Dejar comentario:</h5>
+            
+            <div class="card-body">
             <?= Html::beginForm(['comentarios/comentar', 'blogid' => $model->id], 'post', [
               'id' => 'comentar',
               'enableAjaxValidation' => true
@@ -139,6 +149,7 @@ $this->registerJs($js);
             </div>
             <?= Html::submitButton('Comentar', ['class' => 'btn btn-info', 'id' => 'submitComent', 'style' => 'display:none']) ?>
            <?= Html::endForm() ?>
+           <i id='length-area-texto' style='position:absolute; left:70%' class='text-secondary'></i>
           </div>
         </div>
        <div id='comentarios'>
@@ -149,7 +160,7 @@ $this->registerJs($js);
                 <img class="d-flex mr-3 rounded-circle" src='https://picsum.photos/50/50?random=1' alt="">
                 <div class="media-body">
                 <div class='row'>
-                  <i class="ml-3 pr-2" style='font-size:0.8rem' ><?= ucfirst($comentario->usuario->alias) ?></i>
+                  <h5 class="mt-0 ml-3 pr-2" style='font-size:0.8rem'><?= ucfirst($comentario->usuario->alias) ?></h5>
                   <i class='minutes' style='color:grey; font-size:0.8rem'><?= Yii::$app->AdvHelper->toMinutes($comentario->created_at) ?></i>
                 </div>
                   <div class='texto' ><?= $comentario->texto ?></div>
@@ -161,6 +172,37 @@ $this->registerJs($js);
                     <div class='col-3'>
                     <?= Html::tag('div', 'RESPONDER', ['style' => 'color:grey; font-size:0.9rem']); ?>
                     </div>
+                    <!-- --- REPLY -->
+                    <div class="card my-4 reply-class" style='display:none'>
+                      <div class="row">
+                        <div class='col-6'>
+                          <h5 class="card-header">Dejar comentario:</h5>
+                        </div>
+                        <div class="col-6">
+                        <h5 id='length-area-texto'></h5>
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        <?= Html::beginForm(['comentarios/comentar', 'blogid' => $model->id, 'reply' => $comentario->id], 'post', [
+                            'id' => 'responder'.$comentario->id,
+                            'name' => 'reply'.$comentario->id,
+                            'enableAjaxValidation' => true
+                        ]) ?>
+                        <div class="form-group-reply">
+                          <?= Html::textArea('texto-reply', '', [
+                            'class' => 'form-control-reply'.$comentario->id, 
+                            'id' => 'area-texto-reply'.$comentario->id, 
+                            'rows' => "3"
+                          ]) ?>
+                        </div>
+                        <?= Html::submitButton('Comentar', [
+                          'class' => 'btn btn-info', 
+                          'id' => 'submitReply'.$comentario->id, 
+                        ]) ?>
+                        <?= Html::endForm() ?>
+                      </div>
+                    </div>
+                    <!-- --- -->
                   </div>
                 </div>
                   <?php if($comentario->reply_id != null) : ?>
