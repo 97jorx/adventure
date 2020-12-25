@@ -17,47 +17,19 @@ $url = Url::to(['blogs/like', 'id' => $model->id]);
 $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gusta']);
 $name = Yii::$app->user->identity->username;
 $csrfToken = Yii::$app->request->getCsrfToken();
-$comentar = Url::to(['comentarios/comentar', 'blogid' => $model->id]);
+$comentar = Url::to(['comentarios/comentar']);
+// var_dump($model->id); die();
+
 
 $js = <<< EOT
-$('.responder-click').on('click', function(event) {
-  event.preventDefault();
-  var id = this.id;
-  var respuesta = '.respuesta-'+id;
-  var reply_id = '#reply-'+id;
-  var divid = $(reply_id);
-
-  if(!$('.respuesta-'+id).length )  {
-  divid.append(`
-    <div class='respuesta-\${id}' id='respuesta-form'>
-      <h5 class='card-header'>Responder:</h5>
-      <div class='card-body'>
-        <form id="comentar-\${id}" name='reply' action='$comentar' <method='post'>
-          <input type='hidden' name='_csrf' value='$csrfToken'>                        
-            <div class='form-group-reply'>
-              <textarea id='area-texto-reply-\${id}' class='form-control' name='texto' rows='3'></textarea>                        
-              <input type='hidden' name='reply' value='\${id}'>                        
-            </div>
-            <button type='submit' id='submitReply-\${id}' class='btn btn-white mt-3'>Responder</button>                         
-            <button type='button' id='close-\${id}' onclick='$(this).parent().parent().parent().hide();' class='btn btn-info mt-3'>Cancelar</button>                        
-        </form>                      
-      </div>
-      <i id='length-area-texto-\${id}' style='position:absolute; left:70%'></i>
-    </div>`);
-  } else {
-    $(respuesta).show();
-  }
-
-});
-
-
-
 $('#area-texto, #area-texto-reply').on('input', (event) => {
 
   event.preventDefault();
   var self = $(this);
   var length = $('#area-texto').val().length;
   $("#length-area-texto").text("Carácteres restantes: " + (255 - length));
+  $('.respuesta-form').remove();
+
 
   if($('#area-texto').val().length > 0){
     if(length > 255) {
@@ -71,17 +43,49 @@ $('#area-texto, #area-texto-reply').on('input', (event) => {
     } else {
         $('#submitComent').fadeOut();
     }
-
 });
 
-$('body').on('submit', 'form#comentar-form', 'form#respuesta-form', function(event) {
+$('.responder-click').on('click', function(event) {
+  event.preventDefault();
+  var blogid = $('.blogid').val();
+  var id = this.id;
+  var respuesta = '#respuesta-'+id;
+  var reply_id = '#reply-'+id;
+  var divid = $(reply_id);
+
+  if(!$('#respuesta-'+id).length && $('#area-texto').val().length == 0)  {
+  divid.append(`
+    <div id='respuesta-\${id}' class='respuesta-form'>
+      <h5 class='card-header'>Responder:</h5>
+      <div class='card-body'>
+        <form id='respuesta-comentario'  action='$comentar' method='post'>
+          <input type='hidden' name='_csrf' value='$csrfToken'>                        
+            <div class='form-group-reply'>
+              <textarea id='area-texto-reply-\${id}' class='form-control' name='texto' rows='3'></textarea>                        
+              <input type='hidden' name='reply' value='\${id}'>
+              <input type='hidden' name='blogid' value='\${blogid}'>                        
+            </div>
+            <button type='submit' id='submitReply-\${id}' class='btn btn-white'>Responder</button>                         
+            <button type='button' id='close-\${id}' onclick='$(this).parent().parent().parent().remove();' class='btn btn-info mt-3'>Cancelar</button>                        
+        </form>                      
+      </div>
+      <i id='length-area-texto-\${id}' style='position:absolute; left:70%'></i>
+    </div>`);
+  } 
+});
+
+
+
+$('body').on('submit', 'form#comentar-form, form#respuesta-comentar',  function(event) {
   var form = $(this);
+  console.log();
   $.ajax({
     url: form.attr('action'),
     type: 'POST',
     data: form.serialize(),
     success: function (data) {
       data = JSON.parse(data);
+      console.log(form.serialize());
       $('#submitComent').fadeOut();
       $('#area-texto').val('');
       var div = (data.reply == null) ? $('#comentarios') : $('#reply-div');
@@ -89,7 +93,7 @@ $('body').on('submit', 'form#comentar-form', 'form#respuesta-form', function(eve
         if(!data.code) {
             div.prepend(`
                 <div class='row'>
-                  <div class="media"+\${reply}>
+                  <div class="media mb-4">
                     <img class="d-flex mr-3 rounded-circle" src='https://picsum.photos/50/50?random=1' alt="">
                     <div class="media-body">
                     <div class='row'>
@@ -98,14 +102,14 @@ $('body').on('submit', 'form#comentar-form', 'form#respuesta-form', function(eve
                     </div>
                       <div>\${data.texto}</div>
                         <div class='container mt-2'>
-                        <div class='row'>
-                          <div class='col-3'>
-                            <a href="#" style="color:grey; font-size:0.9rem"><i class="fas fa-thumbs-up"></i> </a>
+                          <div class='row'>
+                            <div class='col-3'>
+                              <a href="#" style="color:grey; font-size:0.9rem"><i class="fas fa-thumbs-up"></i> </a>
+                            </div>
+                            <div class='col-3'>
+                              <div style="color:grey; font-size:0.9rem">RESPONDER</div>
+                            </div>
                           </div>
-                          <div class='col-3'>
-                            <div style="color:grey; font-size:0.9rem">RESPONDER</div>
-                          </div>
-                        </div>
                         </div>
                     </div>
                   </div>
@@ -113,8 +117,8 @@ $('body').on('submit', 'form#comentar-form', 'form#respuesta-form', function(eve
             `);
         }
       }
-  });
-  return false;
+    });
+    return false;
 });
 EOT;
 $this->registerJs($js);
@@ -176,12 +180,12 @@ $this->registerJs($js);
             <h5 class="card-header">Dejar comentario:</h5>
             
             <div class="card-body">
-            <?= Html::beginForm(['comentarios/comentar', 'blogid' => $model->id], 'post', [
+            <?= Html::beginForm(['comentarios/comentar'], 'post', [
               'id' => 'comentar-form',
-              'enableAjaxValidation' => true
             ]) ?>
             <div class="form-group">
               <?= Html::textArea('texto', '', ['class' => 'form-control', 'id' => 'area-texto', 'rows' => "3"]) ?>
+              <?= Html::hiddenInput('blogid', $model->id, ['class' => 'blogid']) ?>
             </div>
             <?= Html::submitButton('Comentar', ['class' => 'btn btn-info', 'id' => 'submitComent', 'style' => 'display:none']) ?>
            <?= Html::endForm() ?>

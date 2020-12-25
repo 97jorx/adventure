@@ -41,16 +41,18 @@ class ComentariosController extends Controller
      * texto ->  El texto del comentario.
      * 
      */
-    public function actionComentar($blogid = null, $reply = null)
+    public function actionComentar()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
 
         $uid = Yii::$app->user->id;
         $texto = Yii::$app->request->post('texto');
+        $blogid = Yii::$app->request->post('blogid');
+        $reply = Yii::$app->request->post('reply');
         $model = new Comentarios();    
         $alias = ucfirst(Yii::$app->user->identity->alias);
 
-        $json = [];
+        $json = [$reply, $blogid, $texto];
         
         if ($blogid != null) {
             $model->usuario_id = $uid;
