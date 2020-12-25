@@ -18,7 +18,7 @@ $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gust
 $name = Yii::$app->user->identity->username;
 $csrfToken = Yii::$app->request->getCsrfToken();
 $comentar = Url::to(['comentarios/comentar']);
-// var_dump($model->id); die();
+// var_dump($model->comentarios->parent); die();
 
 
 $js = <<< EOT
@@ -28,7 +28,7 @@ $('#area-texto, #area-texto-reply').on('input', (event) => {
   var self = $(this);
   var length = $('#area-texto').val().length;
   $("#length-area-texto").text("Carácteres restantes: " + (255 - length));
-  $('.respuesta-form').remove();
+  
 
 
   if($('#area-texto').val().length > 0){
@@ -62,7 +62,7 @@ $('.responder-click').on('click', function(event) {
           <input type='hidden' name='_csrf' value='$csrfToken'>                        
             <div class='form-group-reply'>
               <textarea id='area-texto-reply-\${id}' class='form-control' name='texto' rows='3'></textarea>                        
-              <input type='hidden' name='reply' value='\${id}'>
+              <input type='hidden' name='parent' value='\${id}'>
               <input type='hidden' name='blogid' value='\${blogid}'>                        
             </div>
             <button type='submit' id='submitReply-\${id}' class='btn btn-white'>Responder</button>                         
@@ -107,7 +107,7 @@ $('body').on('submit', 'form#comentar-form, form#respuesta-comentar',  function(
                               <a href="#" style="color:grey; font-size:0.9rem"><i class="fas fa-thumbs-up"></i> </a>
                             </div>
                             <div class='col-3'>
-                              <div style="color:grey; font-size:0.9rem">RESPONDER</div>
+                              <div style="color:grey; class="responder-click" font-size:0.9rem">RESPONDER</div>
                             </div>
                           </div>
                         </div>
@@ -194,8 +194,8 @@ $this->registerJs($js);
         </div>
        <div id='comentarios'>
          <?php foreach($model->comentarios as $comentario) : ?> 
-          <?php if($comentario->reply_id == null) : ?>
-            <div class='row'>
+          <?php if($comentario->parent == null) : ?> 
+          <div class='row'>
               <div class="media mb-4">
                 <img class="d-flex mr-3 rounded-circle" src='https://picsum.photos/50/50?random=1' alt="">
                 <div class="media-body">
@@ -218,25 +218,25 @@ $this->registerJs($js);
                     </div>
                     <!-- --- REPLY -->
                     <div class="card my-4" id="reply-<?= $comentario->id ?>">
-                     
                     </div>
                     <!-- --- -->
                   </div>
                 </div>
-                  <?php if($comentario->reply_id != null) : ?>
-                    <div class="reply-div">
-                      <div class='row'>
-                        <div class="media mt-4">
-                          <img class="d-flex mr-3 rounded-circle" src='https://picsum.photos/50/50?random=1' alt="">
-                          <div class="media-body">
-                            <h5 class="mt-0"><?= ucfirst($comentario->usuario->alias) ?></h5>
-                            <span class='minutes'><?= Yii::$app->AdvHelper->toMinutes($comentario->created_at) ?></span>
-                              <div class='texto' ><?= $comentario->texto ?></div>
+                <?php $respuestas = $model->findResponsesById($comentario->id, $model->id)?>
+                  <?php foreach($respuestas as $key => $value) : ?>
+                        <div class="reply-div">
+                            <div class='row'>
+                              <div class="media mt-4">
+                                <img class="d-flex mr-3 rounded-circle" src='https://picsum.photos/50/50?random=1' alt="">
+                                <div class="media-body">
+                                  <h5 class="mt-0"><?= ucfirst($comentario->usuario->alias) ?></h5>
+                                  <span class='minutes'><?= Yii::$app->AdvHelper->toMinutes($value['created_at']) ?></span>
+                                    <div class='texto' ><?= $value['texto'] ?></div>
+                                </div>
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                    </div>
-                  <?php endif; ?>
+                  <?php endforeach; ?>
                 </div>
             </div>
           </div>

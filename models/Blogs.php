@@ -97,7 +97,27 @@ class Blogs extends \yii\db\ActiveRecord
      */
     public function getComentarios()
     {
-        return $this->hasMany(Comentarios::class, ['blog_id' => 'id'])->inverseOf('blog')->orderBy(['created_at' => SORT_DESC]);
+        return $this->hasMany(Comentarios::class, ['blog_id' => 'id'])
+            ->inverseOf('blog')
+            ->orderBy(['created_at' => SORT_DESC]);
+    }
+
+
+    /**
+     * Gets query for [[Comentarios]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function findResponsesById($id, $blogid)
+    {
+            return Comentarios::find()
+            ->from('comentarios parent')
+            ->leftJoin('comentarios', 'parent.parent_id = comentarios.id')
+            ->where(['parent.blog_id' => $blogid])
+            ->andWhere(['comentarios.id' => $id])
+            ->orderBy(['parent.created_at' => SORT_DESC])
+            ->asArray()->all();
+
     }
 
 
@@ -110,7 +130,6 @@ class Blogs extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Favblogs::class, ['blog_id' => 'id'])->inverseOf('blog');
     }
-
 
 
    /**

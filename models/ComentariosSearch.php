@@ -17,7 +17,7 @@ class ComentariosSearch extends Comentarios
     public function rules()
     {
         return [
-            [['id', 'usuario_id', 'blog_id', 'reply_id'], 'integer'],
+            [['id', 'usuario_id', 'blog_id', 'parent_id'], 'integer'],
             [['texto', 'created_at'], 'safe'],
         ];
     }
@@ -61,7 +61,7 @@ class ComentariosSearch extends Comentarios
             'id' => $this->id,
             'usuario_id' => $this->usuario_id,
             'blog_id' => $this->blog_id,
-            'reply_id' => $this->reply_id,
+            'parent' => $this->parent,
             'created_at' => $this->created_at,
         ]);
 

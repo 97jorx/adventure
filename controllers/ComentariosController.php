@@ -35,7 +35,7 @@ class ComentariosController extends Controller
      
      * TABLA DE COMENTARIOS
      *
-     * reply_id  -> El id del usuario que responde el comentario.
+     * parent_id  -> El id del usuario que responde el comentario.
      * usuario_id -> El usuario que crea el comentario.
      * blog_id -> El id del blog donde se va a crear el comentario.
      * texto ->  El texto del comentario.
@@ -48,18 +48,18 @@ class ComentariosController extends Controller
         $uid = Yii::$app->user->id;
         $texto = Yii::$app->request->post('texto');
         $blogid = Yii::$app->request->post('blogid');
-        $reply = Yii::$app->request->post('reply');
+        $parent = Yii::$app->request->post('parent');
         $model = new Comentarios();    
         $alias = ucfirst(Yii::$app->user->identity->alias);
 
-        $json = [$reply, $blogid, $texto];
+        $json = [$parent, $blogid, $texto];
         
         if ($blogid != null) {
             $model->usuario_id = $uid;
             $model->blog_id = $blogid;
             $model->texto = $texto;
-            if($reply != null){
-                $model->reply_id = $reply;
+            if($parent != null){
+                $model->parent_id = $parent;
             } else {
                 $json = [
                     'mensaje' => 'Ha ocurrido un error inesperado.',
@@ -83,7 +83,7 @@ class ComentariosController extends Controller
                 'foto' => Yii::$app->user->identity->foto_perfil,
                 'alias' => $alias,
                 'fecha' => Yii::$app->AdvHelper->toMinutes($fecha),
-                'reply' => $reply,
+                'parent' => $parent,
                 'texto' => $texto,
             ];
         } 

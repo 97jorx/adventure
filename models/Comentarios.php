@@ -10,7 +10,7 @@ use Yii;
  * @property int $id
  * @property int $usuario_id
  * @property int|null $blog_id
- * @property int $reply_id
+ * @property int $parent_id
  * @property string $texto
  * @property string $created_at
  *
@@ -36,12 +36,12 @@ class Comentarios extends \yii\db\ActiveRecord
     {
         return [
             [['usuario_id', 'texto'], 'required'],
-            [['usuario_id', 'blog_id', 'reply_id'], 'default', 'value' => null],
-            [['usuario_id', 'blog_id', 'reply_id'], 'integer'],
+            [['usuario_id', 'blog_id', 'parent_id'], 'default', 'value' => null],
+            [['usuario_id', 'blog_id', 'parent_id'], 'integer'],
             [['created_at'], 'safe'],
             [['texto'], 'string', 'max' => 255],
             [['blog_id'], 'exist', 'skipOnError' => true, 'targetClass' => Blogs::class, 'targetAttribute' => ['blog_id' => 'id']],
-            [['reply_id'], 'exist', 'skipOnError' => true, 'targetClass' => Comentarios::class, 'targetAttribute' => ['reply_id' => 'id']],
+            [['parent_id'], 'exist', 'skipOnError' => true, 'targetClass' => Comentarios::class, 'targetAttribute' => ['parent_id' => 'id']],
             [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['usuario_id' => 'id']],
         ];
     }
@@ -55,7 +55,7 @@ class Comentarios extends \yii\db\ActiveRecord
             'id' => 'ID',
             'usuario_id' => 'Usuario ID',
             'blog_id' => 'Blog comentado',
-            'reply_id' => 'Usuario respuesta',
+            'parent_id' => 'Usuario respuesta',
             'texto' => 'Texto',
             'created_at' => 'Created At',
         ];
@@ -72,13 +72,16 @@ class Comentarios extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Reply]].
+     * Gets query for [[parent]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getReply()
+    public function getParent()
     {
-        return $this->hasOne(Comentarios::class, ['id' => 'reply_id'])->inverseOf('comentarios');
+        return $this->hasOne(Comentarios::class, ['id' => 'parent_id'])
+        
+                    ->orderBy(['created_at' => SORT_DESC]);
+        
     }
 
     /**
@@ -88,7 +91,8 @@ class Comentarios extends \yii\db\ActiveRecord
      */
     public function getComentarios()
     {
-        return $this->hasMany(Comentarios::class, ['reply_id' => 'id'])->inverseOf('reply');
+        return $this->hasMany(Comentarios::class, ['parent_id' => 'id'])
+        ->inverseOf('parent');
     }
 
     /**
