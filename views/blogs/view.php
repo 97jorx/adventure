@@ -3,6 +3,7 @@
 /* @var $this yii\web\View */
 /* @var $model app\models\Blogs */
 
+use app\models\Comentarios;
 use kartik\icons\Icon;
 use kartik\rating\StarRating;
 use yii\helpers\Html;
@@ -18,19 +19,16 @@ $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gust
 $name = Yii::$app->user->identity->username;
 $csrfToken = Yii::$app->request->getCsrfToken();
 $comentar = Url::to(['comentarios/comentar']);
-// var_dump($model->comentarios->parent); die();
+
+// var_dump($datos); die();
 
 
 $js = <<< EOT
 $('#area-texto, #area-texto-reply').on('input', (event) => {
-
   event.preventDefault();
   var self = $(this);
   var length = $('#area-texto').val().length;
   $("#length-area-texto").text("Carácteres restantes: " + (255 - length));
-  
-
-
   if($('#area-texto').val().length > 0){
     if(length > 255) {
         $('#submitComent').fadeOut();
@@ -65,8 +63,8 @@ $('.responder-click').on('click', function(event) {
               <input type='hidden' name='parent' value='\${id}'>
               <input type='hidden' name='blogid' value='\${blogid}'>                        
             </div>
-            <button type='submit' id='submitReply-\${id}' class='btn btn-white'>Responder</button>                         
-            <button type='button' id='close-\${id}' onclick='$(this).parent().parent().parent().remove();' class='btn btn-info mt-3'>Cancelar</button>                        
+            <button type='button' id='close-\${id}' onclick='$(this).parent().parent().parent().remove();' class='mt-3 btn btn-white'>Cancelar</button>                        
+            <button type='submit' id='submitReply-\${id}' class='btn btn-info'>Responder</button>                         
         </form>                      
       </div>
       <i id='length-area-texto-\${id}' style='position:absolute; left:70%'></i>
@@ -76,7 +74,7 @@ $('.responder-click').on('click', function(event) {
 
 
 
-$('body').on('submit', 'form#comentar-form, form#respuesta-comentar',  function(event) {
+$('body').on('submit', 'form#comentar-form, form#respuesta-comentario',  function(event) {
   var form = $(this);
   console.log();
   $.ajax({
@@ -85,15 +83,14 @@ $('body').on('submit', 'form#comentar-form, form#respuesta-comentar',  function(
     data: form.serialize(),
     success: function (data) {
       data = JSON.parse(data);
-      console.log(form.serialize());
       $('#submitComent').fadeOut();
       $('#area-texto').val('');
-      var div = (data.reply == null) ? $('#comentarios') : $('#reply-div');
-      var reply = (data.reply == null) ? "mb-4" : "mt-4";
+      var div = (data.id == null) ? $('#comentarios') : $('.reply-div-'+data.id);
+      var reply = (data.id == null) ? "mb-4" : "mt-4";
         if(!data.code) {
             div.prepend(`
                 <div class='row'>
-                  <div class="media mb-4">
+                  <div class="media"+reply>
                     <img class="d-flex mr-3 rounded-circle" src='https://picsum.photos/50/50?random=1' alt="">
                     <div class="media-body">
                     <div class='row'>
@@ -222,14 +219,14 @@ $this->registerJs($js);
                     <!-- --- -->
                   </div>
                 </div>
-                <?php $respuestas = $model->findResponsesById($comentario->id, $model->id)?>
+                <?php $respuestas = $comentario->findResponsesById($comentario->id, $model->id)?>
                   <?php foreach($respuestas as $key => $value) : ?>
-                        <div class="reply-div">
+                        <div class="reply-div-<?= $comentario->id ?>">
                             <div class='row'>
                               <div class="media mt-4">
                                 <img class="d-flex mr-3 rounded-circle" src='https://picsum.photos/50/50?random=1' alt="">
                                 <div class="media-body">
-                                  <h5 class="mt-0"><?= ucfirst($comentario->usuario->alias) ?></h5>
+                                  <h5 class="mt-0"><?= ucfirst($value['alias']) ?></h5>
                                   <span class='minutes'><?= Yii::$app->AdvHelper->toMinutes($value['created_at']) ?></span>
                                     <div class='texto' ><?= $value['texto'] ?></div>
                                 </div>

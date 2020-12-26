@@ -79,7 +79,8 @@ class Comentarios extends \yii\db\ActiveRecord
     public function getParent()
     {
         return $this->hasOne(Comentarios::class, ['id' => 'parent_id'])
-        
+                    ->alias('parent')
+                    // ->from(Comentarios::tableName() . ' AS parent')
                     ->orderBy(['created_at' => SORT_DESC]);
         
     }
@@ -104,4 +105,43 @@ class Comentarios extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Usuarios::class, ['id' => 'usuario_id'])->inverseOf('comentarios');
     }
+
+  /**
+     * Gets query for [[Comentarios]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function findResponses($id, $blogid = null)
+    {
+            return Comentarios::find()
+            ->joinWith('comentarios c')
+            ->joinWith('parent p')
+            ->where(['p.blog_id' => $blogid])
+            ->andWhere(['c.id' => $id])
+            ->asArray()
+            ->all();
+
+    }
+
+
+    /**
+     * Gets query for [[Comentarios]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function findResponsesById($id, $blogid = null)
+    {
+            return Comentarios::find()
+            ->select(['usuarios.*', 'parent.*'])
+            ->from('comentarios parent')
+            ->leftJoin('comentarios', 'parent.parent_id = comentarios.id')
+            ->leftJoin('usuarios', 'parent.usuario_id = usuarios.id')
+            ->where(['parent.blog_id' => $blogid])
+            ->andWhere(['comentarios.id' => $id])
+            ->orderBy(['parent.created_at' => SORT_DESC])
+            ->asArray()
+            ->all();
+
+    }
+
 }

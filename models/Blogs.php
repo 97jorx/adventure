@@ -103,22 +103,7 @@ class Blogs extends \yii\db\ActiveRecord
     }
 
 
-    /**
-     * Gets query for [[Comentarios]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function findResponsesById($id, $blogid)
-    {
-            return Comentarios::find()
-            ->from('comentarios parent')
-            ->leftJoin('comentarios', 'parent.parent_id = comentarios.id')
-            ->where(['parent.blog_id' => $blogid])
-            ->andWhere(['comentarios.id' => $id])
-            ->orderBy(['parent.created_at' => SORT_DESC])
-            ->asArray()->all();
-
-    }
+   
 
 
      /**

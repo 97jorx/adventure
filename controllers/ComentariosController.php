@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Comentarios;
+use app\models\Usuarios;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -52,12 +53,16 @@ class ComentariosController extends Controller
         $model = new Comentarios();    
         $alias = ucfirst(Yii::$app->user->identity->alias);
 
-        $json = [$parent, $blogid, $texto];
+        
+
+        $json = [];
         
         if ($blogid != null) {
             $model->usuario_id = $uid;
             $model->blog_id = $blogid;
             $model->texto = $texto;
+
+
             if($parent != null){
                 $model->parent_id = $parent;
             } else {
@@ -65,6 +70,7 @@ class ComentariosController extends Controller
                     'mensaje' => 'Ha ocurrido un error inesperado.',
                 ];
             }
+            
             if(!$model->validate()) {
                 $json = [
                     'mensaje' => 'No debe estar vacio',
@@ -74,16 +80,23 @@ class ComentariosController extends Controller
             }
     
             $model->save();
+
             $fecha = Comentarios::find()
             ->select('created_at')
             ->where(['id' => $model->id])
             ->scalar();
+            
+            $alias = Usuarios::find()
+            ->select('alias')
+            ->where(['id' => $model->usuario_id])
+            ->scalar();
+
             $json = [
                 'mensaje' => 'Se ha creado el comentario',
+                'id' => $model->parent_id,
                 'foto' => Yii::$app->user->identity->foto_perfil,
                 'alias' => $alias,
                 'fecha' => Yii::$app->AdvHelper->toMinutes($fecha),
-                'parent' => $parent,
                 'texto' => $texto,
             ];
         } 
