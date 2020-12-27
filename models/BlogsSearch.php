@@ -117,11 +117,7 @@ class BlogsSearch extends Blogs
         ->orFilterWhere(['ilike', 'u.nombre', $busqueda])
         ->orFilterWhere(['ilike', 'c.denom', $busqueda]);
 
-        // var_dump($_SESSION['actual']);
         $query->andWhere(['blogs.comunidad_id' => $actual]);
-        // var_dump($query->createCommand()->getRawSql());
-        // var_dump($dataProvider);
-        // die();
         return $dataProvider;
     }
 }

@@ -19,7 +19,7 @@ $this->registerCssFile("@web/css/perfil.css");
 
 $js = <<< EOT
 
-
+$(document).ready(function(){  
 // TABS LINK 
 
   $('.nav-link').click(function(e){
@@ -55,7 +55,7 @@ $js = <<< EOT
       return false;
   });
 
-
+});
 EOT;
 $this->registerJs($js);
 
@@ -135,7 +135,8 @@ $this->registerJs($js);
         <?php endif; ?>
         <p class="info"><?= $model->rol ?></p>
         <p class="info"><?= $model->alias ?></p>
-        <p class="info"><?= (empty($model->valoracion)) ? (0) : ($model->valoracion) ?><?= Icon::show('star') ?></p>
+        <p class="info"><?= (empty($model->countNotes($model->alias))) ? (0) :
+                            ($model->countNotes($model->alias)) ?><?= Icon::show('star') ?></p>
         <div class="stats row">
           <div class="stat col-xs-4" style="padding-right: 50px;">
             <p class="number-stat"><?= $model->following ?></p>
@@ -157,13 +158,13 @@ $this->registerJs($js);
           <nav class='tabs' id='activeTab'>
             <ul class="nav nav-tabs">
               <?php foreach($dataProvider2->models as $model) : ?>
-              <li class="nav-link"><a data-toggle="tab" href=".<?=$model->id?>"><?= $model->denom ?></a></li>
+                <li class="nav-link"><a data-toggle="tab" href=".<?=$model->id?>"><?= $model->denom ?></a></li>
               <?php endforeach; ?>              
             </ul>
           </nav> 
           <div class="tab-content scroll-vertical">
             <?php foreach($dataProvider->models as $model) : ?>
-              <div id="<?=$model->comunidad_id?>" class='tab-pane active <?=$model->comunidad_id?>'>
+              <div class='tab-pane active in <?=$model->comunidad_id?>'>
               <a name="top"></a>
                 <div class="card mb-3" style="max-width: 540px;" >
                   <div class="row no-gutters">

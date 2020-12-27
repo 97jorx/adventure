@@ -120,7 +120,7 @@ $this->registerJs($js);
         <h1 class="mt-4"><?= $model->titulo ?></h1>
         <p class="lead">
          Creado por
-            <a href="#"><?= $model->usuario->nombre ?></a>
+            <a href="#"><?= $model->usuario->alias ?></a>
         </p>
         <?php if($model->usuario->nombre == $name) { ?>
             <div class="col-md-2">

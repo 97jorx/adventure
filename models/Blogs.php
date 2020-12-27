@@ -234,10 +234,10 @@ class Blogs extends \yii\db\ActiveRecord
             ->joinWith('favblogs f')
             ->joinWith('notas n')
             ->joinWith('visitas v')
-            // ->joinWith('comentarios co')
             ->groupBy('blogs.id, u.nombre, c.denom, c.descripcion');
     }
   
+
 
  /**
      * Consulta para mostrar Comunidad por su nombre 
@@ -253,18 +253,13 @@ class Blogs extends \yii\db\ActiveRecord
         ->select([
             'blogs.*', 
             '"u".nombre AS usuario', 
-            'COUNT(DISTINCT f.id) AS favs',
-            'COUNT(DISTINCT v.id) AS visits',
-            'SUM(DISTINCT n.nota) AS valoracion'
          ])
         ->joinWith('usuario u')
         ->joinWith('favblogs f')
-        ->joinWith('notas n')
-        ->joinWith('visitas v')
         ->groupBy('blogs.id, u.nombre');
 
         return ($uid == 1) ? ($query) : 
-               ($query->where(['f.id' => $uid]));
+               ($query->where(['f.usuario_id' => $uid]));
     }
 
 
