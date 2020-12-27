@@ -95,7 +95,7 @@ class ComentariosController extends Controller
                 'mensaje' => 'Se ha creado el comentario',
                 'id' => $model->parent_id,
                 'foto' => Yii::$app->user->identity->foto_perfil,
-                'alias' => $alias,
+                'alias' => ucfirst($alias),
                 'fecha' => Yii::$app->AdvHelper->toMinutes($fecha),
                 'texto' => $texto,
             ];

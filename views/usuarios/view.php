@@ -19,7 +19,6 @@ $this->registerCssFile("@web/css/perfil.css");
 
 $js = <<< EOT
 
-$(document).ready(function(){    
 
 // TABS LINK 
 
@@ -57,7 +56,6 @@ $(document).ready(function(){
   });
 
 
-});
 EOT;
 $this->registerJs($js);
 
@@ -155,7 +153,6 @@ $this->registerJs($js);
         <p class="desc"><?= $model->biografia ?></p>
        
       </div>
-      <?php if($blogs_count > 0) : ?> 
         <div class="right col-lg-8">
             <nav class='tabs' id='activeTab'>
               <ul class="nav nav-tabs only-profile">
@@ -167,7 +164,7 @@ $this->registerJs($js);
             <div class="tab-content border-class scroll-vertical">
             <button class="top" id='top' aria-label='Volver arriba' data-balloon-pos="right"><?= Icon::show('arrow-up') ?></button>
               <?php foreach($dataProvider->models as $model) : ?>
-                <div id="<?=$model->comunidad_id?>" class='tab-pane active in <?=$model->comunidad_id?>'>
+                <div  class='tab-pane active in <?=$model->comunidad_id?>'>
                   <div class="card mb-3" style="max-width: 540px;" >
                     <div class="row no-gutters">
                       <div class="col-md-4">
@@ -196,12 +193,8 @@ $this->registerJs($js);
                 </div>
                 <?php endforeach; ?>
             </div>
-          
           </div>
       </div>
-    <?php elseif($blogs_count == 0) : ?>
-      
-    <?php endif;?>
   </main>
 </div>
 

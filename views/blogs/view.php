@@ -20,9 +20,6 @@ $name = Yii::$app->user->identity->username;
 $csrfToken = Yii::$app->request->getCsrfToken();
 $comentar = Url::to(['comentarios/comentar']);
 
-// var_dump($datos); die();
-
-
 $js = <<< EOT
 $('#area-texto, #area-texto-reply').on('input', (event) => {
   event.preventDefault();
@@ -72,11 +69,9 @@ $('.responder-click').on('click', function(event) {
   } 
 });
 
-
-
 $('body').on('submit', 'form#comentar-form, form#respuesta-comentario',  function(event) {
   var form = $(this);
-  console.log();
+  event.preventDefault();
   $.ajax({
     url: form.attr('action'),
     type: 'POST',
@@ -90,7 +85,7 @@ $('body').on('submit', 'form#comentar-form, form#respuesta-comentario',  functio
         if(!data.code) {
             div.prepend(`
                 <div class='row'>
-                  <div class="media"+reply>
+                  <div class="media \${reply}">
                     <img class="d-flex mr-3 rounded-circle" src='https://picsum.photos/50/50?random=1' alt="">
                     <div class="media-body">
                     <div class='row'>
@@ -103,16 +98,13 @@ $('body').on('submit', 'form#comentar-form, form#respuesta-comentario',  functio
                             <div class='col-3'>
                               <a href="#" style="color:grey; font-size:0.9rem"><i class="fas fa-thumbs-up"></i> </a>
                             </div>
-                            <div class='col-3'>
-                              <div style="color:grey; class="responder-click" font-size:0.9rem">RESPONDER</div>
-                            </div>
                           </div>
                         </div>
                     </div>
                   </div>
                 </div>
             `);
-        }
+         }
       }
     });
     return false;
@@ -191,6 +183,7 @@ $this->registerJs($js);
         </div>
        <div id='comentarios'>
          <?php foreach($model->comentarios as $comentario) : ?> 
+          <?php $respuestas = $comentario->findResponsesById($comentario->id, $model->id)?>
           <?php if($comentario->parent == null) : ?> 
           <div class='row'>
               <div class="media mb-4">
@@ -198,42 +191,44 @@ $this->registerJs($js);
                 <div class="media-body">
                 <div class='row'>
                   <h5 class="mt-0 ml-3 pr-2" style='font-size:0.8rem'><?= ucfirst($comentario->usuario->alias) ?></h5>
-                  <i class='minutes' style='color:grey; font-size:0.8rem'><?= Yii::$app->AdvHelper->toMinutes($comentario->created_at) ?></i>
+                  <i class='minutes text-secondary'style='font-size:0.8rem'><?= Yii::$app->AdvHelper->toMinutes($comentario->created_at) ?></i>
                 </div>
                   <div class='texto' ><?= $comentario->texto ?></div>
-                <div class='container mt-2'>
-                  <div class='row'>
-                    <div class='col-3'>
-                      <?= Html::a(Icon::show('thumbs-up'), '#', ['style' => 'color:grey; font-size:0.9rem']); ?>
+                  <div class='container mt-2'>
+                    <div class='row'>
+                      <div class='col-3'>
+                        <?= Html::a(Icon::show('thumbs-up'), '#', ['style' => 'color:grey; font-size:0.9rem']); ?>
+                      </div>
+                      <div class='col-3'>
+                        <?= Html::tag('div', 'RESPONDER', [
+                          'style' => 'font-size:0.9rem; cursor:pointer;', 
+                          'class' => 'responder-click text-secondary',
+                          'id' => $comentario->id 
+                        ]); ?>
+                        </div>
+                        <!-- --- REPLY -->
+                        <div class="card my-4" id="reply-<?= $comentario->id ?>">
+                        </div>
+                        <!-- --- -->
                     </div>
-                    <div class='col-3'>
-                    <?= Html::tag('div', 'RESPONDER', [
-                      'style' => 'color:grey; font-size:0.9rem; cursor:pointer;', 
-                      'class' => 'responder-click',
-                      'id' => $comentario->id 
-                    ]); ?>
-                    </div>
-                    <!-- --- REPLY -->
-                    <div class="card my-4" id="reply-<?= $comentario->id ?>">
-                    </div>
-                    <!-- --- -->
                   </div>
-                </div>
-                <?php $respuestas = $comentario->findResponsesById($comentario->id, $model->id)?>
-                  <?php foreach($respuestas as $key => $value) : ?>
-                        <div class="reply-div-<?= $comentario->id ?>">
-                            <div class='row'>
-                              <div class="media mt-4">
-                                <img class="d-flex mr-3 rounded-circle" src='https://picsum.photos/50/50?random=1' alt="">
-                                <div class="media-body">
-                                  <h5 class="mt-0"><?= ucfirst($value['alias']) ?></h5>
-                                  <span class='minutes'><?= Yii::$app->AdvHelper->toMinutes($value['created_at']) ?></span>
-                                    <div class='texto' ><?= $value['texto'] ?></div>
+                  <div class="reply-div-<?= $comentario->id ?>">
+                    <?php foreach($respuestas as $key => $value) : ?>
+                          <div class='row'>
+                            <div class="media mt-4">
+                              <img class="d-flex mr-3 rounded-circle" src='https://picsum.photos/50/50?random=1' alt="">
+                              <div class="media-body">
+                                <div class='row'>
+                                  <h5 class="mt-0 ml-3 pr-2" style='font-size:0.8rem'><?= ucfirst($value['alias']) ?></h5>
+                                  <i class='minutes text-secondary' style='font-size:0.8rem'><?= Yii::$app->AdvHelper->toMinutes($value['created_at']) ?></i>
                                 </div>
+                                <div class='texto pt-2' ><?= $value['texto'] ?></div>
+                                <?= Html::a(Icon::show('thumbs-up'), '#', ['style' => 'color:grey; font-size:0.9rem']); ?>
                               </div>
                             </div>
                           </div>
-                  <?php endforeach; ?>
+                    <?php endforeach; ?>
+                  </div>
                 </div>
             </div>
           </div>

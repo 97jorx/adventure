@@ -138,7 +138,6 @@ class Comentarios extends \yii\db\ActiveRecord
             ->leftJoin('usuarios', 'parent.usuario_id = usuarios.id')
             ->where(['parent.blog_id' => $blogid])
             ->andWhere(['comentarios.id' => $id])
-            ->orderBy(['parent.created_at' => SORT_DESC])
             ->asArray()
             ->all();
 
