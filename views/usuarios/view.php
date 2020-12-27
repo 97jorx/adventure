@@ -153,27 +153,27 @@ $this->registerJs($js);
         <p class="desc"><?= $model->biografia ?></p>
        
       </div>
-        <div class="right col-lg-8">
-            <nav class='tabs' id='activeTab'>
-              <ul class="nav nav-tabs only-profile">
-                <?php foreach($dataProvider2->models as $model) : ?>
-                <li  class="nav-link active"><a data-toggle="tab" href=".<?=$model->id?>"><?= $model->denom ?></a></li>
-                <?php endforeach; ?>              
-              </ul>
-            </nav> 
-            <div class="tab-content border-class scroll-vertical">
-            <button class="top" id='top' aria-label='Volver arriba' data-balloon-pos="right"><?= Icon::show('arrow-up') ?></button>
-              <?php foreach($dataProvider->models as $model) : ?>
-                <div  class='tab-pane active in <?=$model->comunidad_id?>'>
-                  <div class="card mb-3" style="max-width: 540px;" >
-                    <div class="row no-gutters">
-                      <div class="col-md-4">
-                        <div class='img-holder'>
-                          <?php $fakeimg = "https://picsum.photos/250/250?random=".$model->id;  ?>
-                          <?= Html::a(Html::img($fakeimg)) ?>
-                        </div>
+      <div class="right col-lg-8">
+          <nav class='tabs' id='activeTab'>
+            <ul class="nav nav-tabs">
+              <?php foreach($dataProvider2->models as $model) : ?>
+              <li class="nav-link"><a data-toggle="tab" href=".<?=$model->id?>"><?= $model->denom ?></a></li>
+              <?php endforeach; ?>              
+            </ul>
+          </nav> 
+          <div class="tab-content scroll-vertical">
+            <?php foreach($dataProvider->models as $model) : ?>
+              <div id="<?=$model->comunidad_id?>" class='tab-pane active <?=$model->comunidad_id?>'>
+              <a name="top"></a>
+                <div class="card mb-3" style="max-width: 540px;" >
+                  <div class="row no-gutters">
+                    <div class="col-md-4">
+                      <div class='img-holder'>
+                        <?php $fakeimg = "https://picsum.photos/250/250?random=".$model->id;  ?>
+                        <?= Html::a(Html::img($fakeimg)) ?>
                       </div>
-                      <div class="col-md-8">
+                    </div>
+                    <div class="col-md-8">
                         <div class="card-body">
                           <h5 class="card-title"><?= $model->titulo ?></h5>
                           <p class="card-text"><?= $model->descripcion ?></p>
@@ -191,10 +191,12 @@ $this->registerJs($js);
                     </div>
                   </div>
                 </div>
-                <?php endforeach; ?>
-            </div>
+              </div>
+              <?php endforeach; ?>
           </div>
-      </div>
+        </div>
+    </div>
   </main>
 </div>
 
+                     
