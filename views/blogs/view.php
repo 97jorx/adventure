@@ -173,7 +173,7 @@ $this->registerJs($js);
               'id' => 'comentar-form',
             ]) ?>
             <div class="form-group">
-              <?= Html::textArea('texto', '', ['class' => 'form-control', 'id' => 'area-texto', 'rows' => "3"]) ?>
+              <?= Html::textArea('texto', '', ['class' => 'form-control login', 'id' => 'area-texto', 'rows' => "3"]) ?>
               <?= Html::hiddenInput('blogid', $model->id, ['class' => 'blogid']) ?>
             </div>
             <?= Html::submitButton('Comentar', ['class' => 'btn btn-info', 'id' => 'submitComent', 'style' => 'display:none']) ?>

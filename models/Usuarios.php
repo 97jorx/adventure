@@ -301,6 +301,16 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         return Notas::find('nota')->where(['usuario_id' => $this->id]);
     }
 
+    /**
+     * Gets query for [[Favcomentarios]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFavcomentarios()
+    {
+        return $this->hasMany(Favcomentarios::class, ['usuario_id' => 'id'])->inverseOf('usuario');
+    }
+
 
      /**
      * Gets query for [[Visitas]].

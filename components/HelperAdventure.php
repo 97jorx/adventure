@@ -4,6 +4,7 @@ namespace app\components;
 
 use app\controllers\BlogsController;
 use app\controllers\ComunidadesController;
+use app\controllers\FavcomentariosController;
 use app\models\Bloqcomunidades;
 use app\models\Bloqueados;
 use app\models\Comunidades;
@@ -35,7 +36,7 @@ class HelperAdventure extends Component
     }
 
     /**
-     * Consulta si en la tabla FavBlogs/Favcomunidades si hay un ua fila que corresponda a
+     * Consulta si en la tabla FavBlogs/Favcomunidades/Favcomentarios si hay un ua fila que corresponda a
      * un determinado usuario_id y un id en la correspondiente tabla.
      * @param $model $provider el objeto identificativo que determina que Query se debe hacer.
      * @param id es el id correspondiente a la tabla.
@@ -51,6 +52,10 @@ class HelperAdventure extends Component
         } elseif ($model instanceof ComunidadesController || $model == 'view') {
             return Favcomunidades::find()
             ->where(['comunidad_id' => $id])
+            ->andWhere(['usuario_id' => $usuarioid]);
+        } elseif ($model instanceof FavcomentariosController || $model == 'view') {
+            return Favcomentarios::find()
+            ->where(['comentario_id' => $id])
             ->andWhere(['usuario_id' => $usuarioid]);
         }
     }
