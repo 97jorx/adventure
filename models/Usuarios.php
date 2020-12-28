@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Http\Discovery\Exception\NotFoundException;
 use Yii;
 use yii\web\IdentityInterface;
 
@@ -300,6 +301,16 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         return Notas::find('nota')->where(['usuario_id' => $this->id]);
     }
 
+    /**
+     * Gets query for [[Favcomentarios]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFavcomentarios()
+    {
+        return $this->hasMany(Favcomentarios::class, ['usuario_id' => 'id'])->inverseOf('usuario');
+    }
+
 
      /**
      * Gets query for [[Visitas]].
@@ -320,6 +331,16 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
        return $this->hasMany(Integrantes::class, ['usuario_id' => 'id'])->inverseOf('usuario');
    }
 
+
+    /**
+     * Gets query for [[Comentarios]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getComentarios()
+    {
+        return $this->hasMany(Comentarios::class, ['usuario_id' => 'id'])->inverseOf('usuario');
+    }
 
 
     /**
@@ -478,6 +499,16 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->auth_key === $authKey;
     }
 
+    public static function findIdPorAlias($alias)
+    {
+        if($id = static::find()->select('id')->where(['alias' => $alias])->scalar()) {
+            return $id;
+        } else {
+            throw new NotFoundException();
+        }
+        
+    }
+
     public static function findPorNombre($username)
     {
         return static::findOne(['username' => $username]);
@@ -551,6 +582,19 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     }
 
 
+    public function countNotes($alias){
+
+        $id = $this->findIdPorAlias($alias);
+
+        $count = Notas::find()
+                ->select(['notas.nota'])
+                ->leftJoin('blogs', 'blogs.id = notas.blog_id')
+                ->where(['blogs.usuario_id' => $id])
+                ->sum('nota');
+                
+
+        return $count;        
+    }
 
 
 }

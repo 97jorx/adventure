@@ -8,13 +8,16 @@ use Yii;
  * This is the model class for table "comentarios".
  *
  * @property int $id
- * @property int $user_id_comment
- * @property int $id_comment_blog
- * @property string|null $texto
+ * @property int $usuario_id
+ * @property int|null $blog_id
+ * @property int $parent_id
+ * @property string $texto
  * @property string $created_at
  *
- * @property Blogs $commentBlog
- * @property Usuarios $userIdComment
+ * @property Blogs $blog
+ * @property Comentarios $reply
+ * @property Comentarios[] $comentarios
+ * @property Usuarios $usuario
  */
 class Comentarios extends \yii\db\ActiveRecord
 {
@@ -32,13 +35,14 @@ class Comentarios extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id_comment', 'id_comment_blog'], 'required'],
-            [['user_id_comment', 'id_comment_blog'], 'default', 'value' => null],
-            [['user_id_comment', 'id_comment_blog'], 'integer'],
+            [['usuario_id', 'texto'], 'required'],
+            [['usuario_id', 'blog_id', 'parent_id'], 'default', 'value' => null],
+            [['usuario_id', 'blog_id', 'parent_id'], 'integer'],
             [['created_at'], 'safe'],
             [['texto'], 'string', 'max' => 255],
-            [['id_comment_blog'], 'exist', 'skipOnError' => true, 'targetClass' => Blogs::class, 'targetAttribute' => ['id_comment_blog' => 'id']],
-            [['user_id_comment'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['user_id_comment' => 'id']],
+            [['blog_id'], 'exist', 'skipOnError' => true, 'targetClass' => Blogs::class, 'targetAttribute' => ['blog_id' => 'id']],
+            [['parent_id'], 'exist', 'skipOnError' => true, 'targetClass' => Comentarios::class, 'targetAttribute' => ['parent_id' => 'id']],
+            [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['usuario_id' => 'id']],
         ];
     }
 
@@ -49,30 +53,108 @@ class Comentarios extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'user_id_comment' => 'User Id Comment',
-            'id_comment_blog' => 'Id Comment Blog',
+            'usuario_id' => 'Usuario ID',
+            'blog_id' => 'Blog comentado',
+            'parent_id' => 'Usuario respuesta',
             'texto' => 'Texto',
             'created_at' => 'Created At',
         ];
     }
 
     /**
-     * Gets query for [[CommentBlog]].
+     * Gets query for [[Blog]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCommentBlog()
+    public function getBlog()
     {
-        return $this->hasOne(Blogs::class, ['id' => 'id_comment_blog'])->inverseOf('comentarios');
+        return $this->hasOne(Blogs::class, ['id' => 'blog_id'])->inverseOf('comentarios');
     }
 
     /**
-     * Gets query for [[UserIdComment]].
+     * Gets query for [[parent]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUserIdComment()
+    public function getParent()
     {
-        return $this->hasOne(Usuarios::class, ['id' => 'user_id_comment'])->inverseOf('comentarios');
+        return $this->hasOne(Comentarios::class, ['id' => 'parent_id'])
+                    ->alias('parent')
+                    // ->from(Comentarios::tableName() . ' AS parent')
+                    ->orderBy(['created_at' => SORT_DESC]);
+        
     }
+
+    /**
+     * Gets query for [[Comentarios]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getComentarios()
+    {
+        return $this->hasMany(Comentarios::class, ['parent_id' => 'id'])
+        ->inverseOf('parent');
+    }
+
+    /**
+     * Gets query for [[Usuario]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUsuario()
+    {
+        return $this->hasOne(Usuarios::class, ['id' => 'usuario_id'])->inverseOf('comentarios');
+    }
+
+  /**
+     * Gets query for [[Comentarios]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function findResponses($id, $blogid = null)
+    {
+            return Comentarios::find()
+            ->joinWith('comentarios c')
+            ->joinWith('parent p')
+            ->where(['p.blog_id' => $blogid])
+            ->andWhere(['c.id' => $id])
+            ->asArray()
+            ->all();
+
+    }
+
+
+
+    /**
+     * Cuenta los likes del comentario.
+     *
+     * @param [type] $cid ID del comentario pasado por parámetro.
+     * @return integer
+     */
+    public function countLikes($cid) {
+        return Favcomentarios::find()
+                ->where(['comentario_id' => $cid])
+                ->count();
+    }
+
+
+    /**
+     * Gets query for [[Comentarios]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function findResponsesById($id, $blogid = null)
+    {
+            return Comentarios::find()
+            ->select(['usuarios.*', 'parent.*'])
+            ->from('comentarios parent')
+            ->leftJoin('comentarios', 'parent.parent_id = comentarios.id')
+            ->leftJoin('usuarios', 'parent.usuario_id = usuarios.id')
+            ->where(['parent.blog_id' => $blogid])
+            ->andWhere(['comentarios.id' => $id])
+            ->asArray()
+            ->all();
+
+    }
+
 }

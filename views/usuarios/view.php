@@ -14,13 +14,12 @@ use yii\widgets\DetailView;
 // $this->params['breadcrumbs'][] = ['label' => 'Comunidades', 'url' => ['comunidades/index']];
 // $this->params['breadcrumbs'][] = $model->username;
 
-$name = Yii::$app->user->identity->username;
+$name = Yii::$app->user->identity->alias;
 $this->registerCssFile("@web/css/perfil.css");
 
 $js = <<< EOT
 
-$(document).ready(function(){    
-
+$(document).ready(function(){  
 // TABS LINK 
 
   $('.nav-link').click(function(e){
@@ -55,7 +54,6 @@ $(document).ready(function(){
       $(".tab-content").animate({scrollTop : 0}, 360);
       return false;
   });
-
 
 });
 EOT;
@@ -137,7 +135,8 @@ $this->registerJs($js);
         <?php endif; ?>
         <p class="info"><?= $model->rol ?></p>
         <p class="info"><?= $model->alias ?></p>
-        <p class="info"><?= (empty($model->valoracion)) ? (0) : ($model->valoracion) ?><?= Icon::show('star') ?></p>
+        <p class="info"><?= (empty($model->countNotes($model->alias))) ? (0) :
+                            ($model->countNotes($model->alias)) ?><?= Icon::show('star') ?></p>
         <div class="stats row">
           <div class="stat col-xs-4" style="padding-right: 50px;">
             <p class="number-stat"><?= $model->following ?></p>
@@ -155,28 +154,27 @@ $this->registerJs($js);
         <p class="desc"><?= $model->biografia ?></p>
        
       </div>
-      <?php if($blogs_count > 0) : ?> 
-        <div class="right col-lg-8">
-            <nav class='tabs' id='activeTab'>
-              <ul class="nav nav-tabs only-profile">
-                <?php foreach($dataProvider2->models as $model) : ?>
-                <li  class="nav-link active"><a data-toggle="tab" href=".<?=$model->id?>"><?= $model->denom ?></a></li>
-                <?php endforeach; ?>              
-              </ul>
-            </nav> 
-            <div class="tab-content border-class scroll-vertical">
-            <button class="top" id='top' aria-label='Volver arriba' data-balloon-pos="right"><?= Icon::show('arrow-up') ?></button>
-              <?php foreach($dataProvider->models as $model) : ?>
-                <div id="<?=$model->comunidad_id?>" class='tab-pane active in <?=$model->comunidad_id?>'>
-                  <div class="card mb-3" style="max-width: 540px;" >
-                    <div class="row no-gutters">
-                      <div class="col-md-4">
-                        <div class='img-holder'>
-                          <?php $fakeimg = "https://picsum.photos/250/250?random=".$model->id;  ?>
-                          <?= Html::a(Html::img($fakeimg)) ?>
-                        </div>
+      <div class="right col-lg-8">
+          <nav class='tabs' id='activeTab'>
+            <ul class="nav nav-tabs">
+              <?php foreach($dataProvider2->models as $model) : ?>
+                <li class="nav-link"><a data-toggle="tab" href=".<?=$model->id?>"><?= $model->denom ?></a></li>
+              <?php endforeach; ?>              
+            </ul>
+          </nav> 
+          <div class="tab-content scroll-vertical">
+            <?php foreach($dataProvider->models as $model) : ?>
+              <div class='tab-pane active in <?=$model->comunidad_id?>'>
+              <a name="top"></a>
+                <div class="card mb-3" style="max-width: 540px;" >
+                  <div class="row no-gutters">
+                    <div class="col-md-4">
+                      <div class='img-holder'>
+                        <?php $fakeimg = "https://picsum.photos/250/250?random=".$model->id;  ?>
+                        <?= Html::a(Html::img($fakeimg)) ?>
                       </div>
-                      <div class="col-md-8">
+                    </div>
+                    <div class="col-md-8">
                         <div class="card-body">
                           <h5 class="card-title"><?= $model->titulo ?></h5>
                           <p class="card-text"><?= $model->descripcion ?></p>
@@ -184,7 +182,7 @@ $this->registerJs($js);
                               <div class="col-md-2">
                                 <p class="card-text"><small><?= Icon::show('heart') . $model->favs ?></small></p>
                               </div>
-                              <?php if($model->usuario->nombre == $name) { ?>
+                              <?php if($model->usuario->alias == $name) { ?>
                                 <div class="col-md-2">
                                   <p class="card-text"><small><?= Html::a(Icon::show('pencil'), ['blogs/update', 'id' => $model->id]) ?></small></p>
                                 </div>
@@ -194,14 +192,12 @@ $this->registerJs($js);
                     </div>
                   </div>
                 </div>
-                <?php endforeach; ?>
-            </div>
-          
+              </div>
+              <?php endforeach; ?>
           </div>
-      </div>
-    <?php elseif($blogs_count == 0) : ?>
-      
-    <?php endif;?>
+        </div>
+    </div>
   </main>
 </div>
 
+                     

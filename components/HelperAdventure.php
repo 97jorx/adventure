@@ -3,13 +3,15 @@
 namespace app\components;
 
 use app\controllers\BlogsController;
+use app\controllers\ComentariosController;
 use app\controllers\ComunidadesController;
 use app\models\Bloqcomunidades;
 use app\models\Bloqueados;
-use app\models\Comunidades;
 use app\models\Favblogs;
+use app\models\Favcomentarios;
 use app\models\Favcomunidades;
 use app\models\Notas;
+use DateTime;
 use yii\base\Component;
 use Yii;
 
@@ -34,7 +36,7 @@ class HelperAdventure extends Component
     }
 
     /**
-     * Consulta si en la tabla FavBlogs/Favcomunidades si hay un ua fila que corresponda a
+     * Consulta si en la tabla FavBlogs/Favcomunidades/Favcomentarios si hay un ua fila que corresponda a
      * un determinado usuario_id y un id en la correspondiente tabla.
      * @param $model $provider el objeto identificativo que determina que Query se debe hacer.
      * @param id es el id correspondiente a la tabla.
@@ -44,14 +46,17 @@ class HelperAdventure extends Component
     {
         $usuarioid = Yii::$app->user->id;
         if ($model instanceof BlogsController) {
-            return Favblogs::find()
-            ->where(['blog_id' => $id])
-            ->andWhere(['usuario_id' => $usuarioid]);
+            $query = Favblogs::find()
+            ->where(['blog_id' => $id]);
         } elseif ($model instanceof ComunidadesController || $model == 'view') {
-            return Favcomunidades::find()
-            ->where(['comunidad_id' => $id])
-            ->andWhere(['usuario_id' => $usuarioid]);
+            $query = Favcomunidades::find()
+            ->where(['comunidad_id' => $id]);
+        } elseif ($model instanceof ComentariosController || $model == 'cview') {
+            $query = Favcomentarios::find()
+            ->where(['comentario_id' => $id]);
         }
+
+        return $query->andWhere(['usuario_id' => $usuarioid]);
     }
 
 
@@ -128,6 +133,39 @@ class HelperAdventure extends Component
         }
     }
 
+    /**
+     * Devuelve la fecha en minutos que han transcurrido desde 
+     * la fecha en la que se realizó la acción.
+     * @return String
+     */
+    public function toMinutes($datetime, $full = false) {
+        $now = new DateTime();
+        $ago = new DateTime($datetime);
+        $diff = $now->diff($ago);
+    
+        $diff->w = floor($diff->d / 7);
+        $diff->d -= $diff->w * 7;
+    
+        $string = array(
+            'y' => 'año',
+            'm' => 'mese',
+            'w' => 'semana',
+            'd' => 'dia',
+            'h' => 'hora',
+            'i' => 'minuto',
+            's' => 'segundo',
+        );
+        foreach ($string as $k => &$v) {
+            if ($diff->$k) {
+                $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+            } else {
+                unset($string[$k]);
+            }
+        }
+    
+        if (!$full) $string = array_slice($string, 0, 1);
+        return $string ? 'hace ' . implode(', ', $string)  : 'justo ahora';
+    }
 
    
 }

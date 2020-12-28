@@ -3,17 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Notas;
-use app\models\NotasSearch;
+use app\models\Favcomentarios;
+use app\models\FavcomentariosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\Response;
 
 /**
- * NotasController implements the CRUD actions for Notas model.
+ * FavcomentariosController implements the CRUD actions for Favcomentarios model.
  */
-class NotasController extends Controller
+class FavcomentariosController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -31,12 +30,12 @@ class NotasController extends Controller
     }
 
     /**
-     * Lists all Notas models.
+     * Lists all Favcomentarios models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new NotasSearch();
+        $searchModel = new FavcomentariosSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -46,7 +45,7 @@ class NotasController extends Controller
     }
 
     /**
-     * Displays a single Notas model.
+     * Displays a single Favcomentarios model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -59,13 +58,13 @@ class NotasController extends Controller
     }
 
     /**
-     * Creates a new Notas model.
+     * Creates a new Favcomentarios model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Notas();
+        $model = new Favcomentarios();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -77,7 +76,7 @@ class NotasController extends Controller
     }
 
     /**
-     * Updates an existing Notas model.
+     * Updates an existing Favcomentarios model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -97,7 +96,7 @@ class NotasController extends Controller
     }
 
     /**
-     * Deletes an existing Notas model.
+     * Deletes an existing Favcomentarios model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -111,64 +110,18 @@ class NotasController extends Controller
     }
 
     /**
-     * Dar nota al usuario en un blog en concreto.
-     * 
-     * @param integer $id
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDarnota()
-    {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        $uid = Yii::$app->user->id;
-        $id = Yii::$app->request->get('id');
-        $model = new Notas();    
-
-        $notaexist = Notas::find()
-        ->where(['blog_id' => $id])
-        ->andWhere(['usuario_id' => $uid]);
-
-        $json = [];
-       
-            $nota = Yii::$app->request->post('nota');
-            if (!$notaexist->exists()) {
-                $model->usuario_id = $uid;
-                $model->blog_id = $id;
-                $model->nota = $nota;
-                $model->save();
-                $json = [
-                    'mensaje' => 'Se ha guardado la nota.',
-                    'nota' => $model->nota,
-                    'uid' => $uid,
-                    'blogid' => $id
-                ];
-            } else {
-                $model = Notas::findOne(['blog_id' => $id, 'usuario_id' => $uid]);
-                $model->nota = $nota;
-                $model->save();
-                $json = [
-                     'mensaje' => 'Se ha actualizado la nota.',
-                     'nota' => $model->nota,
-                ];
-            }
-       
-        return json_encode($json);
-    }
-
-
-    /**
-     * Finds the Notas model based on its primary key value.
+     * Finds the Favcomentarios model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Notas the loaded model
+     * @return Favcomentarios the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Notas::findOne($id)) !== null) {
+        if (($model = Favcomentarios::findOne($id)) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-
 }

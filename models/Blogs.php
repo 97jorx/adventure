@@ -97,8 +97,13 @@ class Blogs extends \yii\db\ActiveRecord
      */
     public function getComentarios()
     {
-        return $this->hasMany(Comentarios::class, ['id_comment_blog' => 'id'])->inverseOf('commentBlog');
+        return $this->hasMany(Comentarios::class, ['blog_id' => 'id'])
+            ->inverseOf('blog')
+            ->orderBy(['created_at' => SORT_DESC]);
     }
+
+
+   
 
 
      /**
@@ -110,7 +115,6 @@ class Blogs extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Favblogs::class, ['blog_id' => 'id'])->inverseOf('blog');
     }
-
 
 
    /**
@@ -234,6 +238,7 @@ class Blogs extends \yii\db\ActiveRecord
     }
   
 
+
  /**
      * Consulta para mostrar Comunidad por su nombre 
      * y el Usuario por su nombre en Blogs
@@ -248,18 +253,13 @@ class Blogs extends \yii\db\ActiveRecord
         ->select([
             'blogs.*', 
             '"u".nombre AS usuario', 
-            'COUNT(DISTINCT f.id) AS favs',
-            'COUNT(DISTINCT v.id) AS visits',
-            'SUM(DISTINCT n.nota) AS valoracion'
          ])
         ->joinWith('usuario u')
         ->joinWith('favblogs f')
-        ->joinWith('notas n')
-        ->joinWith('visitas v')
         ->groupBy('blogs.id, u.nombre');
 
         return ($uid == 1) ? ($query) : 
-               ($query->where(['f.id' => $uid]));
+               ($query->where(['f.usuario_id' => $uid]));
     }
 
 
