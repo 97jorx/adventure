@@ -14,10 +14,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Blogs', 'url' => ['index', 'actual
 $this->params['breadcrumbs'][] = $this->title;
 
 $url = Url::to(['blogs/like', 'id' => $model->id]);
-
 $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gusta']);
-
-
 $name = Yii::$app->user->identity->username;
 $csrfToken = Yii::$app->request->getCsrfToken();
 $comentar = Url::to(['comentarios/comentar']);
@@ -199,8 +196,8 @@ $this->registerJs(UtilAjax::LIKE);
                   <div class='container mt-2'>
                     <div class='row'>
                       <div class='col-3'>
-                      <?php $clike = (Yii::$app->AdvHelper->tieneFavoritos($comentario->id, 'cview')) ?
-                      (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gusta']); ?>
+                      <?php $clike = (!Yii::$app->AdvHelper->tieneFavoritos($comentario->id, 'cview')->exists()) ?
+                      (['thumbs-up', 'Me gusta']) : (['thumbs-down', 'No me gusta']); ?>
                       <?= Html::a(Icon::show($clike[0], ['class' => 'clike', 'value' => $comentario->id,'framework' => Icon::FAS]), 
                           Url::to(['comentarios/like', 'cid' => $comentario->id]), ['title' => $clike[1]
                         ]); 
@@ -230,10 +227,12 @@ $this->registerJs(UtilAjax::LIKE);
                                   <i class='minutes text-secondary' style='font-size:0.8rem'><?= Yii::$app->AdvHelper->toMinutes($value['created_at']) ?></i>
                                 </div>
                                 <div class='texto pt-2' ><?= $value['texto'] ?></div>
-                                <!-- ?= Html::a(Icon::show($like[0], ['class' => 'clike', 'value' => $comentario->id, 'framework' => Icon::FAS]), 
-                                     Url::to(['comentarios/like', 'id' => $value['id']]), ['title' => $like[1]
-                                    ]); 
-                                ?>    -->
+                                <?php $crlike = (!Yii::$app->AdvHelper->tieneFavoritos($value['id'], 'cview')->exists()) ?
+                                (['thumbs-up', 'Me gusta']) : (['thumbs-down', 'No me gusta']); ?>
+                               <?= 
+                                   Html::a(Icon::show($crlike[0], ['class' => 'clike', 'value' => $value['id'], 'framework' => Icon::FAS]), 
+                                   Url::to(['comentarios/like', 'cid' => $value['id']]), ['title' => $crlike[1]]);
+                                ?>   
                               </div>
                             </div>
                           </div>

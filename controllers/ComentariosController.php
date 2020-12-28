@@ -160,7 +160,8 @@ class ComentariosController extends Controller
                 ->count();
     }
 
-    /**
+
+     /**
      * Deletes an existing Comentarios model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
