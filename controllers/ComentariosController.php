@@ -119,6 +119,7 @@ class ComentariosController extends Controller
     public function actionLike($cid)
     {
         $json = [];
+        $c = new Comentarios();
         if (!Yii::$app->user->isGuest) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             $usuarioid = Yii::$app->user->id;
@@ -140,7 +141,7 @@ class ComentariosController extends Controller
                     'icono' => 0
                 ];
             }
-            return json_encode(array_merge($json, ['fav' => $this->countLikes($cid)]));
+            return json_encode(array_merge($json, ['fav' => $c->countLikes($cid)]));
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
@@ -148,17 +149,6 @@ class ComentariosController extends Controller
 
 
 
-    /**
-     * Cuenta los likes del comentario.
-     *
-     * @param [type] $cid ID del comentario pasado por parámetro.
-     * @return integer
-     */
-    public function countLikes($cid) {
-        return Favcomentarios::find()
-                ->where(['id' => $cid])
-                ->count();
-    }
 
 
      /**

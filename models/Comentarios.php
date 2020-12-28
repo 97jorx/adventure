@@ -124,6 +124,20 @@ class Comentarios extends \yii\db\ActiveRecord
     }
 
 
+
+    /**
+     * Cuenta los likes del comentario.
+     *
+     * @param [type] $cid ID del comentario pasado por parámetro.
+     * @return integer
+     */
+    public function countLikes($cid) {
+        return Favcomentarios::find()
+                ->where(['comentario_id' => $cid])
+                ->count();
+    }
+
+
     /**
      * Gets query for [[Comentarios]].
      *
