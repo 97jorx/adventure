@@ -3,12 +3,12 @@
 namespace app\components;
 
 use app\controllers\BlogsController;
+use app\controllers\ComentariosController;
 use app\controllers\ComunidadesController;
-use app\controllers\FavcomentariosController;
 use app\models\Bloqcomunidades;
 use app\models\Bloqueados;
-use app\models\Comunidades;
 use app\models\Favblogs;
+use app\models\Favcomentarios;
 use app\models\Favcomunidades;
 use app\models\Notas;
 use DateTime;
@@ -46,18 +46,17 @@ class HelperAdventure extends Component
     {
         $usuarioid = Yii::$app->user->id;
         if ($model instanceof BlogsController) {
-            return Favblogs::find()
-            ->where(['blog_id' => $id])
-            ->andWhere(['usuario_id' => $usuarioid]);
+            $query = Favblogs::find()
+            ->where(['blog_id' => $id]);
         } elseif ($model instanceof ComunidadesController || $model == 'view') {
-            return Favcomunidades::find()
-            ->where(['comunidad_id' => $id])
-            ->andWhere(['usuario_id' => $usuarioid]);
-        } elseif ($model instanceof FavcomentariosController || $model == 'view') {
-            return Favcomentarios::find()
-            ->where(['comentario_id' => $id])
-            ->andWhere(['usuario_id' => $usuarioid]);
+            $query = Favcomunidades::find()
+            ->where(['comunidad_id' => $id]);
+        } elseif ($model instanceof ComentariosController || $model == 'cview') {
+            $query = Favcomentarios::find()
+            ->where(['comentario_id' => $id]);
         }
+
+        return $query->andWhere(['usuario_id' => $usuarioid]);
     }
 
 

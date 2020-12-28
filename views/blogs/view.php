@@ -3,9 +3,8 @@
 /* @var $this yii\web\View */
 /* @var $model app\models\Blogs */
 
-use app\models\Comentarios;
+use app\helpers\UtilAjax;
 use kartik\icons\Icon;
-use kartik\rating\StarRating;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -15,7 +14,10 @@ $this->params['breadcrumbs'][] = ['label' => 'Blogs', 'url' => ['index', 'actual
 $this->params['breadcrumbs'][] = $this->title;
 
 $url = Url::to(['blogs/like', 'id' => $model->id]);
+
 $like = ($tienefavs) ? (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gusta']);
+
+
 $name = Yii::$app->user->identity->username;
 $csrfToken = Yii::$app->request->getCsrfToken();
 $comentar = Url::to(['comentarios/comentar']);
@@ -111,7 +113,7 @@ $('body').on('submit', 'form#comentar-form, form#respuesta-comentario',  functio
 });
 EOT;
 $this->registerJs($js);
-
+$this->registerJs(UtilAjax::LIKE);
 ?>
 
 <div class="container">
@@ -197,7 +199,12 @@ $this->registerJs($js);
                   <div class='container mt-2'>
                     <div class='row'>
                       <div class='col-3'>
-                        <?= Html::a(Icon::show('thumbs-up'), '#', ['style' => 'color:grey; font-size:0.9rem']); ?>
+                      <?php $clike = (Yii::$app->AdvHelper->tieneFavoritos($comentario->id, 'cview')) ?
+                      (['thumbs-up','Me gusta']) : (['thumbs-down', 'No me gusta']); ?>
+                      <?= Html::a(Icon::show($clike[0], ['class' => 'clike', 'value' => $comentario->id,'framework' => Icon::FAS]), 
+                          Url::to(['comentarios/like', 'cid' => $comentario->id]), ['title' => $clike[1]
+                        ]); 
+                      ?> 
                       </div>
                       <div class='col-3'>
                         <?= Html::tag('div', 'RESPONDER', [
@@ -223,7 +230,10 @@ $this->registerJs($js);
                                   <i class='minutes text-secondary' style='font-size:0.8rem'><?= Yii::$app->AdvHelper->toMinutes($value['created_at']) ?></i>
                                 </div>
                                 <div class='texto pt-2' ><?= $value['texto'] ?></div>
-                                <?= Html::a(Icon::show('thumbs-up'), '#', ['style' => 'color:grey; font-size:0.9rem']); ?>
+                                <!-- ?= Html::a(Icon::show($like[0], ['class' => 'clike', 'value' => $comentario->id, 'framework' => Icon::FAS]), 
+                                     Url::to(['comentarios/like', 'id' => $value['id']]), ['title' => $like[1]
+                                    ]); 
+                                ?>    -->
                               </div>
                             </div>
                           </div>
