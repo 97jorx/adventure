@@ -116,7 +116,7 @@ $this->registerJs(UtilAjax::LIKE);
 <div class="container">
     <div class="row">
       <div class="col-lg-8">
-        <h1 class="mt-4"><?= $model->titulo ?></h1>
+        <h1 class="mt-4"><?=  UtilAjax::h($model->titulo) ?></h1>
         <p class="lead">
          Creado por
             <a href="#"><?= $model->usuario->alias ?></a>
@@ -161,8 +161,8 @@ $this->registerJs(UtilAjax::LIKE);
         <hr>
         <img class="img-fluid rounded"  src="<?php echo Yii::$app->request->baseUrl.'/uploads/test.jpg'?>"  alt="">
         <hr>
-        <p class="lead"><?= $model->descripcion?></p>
-        <p class="lead"><?= $model->cuerpo ?></p>
+        <p class="lead"><?= UtilAjax::h($model->descripcion) ?></p>
+        <p class="lead"><?= UtilAjax::h($model->cuerpo) ?></p>
         <hr>
         <div class="card my-4">
             <h5 class="card-header">Dejar comentario:</h5>
@@ -229,7 +229,7 @@ $this->registerJs(UtilAjax::LIKE);
                                   <h5 class="mt-0 ml-3 pr-2" style='font-size:0.8rem'><?= ucfirst($value['alias']) ?></h5>
                                   <i class='minutes text-secondary' style='font-size:0.8rem'><?= Yii::$app->AdvHelper->toMinutes($value['created_at']) ?></i>
                                 </div>
-                                <div class='texto pt-2' ><?= $value['texto'] ?></div>
+                                <div class='texto pt-2' ><?= UtilAjax::h($value['texto']) ?></div>
                                 <div class='container mt-2'>
                                   <div class='row'>
                                     <div class='col-3'>

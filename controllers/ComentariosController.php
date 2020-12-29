@@ -10,6 +10,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
+use yii\helpers\Html;
 
 /**
  * ComentariosController implements the CRUD actions for Comentarios model.
@@ -59,9 +60,9 @@ class ComentariosController extends Controller
         $json = [];
         
         if ($blogid != null) {
-            $model->usuario_id = $uid;
-            $model->blog_id = $blogid;
-            $model->texto = $texto;
+            $model->usuario_id = Html::encode($uid);
+            $model->blog_id = Html::encode($blogid);
+            $model->texto = Html::encode($texto);
 
 
             if($parent != null){
@@ -98,7 +99,7 @@ class ComentariosController extends Controller
                 'foto' => Yii::$app->user->identity->foto_perfil,
                 'alias' => ucfirst($alias),
                 'fecha' => Yii::$app->AdvHelper->toMinutes($fecha),
-                'texto' => $texto,
+                'texto' => Html::encode($texto),
             ];
         } 
 

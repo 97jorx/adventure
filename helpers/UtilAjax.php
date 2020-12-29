@@ -2,6 +2,7 @@
 
 namespace app\helpers;
 use Yii;
+use yii\helpers\Html;
 
 class UtilAjax  {
 
@@ -26,5 +27,19 @@ class UtilAjax  {
             return false
     });
     EOT;
+
+
+
+
+    /**
+     * Funcion para transformar las etiquetas html.
+     * Para evitar por ejemplo el crsf
+     *
+     * @param [type] $content
+     * @return void
+     */
+    public static function h($content){
+        Html::encode($content);
+    }
 
 }
