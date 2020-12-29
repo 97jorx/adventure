@@ -184,7 +184,6 @@ class UsuariosController extends Controller
         $model = Usuarios::findOne($id);
         $model->scenario = Usuarios::SCENARIO_UPDATE;
 
-        // var_dump($model->validate()); die();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', 'Se ha modificado correctamente.');
             return $this->goHome();

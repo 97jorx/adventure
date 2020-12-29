@@ -19,101 +19,12 @@ $name = Yii::$app->user->identity->username;
 $csrfToken = Yii::$app->request->getCsrfToken();
 $comentar = Url::to(['comentarios/comentar']);
 
-$js = <<< EOT
-$('#area-texto, #area-texto-reply').on('input', (event) => {
-  event.preventDefault();
-  var self = $(this);
-  var length = $('#area-texto').val().length;
-  $("#length-area-texto").text("Carácteres restantes: " + (255 - length));
-  if($('#area-texto').val().length > 0){
-    if(length > 255) {
-        $('#submitComent').fadeOut();
-        $("#length-area-texto").text("Carácteres restantes: " + (0));
-        $("#length-area-texto").css("cssText", "color: red;");
-      } else {
-        $('#submitComent').fadeIn();
-        $("#length-area-texto").css("cssText", "color: grey;");
-      }
-    } else {
-        $('#submitComent').fadeOut();
-    }
-});
-
-$('.responder-click').on('click', function(event) {
-  event.preventDefault();
-  var blogid = $('.blogid').val();
-  var id = this.id;
-  var respuesta = '#respuesta-'+id;
-  var reply_id = '#reply-'+id;
-  var divid = $(reply_id);
-
-  if(!$('#respuesta-'+id).length && $('#area-texto').val().length == 0)  {
-  divid.append(`
-    <div id='respuesta-\${id}' class='respuesta-form'>
-      <h5 class='card-header'>Responder:</h5>
-      <div class='card-body'>
-        <form id='respuesta-comentario'  action='$comentar' method='post'>
-          <input type='hidden' name='_csrf' value='$csrfToken'>                        
-            <div class='form-group-reply'>
-              <textarea id='area-texto-reply-\${id}' class='form-control' name='texto' rows='3'></textarea>                        
-              <input type='hidden' name='parent' value='\${id}'>
-              <input type='hidden' name='blogid' value='\${blogid}'>                        
-            </div>
-            <button type='button' id='close-\${id}' onclick='$(this).parent().parent().parent().remove();' class='mt-3 btn btn-white'>Cancelar</button>                        
-            <button type='submit' id='submitReply-\${id}' class='btn btn-info'>Responder</button>                         
-        </form>                      
-      </div>
-      <i id='length-area-texto-\${id}' style='position:absolute; left:70%'></i>
-    </div>`);
-  } 
-});
-
-$('body').on('submit', 'form#comentar-form, form#respuesta-comentario',  function(event) {
-  var form = $(this);
-  event.preventDefault();
-  $.ajax({
-    url: form.attr('action'),
-    type: 'POST',
-    data: form.serialize(),
-    success: function (data) {
-      data = JSON.parse(data);
-      $('#submitComent').fadeOut();
-      $('#area-texto').val('');
-      var div = (data.id == null) ? $('#comentarios') : $('.reply-div-'+data.id);
-      var reply = (data.id == null) ? "mb-4" : "mt-4";
-        if(!data.code) {
-            div.prepend(`
-                <div class='row'>
-                  <div class="media \${reply}">
-                    <img class="d-flex mr-3 rounded-circle" src='https://picsum.photos/50/50?random=1' alt="">
-                    <div class="media-body">
-                    <div class='row'>
-                      <h5 class="mt-0 ml-3 pr-2" style="font-size:0.9rem"> \${data.alias} </h5>
-                      <i class="minutes" style="color:grey; font-size:0.9rem"> \${data.fecha} </i>
-                    </div>
-                      <div>\${data.texto}</div>
-                        <div class='container mt-2'>
-                          <div class='row'>
-                            <div class='col-3'>
-                              <a href="#" style="color:grey; font-size:0.9rem"><i class="fas fa-thumbs-up"></i> </a>
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-                  </div>
-                </div>
-            `);
-         }
-      }
-    });
-    return false;
-});
-EOT;
-$this->registerJs($js);
+$this->registerJs(UtilAjax::COMENTARIOS);
 $this->registerJs(UtilAjax::LIKE);
 ?>
 
 <div class="container">
+  <input type='hidden' id='csrf' name='_csrf' value='<?= $csrfToken ?>'>
     <div class="row">
       <div class="col-lg-8">
         <h1 class="mt-4"><?=  UtilAjax::h($model->titulo) ?></h1>
@@ -192,7 +103,7 @@ $this->registerJs(UtilAjax::LIKE);
                   <h5 class="mt-0 ml-3 pr-2" style='font-size:0.8rem'><?= ucfirst($comentario->usuario->alias) ?></h5>
                   <i class='minutes text-secondary'style='font-size:0.8rem'><?= Yii::$app->AdvHelper->toMinutes($comentario->created_at) ?></i>
                 </div>
-                  <div class='texto' ><?= $comentario->texto ?></div>
+                  <div class='texto' ><?= UtilAjax::h($comentario->texto) ?></div>
                   <div class='container mt-2'>
                     <div class='row'>
                       <div class='col-3'>

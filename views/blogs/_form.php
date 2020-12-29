@@ -1,7 +1,9 @@
 <?php
 
+use app\helpers\UtilAjax;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\ActiveForm;
+use yii\helpers\HtmlPurifier;
 use yii\jui\DatePicker;
 
 /* @var $this yii\web\View */
@@ -13,6 +15,7 @@ use yii\jui\DatePicker;
 
 <div class="blogs-form">
 
+
 <?php $form = ActiveForm::begin([
         'id' => 'blogs-form',
       ]); ?> 
@@ -23,6 +26,9 @@ use yii\jui\DatePicker;
     <?= $form->field($model, 'descripcion')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'cuerpo')->textarea(['rows' => 6]) ?>
+
+    <?= $form->field($model, 'comunidad_id')->dropDownList($comunidades, ['disabled' => 'disabled'])->label(false); ?>
+
 
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>

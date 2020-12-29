@@ -24,7 +24,7 @@ $month = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agost
 
 ?>
 
-<div class="chart-container" style="position: relative; height:40vh; width:65vw">
+<div class="chart-container" style="position: relative; height:40vh; width:50vw">
   <canvas id="chart"></canvas>
 </div>
     

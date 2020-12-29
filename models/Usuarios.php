@@ -344,6 +344,23 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
 
 
     /**
+     * Gets query for [[Comentarios]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getComments()
+    {
+        return Comentarios::find()
+        ->select(['comentarios.*', 'usuarios.alias'])
+        ->leftJoin('usuarios', 'comentarios.usuario_id = usuarios.id')
+        ->where(['comentarios.blog_id' => null])
+        ->orderBy(['created_at' => SORT_DESC])
+        ->asArray()
+        ->all();
+    }
+
+
+    /**
      * SETTER DE @param followers
      * @return \yii\db\ActiveQuery
      */

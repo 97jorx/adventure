@@ -54,54 +54,56 @@ class ComentariosController extends Controller
         $parent = Yii::$app->request->post('parent');
         $model = new Comentarios();    
         $alias = ucfirst(Yii::$app->user->identity->alias);
-
-        
+        $csrfToken = Yii::$app->request->getCsrfToken();
 
         $json = [];
         
+        $model->usuario_id = Html::encode($uid);
+        $model->texto = Html::encode($texto);
+
         if ($blogid != null) {
-            $model->usuario_id = Html::encode($uid);
             $model->blog_id = Html::encode($blogid);
-            $model->texto = Html::encode($texto);
-
-
-            if($parent != null){
-                $model->parent_id = $parent;
-            } else {
-                $json = [
-                    'mensaje' => 'Ha ocurrido un error inesperado.',
-                ];
-            }
-            
-            if(!$model->validate()) {
-                $json = [
-                    'mensaje' => 'No debe estar vacio',
-                    'code' => 1,
-                ];
-                return json_encode($json);
-            }
-    
-            $model->save();
-
-            $fecha = Comentarios::find()
-            ->select('created_at')
-            ->where(['id' => $model->id])
-            ->scalar();
-            
-            $alias = Usuarios::find()
-            ->select('alias')
-            ->where(['id' => $model->usuario_id])
-            ->scalar();
-
+        }
+        
+        if($parent != null){
+            $model->parent_id = $parent;
+        } else {
             $json = [
-                'mensaje' => 'Se ha creado el comentario',
-                'id' => $model->parent_id,
-                'foto' => Yii::$app->user->identity->foto_perfil,
-                'alias' => ucfirst($alias),
-                'fecha' => Yii::$app->AdvHelper->toMinutes($fecha),
-                'texto' => Html::encode($texto),
+                'mensaje' => 'Ha ocurrido un error inesperado.',
             ];
-        } 
+        }
+        
+        if(!$model->validate()) {
+            $json = [
+                'mensaje' => 'No debe estar vacio',
+                'code' => 1,
+            ];
+            return json_encode($json);
+        }
+
+        $model->save();
+
+        $fecha = Comentarios::find()
+        ->select('created_at')
+        ->where(['id' => $model->id])
+        ->scalar();
+        
+        $alias = Usuarios::find()
+        ->select('alias')
+        ->where(['id' => $model->usuario_id])
+        ->scalar();
+
+        $json = [
+            'mensaje' => 'Se ha creado el comentario',
+            'id' => $model->parent_id,
+            'blog_id' => $model->blog_id,
+            'foto' => Yii::$app->user->identity->foto_perfil,
+            'alias' => ucfirst($alias),
+            'fecha' => Yii::$app->AdvHelper->toMinutes($fecha),
+            'texto' => Html::encode($texto),
+            'csrf' => $csrfToken,
+        ];
+         
 
         
         return json_encode($json);
