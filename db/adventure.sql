@@ -1,17 +1,3 @@
-
-
--- CREATE TABLE imagenes (
---       id              bigserial PRIMARY KEY
---     , fotos           text      
--- );
--- DROP TABLE IF EXISTS galerias CASCADE;
-
--- CREATE TABLE galerias (
---       id              bigserial PRIMARY KEY
---     , fotos           text      
--- );
-
-
 DROP TABLE IF EXISTS estados CASCADE;
 CREATE TABLE estados (
      id          bigserial      PRIMARY KEY 
@@ -41,6 +27,13 @@ CREATE TABLE usuarios
    , biografia    varchar(255)
 );
 
+-- TABLA DE GALERIAS
+DROP TABLE IF EXISTS galerias CASCADE;
+CREATE TABLE galerias (
+     id           bigserial PRIMARY KEY
+   , comunidad_id bigint    NOT NULL REFERENCES comunidades (id) ON DELETE CASCADE  
+   , fotos        text      
+);
 
 -- TABLA DE LAS COMUNIDADES
 DROP TABLE IF EXISTS comunidades CASCADE;
