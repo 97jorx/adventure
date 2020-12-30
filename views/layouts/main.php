@@ -10,7 +10,6 @@ use yii\bootstrap4\NavBar;
 use yii\bootstrap4\Breadcrumbs;
 use app\assets\AppAsset;
 use app\helpers\UtilNotify;
-use app\models\Notificaciones;
 use kartik\icons\Icon;
 use kartik\widgets\Select2;
 use yii\bootstrap4\Modal;
@@ -26,11 +25,12 @@ $fakeimg = 'https://picsum.photos/100/1000?random=1';
 $notificaciones = [];
 
 foreach(UtilNotify::notificaciones() as $key => $value) {
+    $m = Yii::$app->AdvHelper->toMinutes($value['created_at']);
     $n  = ['label' => "<div class='list-group'>
                     <div class='lg'>
                         <a href='#' class='list-group-item list-group-item-action flex-column align-items-start scroll-vertical'>
                         <h5 class='mb-1'>{$value['mensaje']}</h5>
-                        <p class='mb-0'>{$value['created_at']}</p>
+                        <p class='mb-0'>{$m}</p>
                         </a>
                     </div>
                 </div>"];

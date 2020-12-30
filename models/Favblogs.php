@@ -79,19 +79,28 @@ class Favblogs extends \yii\db\ActiveRecord
             return false;
         }
 
-        $blog_propietario = Blogs::find('usuario_id')
+        $blog_propietario = Blogs::find()
+        ->select('usuario_id')
         ->where(['id' => $this->blog_id])
         ->scalar();
 
-        $blog_titulo = Blogs::find('titulo')
+        $blog_titulo = Blogs::find()
+        ->select('titulo')
         ->where(['id' => $this->blog_id])
         ->scalar();
 
-        $n = new Notificaciones();
-        $n->usuario_id = $blog_propietario;
-        $n->mensaje = 'Se le ha dado like a tu blog' . '\"'.$blog_titulo.'\"';
-        $n->save();
+        $mensaje = 'Se le ha dado like a tu blog ' . '"' . $blog_titulo . '".';
 
+        $existe = Notificaciones::find()
+        ->where(['usuario_id' => $blog_propietario])
+        ->andWhere(['mensaje' => $mensaje])->exists();
+
+        if(!$existe) {
+            $n = new Notificaciones();
+            $n->usuario_id = $blog_propietario;
+            $n->mensaje = $mensaje;
+            $n->save();
+        }
         return true;
     }
 

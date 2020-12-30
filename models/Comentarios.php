@@ -123,8 +123,6 @@ class Comentarios extends \yii\db\ActiveRecord
 
     }
 
-
-
   
 
     /**
@@ -145,5 +143,39 @@ class Comentarios extends \yii\db\ActiveRecord
             ->all();
 
     }
+
+    public function beforeSave($insert)
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        if ($this->blog_id != null) {
+            $blog_propietario = Blogs::find()
+            ->select('usuario_id')
+            ->where(['id' => $this->blog_id])
+            ->scalar();
+
+            $blog_titulo = Blogs::find()
+            ->select('titulo')
+            ->where(['id' => $this->blog_id])
+            ->scalar();
+
+                $mensaje = 'Te han comentado tu blog ' . '"' . $blog_titulo . '".';
+
+                $existe = Notificaciones::find()
+            ->where(['usuario_id' => $blog_propietario])
+            ->andWhere(['mensaje' => $mensaje])->exists();
+
+            if (!$existe) {
+                $n = new Notificaciones();
+                $n->usuario_id = $blog_propietario;
+                $n->mensaje = $mensaje;
+                $n->save();
+            }
+        }
+        return true;
+    }
+
 
 }
