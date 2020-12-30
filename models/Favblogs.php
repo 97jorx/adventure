@@ -33,8 +33,8 @@ class Favblogs extends \yii\db\ActiveRecord
             [['usuario_id', 'blog_id'], 'required'],
             [['usuario_id', 'blog_id'], 'default', 'value' => null],
             [['usuario_id', 'blog_id'], 'integer'],
-            [['blog_id'], 'exist', 'skipOnError' => true, 'targetClass' => Blogs::className(), 'targetAttribute' => ['blog_id' => 'id']],
-            [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['usuario_id' => 'id']],
+            [['blog_id'], 'exist', 'skipOnError' => true, 'targetClass' => Blogs::class, 'targetAttribute' => ['blog_id' => 'id']],
+            [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['usuario_id' => 'id']],
         ];
     }
 
@@ -57,7 +57,7 @@ class Favblogs extends \yii\db\ActiveRecord
      */
     public function getBlog()
     {
-        return $this->hasOne(Blogs::className(), ['id' => 'blog_id'])->inverseOf('favblogs');
+        return $this->hasOne(Blogs::class, ['id' => 'blog_id'])->inverseOf('favblogs');
     }
 
 
@@ -69,6 +69,31 @@ class Favblogs extends \yii\db\ActiveRecord
      */
     public function getUsuario()
     {
-        return $this->hasOne(Usuarios::className(), ['id' => 'usuario_id'])->inverseOf('favblogs');
+        return $this->hasOne(Usuarios::class, ['id' => 'usuario_id'])->inverseOf('favblogs');
     }
+
+
+    public function beforeSave($insert)
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        $blog_propietario = Blogs::find('usuario_id')
+        ->where(['id' => $this->blog_id])
+        ->scalar();
+
+        $blog_titulo = Blogs::find('titulo')
+        ->where(['id' => $this->blog_id])
+        ->scalar();
+
+        $n = new Notificaciones();
+        $n->usuario_id = $blog_propietario;
+        $n->mensaje = 'Se le ha dado like a tu blog' . '\"'.$blog_titulo.'\"';
+        $n->save();
+
+        return true;
+    }
+
+
 }

@@ -26,15 +26,15 @@ $fakeimg = 'https://picsum.photos/100/1000?random=1';
 $notificaciones = [];
 
 foreach(UtilNotify::notificaciones() as $key => $value) {
- $notificaciones  = 
- ['label' => "<div class='list-group'>
-                <div class='lg'>
-                    <a href='#' class='list-group-item list-group-item-action flex-column align-items-start'>
-                      <h5 class='mb-1'>{$value['mensaje']}</h5>
-                      <p class='mb-0'>{$value['created_at']}</p>
-                    </a>
-                </div>
-              </div>"];
+    $n  = ['label' => "<div class='list-group'>
+                    <div class='lg'>
+                        <a href='#' class='list-group-item list-group-item-action flex-column align-items-start scroll-vertical'>
+                        <h5 class='mb-1'>{$value['mensaje']}</h5>
+                        <p class='mb-0'>{$value['created_at']}</p>
+                        </a>
+                    </div>
+                </div>"];
+    array_push($notificaciones, $n);
 }
 
 

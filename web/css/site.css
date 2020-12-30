@@ -563,3 +563,12 @@ div[id*="success-0"] {
 
  
 
+/* NOTIFICACIONES */
+
+.list-group-item p {
+   font-size: 0.7rem;
+ }
+
+.list-group-item h5 {
+   font-size: 1rem;
+}

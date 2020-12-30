@@ -1,6 +1,7 @@
 
 <?php
 
+use app\helpers\Util;
 use app\helpers\UtilAjax;
 use app\models\Usuarios;
 use kartik\icons\Icon;
@@ -32,6 +33,7 @@ $(document).ready(function(){
     $('.nav-link').removeClass('active');    
     $(this).addClass('active');
   });
+
 
   $('.tabs a').click(function(e){
     e.preventDefault();
@@ -82,8 +84,8 @@ $this->registerJs(UtilAjax::LIKE);
             ($imagen) : ($fakeimg), ['class' => 'photo'])) ?>
           <nav class='tabs' id='activeTab'>
             <ul class="nav nav-tabs">
-                <li class="nav-link"><a data-toggle="tab" href="#comments"><?= Icon::show('comment')?></a></li>
-                <li class="nav-link"><a data-toggle="tab" href="#opciones"><?= Icon::show('cog')?></a></li>
+                <li class="nav-link"><a data-toggle="tab" id='coid' href="#comments"><?= Icon::show('comment')?></a></li>
+                <!-- <li class="nav-link"><a data-toggle="tab" href="#opciones"><?= Icon::show('cog')?></a></li> -->
             </ul>
           </nav>   
         </div>
@@ -166,7 +168,6 @@ $this->registerJs(UtilAjax::LIKE);
        
       </div>
 
-      <?php if($blogs_count != 0) : ?>
       <div class="right col-lg-8">
           <nav class='tabs' id='activeTab'>
             <ul class="nav nav-tabs">
@@ -175,9 +176,9 @@ $this->registerJs(UtilAjax::LIKE);
               <?php endforeach; ?>              
             </ul>
           </nav> 
-          <div class="tab-content scroll-vertical">
+          <div class="tab-content scroll-v ">
             <?php foreach($dataProvider->models as $blogs) : ?>
-              <div class='tab-pane active in <?=$blogs->comunidad_id?>'>
+              <div class='tab-pane <?= ($blogs_count > 0) ? ('active in') : ('') ?> <?=$blogs->comunidad_id?>'>
               <a name="top"></a>
                 <div class="card mb-3" style="max-width: 540px;" >
                   <div class="row no-gutters">
@@ -189,8 +190,8 @@ $this->registerJs(UtilAjax::LIKE);
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                          <h5 class="card-title"><?= UtilAjax::h($blogs->titulo) ?></h5>
-                          <p class="card-text"><?= UtilAjax::h($blogs->descripcion) ?></p>
+                          <h5 class="card-title"><?= Util::h($blogs->titulo) ?></h5>
+                          <p class="card-text"><?= Util::h($blogs->descripcion) ?></p>
                             <div class="row">
                               <div class="col-md-2">
                                 <p class="card-text"><small><?= Icon::show('heart') . $blogs->favs ?></small></p>
@@ -208,8 +209,8 @@ $this->registerJs(UtilAjax::LIKE);
               </div>
               <?php endforeach; ?>
           </div>
-          <div class="tab-content">
-            <div id="comments" class="tab-pane fade scroll-vertical">
+          <div class="tab-content scroll-v">
+            <div id="comments" class="tab-pane <?= ($blogs_count == 0) ? ('active in') : ('') ?>">
                 <div class="card my-4">
                       <h5 class="card-header">Dejar comentario:</h5>
                       
@@ -227,8 +228,6 @@ $this->registerJs(UtilAjax::LIKE);
                 </div>
                 <div id='comentarios'>
                 <?php foreach($model->comments as $comentario) : ?> 
-                  <!-- ?php if($comentario->blog_id == null) : ?>  -->
-                    <!-- ?php var_dump($comentario); die();?>  -->
                   <div class='row'>
                       <div class="media ml-5 mb-4">
                         <img class="d-flex mr-3 rounded-circle" src='https://picsum.photos/50/50?random=1' alt="">
@@ -237,7 +236,7 @@ $this->registerJs(UtilAjax::LIKE);
                           <h5 class="mt-0 ml-3 pr-2" style='font-size:0.8rem'><?= ucfirst($comentario['alias']) ?></h5>
                           <i class='minutes text-secondary'style='font-size:0.8rem'><?= Yii::$app->AdvHelper->toMinutes($comentario['created_at']) ?></i>
                         </div>
-                          <div class='texto' ><?= UtilAjax::h($comentario['texto']) ?></div>
+                          <div class='texto' ><?= Util::h($comentario['texto']) ?></div>
                           <div class='container mt-2'>
                             <div class='row'>
                               <div class='col-3'>
@@ -249,37 +248,18 @@ $this->registerJs(UtilAjax::LIKE);
                               ?> 
                               </div>
                               <div class='col-3 fav<?= $comentario['id'] ?>'>
-                                  <?= $model->comentarios[0]->countLikes($comentario['id']) ?>
+                                  <?= Util::countLikes($comentario['id']) ?>
                               </div>
                             </div>
                           </div>
                         </div>
                     </div>
                   </div>
-                  <!-- <php endif; ?> -->
                 <?php endforeach; ?>
-                </div>
-            </div>
-            <div id="opciones" class="tab-pane fade">
-              <h3>Opciones</h3>
-              <p>Ut enim ad minim veniam, quis nostrud exercitation.</p>
+              </div>
             </div>
           </div>
         </div>
-        <?php else : ?>
-        <div class="card text-center align-self-center p-5">
-          <div class="card-body">
-            <h5 class="card-title">No tiene blogs creados aún</h5>
-            <?php if(Yii::$app->user->identity->alias == Yii::$app->request->get('alias')) : ?>
-              <p class="card-text">Unete a una comunidad y crea un blog.</p>
-              <a href="/comunidades/index" class="btn btn-primary">Comunidades</a>
-            <?php else : ?>
-              <p class="card-text">Este usuario no tiene ningún blog creado.</p>
-            <?php endif; ?>
-          </div>
-        </div>
-        <?php endif; ?>  
-
       </div>
     </div>
   </main>
