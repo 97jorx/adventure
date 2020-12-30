@@ -283,4 +283,8 @@ VALUES (1, 1),
 
 
 INSERT INTO notificaciones (usuario_id, mensaje, leido)
-VALUES (1, 'Esta es una notificación de prueba', false);
+VALUES (1, 'Se se le ha dado like a tu blog de "Viajes por el mundo". ', false)
+       (1, 'Se se le ha dado like a tu blog de "Todo pasará...". ', false)
+       (1, 'Se se le ha dado like a tu blog de "Ser o no ser...". ', false)
+       (1, 'Se se le ha dado like a tu blog de "HolaMundo...".', false)
+       (1, 'Se se le ha dado like a tu blog de "Bienvenido a Adventure...". ', false);
