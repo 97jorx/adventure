@@ -405,7 +405,9 @@ select2-results__option:hover a {
      float: right !important;
    }
 
-  
+   .sidenav {
+      top: 300px !important;
+   }
 
    
  }

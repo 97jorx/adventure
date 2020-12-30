@@ -72,7 +72,7 @@ DROP TABLE IF EXISTS notificaciones CASCADE;
 CREATE TABLE notificaciones (
      id           bigserial      PRIMARY KEY
    , usuario_id   bigint         NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE 
-   , mensaje      bigint         NOT NULL
+   , mensaje      text           
    , leido        boolean        DEFAULT false
    , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
 );
@@ -275,9 +275,6 @@ VALUES  (1, 1, '2020-01-29 18:52:16'),
         (5, 1, '2020-07-29 18:52:16'),
         (2, 1, '2020-07-29 18:52:16');
 
-        
-
-
 INSERT INTO integrantes (usuario_id, comunidad_id)
 VALUES (1, 1),
        (1, 2),
@@ -285,4 +282,5 @@ VALUES (1, 1),
        (1, 4);         
 
 
-
+INSERT INTO notificaciones (usuario_id, mensaje, leido)
+VALUES (1, 'Esta es una notificación de prueba', false);

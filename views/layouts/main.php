@@ -9,6 +9,8 @@ use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
 use yii\bootstrap4\Breadcrumbs;
 use app\assets\AppAsset;
+use app\helpers\UtilNotify;
+use app\models\Notificaciones;
 use kartik\icons\Icon;
 use kartik\widgets\Select2;
 use yii\bootstrap4\Modal;
@@ -19,6 +21,23 @@ $guest = Yii::$app->user->isGuest;
 $url = Url::to(['usuarios/search']);
 $url2 = Yii::$app->urlManager->createUrl(['usuarios/view', 'alias' => '']);
 $fakeimg = 'https://picsum.photos/100/1000?random=1';
+
+
+$notificaciones = [];
+
+foreach(UtilNotify::notificaciones() as $key => $value) {
+ $notificaciones  = 
+ ['label' => "<div class='list-group'>
+                <div class='lg'>
+                    <a href='#' class='list-group-item list-group-item-action flex-column align-items-start'>
+                      <h5 class='mb-1'>{$value['mensaje']}</h5>
+                      <p class='mb-0'>{$value['created_at']}</p>
+                    </a>
+                </div>
+              </div>"];
+}
+
+
 
 AppAsset::register($this);
 
@@ -184,11 +203,12 @@ $this->registerJs($js);
             [
                 'label' => Html::tag('i', Icon::show('bell'), ['class' => '',]),
                 'visible' => !$guest,
+                'items' => $notificaciones,
             ],
             [
                 'label' => '<div class="vertical-minus">'.Html::tag('i', Icon::show('minus')).'</div>',
                 'visible' => !$guest,
-                'options' => ['class' => 'label-vertical-minus']
+                'options' => ['class' => 'label-vertical-minus'],
             ],
             [
                 'label' =>  (!Yii::$app->user->isGuest) ? ucfirst(Yii::$app->user->identity->alias) .' '. 
