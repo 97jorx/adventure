@@ -79,6 +79,11 @@ class Favblogs extends \yii\db\ActiveRecord
             return false;
         }
 
+        $usuario = Usuarios::find()
+        ->select('alias')
+        ->where(['id' => Yii::$app->user->id])
+        ->scalar();
+
         $blog_propietario = Blogs::find()
         ->select('usuario_id')
         ->where(['id' => $this->blog_id])
@@ -89,7 +94,7 @@ class Favblogs extends \yii\db\ActiveRecord
         ->where(['id' => $this->blog_id])
         ->scalar();
 
-        $mensaje = 'Se le ha dado like a tu blog ' . '"' . $blog_titulo . '".';
+        $mensaje = 'El usuario ' . $usuario . 'le ha dado like a tu blog ' . '"' . $blog_titulo . '".';
 
         $existe = Notificaciones::find()
         ->where(['usuario_id' => $blog_propietario])
