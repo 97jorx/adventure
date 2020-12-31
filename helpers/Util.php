@@ -2,6 +2,7 @@
 
 namespace app\helpers;
 
+use app\models\Comunidades;
 use Yii;
 use app\models\Favcomentarios;
 use yii\helpers\Html;
@@ -23,6 +24,22 @@ class Util  {
     }
 
 
+    /**
+     * Dame el nombre de la comunidad a partir de id.
+     * Para evitar por ejemplo el crsf
+     *
+     * @param [string] $content
+     */
+    public static function comunidad(){
+        $id = Yii::$app->request->get('actual');
+        return Comunidades::find()
+        ->select('denom')
+        ->where(['id' => $id])
+        ->scalar();
+    }
+
+
+
     
     /**
      * Funcion para transformar las etiquetas html.
@@ -31,7 +48,7 @@ class Util  {
      * @param [string] $content
      */
     public static function h($content){
-        echo Html::encode($content);
+        return Html::encode($content);
     }
 
 

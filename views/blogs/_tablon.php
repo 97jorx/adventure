@@ -1,12 +1,12 @@
 <?php
 
+use app\helpers\Util;
 use kartik\icons\Icon;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
 
 $blogs = $dataProvider->models;
-
     
 ?>
     <p>
@@ -16,11 +16,10 @@ $blogs = $dataProvider->models;
   <div itemscope itemtype="http://schema.org/Blog" class="container">
     <div class="row">
       <div class="col-md-8">
-        <h1 class="my-4"><?= $this->title?></h1>
+        <h1 class="my-4"><?= Util::h($this->title.' de '.Util::h(Util::comunidad())) ?></h1>
         <?php $index = 0; foreach($dataProvider->models as $model) : ?> 
           <?php if ($index == 0): ?>  
-          <h2><small><?= $model->comunidad->denom ?></small></h2> 
-         <?php endif; ?> 
+          <?php endif; ?> 
         <div class="card mb-4"> 
           <img itemprop="image" class="card-img-top img-thumbnail" src="<?= Yii::getAlias('@uploadsUrl') . '/test.jpg'?>" alt="Card image cap">
           <div class="card-body">

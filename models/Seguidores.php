@@ -69,4 +69,33 @@ class Seguidores extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Usuarios::class, ['id' => 'seguidor'])->inverseOf('seguidores0');
     }
+
+
+    public function beforeSave($insert)
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        $usuario_seguidor = Usuarios::find()
+        ->select('alias')
+        ->where(['id' => $this->seguidor])
+        ->scalar();
+      
+        $mensaje = 'El usuario  ' . '"' . $usuario_seguidor . '" te esta seguiendo ahora..';
+
+        $existe = Notificaciones::find()
+        ->where(['usuario_id' => $this->usuario_id])
+        ->andWhere(['mensaje' => $mensaje])->exists();
+
+        if(!$existe) {
+            $n = new Notificaciones();
+            $n->usuario_id = $this->usuario_id;
+            $n->mensaje = $mensaje;
+            $n->save();
+        }
+        return true;
+    }
+
+
 }

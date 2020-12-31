@@ -171,9 +171,6 @@ CREATE TABLE integrantes (
 );
 
 
--- TODO RESPONDER COMENTARIOS.
-
-
 -- DROP TABLE IF EXISTS chats CASCADE;
 
 -- CREATE TABLE chats (
@@ -219,7 +216,15 @@ INSERT INTO comunidades (denom, descripcion, propietario)
  ('Escribir es para todos', 'Estaís todos invitados formar parte de la comunidad para escritores animaté y comparte tus ideas a con todos nosotros', 1),
  ('Viajes', 'Si te gusta viajar y comentar tus grandes aventuras esta es tu comunidad', 1),
  ('Videojuegos', 'Los videojuegos estan a la orden del día disfruta con más personas de este hobbit', 1),
- ('Ciencialistas', '¿Buscas una comunidad de aficionados a la ciencia? Entra aquí y comenta tus conocimientos', 1);
+ ('Deportes', 'Te gusta moverte constantemente y conocer los mejores hábitos saludables del Deporte, accede aquú para no perderte ninguna rutina.', 1),
+ ('Dibujantes', '"Todos los dibujantes buenos y genuinos dibujan acorde a la imagen en sus mentes y no acorde a la naturaleza"', 1),
+ ('Fotografía', '“Las mejores imágenes son aquellas que retienen su fuerza e impacto a través de los años, a pesar del número de veces que son vistas”.', 1),
+ ('Baloncesto', 'Me divierto en la cancha, sonriendo, riendo, tratando de tener una buena actitud.', 1),
+ ('Fútbol', 'Noticias de futbol. Mundial, Liga Santander, Champions League, Copa del Rey y más. Todo el futbol en Mundo Deportivo.', 1),
+ ('Música', 'Toda la información relacionada con el mundo de la música: crónicas de discos y conciertos, entrevistas y las mejores actuaciones acústicas.', 1),
+ ('Baile', '¿Te quieres divertir un rato en nuestra comunidad intercambiando tus experiencias con el baile? Entra aquí.', 1),
+ ('Actualidad', 'Consulta las últimas noticias de actualidad en Internet. Información de última hora actualizada al minuto sobre España', 1),
+ ('Pesca', '¿Eres de los apasionados a la Pesca? ¿Te diviertes pescando en tus momentos libres? Entra aquí y entre todos aportaremos conocimientos', 1);
 
 INSERT INTO blogs (titulo, descripcion, cuerpo, comunidad_id, usuario_id)
 VALUES 
