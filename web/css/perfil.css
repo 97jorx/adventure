@@ -135,9 +135,9 @@ main {
   object-fit: cover;
 }
 
-.scroll-vertical{
-    max-height: 450px;
-    overflow-y: scroll;
+.scroll-v {
+  max-height: 500px;
+  overflow-y: scroll;
 }
 
 

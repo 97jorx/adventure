@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\helpers\Util;
 use Yii;
 use app\models\Comentarios;
 use app\models\Favcomentarios;
@@ -144,7 +145,7 @@ class ComentariosController extends Controller
                     'icono' => 0
                 ];
             }
-            return json_encode(array_merge($json, ['fav' => $c->countLikes($cid)]));
+            return json_encode(array_merge($json, ['fav' => Util::countLikes($cid)]));
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }

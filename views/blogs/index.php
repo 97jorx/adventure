@@ -1,5 +1,6 @@
 <?php
 
+use app\helpers\Util;
 use kartik\icons\Icon;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
@@ -8,8 +9,9 @@ use yii\widgets\LinkPager;
 
     
     $this->title = 'Blogs';
-    $this->params['breadcrumbs'][] = ['label' => 'Comunidad', 'url' => ['comunidades/index']];
-    $this->params['breadcrumbs'][] = $this->title;
+    $this->params['breadcrumbs'][] = ['label' => 'Comunidades', 'url' => ['comunidades/index']];
+    $this->params['breadcrumbs'][] = ['label' => Util::h(Util::comunidad()), 'url' => ['comunidades/index']];
+    $this->params['breadcrumbs'][] = Util::h($this->title);
 
 ?>
 
@@ -19,6 +21,5 @@ use yii\widgets\LinkPager;
       'actual' => $actual,
       'busqueda' => $busqueda,
 ]); ?>
-
 
 

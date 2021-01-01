@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\helpers\Util;
 use Yii;
 
 /**
@@ -123,20 +124,7 @@ class Comentarios extends \yii\db\ActiveRecord
 
     }
 
-
-
-    /**
-     * Cuenta los likes del comentario.
-     *
-     * @param [type] $cid ID del comentario pasado por parámetro.
-     * @return integer
-     */
-    public function countLikes($cid) {
-        return Favcomentarios::find()
-                ->where(['comentario_id' => $cid])
-                ->count();
-    }
-
+  
 
     /**
      * Gets query for [[Comentarios]].
@@ -156,5 +144,47 @@ class Comentarios extends \yii\db\ActiveRecord
             ->all();
 
     }
+
+    public function beforeSave($insert)
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        if ($this->blog_id != null) {
+
+            $usuario_alias = Usuarios::find()
+            ->select('alias')
+            ->where(['id' => $this->usuario_id])
+            ->scalar();
+
+
+            $blog_propietario = Blogs::find()
+            ->select('usuario_id')
+            ->where(['id' => $this->blog_id])
+            ->scalar();
+
+            $blog_titulo = Blogs::find()
+            ->select('titulo')
+            ->where(['id' => $this->blog_id])
+            ->scalar();
+
+             $mensaje = '<strong>'. $usuario_alias. '</strong>" ha comentado "<br><strong>
+                        ' . Util::h($blog_titulo) . '</strong>"';
+
+            $existe = Notificaciones::find()
+            ->where(['usuario_id' => $blog_propietario])
+            ->andWhere(['mensaje' => $mensaje])->exists();
+
+            if (!$existe) {
+                $n = new Notificaciones();
+                $n->usuario_id = $blog_propietario;
+                $n->mensaje = $mensaje;
+                $n->save();
+            }
+        }
+        return true;
+    }
+
 
 }

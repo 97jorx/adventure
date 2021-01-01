@@ -30,6 +30,14 @@ class UtilAjax  {
     EOT;
 
 
+    const npjax = <<< EOT
+        setInterval(function(){  
+            $.pjax.reload({container:"#pjax-notificaciones"});
+        }, 15000); 
+    EOT;
+    
+
+
     const COMENTARIOS = <<< EOT
         $('#area-texto, #area-texto-reply').on('input', (event) => {
             event.preventDefault();
@@ -122,30 +130,6 @@ class UtilAjax  {
                 return false;
             });
         EOT;
-
-
-
-    /**
-     * Funcion para transformar las etiquetas html.
-     * Para evitar por ejemplo el crsf
-     *
-     * @param [string] $content
-     */
-    public static function h($content){
-        echo Html::encode($content);
-    }
-
-
-    /**
-     * Funcion para transformar las etiquetas html.
-     * Para evitar por ejemplo el crsf
-     *
-     * @param [type] $content
-     * @return void
-     */
-    public static function p($html){
-        HtmlPurifier::process($html);
-    }
 
 
 }

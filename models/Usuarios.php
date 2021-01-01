@@ -344,6 +344,17 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
 
 
     /**
+     * Gets query for [[Notificaciones]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getNotificaciones()
+    {
+        return $this->hasMany(Notificaciones::class, ['usuario_id' => 'id'])->inverseOf('usuario');
+    }
+
+
+    /**
      * Gets query for [[Comentarios]].
      *
      * @return \yii\db\ActiveQuery

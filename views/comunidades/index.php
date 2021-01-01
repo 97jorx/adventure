@@ -70,30 +70,32 @@ Yii::$app->formatter->locale = 'es-ES';
              <div class="masonry-item item " onload ='this.style.opacity=1' id="<?=$model->id?>"> 
                 <div class="masonry-content ">
                     <div class="masonry-bar" id="masonry-bar<?=$model->id?>">
-                        <?php $existe = ($model->existeIntegrante($model->id)) ? ['sign-out-alt', 'Salir'] : ['sign-in-alt', 'Unirse']; ?>
-                        <?php $unirse = Url::to(['comunidades/unirse', 'id' => $model->id]); ?>
-                        <?= Html::a(Icon::show($existe[0], ['id' => 'acceso']), '#', ['class' => 'masonry-button login',
-                            'aria-label' => $existe[1], 'data-balloon-pos' => 'up',
-                            'onclick' =>"
-                                event.preventDefault();
-                                var self = $(this);
-                                $.ajax({
-                                    type: 'GET',
-                                    url: '$unirse',
-                                    dataType: 'json',
-                                }).done(function( data, textStatus, jqXHR ) {
-                                    data = JSON.parse(data);
-                                    $(self).find('i').removeClass();
-                                    $(self).find('i').addClass('fas fa-'+data.iconclass[0]);
-                                    $(self).attr('aria-label', data.iconclass[1]);
-                                    $('#color').prop('class', data.color);
-                                    $('#mensaje').text(data.mensaje);
-                                    $('#myModal').modal('show');
-                                }).fail(function( data, textStatus, jqXHR ) {
-                                    console.log('Error de la solicitud.');
-                                });",
-                        ]);
-                        ?> 
+                        <?php if($model->propietario != Yii::$app->user->id) :?>
+                            <?php $existe = ($model->existeIntegrante($model->id)) ? ['sign-out-alt', 'Salir'] : ['sign-in-alt', 'Unirse']; ?>
+                            <?php $unirse = Url::to(['comunidades/unirse', 'id' => $model->id]); ?>
+                            <?= Html::a(Icon::show($existe[0], ['id' => 'acceso']), '#', ['class' => 'masonry-button login',
+                                'aria-label' => $existe[1], 'data-balloon-pos' => 'up',
+                                'onclick' =>"
+                                    event.preventDefault();
+                                    var self = $(this);
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: '$unirse',
+                                        dataType: 'json',
+                                    }).done(function( data, textStatus, jqXHR ) {
+                                        data = JSON.parse(data);
+                                        $(self).find('i').removeClass();
+                                        $(self).find('i').addClass('fas fa-'+data.iconclass[0]);
+                                        $(self).attr('aria-label', data.iconclass[1]);
+                                        $('#color').prop('class', data.color);
+                                        $('#mensaje').text(data.mensaje);
+                                        $('#myModal').modal('show');
+                                    }).fail(function( data, textStatus, jqXHR ) {
+                                        console.log('Error de la solicitud.');
+                                    });",
+                            ]);
+                            ?> 
+                        <?php endif; ?>
                         <?php $id = html::encode($model->id)?>
                         <?php $tienelike = (Yii::$app->AdvHelper->tieneFavoritos($id, 'view')->exists()) ?
                             ['heart-broken', 'No me gusta'] :

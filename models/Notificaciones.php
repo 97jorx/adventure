@@ -9,7 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property int $usuario_id
- * @property int $mensaje
+ * @property string|null $mensaje
  * @property bool|null $leido
  * @property string $created_at
  *
@@ -31,9 +31,10 @@ class Notificaciones extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['usuario_id', 'mensaje'], 'required'],
-            [['usuario_id', 'mensaje'], 'default', 'value' => null],
-            [['usuario_id', 'mensaje'], 'integer'],
+            [['usuario_id'], 'required'],
+            [['usuario_id'], 'default', 'value' => null],
+            [['usuario_id'], 'integer'],
+            [['mensaje'], 'string'],
             [['leido'], 'boolean'],
             [['created_at'], 'safe'],
             [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['usuario_id' => 'id']],

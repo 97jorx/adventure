@@ -6,6 +6,7 @@
 html,
 body {
    height: 100%;
+   font-family: 'PT Sans';
 }
 
 img{
@@ -405,7 +406,9 @@ select2-results__option:hover a {
      float: right !important;
    }
 
-  
+   .sidenav {
+      top: 300px !important;
+   }
 
    
  }
@@ -561,3 +564,88 @@ div[id*="success-0"] {
 
  
 
+/* NOTIFICACIONES */
+
+.list-group-item p {
+   font-size: 0.7rem;
+ }
+
+.list-group-item h5 {
+   font-size: 1rem;
+}
+
+.dropdown-menu {
+   padding: 0 !important;
+   word-wrap: break-word;
+}
+
+.dropdown-menu {
+   padding: 0 !important;
+   word-wrap: break-word;
+}
+
+.dropdown-menu {
+   margin-top: 10px;
+}
+ 
+.dropdown-header .notificaciones {
+   padding: 0 !important;
+}
+
+.items {
+   font-family: 'PT Sans';
+   overflow-y: scroll;
+   font-weight: 400;
+   color: #212529;
+   text-align: inherit;
+   white-space: nowrap;
+   background-color: transparent;
+   padding: 1em;
+   max-height: 400px;
+}
+
+.items li:last-child {
+   border-bottom: 0;
+}
+
+.items li {
+   padding: 1em; 
+   font-size: 0.7rem;
+}
+
+.items li {
+   border-bottom: #1d1d1d 1px solid;
+}
+
+.notificaciones {
+   font-family: 'PT Sans';
+   text-transform: uppercase;
+   background-color: #313131;
+   color: #ffffff;
+   padding: 1rem;
+   text-align: center;
+   font-size: 1em;
+   
+}
+
+
+.bell > .dropdown-toggle::after {
+   content: none !important;
+}
+
+
+.countNotify {
+   position: absolute;
+   box-sizing: initial;
+   background: red;
+   border-radius: 50%;
+   width: 15px;
+   height: 15px;
+   top: 0;
+   font-size: 0.7em;
+   color:#ffffff;
+   text-align: center;
+
+   
+
+}
