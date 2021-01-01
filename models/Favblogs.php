@@ -94,7 +94,7 @@ class Favblogs extends \yii\db\ActiveRecord
         ->where(['id' => $this->blog_id])
         ->scalar();
 
-        $mensaje = 'El usuario ' . $usuario . 'le ha dado like a tu blog ' . '"' . $blog_titulo . '".';
+        $mensaje = 'El usuario ' . $usuario . ' le ha dado like a tu blog ' . '"' . $blog_titulo . '".';
 
         $existe = Notificaciones::find()
         ->where(['usuario_id' => $blog_propietario])

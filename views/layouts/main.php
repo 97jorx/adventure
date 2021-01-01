@@ -15,6 +15,8 @@ use kartik\widgets\Select2;
 use yii\bootstrap4\Modal;
 use yii\helpers\Url;
 use yii\web\JsExpression;
+use \yii\widgets\Menu;
+
 
 $guest = Yii::$app->user->isGuest;
 $url = Url::to(['usuarios/search']);
@@ -23,18 +25,25 @@ $fakeimg = 'https://picsum.photos/100/1000?random=1';
 
 
 $notificaciones = [];
-
+$index = 0;
 foreach(UtilNotify::notificaciones() as $key => $value) {
+
     $m = Yii::$app->AdvHelper->toMinutes($value['created_at']);
-    $n  = ['label' => "<div class='list-group'>
-                    <div class='lg'>
-                        <a href='#' class='list-group-item list-group-item-action flex-column align-items-start scroll-vertical'>
-                        <h5 class='mb-1'>{$value['mensaje']}</h5>
-                        <p class='mb-0'>{$m}</p>
-                        </a>
-                    </div>
-                </div>"];
+    
+    // if ($index == 0) {
+    //     $n = ['label' => "<div class='notificaciones list-group-item'>Notifications</div>"];
+    //     array_push($notificaciones, $n);
+    // }
+    
+    $n  = [
+            'label' =>"
+            <a href='#' class='list-group-item list-group-item-action flex-column align-items-start scroll-vertical'>
+                <h5 class='mb-1'>{$value['mensaje']}</h5>
+                <p class='mb-0'>{$m}</p>
+            </a>"
+          ];
     array_push($notificaciones, $n);
+    $index++;
 }
 
 
@@ -203,7 +212,13 @@ $this->registerJs($js);
             [
                 'label' => Html::tag('i', Icon::show('bell'), ['class' => '',]),
                 'visible' => !$guest,
-                'items' => $notificaciones,
+                'items' => [ \yii\widgets\Menu::widget([
+                    'options' => ['class' => 'dropdown-item'],
+                    'items' => $notificaciones,
+                    'encodeLabels' => false,
+                    'activateParents' => true,
+                  ]),
+                ]
             ],
             [
                 'label' => '<div class="vertical-minus">'.Html::tag('i', Icon::show('minus')).'</div>',

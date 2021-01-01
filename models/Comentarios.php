@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\helpers\Util;
 use Yii;
 
 /**
@@ -151,6 +152,13 @@ class Comentarios extends \yii\db\ActiveRecord
         }
 
         if ($this->blog_id != null) {
+
+            $usuario_alias = Usuarios::find()
+            ->select('alias')
+            ->where(['id' => $this->usuario_id])
+            ->scalar();
+
+
             $blog_propietario = Blogs::find()
             ->select('usuario_id')
             ->where(['id' => $this->blog_id])
@@ -161,9 +169,9 @@ class Comentarios extends \yii\db\ActiveRecord
             ->where(['id' => $this->blog_id])
             ->scalar();
 
-                $mensaje = 'Te han comentado tu blog ' . '"' . $blog_titulo . '".';
+             $mensaje = 'El usuario "' .$usuario_alias. '" ha comentado tu blog "' . Util::h($blog_titulo) . '"';
 
-                $existe = Notificaciones::find()
+            $existe = Notificaciones::find()
             ->where(['usuario_id' => $blog_propietario])
             ->andWhere(['mensaje' => $mensaje])->exists();
 

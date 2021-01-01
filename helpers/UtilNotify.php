@@ -12,7 +12,7 @@ class UtilNotify  {
     public static function notificaciones() {
         return Notificaciones::find()
         ->where(['usuario_id' => Yii::$app->user->id])
-        ->orderBy(['created_at' => SORT_ASC])
+        ->orderBy(['created_at' => SORT_DESC])
         ->limit(5)
         ->asArray()
         ->all();
