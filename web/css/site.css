@@ -578,8 +578,39 @@ div[id*="success-0"] {
    word-wrap: break-word;
 }
 
-.dropdown-header {
+.dropdown-menu {
    padding: 0 !important;
+   word-wrap: break-word;
+}
+
+.dropdown-menu {
+   margin-top: 10px;
+}
+ 
+.dropdown-header .notificaciones {
+   padding: 0 !important;
+}
+
+.items {
+   font-weight: 400;
+   color: #212529;
+   text-align: inherit;
+   white-space: nowrap;
+   background-color: transparent;
+   padding: 1em;
+}
+
+.items li:last-child {
+   border-bottom: 0;
+}
+
+.items li {
+   padding: 1em; 
+   font-size: 0.7rem;
+}
+
+.items li {
+   border-bottom: #1d1d1d 1px solid;
 }
 
 .notificaciones {

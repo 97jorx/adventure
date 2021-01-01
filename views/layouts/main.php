@@ -24,27 +24,7 @@ $url2 = Yii::$app->urlManager->createUrl(['usuarios/view', 'alias' => '']);
 $fakeimg = 'https://picsum.photos/100/1000?random=1';
 
 
-$notificaciones = [];
-$index = 0;
-foreach(UtilNotify::notificaciones() as $key => $value) {
 
-    $m = Yii::$app->AdvHelper->toMinutes($value['created_at']);
-    
-    // if ($index == 0) {
-    //     $n = ['label' => "<div class='notificaciones list-group-item'>Notifications</div>"];
-    //     array_push($notificaciones, $n);
-    // }
-    
-    $n  = [
-            'label' =>"
-            <a href='#' class='list-group-item list-group-item-action flex-column align-items-start scroll-vertical'>
-                <h5 class='mb-1'>{$value['mensaje']}</h5>
-                <p class='mb-0'>{$m}</p>
-            </a>"
-          ];
-    array_push($notificaciones, $n);
-    $index++;
-}
 
 
 
@@ -212,13 +192,13 @@ $this->registerJs($js);
             [
                 'label' => Html::tag('i', Icon::show('bell'), ['class' => '',]),
                 'visible' => !$guest,
-                'items' => [ \yii\widgets\Menu::widget([
-                    'options' => ['class' => 'dropdown-item'],
-                    'items' => $notificaciones,
+                'items' => (UtilNotify::countNotificaciones() > 0) ? ( ['label' => "<div class='notificaciones'>Notificaciones</div>", 'items' => Menu::widget([
+                    'options' => ['class' => 'items', 'style' => 'display: list-item; list-style: none'],
+                    'items' => UtilNotify::itemsNotificaciones(),
                     'encodeLabels' => false,
                     'activateParents' => true,
                   ]),
-                ]
+                ]) : (''),
             ],
             [
                 'label' => '<div class="vertical-minus">'.Html::tag('i', Icon::show('minus')).'</div>',
