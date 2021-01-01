@@ -82,7 +82,7 @@ class Seguidores extends \yii\db\ActiveRecord
         ->where(['id' => $this->seguidor])
         ->scalar();
       
-        $mensaje = $usuario_seguidor . '" te esta seguiendo ahora..';
+        $mensaje = '<strong>'. $usuario_seguidor . '</strong>" te esta seguiendo ahora..';
 
         $existe = Notificaciones::find()
         ->where(['usuario_id' => $this->usuario_id])

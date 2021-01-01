@@ -30,6 +30,14 @@ class UtilAjax  {
     EOT;
 
 
+    const npjax = <<< EOT
+        setInterval(function(){  
+            $.pjax.reload({container:"#pjax-notificaciones"});
+        }, 15000); 
+    EOT;
+    
+
+
     const COMENTARIOS = <<< EOT
         $('#area-texto, #area-texto-reply').on('input', (event) => {
             event.preventDefault();

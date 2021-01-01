@@ -10,13 +10,14 @@ use yii\bootstrap4\NavBar;
 use yii\bootstrap4\Breadcrumbs;
 use app\assets\AppAsset;
 use app\helpers\UtilNotify;
+use app\helpers\UtilAjax;
 use kartik\icons\Icon;
 use kartik\widgets\Select2;
 use yii\bootstrap4\Modal;
 use yii\helpers\Url;
 use yii\web\JsExpression;
 use \yii\widgets\Menu;
-
+use yii\widgets\Pjax;
 
 $guest = Yii::$app->user->isGuest;
 $url = Url::to(['usuarios/search']);
@@ -68,6 +69,7 @@ $(document).ready(function () {
 });
 EOT;
 $this->registerJs($js);
+$this->registerJs(UtilAJax::npjax);
 
 ?>
 <?php $this->beginPage() ?>
@@ -180,42 +182,48 @@ $this->registerJs($js);
         
     }
     
-    
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'encodeLabels' => false,
-        'items' => [
-            [
-                'label' => Html::tag('i', Icon::show('envelope'), ['class' => '',]),
-                'visible' => !$guest,
-            ],
-            [
-                'label' => Html::tag('i', Icon::show('bell'), ['class' => '',]),
-                'visible' => !$guest,
-                'items' => (UtilNotify::countNotificaciones() > 0) ? ( ['label' => "<div class='notificaciones'>Notificaciones</div>", 'items' => Menu::widget([
-                    'options' => ['class' => 'items', 'style' => 'display: list-item; list-style: none'],
-                    'items' => UtilNotify::itemsNotificaciones(),
-                    'encodeLabels' => false,
-                    'activateParents' => true,
-                  ]),
-                ]) : (''),
-            ],
-            [
-                'label' => '<div class="vertical-minus">'.Html::tag('i', Icon::show('minus')).'</div>',
-                'visible' => !$guest,
-                'options' => ['class' => 'label-vertical-minus'],
-            ],
-            [
-                'label' =>  (!Yii::$app->user->isGuest) ? ucfirst(Yii::$app->user->identity->alias) .' '. 
-                 Html::tag('i', Icon::show('user'), ['class' => '',]) : 'Iniciar sesión',
-                'items' => $items,
-            ],
-            
-        ],
-    ]);
+            echo Nav::widget([
+                'options' => ['class' => 'navbar-nav navbar-right' , 'id' => 'pjax-notificaciones'],
+                'encodeLabels' => false,
+                'items' => [
+                    [
+                        'label' => Html::tag('i', Icon::show('envelope'), ['class' => '',]),
+                        'visible' => !$guest,
+                    ],
+                    [
+                        'label' => Html::tag('i', Icon::show('bell',) .
+                                '<i class="countNotify">'.
+                                UtilNotify::countNotificaciones().
+                                '</i>'),
+                        'visible' => !$guest,
+                        'options' => ['class' => 'bell'],
+                        'items' => (UtilNotify::countNotificaciones() > 0) ?
+                                ( ['label' => "<div class='notificaciones'>Notificaciones</div>", 
+                                    'items' => Menu::widget([
+                                                'options' => ['class' => 'items', 'style' => 'display: list-item; list-style: none'],
+                                                'items' => UtilNotify::itemsNotificaciones(),
+                                                'encodeLabels' => false,
+                                                'activateParents' => true,
+                                            ]),
+                                    ]) : (''),
+                    ],
+                    [
+                        'label' => '<div class="vertical-minus">'.Html::tag('i', Icon::show('minus')).'</div>',
+                        'visible' => !$guest,
+                        'options' => ['class' => 'label-vertical-minus'],
+                    ],
+                    [
+                        'label' =>  (!Yii::$app->user->isGuest) ? ucfirst(Yii::$app->user->identity->alias) .' '. 
+                        Html::tag('i', Icon::show('user'), ['class' => '',]) : 'Iniciar sesión',
+                        'items' => $items,
+                    ],
+                    
+                ],
+            ]);
     NavBar::end();
-    ?>
-  
+?>
+
+
     <div class="container">
         <?= Breadcrumbs::widget([
              'homeLink' => [

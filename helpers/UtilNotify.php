@@ -13,7 +13,6 @@ class UtilNotify  {
         return Notificaciones::find()
         ->where(['usuario_id' => Yii::$app->user->id])
         ->orderBy(['created_at' => SORT_DESC])
-        ->limit(5)
         ->asArray()
         ->all();
     }
@@ -39,10 +38,12 @@ class UtilNotify  {
                 $m = Yii::$app->AdvHelper->toMinutes($value['created_at']);
                 $n  = [
                         'label' =>"
+                    <div class='scrolling'>
                         <a href='#' class=' list-group-item-action flex-column align-items-start scroll-vertical'>
                             <h5 class='mb-1'>{$value['mensaje']}</h5>
                             <p class='mb-0'>{$m}</p>
-                        </a>"
+                        </a> 
+                    </div>"
                     ];
                 array_push($notificaciones, $n);
                 $index++;

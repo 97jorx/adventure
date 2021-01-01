@@ -6,6 +6,7 @@
 html,
 body {
    height: 100%;
+   font-family: 'PT Sans';
 }
 
 img{
@@ -592,12 +593,15 @@ div[id*="success-0"] {
 }
 
 .items {
+   font-family: 'PT Sans';
+   overflow-y: scroll;
    font-weight: 400;
    color: #212529;
    text-align: inherit;
    white-space: nowrap;
    background-color: transparent;
    padding: 1em;
+   max-height: 400px;
 }
 
 .items li:last-child {
@@ -614,10 +618,34 @@ div[id*="success-0"] {
 }
 
 .notificaciones {
+   font-family: 'PT Sans';
    text-transform: uppercase;
    background-color: #313131;
    color: #ffffff;
    padding: 1rem;
    text-align: center;
+   font-size: 1em;
    
+}
+
+
+.bell > .dropdown-toggle::after {
+   content: none !important;
+}
+
+
+.countNotify {
+   position: absolute;
+   box-sizing: initial;
+   background: red;
+   border-radius: 50%;
+   width: 15px;
+   height: 15px;
+   top: 0;
+   font-size: 0.7em;
+   color:#ffffff;
+   text-align: center;
+
+   
+
 }

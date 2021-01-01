@@ -169,7 +169,8 @@ class Comentarios extends \yii\db\ActiveRecord
             ->where(['id' => $this->blog_id])
             ->scalar();
 
-             $mensaje = $usuario_alias. '" ha comentado "' . Util::h($blog_titulo) . '"';
+             $mensaje = '<strong>'. $usuario_alias. '</strong>" ha comentado "<br><strong>
+                        ' . Util::h($blog_titulo) . '</strong>"';
 
             $existe = Notificaciones::find()
             ->where(['usuario_id' => $blog_propietario])

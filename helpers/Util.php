@@ -38,9 +38,6 @@ class Util  {
         ->scalar();
     }
 
-
-    
-
     
     /**
      * Funcion para transformar las etiquetas html.
