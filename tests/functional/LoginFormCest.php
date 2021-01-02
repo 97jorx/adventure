@@ -16,7 +16,7 @@ class LoginFormCest
     // demonstrates `amLoggedInAs` method
     public function internalLoginById(\FunctionalTester $I)
     {
-        $I->amLoggedInAs(100);
+        $I->amLoggedInAs(1);
         $I->amOnPage('/');
         $I->see('Logout (admin)');
     }
@@ -33,8 +33,8 @@ class LoginFormCest
     {
         $I->submitForm('#login-form', []);
         $I->expectTo('see validations errors');
-        $I->see('Username no puede estar vacío.');
-        $I->see('Password no puede estar vacío.');
+        $I->see('Nombre de usuario no puede estar vacío.');
+        $I->see('Contraseña no puede estar vacía.');
     }
 
     public function loginWithWrongCredentials(\FunctionalTester $I)

@@ -41,6 +41,7 @@ use yii\bootstrap4\ActiveForm;
         ])->label(Icon::show('calendar', ['class' => 'icon-label'])) ?>
         
     <?= $form->field($model, 'contrasena')->passwordInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'password_repeat')->passwordInput(['maxlength' => true]) ?>
 
     <div class="form-group">

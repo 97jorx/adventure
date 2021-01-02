@@ -517,6 +517,14 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->id;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
     public function getAuthKey()
     {
         return $this->auth_key;
@@ -583,6 +591,8 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         return $estados;
     }
     
+
+
     /**
      * Consulta para mostrar Los bloqueados del usuarios actual
      * @return query
