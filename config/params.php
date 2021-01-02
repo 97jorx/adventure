@@ -3,7 +3,7 @@
 return [
     'adminEmail' => 'adventureyii@gmail.com',
     'senderEmail' => 'noreply@example.com',
-    'senderName' => 'Example.com mailer',
+    'senderName' => 'noreply@example.com',
     'smtpUsername' => 'adventureyii@gmail.com',
     'icon-framework' => \kartik\icons\Icon::BSG,  // Font Awesome Icon framework
     'icon-framework' => \kartik\icons\Icon::FA,  // Font Awesome Icon framework

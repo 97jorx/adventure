@@ -37,4 +37,4 @@ tests/chromedriver
 .php_cs.cache
 
 # local environment variables
-.env.email
+.env
