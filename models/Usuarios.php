@@ -368,6 +368,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         ->select(['comentarios.*', 'usuarios.alias'])
         ->leftJoin('usuarios', 'comentarios.usuario_id = usuarios.id')
         ->where(['comentarios.blog_id' => null])
+        ->andWhere(['comentarios.perfil' => $this->findIdPorAlias($alias)])
         ->orderBy(['created_at' => SORT_DESC])
         ->asArray()
         ->all();
@@ -520,6 +521,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->id;
     }
 
+    
     /**
      * {@inheritdoc}
      */

@@ -37,8 +37,8 @@ class Comentarios extends \yii\db\ActiveRecord
     {
         return [
             [['usuario_id', 'texto'], 'required'],
-            [['usuario_id', 'blog_id', 'parent_id'], 'default', 'value' => null],
-            [['usuario_id', 'blog_id', 'parent_id'], 'integer'],
+            [['usuario_id', 'perfil', 'blog_id', 'parent_id'], 'default', 'value' => null],
+            [['usuario_id', 'perfil', 'blog_id', 'parent_id'], 'integer'],
             [['created_at'], 'safe'],
             [['texto'], 'string', 'max' => 255],
             [['blog_id'], 'exist', 'skipOnError' => true, 'targetClass' => Blogs::class, 'targetAttribute' => ['blog_id' => 'id']],

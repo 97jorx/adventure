@@ -48,14 +48,20 @@ class ComentariosController extends Controller
     public function actionComentar()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
-
+        
         $uid = Yii::$app->user->id;
+        $alias = ucfirst(Yii::$app->user->identity->alias);
+        //POST BLOGS
+
         $texto = Yii::$app->request->post('texto');
         $blogid = Yii::$app->request->post('blogid');
         $parent = Yii::$app->request->post('parent');
-        $model = new Comentarios();    
-        $alias = ucfirst(Yii::$app->user->identity->alias);
         $csrfToken = Yii::$app->request->getCsrfToken();
+        
+        $model = new Comentarios();    
+
+        //GET PERFIL
+        
 
         $json = [];
         
@@ -64,6 +70,9 @@ class ComentariosController extends Controller
 
         if ($blogid != null) {
             $model->blog_id = Html::encode($blogid);
+        } else {
+            $perfil = Usuarios::findIdPorAlias(Yii::$app->request->post('alias'));
+            $model->perfil = $perfil;
         }
         
         if($parent != null){

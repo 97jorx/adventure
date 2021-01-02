@@ -69,7 +69,7 @@ $(document).ready(function () {
 });
 EOT;
 $this->registerJs($js);
-$this->registerJs(UtilAJax::npjax);
+
 
 ?>
 <?php $this->beginPage() ?>

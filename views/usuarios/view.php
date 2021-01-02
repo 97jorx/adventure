@@ -220,6 +220,7 @@ $this->registerJs(UtilAjax::LIKE);
                         ]) ?>
                         <div class="form-group">
                           <?= Html::textArea('texto', '', ['class' => 'form-control login', 'id' => 'area-texto', 'rows' => "3"]) ?>
+                          <?= Html::hiddenInput('alias', Yii::$app->request->get('alias'), ['class' => 'alias']) ?>
                         </div>
                         <?= Html::submitButton('Comentar', ['class' => 'btn btn-info', 'id' => 'submitComent', 'style' => 'display:none']) ?>
                       <?= Html::endForm() ?>
