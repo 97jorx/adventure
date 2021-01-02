@@ -18,24 +18,24 @@ modules:
             user: 'adventure'
             password: 'adventure'
 
-# To enable code coverage:
-#coverage:
-#    #c3_url: http://localhost:8080/index-test.php/
-#    enabled: true
-#    #remote: true
-#    #remote_config: '../codeception.yml'
-#    whitelist:
-#        include:
-#            - models/*
-#            - controllers/*
-#            - commands/*
-#            - mail/*
-#    blacklist:
-#        include:
-#            - assets/*
-#            - config/*
-#            - runtime/*
-#            - vendor/*
-#            - views/*
-#            - web/*
-#            - tests/*
+To enable code coverage:
+coverage:
+   #c3_url: http://localhost:8080/index-test.php/
+   enabled: true
+   #remote: true
+   #remote_config: '../codeception.yml'
+   whitelist:
+       include:
+           - models/*
+           - controllers/*
+           - commands/*
+           - mail/*
+   blacklist:
+       include:
+           - assets/*
+           - config/*
+           - runtime/*
+           - vendor/*
+           - views/*
+           - web/*
+           - tests/*

@@ -19,7 +19,7 @@ class ContactFormCest
         $I->see('Contact', 'h1');
         $I->see('Nombre no puede estar vacío');
         $I->see('Correo no puede estar vacío');
-        $I->see('Asuntp no puede estar vacío');
+        $I->see('Asunto no puede estar vacío');
         $I->see('Cuerpo no puede estar vacío');
         $I->see('El código de verificación es incorrecto');
     }

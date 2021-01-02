@@ -106,7 +106,7 @@ class SiteController extends Controller
                 'model' => $model,
             ]);
         } else {
-            return $this->render('login', [
+            return $this->render('normalLogin', [
                 'model' => $model,
             ]);
         }
@@ -172,8 +172,8 @@ class SiteController extends Controller
     public function actionContact()
     {
         $model = new ContactForm();
-        $model->email = Yii::$app->user->identity->email;
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->user->identity->email)) {
+        
+        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['smtpUsername'])) {
             Yii::$app->session->setFlash('contactFormSubmitted');
             return $this->refresh();
         }

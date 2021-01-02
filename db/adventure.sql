@@ -75,6 +75,7 @@ DROP TABLE IF EXISTS comentarios CASCADE;
 CREATE TABLE comentarios (
      id           bigserial      PRIMARY KEY 
    , usuario_id   bigint         NOT NULL REFERENCES usuarios (id) 
+   , perfil       bigint         
    , blog_id      bigint         REFERENCES blogs (id) ON DELETE CASCADE
    , parent_id    bigint         REFERENCES comentarios (id) ON DELETE CASCADE
    , texto        varchar(255)   NOT NULL
