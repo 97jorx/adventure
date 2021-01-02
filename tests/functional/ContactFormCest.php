@@ -17,10 +17,10 @@ class ContactFormCest
         $I->submitForm('#contact-form', []);
         $I->expectTo('see validations errors');
         $I->see('Contact', 'h1');
-        $I->see('Name no puede estar vacío');
-        $I->see('Email no puede estar vacío');
-        $I->see('Subject no puede estar vacío');
-        $I->see('Body no puede estar vacío');
+        $I->see('Nombre no puede estar vacío');
+        $I->see('Correo no puede estar vacío');
+        $I->see('Asuntp no puede estar vacío');
+        $I->see('Cuerpo no puede estar vacío');
         $I->see('El código de verificación es incorrecto');
     }
 
@@ -34,10 +34,10 @@ class ContactFormCest
             'ContactForm[verifyCode]' => 'testme',
         ]);
         $I->expectTo('see that email address is wrong');
-        $I->dontSee('Name no puede estar vacío', '.help-inline');
-        $I->see('Email no es una dirección de correo válida.');
-        $I->dontSee('Subject no puede esstar vacío', '.help-inline');
-        $I->dontSee('Body no puede estar vacío', '.help-inline');
+        $I->dontSee('Nombre no puede estar vacío', '.help-inline');
+        $I->see('Correo no es una dirección de correo válida.');
+        $I->dontSee('El asunto no puede esstar vacío', '.help-inline');
+        $I->dontSee('El cuerpo no puede estar vacío', '.help-inline');
         $I->dontSee('The verification code is incorrect', '.help-inline');        
     }
 
@@ -52,6 +52,6 @@ class ContactFormCest
         ]);
         $I->seeEmailIsSent();
         $I->dontSeeElement('#contact-form');
-        $I->see('Thank you for contacting us. We will respond to you as soon as possible.');        
+        $I->see('Gracias por contactarnos, responderemos los mas rápido posible.');        
     }
 }

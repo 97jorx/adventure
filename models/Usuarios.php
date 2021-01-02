@@ -371,6 +371,17 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     }
 
 
+     /**
+     * Finds user by username
+     *
+     * @param string $username
+     * @return static|null
+     */
+    public static function findByUsername($username)
+    {
+        return static::findOne(['username' => $username]);
+    }
+
     /**
      * SETTER DE @param followers
      * @return \yii\db\ActiveQuery
