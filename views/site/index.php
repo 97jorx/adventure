@@ -2,9 +2,15 @@
 <?php
 
 /* @var $this yii\web\View */
+
+use app\helpers\Util;
 use dmstr\cookieconsent\widgets\CookieConsent;
 use yii\bootstrap4\Html;
 $this->registerCssFile('@web/css/cookie-consent.css');
+
+// var_dump(Util::s3DeleteImage('admin.png')); die();
+// var_dump(Util::s3UploadImage(Yii::getAlias('@img').'/foto.jpg', 'foto.jpg')); die();
+// var_dump(Util::s3GetImage('foto.jpg')); die();
 ?>
 
 <?php if($count >= 4) : ?> 
@@ -16,7 +22,8 @@ $this->registerCssFile('@web/css/cookie-consent.css');
      <div class="card h-100 flex-row flex-wrap border-0">
         <div class="col-lg-7">
           <?php $fakeimg = "https://picsum.photos/600/450?random=".$model->id;  ?>
-          <?= Html::a(Html::img($fakeimg, ['class' => 'card-image']), ['blogs/index', 'actual' => $model->id],  ['class' => 'login']) ?>
+          <?php $awsImg = Util::s3GetImage('foto.jpg');  ?>
+          <?= Html::a(Html::img($awsImg, ['class' => 'card-image']), ['blogs/index', 'actual' => $model->id],  ['class' => 'login']) ?>
         </div>
         <div class="col-lg-5">
                 <h1 class="font-weight-light"><?= $model->denom  ?></h1>

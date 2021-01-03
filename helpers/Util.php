@@ -7,7 +7,9 @@ use Yii;
 use app\models\Favcomentarios;
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
+use Aws\S3\S3Client;
 
+require '../vendor/autoload.php';
 class Util  {
 
 
@@ -60,6 +62,93 @@ class Util  {
     public static function p($html){
         HtmlPurifier::process($html);
     }
+
+
+    /**
+     * Elimina la imagen del bucket de AWS.
+     */
+    public static function s3DeleteImage($name) {
+        
+        // Instantiate an Amazon S3 client.
+        $s3 = new S3Client([
+            'credentials' => [
+                'key' => getenv('ID_KEY'),
+                'secret' => getenv('SECRET_KEY'),
+            ],
+            'version' => 'latest',
+            'region'  => 'us-east-2'
+        ]);
+
+
+        try {
+            $s3->deleteObject([
+                'Bucket' => 'yii-adventure',
+                'Key' => $name,
+            ]);
+        } catch (Aws\S3\Exception\S3Exception $e) {
+            echo "There was an error uploading the file.\n";
+        }
+    }
+
+
+    /**
+     * Sube una foto a AWS a partir de la ruta y el nombre.
+     */
+     public static function s3UploadImage($file, $name) {
+        
+        // Instantiate an Amazon S3 client.
+        $s3 = new S3Client([
+            'credentials' => [
+                'key' => getenv('ID_KEY'),
+                'secret' => getenv('SECRET_KEY'),
+            ],
+            'version' => 'latest',
+            'region'  => 'us-east-2'
+        ]);
+
+       
+        // Upload a publicly accessible file. The file size and type are determined by the SDK.
+        try {
+            $s3->putObject([
+                'Bucket' => 'yii-adventure',
+                'Key'    => $name,
+                'Body'   => fopen($file, 'r'),
+                'ACL'    => 'public-read',
+            ]);
+        } catch (Aws\S3\Exception\S3Exception $e) {
+            echo "There was an error uploading the file.\n";
+        }
+
+    }
+
+    /**
+    * Documentación de los métodos utilizados.
+    * https://docs.aws.amazon.com/aws-sdk-php/v3/api/class-Aws.S3.S3Client.html#_getObjectUrl
+    *
+    */
+    public static function s3GetImage($name) {
+        // Instantiate an Amazon S3 client.
+        $s3 = new S3Client([
+            'credentials' => [
+                'key' => getenv('ID_KEY'),
+                'secret' => getenv('SECRET_KEY'),
+            ],
+            'version' => 'latest',
+            'region'  => 'us-east-2'
+        ]);
+
+        try {
+            // Get the object.
+            $result = $s3->getObjectUrl('yii-adventure', $name);
+            // Display the object in the browser.
+            return $result;
+        } catch (S3Exception $e) {
+            echo $e->getMessage() . PHP_EOL;
+        }
+
+    }
+   
+
 
 
 }
