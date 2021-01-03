@@ -7,7 +7,9 @@ use Yii;
 use app\models\Favcomentarios;
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
+use Aws\S3\S3Client;
 
+require '../vendor/autoload.php';
 class Util  {
 
 
@@ -60,6 +62,79 @@ class Util  {
     public static function p($html){
         HtmlPurifier::process($html);
     }
+
+
+    /**
+     * Elimina la foto de AWS
+     */
+    public static function s3DeleteImage($name) {
+        
+        // Instantiate an Amazon S3 client.
+        $s3 = new S3Client([
+            'credentials' => [
+                'key' => getenv('ID_KEY'),
+                'secret' => getenv('SECRET_KEY'),
+            ],
+            'version' => 'latest',
+            'region'  => 'us-east-2'
+        ]);
+
+        $s3->deleteObject([
+            'Bucket' => 'yii-adventure',
+            'Key' => $name,
+        ]);
+
+        
+       
+        // Upload a publicly accessible file. The file size and type are determined by the SDK.
+        // try {
+        //     $s3->putObject([
+        //         'Bucket' => 'yii-adventure',
+        //         'Key'    => $name,
+        //         'Body'   => fopen($file, 'r'),
+        //         'ACL'    => 'public-read',
+        //     ]);
+        // } catch (Aws\S3\Exception\S3Exception $e) {
+        //     echo "There was an error uploading the file.\n";
+        // }
+
+    }
+
+
+
+    /**
+     * Elimina la foto de AWS
+     */
+     public static function s3UploadImage($file, $name) {
+        
+        // Instantiate an Amazon S3 client.
+        $s3 = new S3Client([
+            'credentials' => [
+                'key' => getenv('ID_KEY'),
+                'secret' => getenv('SECRET_KEY'),
+            ],
+            'version' => 'latest',
+            'region'  => 'us-east-2'
+        ]);
+
+       
+        // Upload a publicly accessible file. The file size and type are determined by the SDK.
+        try {
+            $s3->putObject([
+                'Bucket' => 'yii-adventure',
+                'Key'    => $name,
+                'Body'   => fopen($file, 'r'),
+                'ACL'    => 'public-read',
+            ]);
+        } catch (Aws\S3\Exception\S3Exception $e) {
+            echo "There was an error uploading the file.\n";
+        }
+
+    }
+
+
+   
+
 
 
 }
