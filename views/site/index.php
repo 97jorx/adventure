@@ -2,14 +2,9 @@
 <?php
 
 /* @var $this yii\web\View */
-
-use app\helpers\Util;
 use dmstr\cookieconsent\widgets\CookieConsent;
 use yii\bootstrap4\Html;
 $this->registerCssFile('@web/css/cookie-consent.css');
-
-// var_dump(Util::s3DeleteImage('admin.png')); die();
-var_dump(Util::s3UploadImage(Yii::getAlias('@img'). '/foto.jpg','foto.jpg')); die();
 ?>
 
 <?php if($count >= 4) : ?> 
