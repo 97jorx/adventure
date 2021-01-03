@@ -101,6 +101,38 @@ class Util  {
     }
 
 
+
+    /**
+     * Elimina la foto de AWS
+     */
+     public static function s3UploadImage($file, $name) {
+        
+        // Instantiate an Amazon S3 client.
+        $s3 = new S3Client([
+            'credentials' => [
+                'key' => getenv('ID_KEY'),
+                'secret' => getenv('SECRET_KEY'),
+            ],
+            'version' => 'latest',
+            'region'  => 'us-east-2'
+        ]);
+
+       
+        // Upload a publicly accessible file. The file size and type are determined by the SDK.
+        try {
+            $s3->putObject([
+                'Bucket' => 'yii-adventure',
+                'Key'    => $name,
+                'Body'   => fopen($file, 'r'),
+                'ACL'    => 'public-read',
+            ]);
+        } catch (Aws\S3\Exception\S3Exception $e) {
+            echo "There was an error uploading the file.\n";
+        }
+
+    }
+
+
    
 
 
