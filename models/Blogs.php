@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use app\helpers\Util;
+use yii\web\UploadedFile;
 use Yii;
 
 /**
@@ -27,6 +29,7 @@ class Blogs extends \yii\db\ActiveRecord
     private $_favs = null;
     private $_valoracion = null;
     private $_visits = null;
+    public $uploadedFile;
 
     /**
      * {@inheritdoc}
@@ -47,6 +50,8 @@ class Blogs extends \yii\db\ActiveRecord
             [['comunidad_id', 'usuario_id'], 'default', 'value' => null],
             [['comunidad_id', 'usuario_id'], 'integer'],
             [['created_at'], 'safe'],
+            [['imagen'], 'string'],
+            [['uploadedFile'], 'image', 'extensions' => 'jpg, png'],
             [['titulo', 'descripcion'], 'string', 'max' => 255],
             [['titulo'], 'unique'],
             [['comunidad_id'], 'exist', 'skipOnError' => true, 'targetClass' => Comunidades::class, 'targetAttribute' => ['comunidad_id' => 'id']],
@@ -101,9 +106,6 @@ class Blogs extends \yii\db\ActiveRecord
             ->inverseOf('blog')
             ->orderBy(['created_at' => SORT_DESC]);
     }
-
-
-   
 
 
      /**
@@ -264,7 +266,49 @@ class Blogs extends \yii\db\ActiveRecord
 
 
     
- 
+    /**
+     * Sube la imagen del Blog a AWS.
+     *
+     */
+
+    public function uploadBlogImg()
+    {
+        $this->uploadedFile = UploadedFile::getInstance($this, 'uploadedFile');
+        if ($this->uploadedFile != null) {
+            $filename = $this->uploadedFile->basename;
+            $fullname = $filename . '.' . $this->uploadedFile->extension;
+            Util::s3DeleteImage($this->imagen);
+            $this->imagen = $fullname;
+
+            $origen = Yii::getAlias('@uploads/' . $filename . '.' . $this->uploadedFile->extension);
+            $destino = Yii::getAlias('@img/' . $filename . '.' . $this->uploadedFile->extension);
+
+            $this->uploadedFile->saveAs($origen);
+
+            \yii\imagine\Image::resize($origen, 400, null)->save($destino);
+            Util::s3UploadImage(Yii::getAlias('@img').'/'.$fullname, $fullname);
+            unlink($destino);
+            unlink($origen);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
+    public function beforeSave($insert)
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        $this->uploadBlogImg();
+        
+        return true;
+    }
+
+
 }
 
 

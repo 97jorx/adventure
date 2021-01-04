@@ -149,7 +149,7 @@ class BlogsController extends Controller
         }
         
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
             return $this->redirect(['view', 'id' => $model->id, 'actual' => $actual]);
         }
 
@@ -170,7 +170,6 @@ class BlogsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
 
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;

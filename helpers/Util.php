@@ -5,6 +5,7 @@ namespace app\helpers;
 use app\models\Comunidades;
 use Yii;
 use app\models\Favcomentarios;
+use app\models\Usuarios;
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
 use Aws\S3\S3Client;
@@ -181,5 +182,17 @@ class Util  {
         }
 
     }
+
+    /**
+    * Devuelvo la imagen guardada en la base de datos a partir del alias.
+    * @param mixed $alias
+    */
+    public static function getImageByAlias($alias) {
+        return Usuarios::find()
+        ->select('foto_perfil')
+        ->where(['alias' => $alias])
+        ->scalar();
+    }
+
 
 }

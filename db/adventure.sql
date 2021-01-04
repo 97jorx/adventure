@@ -51,7 +51,7 @@ DROP TABLE IF EXISTS blogs CASCADE;
 CREATE TABLE blogs (
      id           bigserial      PRIMARY KEY 
    , titulo       varchar(255)   NOT NULL UNIQUE
--- , imagen       text
+   , imagen       text
    , descripcion  varchar(255)   NOT NULL
    , cuerpo       text           NOT NULL
    , comunidad_id bigint         NOT NULL REFERENCES comunidades (id) ON DELETE CASCADE 

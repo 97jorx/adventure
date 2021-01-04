@@ -1,6 +1,7 @@
 <?php
 
 use app\helpers\UtilAjax;
+use kartik\file\FileInput;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\HtmlPurifier;
@@ -29,6 +30,14 @@ use yii\jui\DatePicker;
 
     <?= $form->field($model, 'comunidad_id')->dropDownList($comunidades, ['disabled' => 'disabled'])->label(false); ?>
 
+
+    <?= $form->field($model, 'uploadedFile')->widget(FileInput::class, [
+      'options' => ['accept' => 'uploadedFile/*', 
+      'data-allowed-file-extensions' => ["png", "jpg"]],
+      'pluginOptions' => [
+          'maxFileSize' => 2048,
+      ]
+    ])->label(false); ?>
 
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
