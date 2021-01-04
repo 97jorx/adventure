@@ -80,8 +80,9 @@ $this->registerJs(UtilAjax::LIKE);
         <div class="photo-left">
            <?php $fakeimg = "https://picsum.photos/300/300?random=".$model->id;  ?>
             <?php $imagen = Yii::getAlias('@imgUrl') . '/' . $model->foto_perfil?>
-           <?= Html::a(Html::img((file_exists(Yii::getAlias('@img'). '/' . $model->foto_perfil) && isset($model->foto_perfil )) ?
-            ($imagen) : ($fakeimg), ['class' => 'photo'])) ?>
+            <?php $awsImg = Util::s3GetImage($model->foto_perfil);  ?>
+           <?= Html::a(Html::img((isset($model->foto_perfil )) ?
+            ($awsImg) : ($fakeimg), ['class' => 'photo'])) ?>
           <nav class='tabs' id='activeTab'>
             <ul class="nav nav-tabs">
                 <li class="nav-link"><a data-toggle="tab" id='coid' href="#comments"><?= Icon::show('comment')?></a></li>

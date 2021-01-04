@@ -64,8 +64,32 @@ class Util  {
     }
 
 
+
+    /**
+     * Subir una imagen a partir del local.
+     * 
+     * @param mixed $name el nombre del archivo a eliminar del bucket.
+     * 
+     * Documentación de los métodos utilizados.
+     * https://docs.aws.amazon.com/aws-sdk-php/v3/api/class-Aws.S3.S3Client.html#_getObjectUrl
+     * 
+     */
+    public static function uploadImage($name) {
+        
+        // Instantiate an Amazon S3 client.
+        
+    }
+
+    
+
     /**
      * Elimina la imagen del bucket de AWS.
+     * 
+     * @param mixed $name el nombre del archivo a eliminar del bucket.
+     * 
+     * Documentación de los métodos utilizados.
+     * https://docs.aws.amazon.com/aws-sdk-php/v3/api/class-Aws.S3.S3Client.html#_getObjectUrl
+     * 
      */
     public static function s3DeleteImage($name) {
         
@@ -92,8 +116,15 @@ class Util  {
 
 
     /**
-     * Sube una foto a AWS a partir de la ruta y el nombre.
-     */
+    * Sube una foto a AWS a partir de la ruta y el nombre.
+    *
+    * @param $file es la ruta del archivo en local
+    * @param $name es el nombre del archivo
+    *
+    * Documentación de los métodos utilizados.
+    * https://docs.aws.amazon.com/aws-sdk-php/v3/api/api-mediastore-data-2017-09-01.html#putobject
+    *
+    */
      public static function s3UploadImage($file, $name) {
         
         // Instantiate an Amazon S3 client.
@@ -122,6 +153,9 @@ class Util  {
     }
 
     /**
+    * Devuelvo la ruta de la imagen desde el bucket.
+    * @param mixed $name nombre de la imagen.
+    *
     * Documentación de los métodos utilizados.
     * https://docs.aws.amazon.com/aws-sdk-php/v3/api/class-Aws.S3.S3Client.html#_getObjectUrl
     *
@@ -147,8 +181,5 @@ class Util  {
         }
 
     }
-   
-
-
 
 }

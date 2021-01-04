@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use Yii;
+use app\helpers\Util;
 use app\models\Blogs;
 use app\models\Bloqueados;
 use app\models\Comunidades;
@@ -332,14 +333,17 @@ class UsuariosController extends Controller
             $model->imagen = UploadedFile::getInstance($model, 'imagen');
             if ($model->upload($id)) {
                 $usuario->foto_perfil = $id.'.'.$model->imagen->extension;
+                $oldImage = $usuario->getOldAttribute('foto_perfil');
+                Util::s3DeleteImage($oldImage);
+                Util::s3UploadImage(Yii::getAlias('@img').'/'.$usuario->foto_perfil, $usuario->foto_perfil);
                 $usuario->save(false);
+                unlink(Yii::getAlias('@img').'/'.$usuario->foto_perfil);
                 Yii::$app->session->setFlash('success', 'Se ha añadido la foto de perfil.', false);
                 return Yii::$app->response->redirect(Url::to(['usuarios/view', 'alias' => $alias]));
             } else {
                 Yii::$app->session->setFlash('error', 'La imagen no se ha añadido correctamente.');
             }
         } 
-        
         return $this->render('imagen', [
             'model' => $model,
         ]);

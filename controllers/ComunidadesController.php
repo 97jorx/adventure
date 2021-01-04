@@ -320,15 +320,6 @@ class ComunidadesController extends Controller
     }
 
 
-    // public function beforeAction($action)
-    // {
-    //     if (Yii::$app->user->isGuest) {
-    //         $url = Url::to(['site/login']);
-    //         $this->redirect($url);
-    //     } 
-    //         return parent::beforeAction($action);
-    // }
-
 
 
 }
