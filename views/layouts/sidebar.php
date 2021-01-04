@@ -1,6 +1,6 @@
 <?php
 
-
+use app\helpers\Util;
 use kartik\icons\Icon;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -59,9 +59,9 @@ $this->registerJs($js);
 ?>
     <div class="row">
         <div class='img-container'>
-            <?php $fakeimg = "https://picsum.photos/300/300?random=".Yii::$app->user->id;  ?>
-            <?php $imagen = Yii::getAlias('@imgUrl') . '/' . Yii::$app->user->identity->foto_perfil?>
-            <?= Html::a(Html::img(isset(Yii::$app->user->identity->foto_perfil) ? ($imagen) : ($fakeimg), ['class' => 'img'])) ?>
+            <?php $fakeimg = "https://picsum.photos/300/300?random=1";  ?>
+            <?= Html::a(Html::img((isset(Yii::$app->user->identity->foto_perfil)) ?
+            (Util::s3GetImage(Yii::$app->user->identity->foto_perfil)) : ($fakeimg), ['class' => 'img'])) ?>
         </div>
         <div class="masonry-title text-center" id="nav-title">
             <?= ucfirst(Yii::$app->user->identity->alias) ?>

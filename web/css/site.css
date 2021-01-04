@@ -645,7 +645,11 @@ div[id*="success-0"] {
    font-size: 0.7em;
    color:#ffffff;
    text-align: center;
+}
 
-   
 
+.card-img-top {
+   width: 100%;
+   height: 15vw;
+   object-fit: cover;
 }

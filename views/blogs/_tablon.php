@@ -21,9 +21,11 @@ $blogs = $dataProvider->models;
           <?php if ($index == 0): ?>  
           <?php endif; ?> 
         <div class="card mb-4"> 
-            <?php $fakeimg = "https://picsum.photos/200/200?random=".$model->id;  ?>
+        <div class="container-img"> 
+            <?php $fakeimg = "https://picsum.photos/850/850?random=".$model->id;  ?>
            <?= Html::a(Html::img((isset($model->imagen)) ? (Util::s3GetImage($model->imagen)) :
-            ($fakeimg), ['class' => 'card-img-top img-thumbnail', 'itemprop' => 'image'])) ?>
+            ($fakeimg), ['class' => 'card-img-top', 'itemprop' => 'image'])) ?>
+        </div> 
           <div class="card-body">
             <h2 temprop="title" class="card-title"><?= Html::encode($model->titulo); ?></h2>
             <p class="card-text"></p>
@@ -33,9 +35,9 @@ $blogs = $dataProvider->models;
             Creado <?= Yii::$app->formatter->asDate($model->created_at) ?> por
             <?= Html::a(''.html::encode($model->usuario->alias).'', ['usuarios/view', 'username' => $model->usuario->username]) ?>
             <?php $like = Url::to(['blogs/like']); ?>
-            <span temprop="favoritos" class="ml-4"><?= $model->favs ?></span>
+            <i temprop="favoritos" class="ml-4"><?= $model->favs ?></i>
             <?= Icon::show('thumbs-up', ['framework' => Icon::FAS]) ?> 
-            <span temprop="favoritos" class="ml-4"><?= $model->visits ?></span>
+            <i temprop="favoritos" class="ml-4"><?= $model->visits ?></i>
             <?= Icon::show('eye', ['framework' => Icon::FAS]) ?> 
           </div>
         </div>
