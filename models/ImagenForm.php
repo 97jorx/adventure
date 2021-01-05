@@ -17,6 +17,11 @@ class ImagenForm extends Model
         ];
     }
 
+    /**
+     *  Permite subir una foto en local.
+     * @param mixed $id es el id de cualquier tabla.
+     * @return boolean
+    */ 
     public function upload($id)
     {
         if ($this->validate()) {

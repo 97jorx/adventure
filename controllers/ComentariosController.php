@@ -114,13 +114,9 @@ class ComentariosController extends Controller
             'csrf' => $csrfToken,
         ];
          
-
-        
         return json_encode($json);
 
     }
-
-
 
     /**
      * Añade una fila en la tabla de Favcomentarios.
@@ -159,9 +155,6 @@ class ComentariosController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-
-
-
 
 
      /**

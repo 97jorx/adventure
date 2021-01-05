@@ -93,11 +93,6 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
             ['email', 'email'],
             [['estado_id'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::class, 'targetAttribute' => ['estado_id' => 'id']],
             
-            // [
-            //     ['fecha_nac'],
-            //     'required',
-            //     'on' => [self::SCENARIO_CREAR],
-            // ],
             [
                 ['contrasena'],
                 'trim',
@@ -356,8 +351,12 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
 
     /**
      * Gets query for [[Comentarios]].
-     *
-     * @return \yii\db\ActiveQuery
+     * 
+     * Establece una relación que devuelve los comentarios 
+     * apartir del alias pasado por GET y que corresponda 
+     * con el perfil del usuario.
+     * 
+     * @return array | ActiveRecord
      */
     public function getComments()
     {
@@ -474,7 +473,9 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     }
 
 
-
+    /**
+     * Getter del atributo virtual _imagen.
+     */
     public function getImagen()
     {
         if ($this->_imagen !== null) {
@@ -485,12 +486,21 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->_imagen;
     }
 
-
+    /**
+     * Setter del attributo virtual _imagen.
+     * Inserta una imagen pasada como parametro.
+     * @param mixed $imagen
+     */
     public function setImagen($imagen)
     {
         $this->_imagen = $imagen;
     }
 
+    /**
+     * Setter del attributo virtual _imagenUrl.
+     * Inserta una imagenUrl pasada como parametro.
+     * @param mixed $imagenUrl
+     */
     public function getImagenUrl()
     {
         if ($this->_imagenUrl !== null) {
@@ -501,21 +511,37 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->_imagenUrl;
     }
 
+    /**
+     * Setter del attributo virtual _imagenUrl.
+     * Inserta una imagen pasada como parametro.
+     * @param mixed $imagenUrl
+     */
     public function setImagenUrl($imagenUrl)
     {
         $this->_imagenUrl = $imagenUrl;
     }
 
-
+    /**
+     * Busca un usuario a partir del $id.
+     * Inserta una imagen pasada como parametro.
+     * @param mixed $imagenUrl
+     */
     public static function findIdentity($id)
     {
         return static::findOne($id);
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function findIdentityByAccessToken($token, $type = null)
     {
+   
     }
 
+    /**
+     * Devuelve el id del usuario.
+     */
     public function getId()
     {
         return $this->id;
@@ -530,16 +556,28 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->email;
     }
 
+    /**
+    * {@inheritdoc}
+    */
     public function getAuthKey()
     {
         return $this->auth_key;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function validateAuthKey($authKey)
     {
         return $this->auth_key === $authKey;
     }
 
+    
+    /**
+     * Busca el id del usuario a partir del alias,
+     *  en caso de no encontrarlo devuelve un error 404.
+     * @return integer $id
+     */
     public static function findIdPorAlias($alias)
     {
         if($id = static::find()->select('id')->where(['alias' => $alias])->scalar()) {
@@ -550,16 +588,44 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
         
     }
 
+
+    /**
+     * Busca un usuario a partir del username
+     *
+     * @param [string] $username
+     * @return void
+     */
     public static function findPorNombre($username)
     {
         return static::findOne(['username' => $username]);
     }
 
+
+    /**
+     * Valida la contraseña pasada por parámetro 
+     * con el hash correspondiente.
+     *
+     * @param [type] $contrasena
+     * @return void
+     */
     public function validateContrasena($contrasena)
     {
         return Yii::$app->security->validatePassword($contrasena, $this->contrasena);
     }
 
+
+    /**
+     * self::SCENARIO_CREAR
+     * Guarda la contraseña y se genera el token de 
+     * seguiridad a la hora de registrar el usuario.
+     * 
+     * self::SCENARIO_UPDATE
+     * En caso de modificar el usuario se cambia 
+     * la contraseña por la nueva introducida.
+     *
+     * @param [type] $insert
+     * @return void
+     */
     public function beforeSave($insert)
     {
         if (!parent::beforeSave($insert)) {
@@ -625,6 +691,13 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     }
 
 
+
+    /**
+     * Cuenta las notas a partir del alias;
+     *
+     * @param [string] $alias
+     * @return integer $count
+     */
     public function countNotes($alias){
 
         $id = $this->findIdPorAlias($alias);

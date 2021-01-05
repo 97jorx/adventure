@@ -69,8 +69,18 @@ class Seguidores extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Usuarios::class, ['id' => 'seguidor'])->inverseOf('seguidores0');
     }
-
-
+    
+    
+    /**
+     * Después de que se inserte una fila en la tabla Seguidores 
+     * se crea una fila en la tabla notificaciones, pasandole el 
+     * nombre del usuario al que se le ha dado seguido. En la tabla
+     * notificaciones se insertará el usuario_id del usuario al que 
+     * se sigue.
+     *
+     * @param [type] $insert
+     * @return true
+     */
     public function beforeSave($insert)
     {
         if (!parent::beforeSave($insert)) {

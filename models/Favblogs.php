@@ -73,6 +73,16 @@ class Favblogs extends \yii\db\ActiveRecord
     }
 
 
+
+    /**
+     * Después de que se inserte una fila en la tabla Favblogs 
+     * se crea una fila en la tabla notificaciones, pasandole el 
+     * nombre del blog al que se le ha dado like y al usuario que 
+     * tiene ese blog.
+     *
+     * @param [type] $insert
+     * @return true
+     */
     public function beforeSave($insert)
     {
         if (!parent::beforeSave($insert)) {

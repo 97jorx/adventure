@@ -270,7 +270,6 @@ class Blogs extends \yii\db\ActiveRecord
      * Sube la imagen del Blog a AWS.
      *
      */
-
     public function uploadBlogImg()
     {
         $this->uploadedFile = UploadedFile::getInstance($this, 'uploadedFile');
@@ -298,7 +297,10 @@ class Blogs extends \yii\db\ActiveRecord
     }
 
 
-
+    /**
+     *  Después de guardar una fila se ejecuta la funciona 
+     *  uploadBlogImg();
+     */
     public function beforeSave($insert)
     {
         if (!parent::beforeSave($insert)) {

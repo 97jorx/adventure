@@ -53,6 +53,15 @@ class LoginForm extends Model
         }
     }
 
+
+    /**
+     * Valida si si la imagen pesan mucho 
+     * a partir de las rules.
+     *
+     * @param [type] $attribute
+     * @param [type] $params
+     * @return void
+     */
     public function validateSize($attribute, $params)
     {
         if(!$this->hasErrors())

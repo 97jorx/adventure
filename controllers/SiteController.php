@@ -211,28 +211,4 @@ class SiteController extends Controller
     }
 
 
-    // /**
-    //  * Este metodo es invocado después de ejecutar una acción.
-    //  * @param $action la acción que se ejecuta.
-    //  * Your custom code here, if you want the code to run before action filters,
-    //  * Which are triggered on the [[EVENT_BEFORE_ACTION]] event, e.g. PageCache or AccessControl
-    //  */
-    // public function afterAction($action, $result)
-    // {
-    //     $result = parent::afterAction($action, $result);
-    
-    //     if($action->id == 'login') {
-    //         $session = (new Query())
-    //         ->select(['user_id'])
-    //         ->from('session')
-    //         ->scalar();
-            
-    //         $model = Usuarios::find()->where(['id' => $session]);
-    //         $model->estado_id = 1;
-    //         $model->save();
-    //     }
-        
-    //     return $result;
-    // }
-
 }

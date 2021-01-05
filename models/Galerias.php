@@ -94,7 +94,10 @@ class Galerias extends \yii\db\ActiveRecord
     }
 
 
-
+    /**
+     *  Después de guardar una fila se ejecuta la funciona 
+     *  uploadGaleryImg();
+     */
     public function beforeSave($insert)
     {
         if (!parent::beforeSave($insert)) {

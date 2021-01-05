@@ -7,7 +7,7 @@ use yii\data\ActiveDataProvider;
 use app\models\Visitas;
 
 /**
- * VisitasSearch represents the model behind the search form of `app\models\Visitas`.
+ * VisitasSearch representa el modelo detrás de la forma de búsqueda de `app\models\Visitas`.
  */
 class VisitasSearch extends Visitas
 {

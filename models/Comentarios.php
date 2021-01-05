@@ -145,6 +145,15 @@ class Comentarios extends \yii\db\ActiveRecord
 
     }
 
+     /**
+     * Después de que se inserte una fila en la tabla Comentarios 
+     * se crea una fila en la tabla notificaciones, pasandole el 
+     * el nombre del usuario que ha comentado ese blog y al id del 
+     * usuario al que pertenece ese blog en notificaciones.usuario_id.
+     *
+     * @param [type] $insert
+     * @return true
+     */
     public function beforeSave($insert)
     {
         if (!parent::beforeSave($insert)) {

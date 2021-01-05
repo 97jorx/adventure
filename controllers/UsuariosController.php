@@ -62,6 +62,18 @@ class UsuariosController extends Controller
         ];
     }
 
+    /**
+     * Acción que permite al usuario registrarse
+     * utilizando el SCENARIO_CREAR
+     * 
+     * La validación de realiza a partir del AJAX
+     * 
+     * En caso de ser una petición AJAX se mostrará 
+     * el formulario de registro en una ventana modal,
+     * en caso contrario de mostrará una ventana normal.
+     *
+     * @return renderAjax() | render()
+     */
     public function actionRegistrar()
     {
             

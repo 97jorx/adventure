@@ -51,7 +51,7 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
     }
 
     /**
-     * Finds user by username
+     * Busca un usuario a partir de username.
      *
      * @param string $username
      * @return static|null
@@ -74,8 +74,6 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
     {
         return $this->id;
     }
-    
-    
 
     /**
      * {@inheritdoc}
