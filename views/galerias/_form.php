@@ -23,11 +23,6 @@ use kartik\file\FileInput;
         ]
         ])->label(false); ?>
 
-    <?= $form->field($model, 'comunidad_id')->textInput() ?>
-
-    <?= $form->field($model, 'fotos')->textarea(['rows' => 6]) ?>
-
-
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>

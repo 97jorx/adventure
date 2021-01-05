@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\helpers\Util;
 use Yii;
 use app\models\Galerias;
 use app\models\GaleriasSearch;
@@ -29,20 +30,6 @@ class GaleriasController extends Controller
         ];
     }
 
-    /**
-     * Lists all Galerias models.
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-        $searchModel = new GaleriasSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
 
    
     /**
@@ -54,15 +41,18 @@ class GaleriasController extends Controller
     {
         $model = new Galerias();
         $searchModel = new GaleriasSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        
         $actual = Yii::$app->request->get('actual');
-
-        if($actual != null){
-            $model->comunidad_id = $actual;
+        $model->comunidad_id = $actual;
+        if($model->validate()) {
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $actual);
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['create', 'actual' => $actual]);
             }
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
         }
+        
 
         return $this->render('create', [
             'model' => $model,
@@ -100,4 +90,7 @@ class GaleriasController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+
+    
 }

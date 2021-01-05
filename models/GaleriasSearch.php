@@ -5,6 +5,7 @@ namespace app\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Galerias;
+use Yii;
 
 /**
  * GaleriasSearch represents the model behind the search form of `app\models\Galerias`.
@@ -38,9 +39,10 @@ class GaleriasSearch extends Galerias
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $actual)
     {
-        $query = Galerias::find();
+        $query = Galerias::find()
+        ->where(['comunidad_id' => $actual]);
 
         // add conditions that should always apply here
 

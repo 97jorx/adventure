@@ -123,7 +123,7 @@ $this->registerJs($js);
                         </div>
                     </div>
                 </li>
-                <?php if($actual = Yii::$app->request->get('actual') != null) { ?>
+                <?php if(Yii::$app->request->get('actual') != null) { ?>
                     <li>
                         <div class="row">
 
@@ -131,7 +131,7 @@ $this->registerJs($js);
                                 <i><?= Icon::show('images');?></i>
                             </div>
                             <div class="col-6">
-                            <?= Html::a('Galerias', ['galerias/create', 'actual' => $actual]) ?>
+                            <?= Html::a('Galerias', ['galerias/create', 'actual' => Yii::$app->request->get('actual')]) ?>
                             </div>
                         </div>
                     </li>
