@@ -20,8 +20,6 @@ use yii\widgets\DetailView;
 $name = Yii::$app->user->identity->alias;
 $this->registerCssFile("@web/css/perfil.css");
 $csrfToken = Yii::$app->request->getCsrfToken();
-// var_dump($model->comentarios0); die();
-
 
 $js = <<< EOT
 

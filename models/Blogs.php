@@ -277,8 +277,8 @@ class Blogs extends \yii\db\ActiveRecord
         if ($this->uploadedFile != null) {
             $filename = $this->uploadedFile->basename;
             $fullname = $filename . '.' . $this->uploadedFile->extension;
-            if($this->imagen != null) {
-            Util::s3DeleteImage($this->imagen);
+            if ($this->imagen != null) {
+                Util::s3DeleteImage($this->imagen);
             }
             $this->imagen = $fullname;
 

@@ -24,7 +24,7 @@ $blogs = $dataProvider->models;
         <div class="container-img"> 
             <?php $fakeimg = "https://picsum.photos/850/850?random=".$model->id;  ?>
            <?= Html::a(Html::img((isset($model->imagen)) ? (Util::s3GetImage($model->imagen)) :
-            ($fakeimg), ['class' => 'card-img-top', 'itemprop' => 'image'])) ?>
+            ($fakeimg), ['class' => 'card-img-top-blog', 'itemprop' => 'image'])) ?>
         </div> 
           <div class="card-body">
             <h2 temprop="title" class="card-title"><?= Html::encode($model->titulo); ?></h2>

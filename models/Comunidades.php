@@ -115,7 +115,15 @@ class Comunidades extends \yii\db\ActiveRecord
     }
 
 
-
+    /**
+     * Gets query for [[Galerias]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGalerias()
+    {
+        return $this->hasMany(Galerias::class, ['comunidad_id' => 'id']);
+    }
 
     /**
      * Setter que añade a $favs el valor correspondiente.

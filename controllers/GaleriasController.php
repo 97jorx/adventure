@@ -44,19 +44,7 @@ class GaleriasController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single Galerias model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
+   
     /**
      * Creates a new Galerias model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -65,33 +53,21 @@ class GaleriasController extends Controller
     public function actionCreate()
     {
         $model = new Galerias();
+        $searchModel = new GaleriasSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $actual = Yii::$app->request->get('actual');
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if($actual != null){
+            $model->comunidad_id = $actual;
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['create', 'actual' => $actual]);
+            }
         }
 
         return $this->render('create', [
             'model' => $model,
-        ]);
-    }
-
-    /**
-     * Updates an existing Galerias model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 

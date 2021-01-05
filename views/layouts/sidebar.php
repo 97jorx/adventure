@@ -123,19 +123,24 @@ $this->registerJs($js);
                         </div>
                     </div>
                 </li>
-                <li>
-                <div class="row">
-                        <div class="col-1">
-                            <i><?= Icon::show('images');?></i>
+                <?php if($actual = Yii::$app->request->get('actual') != null) { ?>
+                    <li>
+                        <div class="row">
+
+                            <div class="col-1">
+                                <i><?= Icon::show('images');?></i>
+                            </div>
+                            <div class="col-6">
+                            <?= Html::a('Galerias', ['galerias/create', 'actual' => $actual]) ?>
+                            </div>
                         </div>
-                        <div class="col-6">
-                            <a class="nav-text">
-                                Galerias
-                            </a>
-                        </div>
-                </li>
+                    </li>
+                <?php } ?>
             </ul>
         </div>
     </div>
  
 
+    
+           
+    

@@ -27,13 +27,6 @@ CREATE TABLE usuarios
    , biografia    varchar(255)
 );
 
--- TABLA DE GALERIAS
-DROP TABLE IF EXISTS galerias CASCADE;
-CREATE TABLE galerias (
-     id           bigserial PRIMARY KEY
-   , comunidad_id bigint    NOT NULL REFERENCES comunidades (id) ON DELETE CASCADE  
-   , fotos        text      
-);
 
 -- TABLA DE LAS COMUNIDADES
 DROP TABLE IF EXISTS comunidades CASCADE;
@@ -45,6 +38,13 @@ CREATE TABLE comunidades (
    , propietario  bigint         NOT NULL REFERENCES usuarios (id)
 );
 
+-- TABLA DE GALERIAS
+DROP TABLE IF EXISTS galerias CASCADE;
+CREATE TABLE galerias (
+     id           bigserial PRIMARY KEY
+   , comunidad_id bigint    NOT NULL REFERENCES comunidades (id) ON DELETE CASCADE  
+   , fotos        text      
+);
 
 -- TABLA DE LOS BLOGS
 DROP TABLE IF EXISTS blogs CASCADE;
