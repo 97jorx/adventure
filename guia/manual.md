@@ -13,8 +13,14 @@
 ![11](images/usuario-guia/10-borrar.png)
 ![12](images/usuario-guia/11-tablon-de-blogs.png)
 ![13](images/usuario-guia/11-view-blog.png)
-![14](images/usuario-guia/12-dejar-comentario-blog.png)
-![15](images/usuario-guia/13-perfil-usuario.png)
+![14](images/usuario-guia/11-blogs-search-sort.png)
+![15](images/usuario-guia/14-notificaciones.png)
+![16](images/usuario-guia/15-siguiendo.png)
+![17](images/usuario-guia/16-blogs-favoritos.png)
+![18](images/usuario-guia/17-bloqueados.png)
+![19](images/usuario-guia/18-buscar-usuario.png)
+![20](images/usuario-guia/19-seguir-bloquear.png)
+![21](images/usuario-guia/20-editar-perfil.png)
 
 
 
