@@ -51,9 +51,49 @@
     <div class="col-md-9 guide-content" role="main">
         <h1>Instrucciones de instalación y despliegue <span id="instrucciones-de-instalacion-y-despliegue"></span><a href="#instrucciones-de-instalacion-y-despliegue" class="hashlink">&para;</a></h1>
 <div class="toc"><ol><li><a href="#en-local">En local</a></li>
+<li><a href="#ir-al-navegador-y-escribir-la-url-localhost8080">Ir al navegador y escribir la URL localhost:8080.</a></li>
 <li><a href="#en-la-nube">En la nube</a></li></ol></div>
-<h2>En local <span id="en-local"></span><a href="#en-local" class="hashlink">&para;</a></h2><p>Explicar.</p>
-<h2>En la nube <span id="en-la-nube"></span><a href="#en-la-nube" class="hashlink">&para;</a></h2><p>Explicar.</p>
+<h2>En local <span id="en-local"></span><a href="#en-local" class="hashlink">&para;</a></h2><ul>
+<li>PHP 7.4.x</li>
+<li>PostgreSQL.</li>
+<li>Composer 1.1.1.</li>
+<li>Servidor Integrado PHP (localhost).</li>
+<li>Gmail. </li>
+</ul>
+<hr />
+<p> <strong>Pasos a seguir</strong></p>
+<ol>
+<li>Clonar el proyecto desde github <a href="https://github.com/97jorx/adventure.git">https://github.com/97jorx/adventure.git</a></li>
+<li>Comando en la terminal <strong><code>`cd</code>`</strong> adventure desde el directorio donde se ha   clonado.</li>
+<li>Escribir el comando <strong><code>`</code>composer update<code>`</code></strong>. Se generará la carpeta vendor.<pre><code class="hljs bash">adventure/     <span class="hljs-comment"># Directorio Root.</span>
+|- vendor/      <span class="hljs-comment"># Las extensiones por Composer se almacenan en el directorio vendor</span>
+</code></pre>
+</li>
+<li>Por ultimo ejecutar el servidor de php: <strong><code>`</code>php -S localhost:8080<code>`</code></strong> </li>
+<li><h2>Ir al navegador y escribir la URL localhost:8080. <span id="ir-al-navegador-y-escribir-la-url-localhost8080"></span><a href="#ir-al-navegador-y-escribir-la-url-localhost8080" class="hashlink">&para;</a></h2></li>
+</ol>
+<h2>En la nube <span id="en-la-nube"></span><a href="#en-la-nube" class="hashlink">&para;</a></h2><ul>
+<li>PHP 7.4.x</li>
+<li>PostgreSQL.</li>
+<li>Composer 1.1.1.</li>
+<li>Gmail. </li>
+<li>Cuenta de Heroku. Heroku.com</li>
+</ul>
+<hr />
+<p> <strong>Pasos a seguir</strong></p>
+<ol>
+<li>Una vez tengamos cuenta de Heroku realizar los siguientes pasos:<pre><code class="hljs bash language-sh">  heroku login <span class="hljs-comment"># Loguearse en Heroku.</span>
+  heroku apps:create nombreAplicacion --region eu <span class="hljs-comment"># Crear la aplicación en Heroku.</span>
+  heroku addons:create heroku-postgresql <span class="hljs-comment"># Agregar el Addon de heroku-postgresql </span>
+  heroku pg:psql &lt; db/nombreBaseDeDatos.sql --app <span class="hljs-comment"># Subir los cambios de SQL al Dyno de heroku.</span>
+  heroku pg:psql <span class="hljs-comment"># Acceder al terminal interativo de PostgreSQL en el dyno de Heroku.</span>
+  create extension pgcrypto; <span class="hljs-comment"># Crear la extension para encriptar contraseñas.</span>
+  heroku config:<span class="hljs-built_in">set</span> SMTP_PASS=clave <span class="hljs-comment"># Agregar las claves de entorno en heroku.</span>
+  git push -u heroku master  <span class="hljs-comment"># Subir los cambios de la rama master de github a la rama de Heroku.</span>
+</code></pre>
+<hr />
+</li>
+</ol>
         <div class="toplink"><a href="#" class="h1" title="go to top"><span class="glyphicon glyphicon-arrow-up"></a></div>
     </div>
 </div>
@@ -62,7 +102,7 @@
 </div>
 
 <footer class="footer">
-        <p class="pull-right"><small>Page generated on Wed, 06 Jan 2021 00:16:38 +0000</small></p>
+        <p class="pull-right"><small>Page generated on Wed, 06 Jan 2021 17:31:31 +0000</small></p>
     Powered by <a href="http://www.yiiframework.com/" rel="external">Yii Framework</a></footer>
 
 <script>jQuery(function ($) {
