@@ -19,7 +19,7 @@ $this->registerCssFile('@web/css/cookie-consent.css');
      <div class="card h-100 flex-row flex-wrap border-0">
         <div class="col-lg-7">
           <?php $fakeimg = "https://picsum.photos/600/450?random=".$model->id;  ?>
-          <?= Html::a(Html::img($fakeimg, ['class' => 'card-image']), ['blogs/index', 'actual' => $model->id],  ['class' => 'login']) ?>
+          <?= Html::a(Html::img($fakeimg, ['class' => 'card-image', 'alt' => 'blog-img']), ['blogs/index', 'actual' => $model->id],  ['class' => 'login']) ?>
         </div>
         <div class="col-lg-5">
                 <h1 class="font-weight-light"><?= $model->denom  ?></h1>
@@ -38,7 +38,7 @@ $this->registerCssFile('@web/css/cookie-consent.css');
       <div class="col-md-4 mb-5">
         <div class="card h-100">
           <div class="card-body">
-              <h2 class="card-title"><?= $model->denom  ?></h2>
+              <h3 class="card-title"><?= $model->denom  ?></h3>
               <p class="card-text"><?= $model->descripcion ?></p>
           </div>
           <div class="card-footer">
