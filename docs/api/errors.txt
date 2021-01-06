@@ -1078,7 +1078,7 @@ Array
 
     [179] => Array
         (
-            [line] => 45
+            [line] => 46
             [file] => ./components/HelperAdventure.php
             [message] => Undefined parameter documented:  in tieneFavoritos().
         )

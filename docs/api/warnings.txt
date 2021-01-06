@@ -72,7 +72,7 @@ Array
 
     [10] => Array
         (
-            [line] => 19
+            [line] => 20
             [file] => ./components/HelperAdventure.php
             [message] => No docblock for element 'app\components\HelperAdventure'
         )

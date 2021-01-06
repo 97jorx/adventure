@@ -149,7 +149,7 @@ class BlogsController extends Controller
         }
         
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id, 'actual' => $actual]);
         }
 
@@ -170,14 +170,14 @@ class BlogsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $actual = Yii::$app->request->get('actual');
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id, 'actual' => $actual]);
         }
 
         return $this->render('update', [

@@ -29,11 +29,15 @@ $blogs = $dataProvider->models;
           <div class="card-body">
             <h2 temprop="title" class="card-title"><?= Html::encode($model->titulo); ?></h2>
             <p class="card-text"></p>
-            <?= Html::a('Continuar leyendo...', ['blogs/view', 'id' => $model->id, 'actual' => $actual], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a('Continuar leyendo...', ['blogs/view', 'id' => $model->id, 'actual' => $actual], 
+            ['class' => 'btn btn-primary',
+            'aria-label' => ''.Html::encode($model->descripcion),
+            'data-balloon-pos' => 'left'
+            ]) ?>
           </div>
           <div class="card-footer text-muted ml-4">
             Creado <?= Yii::$app->formatter->asDate($model->created_at) ?> por
-            <?= Html::a(''.html::encode($model->usuario->alias).'', ['usuarios/view', 'username' => $model->usuario->username]) ?>
+            <?= Html::a(''.html::encode($model->usuario->alias).'', ['usuarios/view', 'alias' => $model->usuario->alias]) ?>
             <?php $like = Url::to(['blogs/like']); ?>
             <i temprop="favoritos" class="ml-4"><?= $model->favs ?></i>
             <?= Icon::show('thumbs-up', ['framework' => Icon::FAS]) ?> 
@@ -78,11 +82,18 @@ $blogs = $dataProvider->models;
             </div>
           </div>
         </div>
-          <div class="card my-4">
-            <h5 class="card-header">Side Widget</h5>
-              <div class="card-body">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam excepturi deserunt incidunt suscipit, 
-               tempore commodi magni quam quis perspiciatis sapiente blanditiis vitae saepe dolor ipsum aperiam, eos alias animi dignissimos.
+              <div class=container>
+                  <div class="alert alert-warning alert-dismissable">
+                    <div class="col-">
+                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    </div>
+                    <ul>
+                      <p>Aviso del usuario, queda totalmente prohibido:</p>
+                      <li>Spam, prácticas engañosas y estafas</li>
+                      <li>Suplantación de identidad</li>
+                      <li>Enlaces en el contenido</li>
+                    </ul>
+              </div>
             </div>
           </div>
         </div>

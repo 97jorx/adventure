@@ -8,6 +8,7 @@ use yii\bootstrap4\Html;
 $this->title = 'Create Comunidades';
 $this->params['breadcrumbs'][] = ['label' => 'Comunidades', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+var_dump($actual);
 ?>
 <div class="comunidades-create">
 

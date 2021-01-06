@@ -7,6 +7,7 @@ use app\controllers\ComentariosController;
 use app\controllers\ComunidadesController;
 use app\models\Bloqcomunidades;
 use app\models\Bloqueados;
+use app\models\Comunidades;
 use app\models\Favblogs;
 use app\models\Favcomentarios;
 use app\models\Favcomunidades;
@@ -14,7 +15,7 @@ use app\models\Notas;
 use DateTime;
 use yii\base\Component;
 use Yii;
-
+use yii\web\NotFoundHttpException;
 
 class HelperAdventure extends Component
 {
@@ -67,14 +68,17 @@ class HelperAdventure extends Component
     public static function estaBloqueado($uid = null, $id = null){
         
         $bloqueado = Bloqcomunidades::find();
-        
+        static::findIdComunidad($id);
+
         if (!isset($uid)) {
-            $uid = Yii::$app->user->id;
             $id = Yii::$app->request->get('id');
+            
+            $uid = Yii::$app->user->id;
             return !$bloqueado
             ->where(['comunidad_id' => $id])
             ->andWhere(['bloqueado' => $uid])
             ->exists();
+            
         } else {
             return $bloqueado
             ->where(['comunidad_id' => $id])
@@ -96,21 +100,18 @@ class HelperAdventure extends Component
     public static function usuarioBloqueado($id = null) {
         
         $uid = Yii::$app->user->id;
-        
+        static::findIdComunidad($id);
+       
         if (isset($id) && $id != 0) {
-
             return Bloqueados::find()
-            ->where(['usuario_id' => $id])
-            ->andWhere(['bloqueado' => $uid])
-            ->exists();
-
+        ->where(['usuario_id' => $id])
+        ->andWhere(['bloqueado' => $uid])
+        ->exists();
         } else {
-
             return Bloqueados::find()
-            ->select('usuario_id')
-            ->andWhere(['bloqueado' => $uid])
-            ->column();
-
+        ->select('usuario_id')
+        ->andWhere(['bloqueado' => $uid])
+        ->column();
         }
     }
 
@@ -168,6 +169,20 @@ class HelperAdventure extends Component
     }
 
    
+    /**
+     * Busca el id de la comunidad si no existe lanza un 404.
+     * @return Integer retorna un booleano.
+     */
+    public static function findIdComunidad($id){
+       
+        $model = Comunidades::find()->where(['id' => $id]);
+        if(!$model){
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+    }
+
+
 }
 
 

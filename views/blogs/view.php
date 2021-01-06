@@ -11,7 +11,7 @@ use yii\helpers\Url;
 
 $this->title = $model->titulo;
 $this->params['breadcrumbs'][] = ['label' => 'Comunidad', 'url' => ['comunidades/index']];
-$this->params['breadcrumbs'][] = ['label' => 'Blogs', 'url' => ['index', 'actual' => $actual]];
+$this->params['breadcrumbs'][] = ['label' => 'Blogs', 'url' => ['blogs/index', 'actual' => $actual]];
 $this->params['breadcrumbs'][] = $this->title;
 
 $url = Url::to(['blogs/like', 'id' => $model->id]);
@@ -35,7 +35,7 @@ $this->registerJs(UtilAjax::LIKE);
         </p>
         <?php if($model->usuario->nombre == $name) { ?>
             <div class="col-md-2">
-              <p class="card-text"><small><?= Html::a(Icon::show('pencil'), ['blogs/update', 'id' => $model->id]) ?></small></p>
+              <p class="card-text"><small><?= Html::a(Icon::show('pencil'), ['blogs/update', 'id' => $model->id, 'actual' => $actual]) ?></small></p>
             </div>
         <?php } ?>
         <hr>
@@ -71,7 +71,9 @@ $this->registerJs(UtilAjax::LIKE);
           </div>
         </div>
         <hr>
-        <img class="img-fluid rounded"  src="<?php echo Yii::$app->request->baseUrl.'/uploads/test.jpg'?>"  alt="">
+        <?php $fakeimg = "https://picsum.photos/850/850?random=".$model->id;  ?>
+           <?= Html::a(Html::img((isset($model->imagen)) ? (Util::s3GetImage($model->imagen)) :
+            ($fakeimg), ['class' => 'card-img-top-blog', 'itemprop' => 'image', 'alt' => 'blog-view-img'])) ?>
         <hr>
         <p class="lead"><?= Util::h($model->descripcion) ?></p>
         <p class="lead"><?= Util::h($model->cuerpo) ?></p>

@@ -180,11 +180,13 @@ class Comunidades extends \yii\db\ActiveRecord
      */
     public static function esPropietario(){
         $id = Yii::$app->request->get('id');
-        $propietario = Comunidades::find()
-        ->select('propietario')
-        ->where(['id' => $id])->scalar();
-
-        return $propietario === Yii::$app->user->id;
+        
+        if(Yii::$app->AdvHelper->findIdComunidad($id)) {
+            $propietario = Comunidades::find()
+            ->select('propietario')
+            ->where(['id' => $id])->scalar();
+            return $propietario === Yii::$app->user->id;
+        }
     }
 
     /**
