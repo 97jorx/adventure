@@ -2,8 +2,9 @@
 
 ## Diagramas de clases
 
-Incluir.
+![Diagramas de estructura lógica de datos](images/diagrama-estructura-lógica.jpeg)
+
 
 ## Diagramas de estructura lógica de datos
 
-Incluir.
+![Diagramas de estructura lógica de datos](images/diagrama-estructura-lógica.jpeg)
