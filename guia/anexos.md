@@ -62,8 +62,6 @@
 <li>¿Qué opciones tengo en este nivel?</li>
 <ul>
     <li>Aparece un menú lateral y un navbar en el cual se redireccionará a la parte de la aplicación en cuestión. En el perfil se dispondrá de TABS para poder seleccionar los comentarios de ese usuario además de los blogs que el usuario haya creado tanto la posibilidad de modificarlos y ver el número de likes.</li>
-
-    
 </ul>
 <br>
 
