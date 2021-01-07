@@ -7,5 +7,5 @@ que se solapen ya que las imagenes se cargan con imagenLoader.js que es otra lib
 con AJAX para asi utilizar una animación a la hora de generarlas.
 
 Tomar la decisión de utilizar Amazon Web Service en vez de utilizar Dropbox o Google Drive, ya que son bastante 
-más compleja su implementación.
+más compleja su implementación y AWS aporta una funcionalidad más eficiente.
 

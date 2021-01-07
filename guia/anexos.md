@@ -84,5 +84,10 @@
 ### **([R38]()) Despliegue en un servidor local**
 
 
-### **([R34]()) Codeclimate**
+### **([R26]()) Codeclimate**
+#[#26](https://github.com/97jorx/adventure/issues/26)
 ![codeclimate](images/codeclimate.png)
+
+### **([R25]()) Codeception**
+#[#25](https://github.com/97jorx/adventure/issues/25)
+![codeception](images/codeception.jpeg)
