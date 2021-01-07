@@ -32,7 +32,8 @@ CREATE TABLE usuarios
 DROP TABLE IF EXISTS comunidades CASCADE;
 CREATE TABLE comunidades (
      id           bigserial      PRIMARY KEY 
-   , denom        varchar(255)   NOT NULL UNIQUE    
+   , denom        varchar(255)   NOT NULL UNIQUE
+   , imagen       text    
    , descripcion  text           NOT NULL    
    , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
    , propietario  bigint         NOT NULL REFERENCES usuarios (id)

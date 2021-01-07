@@ -1,5 +1,7 @@
 <?php
 
+use app\helpers\Util;
+use app\helpers\UtilAjax;
 use ereminmdev\yii2\infinite_scroll\InfiniteScroll;
 use kartik\icons\Icon;
 use yii\bootstrap4\Html;
@@ -24,8 +26,12 @@ $(".masonry-item").hover(
 );
 
 $('.loader').imagesLoaded( {}, function() {
-    $('.loader').attr("style", "visibility: visible")
-    $('.spinner-border').fadeOut("fast");
+    setTimeout(function(){ 
+        $('.loader')
+        .attr("style", "visibility: visible")
+        .fadeIn("slow"); 
+    }, 700);
+    $('.adventure').fadeOut("slow");
 });
 
 window.onload = (e) => { 
@@ -45,7 +51,7 @@ $(".arrow-right").click(function(){
 }
 EOF;
 $this->registerJs($js);
-
+$this->registerJs(UtilAjax::animate);
 
 Yii::$app->formatter->locale = 'es-ES';
 
@@ -57,8 +63,8 @@ Yii::$app->formatter->locale = 'es-ES';
 </p>
 <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
-<div class="spinner-border" role="status">
-    <span class="sr-only">Si no aparece las imagenes, recarge la página.</span>
+<div class="spinner" role="status">
+    <h1 class="ml2 adventure">ADVENTURE</h1>
 </div>
 
 <div class="loader">
@@ -150,10 +156,12 @@ Yii::$app->formatter->locale = 'es-ES';
                         ]) ?>
                         <?php endif;?>
                     </div>
-
+                    
                     <?php $fakeimg = 'https://picsum.photos/800/800?random=' . $model->id;  ?>
                     <div class="img-container">
-                        <?= Html::a(Html::img($fakeimg, ['class' => 'card-img-top masonry-img loader-img', 
+                        <?= Html::a(Html::img((isset($model->imagen)) ? 
+                           (Util::s3GetImage($model->imagen)) : 
+                           ($fakeimg), ['class' => 'card-img-top masonry-img loader-img', 
                             'onload' => 'this.style.opacity = 1']), [
                             'blogs/index',  'actual' => $model->id], 
                             ['class' => 'login']) ?>

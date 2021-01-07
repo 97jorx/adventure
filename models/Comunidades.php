@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use app\helpers\Util;
+use yii\web\UploadedFile;
 use Yii;
 
 /**
@@ -24,6 +26,7 @@ class Comunidades extends \yii\db\ActiveRecord
 
     private $_favs = null;
     private $_members = null;
+    public $uploadedFile;
 
     /**
      * {@inheritdoc}
@@ -44,6 +47,8 @@ class Comunidades extends \yii\db\ActiveRecord
             [['created_at'], 'safe'],
             [['propietario'], 'default', 'value' => null],
             [['propietario'], 'integer'],
+            [['imagen'], 'string'],
+            [['uploadedFile'], 'image', 'extensions' => 'jpg, png'],
             [['denom'], 'string', 'max' => 255],
             [['denom'], 'unique'],
             [['propietario'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['propietario' => 'id']],
@@ -222,6 +227,51 @@ class Comunidades extends \yii\db\ActiveRecord
             ->groupBy('comunidades.id');
     }
   
+ /**
+     * Sube la imagen del Blog a AWS.
+     *
+     */
+    public function uploadComunidadImg()
+    {
+        $this->uploadedFile = UploadedFile::getInstance($this, 'uploadedFile');
+        if ($this->uploadedFile != null) {
+            $filename = $this->uploadedFile->basename;
+            $fullname = $filename . '.' . $this->uploadedFile->extension;
+            if ($this->imagen != null) {
+                Util::s3DeleteImage($this->imagen);
+            }
+            $this->imagen = $fullname;
+
+            $origen = Yii::getAlias('@uploads/' . $filename . '.' . $this->uploadedFile->extension);
+            $destino = Yii::getAlias('@img/' . $filename . '.' . $this->uploadedFile->extension);
+
+            $this->uploadedFile->saveAs($origen);
+
+            \yii\imagine\Image::resize($origen, 400, null)->save($destino);
+            Util::s3UploadImage(Yii::getAlias('@img').'/'.$fullname, $fullname);
+            unlink($destino);
+            unlink($origen);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    /**
+     *  Después de guardar una fila se ejecuta la funciona 
+     *  uploadBlogImg();
+     */
+    public function beforeSave($insert)
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        $this->uploadComunidadImg();
+        
+        return true;
+    }
 
   
 

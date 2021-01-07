@@ -295,7 +295,9 @@ select2-results__option:hover a {
    color: #ffffff
 }
 
-.select2-container--krajee-bs4 .select2-results__option.loading-results, .select2-container--krajee-bs4 .load-more {
+.select2-container--krajee-bs4 
+.select2-results__option.loading-results, 
+.select2-container--krajee-bs4 .load-more {
    display: none  !important;
 }
 
@@ -653,3 +655,26 @@ div[id*="success-0"] {
    height: 14vw;
    object-fit: cover;
 }
+
+
+/* ANIME.JS */
+
+.ml2 {
+   font-weight: 1000;
+   font-size: 3em;
+   position: absolute;
+   top: 50%;
+   left: 47%;
+   margin-top: -50px;
+   margin-left: -50px;
+ }
+ 
+ .ml2 .letter {
+   display: inline-block;
+   line-height: 1em;
+ }
+
+
+
+
+ 

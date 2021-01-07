@@ -22,10 +22,7 @@ $this->registerJs($js);
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            'id',
-            'username',
-            'nombre',
-            'apellidos',
+            'alias',
             'email:email',
             'rol',
             'created_at',

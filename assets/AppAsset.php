@@ -32,6 +32,7 @@ class AppAsset extends AssetBundle
         'js/parsley.js',
         'js/jquery.efect.js',
         'js/masonrys.js',
+        'js/anime.min.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
