@@ -66,21 +66,7 @@ class Util  {
 
 
 
-    /**
-     * Subir una imagen a partir del local.
-     * 
-     * @param mixed $name el nombre del archivo a eliminar del bucket.
-     * 
-     * Documentación de los métodos utilizados.
-     * https://docs.aws.amazon.com/aws-sdk-php/v3/api/class-Aws.S3.S3Client.html#_getObjectUrl
-     * 
-     */
-    public static function uploadImage($name) {
-        
-        // Instantiate an Amazon S3 client.
-        
-    }
-
+  
     
 
     /**

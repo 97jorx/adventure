@@ -346,7 +346,9 @@ class UsuariosController extends Controller
             if ($model->upload($id)) {
                 $usuario->foto_perfil = $id.'.'.$model->imagen->extension;
                 $oldImage = $usuario->getOldAttribute('foto_perfil');
-                Util::s3DeleteImage($oldImage);
+                if($oldImage != null) {
+                    Util::s3DeleteImage($oldImage);
+                }
                 Util::s3UploadImage(Yii::getAlias('@img').'/'.$usuario->foto_perfil, $usuario->foto_perfil);
                 $usuario->save(false);
                 unlink(Yii::getAlias('@img').'/'.$usuario->foto_perfil);

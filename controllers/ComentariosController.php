@@ -110,6 +110,7 @@ class ComentariosController extends Controller
             'foto' => Yii::$app->user->identity->foto_perfil,
             'alias' => ucfirst($alias),
             'fecha' => Yii::$app->AdvHelper->toMinutes($fecha),
+            'img' => Util::s3GetImage(Util::getImageByAlias($alias)),
             'texto' => Html::encode($texto),
             'csrf' => $csrfToken,
         ];

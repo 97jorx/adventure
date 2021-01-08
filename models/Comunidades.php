@@ -228,7 +228,7 @@ class Comunidades extends \yii\db\ActiveRecord
     }
   
  /**
-     * Sube la imagen del Blog a AWS.
+     * Sube la imagen de la comunidad a AWS.
      *
      */
     public function uploadComunidadImg()

@@ -96,11 +96,13 @@ $this->registerJs(UtilAjax::LIKE);
         </div>
        <div id='comentarios'>
          <?php foreach($model->comentarios as $comentario) : ?> 
+          <?php $fakeimg = 'https://picsum.photos/50/50?random='.$comentario->id ?>
           <?php $respuestas = $comentario->findResponsesById($comentario->id, $model->id)?>
           <?php if($comentario->parent == null) : ?> 
           <div class='row'>
               <div class="media mb-4">
-                <img class="d-flex mr-3 rounded-circle" src='https://picsum.photos/50/50?random=1' alt="">
+                <img class="d-flex mr-3 rounded-circle-user" src='<?= (isset($comentario->usuario->foto_perfil)) ?
+                (Util::s3GetImage($comentario->usuario->foto_perfil)) : ($fakeimg) ?>' alt="">
                 <div class="media-body">
                 <div class='row'>
                   <h5 class="mt-0 ml-3 pr-2" style='font-size:0.8rem'><?= ucfirst($comentario->usuario->alias) ?></h5>
@@ -137,7 +139,8 @@ $this->registerJs(UtilAjax::LIKE);
                     <?php foreach($respuestas as $key => $value) : ?>
                           <div class='row'>
                             <div class="media mt-4">
-                              <img class="d-flex mr-3 rounded-circle" src='https://picsum.photos/50/50?random=1' alt="">
+                              <img class="d-flex mr-3 rounded-circle-user" src='<?= (isset($value['foto_perfil'])) ?
+                              (Util::s3GetImage($value['foto_perfil'])) : ($fakeimg) ?>' alt="blog-img-comment">
                               <div class="media-body">
                                 <div class='row'>
                                   <h5 class="mt-0 ml-3 pr-2" style='font-size:0.8rem'><?= ucfirst($value['alias']) ?></h5>
