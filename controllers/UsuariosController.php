@@ -220,10 +220,10 @@ class UsuariosController extends Controller
 
         Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
         $bloqueados = Yii::$app->AdvHelper->usuarioBloqueado();
-        $out = ['results' => ['text' => '', 'id' => '']];
+        $out = ['results' => ['text' => '', 'id' => '', 'img' => '']];
         if (!is_null($q)) {
             $query = new Query;
-            $query->select('id, alias AS text')
+            $query->select('id, alias AS text, foto_perfil AS img')
                 ->from('usuarios')
                 ->where(['ilike', 'alias', $q])
                 ->andWhere(['not in', 'id', $bloqueados])
@@ -232,7 +232,10 @@ class UsuariosController extends Controller
             $data = $command->queryAll();
             $out['results'] = array_values($data);
         } elseif ($id > 0) {
-            $out['results'] = ['id' => $id, 'text' => Usuarios::find($id)->alias];
+            $out['results'] = [
+                'id' => $id, 
+                'text' => Usuarios::find($id)->alias,
+            ];
         } else {
             return false;
         }

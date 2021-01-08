@@ -131,7 +131,11 @@ $this->registerJs($js);
             }'),
             'templateResult' => new JsExpression('function(params) {
                 $var = params.id;
-                imgenlace = \'<span><img class="small-circular-photo" src="https://picsum.photos/100/100?random=\'+$var+\'"/></span>\'+
+                $img = params.img;
+                $src = (params.img == null) ?
+                ("https://picsum.photos/100/100?random="+$var) : 
+                ("https://yii-adventure.s3.us-east-2.amazonaws.com/"+$img);
+                imgenlace = \'<span><img class="small-circular-photo" src="\'+$src+\'"/></span>\'+
                 "<i class=\'enlace-select2\'>"+params.text+"</i>";
                 return imgenlace;
             }'),
