@@ -52,7 +52,7 @@ class ComentariosController extends Controller
         $uid = Yii::$app->user->id;
         $alias = ucfirst(Yii::$app->user->identity->alias);
         //POST BLOGS
-
+        
         $texto = Yii::$app->request->post('texto');
         $blogid = Yii::$app->request->post('blogid');
         $parent = Yii::$app->request->post('parent');
@@ -110,7 +110,7 @@ class ComentariosController extends Controller
             'foto' => Yii::$app->user->identity->foto_perfil,
             'alias' => ucfirst($alias),
             'fecha' => Yii::$app->AdvHelper->toMinutes($fecha),
-            'img' => Util::s3GetImage(Util::getImageByAlias($alias)),
+            'img' => Util::getImageByAlias($alias),
             'texto' => Html::encode($texto),
             'csrf' => $csrfToken,
         ];

@@ -92,15 +92,20 @@ class UtilAjax  {
                 data = JSON.parse(data);
                 $('#submitComent').fadeOut();
                 $('#area-texto').val('');
-                img = (data.img == null) ? 'https://picsum.photos/50/50?random=1' : data.img;
+
+                src = (data.img == null) ?
+                ("https://picsum.photos/100/100?random=1") : 
+                ("https://yii-adventure.s3.us-east-2.amazonaws.com/"+data.img);
+
                 div = (data.id == null) ? $('#comentarios') : $('.reply-div-'+data.id);
                 reply = (data.id == null) ? "mb-4" : "mt-4";
                 ml = (data.blog_id == null) ? "ml-5" : "";
+
                     if(!data.code) {
                         div.prepend(`
                             <div class='row'>
                             <div class="media \${ml} \${reply}">
-                                <img class="d-flex mr-3 rounded-circle-user" src='\${img}'  alt="img-blog-coment">
+                                <img class="d-flex mr-3 rounded-circle-user" src="\${src}"  alt="img-blog-coment">
                                 <div class="media-body">
                                 <div class='row'>
                                 <h5 class="mt-0 ml-3 pr-2" style="font-size:0.9rem"> \${data.alias} </h5>

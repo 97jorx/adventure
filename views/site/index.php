@@ -18,8 +18,9 @@ $this->registerCssFile('@web/css/cookie-consent.css');
     <div class="row align-items-center my-5">
      <div class="card h-100 flex-row flex-wrap border-0">
         <div class="col-lg-7">
-          <?php $fakeimg = "https://picsum.photos/600/450?random=".$model->id;  ?>
-          <?= Html::a(Html::img($fakeimg, ['class' => 'card-image', 'alt' => 'blog-img']), ['blogs/index', 'actual' => $model->id],  ['class' => 'login']) ?>
+        <?php $fakeimg = "https://picsum.photos/400/400?random=".$model->id;  ?>
+        <?= Html::a(Html::img((isset($model->imagen)) ? (Util::s3GetImage($model->imagen)) 
+        : ($fakeimg), ['class' => 'card-img-top-blog', 'style' => 'width:400px', 'alt' => 'blog-img']), ['blogs/index', 'actual' => $model->id],  ['class' => 'login']) ?>
         </div>
         <div class="col-lg-5">
                 <h1 class="font-weight-light"><?= $model->denom  ?></h1>

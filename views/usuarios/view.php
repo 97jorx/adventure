@@ -20,7 +20,7 @@ use yii\widgets\DetailView;
 $name = Yii::$app->user->identity->alias;
 $this->registerCssFile("@web/css/perfil.css");
 $csrfToken = Yii::$app->request->getCsrfToken();
-
+// var_dump(Usuarios::find()->select('id')->where(['alias' => Yii::$app->request->get('alias')])->scalar()); die();
 $js = <<< EOT
 
 $(document).ready(function(){  
@@ -182,7 +182,8 @@ $this->registerJs(UtilAjax::LIKE);
                     <div class="col-md-4">
                       <div class='img-holder'>
                         <?php $fakeimg = "https://picsum.photos/250/250?random=".$blogs->id;  ?>
-                        <?= Html::a(Html::img($fakeimg)) ?>
+                        <!-- ?= Html::a(Html::img(($blogs->imagen != null)) ? 
+                           (Util::s3GetImage($blogs->imagen)) : ($fakeimg)) ?> -->
                       </div>
                     </div>
                     <div class="col-md-8">
@@ -228,7 +229,8 @@ $this->registerJs(UtilAjax::LIKE);
                 <?php foreach($model->comments as $comentario) : ?> 
                   <div class='row'>
                       <div class="media ml-5 mb-4">
-                        <img class="d-flex mr-3 rounded-circle" src='https://picsum.photos/50/50?random=1' alt="">
+                      <img class="d-flex mr-3 rounded-circle-user" src="<?= (Util::getImageByAlias($comentario['alias']) === null) ? ($fakeimg) 
+                      : (Util::s3GetImage(Util::getImageByAlias($comentario['alias']))) ?>" alt="">
                         <div class="media-body">
                         <div class='row'>
                           <h5 class="mt-0 ml-3 pr-2" style='font-size:0.8rem'><?= ucfirst($comentario['alias']) ?></h5>
