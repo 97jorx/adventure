@@ -182,8 +182,7 @@ $this->registerJs(UtilAjax::LIKE);
                     <div class="col-md-4">
                       <div class='img-holder'>
                         <?php $fakeimg = "https://picsum.photos/250/250?random=".$blogs->id;  ?>
-                        <!-- ?= Html::a(Html::img(($blogs->imagen != null)) ? 
-                           (Util::s3GetImage($blogs->imagen)) : ($fakeimg)) ?> -->
+                         <?= Html::a(Html::img( ($blogs->imagen != null) ? (Util::s3GetImage($blogs->imagen)) : ($fakeimg))) ?> 
                       </div>
                     </div>
                     <div class="col-md-8">
