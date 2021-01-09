@@ -301,6 +301,12 @@ is read-only.</td>
         <td>The scenario that this model is in. Defaults to <a href="yii-base-model.html#SCENARIO_DEFAULT-detail">SCENARIO_DEFAULT</a>.</td>
         <td><a href="yii-base-model.html">yii\base\Model</a></td>
     </tr>
+            <tr class="inherited" id="$uploadedFile">
+        <td><a href="app-models-comunidades.html#$uploadedFile-detail">$uploadedFile</a></td>
+        <td></td>
+        <td></td>
+        <td><a href="app-models-comunidades.html">app\models\Comunidades</a></td>
+    </tr>
             <tr class="inherited" id="$validators">
         <td><a href="yii-base-model.html#$validators-detail">$validators</a></td>
         <td><a href="https://www.php.net/class.arrayobject">ArrayObject</a>|<a href="yii-validators-validator.html">yii\validators\Validator</a>[]</td>
@@ -433,9 +439,10 @@ model. This property is read-only.</td>
         <td><a href="yii-db-baseactiverecord.html">yii\db\BaseActiveRecord</a></td>
     </tr>
             <tr class="inherited" id="beforeSave()">
-        <td><a href="yii-db-baseactiverecord.html#beforeSave()-detail">beforeSave()</a></td>
-        <td>This method is called at the beginning of inserting or updating a record.</td>
-        <td><a href="yii-db-baseactiverecord.html">yii\db\BaseActiveRecord</a></td>
+        <td><a href="app-models-comunidades.html#beforeSave()-detail">beforeSave()</a></td>
+        <td>Después de guardar una fila se ejecuta la funciona
+ uploadBlogImg();</td>
+        <td><a href="app-models-comunidades.html">app\models\Comunidades</a></td>
     </tr>
             <tr class="inherited" id="beforeValidate()">
         <td><a href="yii-base-model.html#beforeValidate()-detail">beforeValidate()</a></td>
@@ -1018,7 +1025,12 @@ y el total de integrantes de cada comunidad</td>
         <td>Updates one or several counter columns for the current AR object.</td>
         <td><a href="yii-db-baseactiverecord.html">yii\db\BaseActiveRecord</a></td>
     </tr>
-                <tr class="inherited" id="validate()">
+                <tr class="inherited" id="uploadComunidadImg()">
+        <td><a href="app-models-comunidades.html#uploadComunidadImg()-detail">uploadComunidadImg()</a></td>
+        <td>Sube la imagen de la comunidad a AWS.</td>
+        <td><a href="app-models-comunidades.html">app\models\Comunidades</a></td>
+    </tr>
+            <tr class="inherited" id="validate()">
         <td><a href="yii-base-model.html#validate()-detail">validate()</a></td>
         <td>Performs the data validation.</td>
         <td><a href="yii-base-model.html">yii\base\Model</a></td>
@@ -1107,7 +1119,7 @@ The previous example would extract "id".</td>
         <td></td>
         <td><a href="yii-db-baseactiverecord.html">yii\db\BaseActiveRecord</a></td>
     </tr>
-            </table>
+                </table>
 </div>
 
 <a id="events"></a>
@@ -1451,7 +1463,7 @@ are being validated by the validation rules that apply to the scenario.</p>
 </div>
 
 <footer class="footer">
-        <p class="pull-right"><small>Page generated on Thu, 07 Jan 2021 17:20:02 +0000</small></p>
+        <p class="pull-right"><small>Page generated on Sat, 09 Jan 2021 18:57:56 +0000</small></p>
     Powered by <a href="http://www.yiiframework.com/" rel="external">Yii Framework</a></footer>
 
 <script>jQuery(function ($) {

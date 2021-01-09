@@ -301,6 +301,12 @@ is read-only.</td>
         <td>The scenario that this model is in. Defaults to <a href="yii-base-model.html#SCENARIO_DEFAULT-detail">SCENARIO_DEFAULT</a>.</td>
         <td><a href="yii-base-model.html">yii\base\Model</a></td>
     </tr>
+            <tr id="$uploadedFile">
+        <td><a href="app-models-comunidades.html#$uploadedFile-detail">$uploadedFile</a></td>
+        <td></td>
+        <td></td>
+        <td><a href="app-models-comunidades.html">app\models\Comunidades</a></td>
+    </tr>
             <tr class="inherited" id="$validators">
         <td><a href="yii-base-model.html#$validators-detail">$validators</a></td>
         <td><a href="https://www.php.net/class.arrayobject">ArrayObject</a>|<a href="yii-validators-validator.html">yii\validators\Validator</a>[]</td>
@@ -432,10 +438,11 @@ model. This property is read-only.</td>
         <td>This method is invoked before deleting a record.</td>
         <td><a href="yii-db-baseactiverecord.html">yii\db\BaseActiveRecord</a></td>
     </tr>
-            <tr class="inherited" id="beforeSave()">
-        <td><a href="yii-db-baseactiverecord.html#beforeSave()-detail">beforeSave()</a></td>
-        <td>This method is called at the beginning of inserting or updating a record.</td>
-        <td><a href="yii-db-baseactiverecord.html">yii\db\BaseActiveRecord</a></td>
+            <tr id="beforeSave()">
+        <td><a href="app-models-comunidades.html#beforeSave()-detail">beforeSave()</a></td>
+        <td>Después de guardar una fila se ejecuta la funciona
+ uploadBlogImg();</td>
+        <td><a href="app-models-comunidades.html">app\models\Comunidades</a></td>
     </tr>
             <tr class="inherited" id="beforeValidate()">
         <td><a href="yii-base-model.html#beforeValidate()-detail">beforeValidate()</a></td>
@@ -1013,7 +1020,12 @@ y el total de integrantes de cada comunidad</td>
         <td>Updates one or several counter columns for the current AR object.</td>
         <td><a href="yii-db-baseactiverecord.html">yii\db\BaseActiveRecord</a></td>
     </tr>
-                <tr class="inherited" id="validate()">
+                <tr id="uploadComunidadImg()">
+        <td><a href="app-models-comunidades.html#uploadComunidadImg()-detail">uploadComunidadImg()</a></td>
+        <td>Sube la imagen de la comunidad a AWS.</td>
+        <td><a href="app-models-comunidades.html">app\models\Comunidades</a></td>
+    </tr>
+            <tr class="inherited" id="validate()">
         <td><a href="yii-base-model.html#validate()-detail">validate()</a></td>
         <td>Performs the data validation.</td>
         <td><a href="yii-base-model.html">yii\base\Model</a></td>
@@ -1102,7 +1114,7 @@ The previous example would extract "id".</td>
         <td></td>
         <td><a href="yii-db-baseactiverecord.html">yii\db\BaseActiveRecord</a></td>
     </tr>
-            </table>
+                </table>
 </div>
 
 <a id="events"></a>
@@ -1480,6 +1492,23 @@ This is a shortcut of the expression: OP_INSERT | OP_UPDATE | OP_DELETE.        
 
     <div class="signature"><span class="signature-defs">public</span> <span class="signature-type"><a href="app-models-usuarios.html">app\models\Usuarios</a></span> <a href="app-models-comunidades.html#$propietario0-detail">$propietario0</a> <span style="color: #0000BB"></span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">null</span></div>
 
+
+    <div class="detail-header h3" id="$uploadedFile-detail">
+        <a href="#" class="tool-link" title="go to top"><span class="glyphicon glyphicon-arrow-up"></span></a>
+        <a class="tool-link hash" href="app-models-comunidades.html#$uploadedFile-detail" title="direct link to this method"><span class="glyphicon icon-hash"></span></a>
+        
+        $uploadedFile        <span class="detail-header-tag small">
+            public                                                property
+                    </span>
+    </div>
+
+    
+    <div class="doc-description">
+        
+            </div>
+
+    <div class="signature"><span class="signature-defs">public</span> <span class="signature-type"></span> <a href="app-models-comunidades.html#$uploadedFile-detail">$uploadedFile</a> <span style="color: #0000BB"></span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">null</span></div>
+
 </div>
 <h2>Method Details</h2>
 
@@ -1518,6 +1547,35 @@ merge the parent labels with child labels using functions such as <code>array_me
 </td>
                 </tr>
                                     </table>
+
+<!--	-->
+
+    <div class="detail-header h3" id="beforeSave()-detail">
+        <a href="#" class="tool-link" title="go to top"><span class="glyphicon glyphicon-arrow-up"></span></a>
+        <a class="tool-link hash" href="app-models-comunidades.html#beforeSave()-detail" title="direct link to this method"><span class="glyphicon icon-hash"></span></a>
+        
+        beforeSave()
+        <span class="detail-header-tag small">
+            public                                    method
+                    </span>
+    </div>
+
+    
+    <div class="doc-description">
+        <p><strong>Después de guardar una fila se ejecuta la funciona
+ uploadBlogImg();</strong></p>
+
+        
+            </div>
+
+    <table class="detail-table table table-striped table-bordered table-hover">
+        <tr><td colspan="3" class="signature"><span class="signature-defs">public</span> <span class="signature-type">void</span> <strong><a href="app-models-comunidades.html#beforeSave()-detail">beforeSave</a></strong> ( <span style="color: #0000BB">$insert</span> )</td></tr>
+                                    <tr>
+                  <td class="param-name-col"><span style="color: #0000BB">$insert</span></td>
+                  <td class="param-type-col"></td>
+                  <td class="param-desc-col"></td>
+                </tr>
+                                                </table>
 
 <!--	-->
 
@@ -1982,6 +2040,29 @@ if the table is not named after this convention.</p>
                                     </table>
 
 <!--	-->
+
+    <div class="detail-header h3" id="uploadComunidadImg()-detail">
+        <a href="#" class="tool-link" title="go to top"><span class="glyphicon glyphicon-arrow-up"></span></a>
+        <a class="tool-link hash" href="app-models-comunidades.html#uploadComunidadImg()-detail" title="direct link to this method"><span class="glyphicon icon-hash"></span></a>
+        
+        uploadComunidadImg()
+        <span class="detail-header-tag small">
+            public                                    method
+                    </span>
+    </div>
+
+    
+    <div class="doc-description">
+        <p><strong>Sube la imagen de la comunidad a AWS.</strong></p>
+
+        
+            </div>
+
+    <table class="detail-table table table-striped table-bordered table-hover">
+        <tr><td colspan="3" class="signature"><span class="signature-defs">public</span> <span class="signature-type">void</span> <strong><a href="app-models-comunidades.html#uploadComunidadImg()-detail">uploadComunidadImg</a></strong> ( )</td></tr>
+            </table>
+
+<!--	-->
 </div>
         </div>
 </div>
@@ -2021,7 +2102,7 @@ if the table is not named after this convention.</p>
 </div>
 
 <footer class="footer">
-        <p class="pull-right"><small>Page generated on Thu, 07 Jan 2021 17:20:01 +0000</small></p>
+        <p class="pull-right"><small>Page generated on Sat, 09 Jan 2021 18:57:56 +0000</small></p>
     Powered by <a href="http://www.yiiframework.com/" rel="external">Yii Framework</a></footer>
 
 <script>jQuery(function ($) {

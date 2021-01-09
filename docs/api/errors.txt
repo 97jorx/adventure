@@ -1729,21 +1729,21 @@ Array
 
     [272] => Array
         (
-            [line] => 248
+            [line] => 251
             [file] => ./controllers/UsuariosController.php
             [message] => Undefined parameter documented:  in actionSeguir().
         )
 
     [273] => Array
         (
-            [line] => 293
+            [line] => 296
             [file] => ./controllers/UsuariosController.php
             [message] => Undefined parameter documented:  in actionBloquear().
         )
 
     [274] => Array
         (
-            [line] => 497
+            [line] => 502
             [file] => ./controllers/UsuariosController.php
             [message] => Undefined parameter documented: $alias. in findIdByAlias().
         )
@@ -2765,7 +2765,7 @@ Array
 
     [420] => Array
         (
-            [line] => 168
+            [line] => 173
             [file] => ./models/Comunidades.php
             [message] => Undefined parameter documented:  in existeIntegrante().
         )

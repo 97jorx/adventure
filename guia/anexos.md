@@ -82,6 +82,22 @@
 ---
 
 ### **([R38]()) Despliegue en un servidor local**
+![1](images/usuario-guia/descargar-xampp.png)
+![2](images/usuario-guia/descargar-composer.png)
+![3](images/usuario-guia/descargar-git.png)
+![4](images/usuario-guia/descargar-postgresql.png)
+![5](images/usuario-guia/descargar-pgadmin4.png)
+![6](images/usuario-guia/iniciar-apache.png)
+![7](images/usuario-guia/extensiones-psql-apache.png)
+![8](images/usuario-guia/listen-localhost.png)
+![9](images/usuario-guia/postgresql-host-all.png)
+![10](images/usuario-guia/adventure-pgadmin.png)
+![11](images/usuario-guia/composer-update.png)
+![12](images/usuario-guia/insertar-datos-sql.png)
+![13](images/usuario-guia/virtualhost1.jpeg)
+![14](images/usuario-guia/virtualhost2.jpeg)
+![15](images/usuario-guia/carga-index-web-adventure.png)
+
 
 
 ### **([R26]()) Codeclimate**
