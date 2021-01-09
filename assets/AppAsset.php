@@ -24,7 +24,8 @@ class AppAsset extends AssetBundle
         'css/masonry.css',
         'css/jquery-ui.css',
         'css/balloon.css',
-        'css/parsley.css'
+        'css/parsley.css',
+        'css/jquery.fancybox.min.css',
     ];
     public $js = [
         'js/imagesloaded.pkgd.js',
@@ -33,6 +34,7 @@ class AppAsset extends AssetBundle
         'js/jquery.efect.js',
         'js/masonrys.js',
         'js/anime.min.js',
+        'js/jquery.fancybox.min.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
