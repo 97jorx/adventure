@@ -72,7 +72,6 @@ class HelperAdventure extends Component
 
         if (!isset($uid)) {
             $id = Yii::$app->request->get('id');
-            
             $uid = Yii::$app->user->id;
             return !$bloqueado
             ->where(['comunidad_id' => $id])

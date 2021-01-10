@@ -47,9 +47,6 @@ class UsuariosSearch extends Usuarios
             $query = Usuarios::find()
             ->select([
                         'usuarios.*', 
-                        // 'DISTINCT COUNT(s.id) AS followers', 
-                        // 'DISTINCT COUNT(s.id) AS following',
-                        // 'DISTINCT SUM(n.nota) AS valoracion'
             ])
             ->joinWith('seguidores s')
             ->joinWith('notas n')

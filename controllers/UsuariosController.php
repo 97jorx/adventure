@@ -30,36 +30,35 @@ class UsuariosController extends Controller
 {
     public function behaviors()
     {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::class,
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-            'access' => [
-                'class' => AccessControl::class,
-                'only' => ['index', 'update'],
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['@'],
-                        'matchCallback' => function ($rules, $action) {
-                           return Yii::$app->user->identity->username === 'admin';
-                        },
-
-                    ],
-                    [
-                        'allow' => true,
-                        'actions' => ['update'],
-                        'roles' => ['@'],
-                        'matchCallback' => function ($rules, $action) {
-                           return Yii::$app->user->identity->id == Yii::$app->request->get('id');
-                        },
+            return [
+                'verbs' => [
+                    'class' => VerbFilter::class,
+                    'actions' => [
+                        'delete' => ['POST'],
                     ],
                 ],
-            ],
-        ];
+                'access' => [
+                    'class' => AccessControl::class,
+                    'only' => ['update', 'index'],
+                    'rules' => [
+                        [
+                            'allow' => true,
+                            'roles' => ['@'],
+                            'matchCallback' => function ($rules, $action) {
+                                return Yii::$app->user->identity->username === 'admin';
+                            },
+                        ],
+                        [
+                            'allow' => true,
+                            'actions' => ['update'],
+                            'roles' => ['@'],
+                            'matchCallback' => function ($rules, $action) {
+                                return Yii::$app->user->identity->id == Yii::$app->request->get('id');
+                            },
+                        ],
+                    ],
+                ],
+            ];
     }
 
     /**
@@ -117,13 +116,30 @@ class UsuariosController extends Controller
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
             ]);
-        } else {
+        } 
+    }
+
+
+        
+    /**
+     * Lists all Usuarios models.
+     * @return mixed
+     */
+    public function actionUserconf()
+    {
+        $id = Yii::$app->request->get('id');
+        $searchModel = new UsuariosSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id);
+
+        if (isset($id)) {
             return $this->renderPartial('_userConf.php', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
             ]);
         }
     }
+
+    
 
     /**
      * Muestra el perfil del usuario.
@@ -167,23 +183,23 @@ class UsuariosController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    /**
-     * Creates a new Usuarios model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new Usuarios();
+    // /**
+    //  * Creates a new Usuarios model.
+    //  * If creation is successful, the browser will be redirected to the 'view' page.
+    //  * @return mixed
+    //  */
+    // public function actionCreate()
+    // {
+    //     $model = new Usuarios();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
+    //     if ($model->load(Yii::$app->request->post()) && $model->save()) {
+    //         return $this->redirect(['view', 'id' => $model->id]);
+    //     }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
+    //     return $this->render('create', [
+    //         'model' => $model,
+    //     ]);
+    // }
 
     /**
      * Updates an existing Usuarios model.

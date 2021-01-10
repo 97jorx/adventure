@@ -39,17 +39,21 @@ class BlogsController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::class,
-                //'only' => ['index'],
+                // 'only' => ['index'],
                 'rules' => [
                     [
+                        'allow' => false,
+                        'roles' => ['@'],
+                        'actions' => ['index', 'create', 'update', 'like', 'view'],
+                        'matchCallback' => function ($rules, $action) {
+                            return Yii::$app->AdvHelper->estaBloqueado(Yii::$app->user->id, Yii::$app->request->get('actual'));
+                        },
+                    ],       
+                    [
                         'allow' => true,
-                        'actions' => [
-                                      'index','update', 'create',
-                                      'view', 'like', 'viewfavoritos'
-                        ],
+                        'actions' => ['index', 'update', 'create', 'view', 'like', 'viewfavoritos'],
                         'roles' => ['@'],
                     ],
-
                     [
                         'allow' => true,
                         'actions' => [
