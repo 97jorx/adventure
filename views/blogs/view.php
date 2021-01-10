@@ -114,8 +114,12 @@ $this->registerJs(UtilAjax::LIKE);
                       <div class='col-3'>
                       <?php $clike = (!Yii::$app->AdvHelper->tieneFavoritos($comentario->id, 'cview')->exists()) ?
                       (['thumbs-up', 'Me gusta']) : (['thumbs-down', 'No me gusta']); ?>
-                      <?= Html::a(Icon::show($clike[0], ['class' => 'clike', 'id' => 'clike', 'value' => $comentario->id,'framework' => Icon::FAS]), 
-                          Url::to(['comentarios/like', 'cid' => $comentario->id]), ['title' => $clike[1]
+                      <?= Html::a(Icon::show($clike[0], ['class' => 'cicon'.$comentario->id, 'framework' => Icon::FAS]), 
+                          Url::to(['comentarios/like', 'cid' => $comentario->id]), [
+                            'class' => 'clike', 
+                            'id' => 'clike', 
+                            'value' => $comentario->id,
+                            'title' => $clike[1]
                         ]); 
                       ?> 
                       </div>
@@ -152,8 +156,13 @@ $this->registerJs(UtilAjax::LIKE);
                                     <div class='col-3'>
                                   <?php $crlike = (!Yii::$app->AdvHelper->tieneFavoritos($value['id'], 'cview')->exists()) ?
                                   (['thumbs-up', 'Me gusta']) : (['thumbs-down', 'No me gusta']); ?>
-                                  <?= Html::a(Icon::show($crlike[0], ['class' => 'clike', 'id' => 'crlike', 'value' => $value['id'], 'framework' => Icon::FAS]), 
-                                      Url::to(['comentarios/like', 'cid' => $value['id']]), ['title' => $crlike[1]]); ?>   
+                                  <?= Html::a(Icon::show($crlike[0], ['class' => 'cicon'.$value['id'], 'framework' => Icon::FAS]), Url::to(['comentarios/like', 'cid' => $value['id']]), 
+                                        [
+                                         'class' => 'clike', 
+                                         'id' => 'crlike', 
+                                         'value' => $value['id'],
+                                         'title' => $crlike[1]]); 
+                                        ?>   
                                     </div>
                                     <div class='col-3 fav<?= $value['id'] ?>'>
                                         <?= Util::countLikes($value['id']) ?>

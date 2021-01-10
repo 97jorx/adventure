@@ -241,8 +241,12 @@ $this->registerJs(UtilAjax::LIKE);
                               <div class='col-3'>
                               <?php $clike = (!Yii::$app->AdvHelper->tieneFavoritos($comentario['id'], 'cview')->exists()) ?
                               (['thumbs-up', 'Me gusta']) : (['thumbs-down', 'No me gusta']); ?>
-                              <?= Html::a(Icon::show($clike[0], ['class' => 'clike', 'id' => 'clike', 'value' => $comentario['id'], 'framework' => Icon::FAS]), 
-                                  Url::to(['comentarios/like', 'cid' => $comentario['id']]), ['title' => $clike[1]
+                              <?= Html::a(Icon::show($clike[0], ['class' => 'cicon'.$comentario['id'], 'framework' => Icon::FAS]), 
+                                  Url::to(['comentarios/like', 'cid' => $comentario['id']]), [
+                                    'class' => 'clike', 
+                                    'id' => 'clike', 
+                                    'value' => $comentario['id'],
+                                    'title' => $clike[1]
                                 ]); 
                               ?> 
                               </div>

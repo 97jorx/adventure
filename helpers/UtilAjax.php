@@ -9,9 +9,11 @@ class UtilAjax  {
 
     const LIKE = <<< EOT
     $('.clike').on('click', function(event) {
+        event.preventDefault();
         var self = $(this);
         var value = self.attr('value');
         var id = self.attr('id');
+
         $.ajax({
             type: 'GET',
             url: '/comentarios/like?cid='+value,
@@ -19,13 +21,14 @@ class UtilAjax  {
         }).done(function(data, textStatus, jqXHR) {
             data = JSON.parse(data);
             $('.fav'+value).html(data.fav);
-            self.efect();
-            self.attr('class', (data.icono) ? ('fas fa-thumbs-down') : ('fas fa-thumbs-up')) 
+            $('.cicon'+value).attr('class', (data.icono) ?
+            ('fas fa-thumbs-down cicon'+value) :
+            ('fas fa-thumbs-up cicon'+value)) 
             self.attr('title', (data.icono) ? ('No me gusta') : ('Me gusta'))
         }).fail(function(data, textStatus, jqXHR) {
-            console.log('Error de la solicitud.');
+            return false;
         });
-        return false
+        return false;
     });
     EOT;
 
