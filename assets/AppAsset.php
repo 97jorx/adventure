@@ -35,6 +35,7 @@ class AppAsset extends AssetBundle
         'js/masonrys.js',
         'js/anime.min.js',
         'js/jquery.fancybox.min.js',
+        'js/jquery.balloon.min.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

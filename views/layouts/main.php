@@ -24,11 +24,7 @@ $url = Url::to(['usuarios/search']);
 $url2 = Yii::$app->urlManager->createUrl(['usuarios/view', 'alias' => '']);
 $fakeimg = 'https://picsum.photos/100/1000?random=1';
 
-
-
-
-
-
+$this->registerJs(UtilAjax::notify);
 AppAsset::register($this);
 
 $js = <<< EOT
@@ -65,7 +61,7 @@ $(document).ready(function () {
             }
         });
     });
-
+   
 });
 EOT;
 $this->registerJs($js);
@@ -118,7 +114,6 @@ $this->registerJs($js);
         'name' => 'kv-repo-template',
         'pluginOptions' => [
             'placeholder' => Icon::show('search')."Buscar usuario",
-            // 'width' => '20%',
             'ajax' => [
                 'url' => $url,
                 'dataType' => 'json',
@@ -202,14 +197,19 @@ $this->registerJs($js);
                         'visible' => !$guest,
                         'options' => ['class' => 'bell'],
                         'items' => (UtilNotify::countNotificaciones() > 0) ?
-                                ( ['label' => "<div class='notificaciones'>Notificaciones</div>", 
+                                (['label' => "
+                                    <div class='notificaciones'>Notificaciones
+                                        <a value='/notificaciones/clear' style='position:absolute;left:5%;' id='notify' 
+                                           class='options fas fa-envelope-open-text'>
+                                        </a>
+                                    </div>", 
                                     'items' => Menu::widget([
-                                                'options' => ['class' => 'items', 'style' => 'display: list-item; list-style: none'],
+                                                'options' => ['class' => 'items items-notify', 'style' => 'display: list-item; list-style: none'],
                                                 'items' => UtilNotify::itemsNotificaciones(),
                                                 'encodeLabels' => false,
                                                 'activateParents' => true,
                                             ]),
-                                    ]) : (''),
+                                ]) : (''),
                     ],
                     [
                         'label' => '<div class="vertical-minus">'.Html::tag('i', Icon::show('minus')).'</div>',
@@ -257,7 +257,10 @@ $this->registerJs($js);
     <?="<div id='createContent'></div>"?>
 <?php Modal::end();?>
 
-
+<div id="w4-success-0" style='display:none;' class="alert-success alert alert-dismissible" role="alert">
+    <div class='mensaje'></div>
+    <button type="button" class="close"><span>×</span></button>
+</div>
 
 
 <?php $this->endBody() ?>

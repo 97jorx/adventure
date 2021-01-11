@@ -57,6 +57,8 @@ $this->registerJs(UtilAjax::LIKE);
                   $('#like').efect();
                   $('#like').attr('class', (data.icono) ? ('fas fa-thumbs-down') : ('fas fa-thumbs-up')) 
                   $('#like').attr('title', (data.icono) ? ('No me gusta') : ('Me gusta'))
+                  $('.mensaje').text(data.mensaje);
+                  $('#w4-success-0').removeAttr('style');
               }).fail(function(data, textStatus, jqXHR) {
                   console.log('Error de la solicitud.');
               });", 'title' => $like[1]

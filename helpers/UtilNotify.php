@@ -12,6 +12,7 @@ class UtilNotify  {
     public static function notificaciones() {
         return Notificaciones::find()
         ->where(['usuario_id' => Yii::$app->user->id])
+        ->andWhere(['leido' => false])
         ->orderBy(['created_at' => SORT_DESC])
         ->asArray()
         ->all();
@@ -26,6 +27,7 @@ class UtilNotify  {
     public static function countNotificaciones(){
         return Notificaciones::find()
         ->where(['usuario_id' => Yii::$app->user->id])
+        ->andWhere(['leido' => false])
         ->count();
     }
 
@@ -37,7 +39,7 @@ class UtilNotify  {
 
                 $m = Yii::$app->AdvHelper->toMinutes($value['created_at']);
                 $n  = [
-                        'label' =>"
+                    'label' =>"
                     <div class='scrolling'>
                         <a href='#' class=' list-group-item-action flex-column align-items-start scroll-vertical'>
                             <h5 class='mb-1'>{$value['mensaje']}</h5>
@@ -51,6 +53,9 @@ class UtilNotify  {
 
         return $notificaciones;
     }
+
+
+    
 
 
 }

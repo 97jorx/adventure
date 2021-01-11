@@ -25,6 +25,8 @@ class UtilAjax  {
             ('fas fa-thumbs-down cicon'+value) :
             ('fas fa-thumbs-up cicon'+value)) 
             self.attr('title', (data.icono) ? ('No me gusta') : ('Me gusta'))
+            $('.mensaje').text(data.mensaje);
+            $('#w4-success-0').removeAttr('style');
         }).fail(function(data, textStatus, jqXHR) {
             return false;
         });
@@ -81,6 +83,7 @@ class UtilAjax  {
                 </div>
                 <i id='length-area-texto-\${id}' style='position:absolute; left:70%'></i>
                 </div>`);
+          
             } 
         });
 
@@ -92,41 +95,43 @@ class UtilAjax  {
                 type: 'POST',
                 data: form.serialize(),
                 success: function (data) {
-                data = JSON.parse(data);
-                $('#submitComent').fadeOut();
-                $('#area-texto').val('');
+                    data = JSON.parse(data);
+                    $('#submitComent').fadeOut();
+                    $('#area-texto').val('');
 
-                src = (data.img == null) ?
-                ("https://picsum.photos/100/100?random=1") : 
-                ("https://yii-adventure.s3.us-east-2.amazonaws.com/"+data.img);
+                    src = (data.img == null) ?
+                    ("https://picsum.photos/100/100?random=1") : 
+                    ("https://yii-adventure.s3.us-east-2.amazonaws.com/"+data.img);
 
-                div = (data.id == null) ? $('#comentarios') : $('.reply-div-'+data.id);
-                reply = (data.id == null) ? "mb-4" : "mt-4";
-                ml = (data.blog_id == null) ? "ml-5" : "";
+                    div = (data.id == null) ? $('#comentarios') : $('.reply-div-'+data.id);
+                    reply = (data.id == null) ? "mb-4" : "mt-4";
+                    ml = (data.blog_id == null) ? "ml-5" : "";
 
-                    if(!data.code) {
-                        div.prepend(`
-                            <div class='row'>
-                            <div class="media \${ml} \${reply}">
-                                <img class="d-flex mr-3 rounded-circle-user" src="\${src}"  alt="img-blog-coment">
-                                <div class="media-body">
+                        if(!data.code) {
+                            div.prepend(`
                                 <div class='row'>
-                                <h5 class="mt-0 ml-3 pr-2" style="font-size:0.9rem"> \${data.alias} </h5>
-                                <i class="minutes" style="color:grey; font-size:0.9rem"> \${data.fecha} </i>
-                                </div>
-                                <div>\${data.texto}</div>
-                                    <div class='container mt-2'>
+                                <div class="media \${ml} \${reply}">
+                                    <img class="d-flex mr-3 rounded-circle-user" src="\${src}"  alt="img-blog-coment">
+                                    <div class="media-body">
                                     <div class='row'>
-                                        <div class='col-3'>
-                                        <a href="#" style="color:grey; font-size:0.9rem"><i class="fas fa-thumbs-up"></i> </a>
+                                    <h5 class="mt-0 ml-3 pr-2" style="font-size:0.9rem"> \${data.alias} </h5>
+                                    <i class="minutes" style="color:grey; font-size:0.9rem"> \${data.fecha} </i>
+                                    </div>
+                                    <div>\${data.texto}</div>
+                                        <div class='container mt-2'>
+                                        <div class='row'>
+                                            <div class='col-3'>
+                                            <a href="#" style="color:grey; font-size:0.9rem"><i class="fas fa-thumbs-up"></i> </a>
+                                            </div>
+                                        </div>
                                         </div>
                                     </div>
-                                    </div>
                                 </div>
-                            </div>
-                            </div>
-                        `);
-                    }
+                                </div>
+                            `);
+                        }
+                    $('.mensaje').text(data.mensaje);
+                    $('#w4-success-0').removeAttr('style');
                 }
                 });
                 return false;
@@ -175,6 +180,43 @@ class UtilAjax  {
             });
         EOT;  
 
+
+        const notify = <<< EOT
+        
+        $('.close').click(function() {
+            $('#w4-success-0').attr('style', 'display:none');
+        });
+
+
+        $('#notify').on('click', function(event) {
+            $.ajax({
+                url: '/notificaciones/clear',
+                dataType: 'json',
+            }).done(function(data, textStatus, jqXHR) {
+                console.log(data.ncount);
+                $('.notificaciones').remove();
+                $('.items-notify').remove();
+                $('.countNotify').text(data.ncount);
+            }).fail(function(data, textStatus, jqXHR) {
+                return false;
+            });
+            
+        });
+
+        $('.options').balloon({
+            css: {
+                padding: '10px',
+                fontSize: '80%',
+                fontWeight: 'bold',
+                lineHeight: '3',
+                backgroundColor: '#fff',
+                color: '#1d1d1d'
+            },
+            position: 'bottom',
+            contents: 'Marcar como leidas'
+          });
+          
+        EOT;
 
 
 }

@@ -13,14 +13,10 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Usuarios */
 
-// $this->title = $model->id;
-// $this->params['breadcrumbs'][] = ['label' => 'Comunidades', 'url' => ['comunidades/index']];
-// $this->params['breadcrumbs'][] = $model->username;
 
 $name = Yii::$app->user->identity->alias;
 $this->registerCssFile("@web/css/perfil.css");
 $csrfToken = Yii::$app->request->getCsrfToken();
-// var_dump(Usuarios::find()->select('id')->where(['alias' => Yii::$app->request->get('alias')])->scalar()); die();
 $js = <<< EOT
 
 $(document).ready(function(){  
@@ -82,7 +78,6 @@ $this->registerJs(UtilAjax::LIKE);
           <nav class='tabs' id='activeTab'>
             <ul class="nav nav-tabs">
                 <li class="nav-link"><a data-toggle="tab" id='coid' href="#comments"><?= Icon::show('comment')?></a></li>
-                <!-- <li class="nav-link"><a data-toggle="tab" href="#opciones"><?= Icon::show('cog')?></a></li> -->
             </ul>
           </nav>   
         </div>

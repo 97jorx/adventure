@@ -94,7 +94,7 @@ Yii::$app->formatter->locale = 'es-ES';
                                         $(self).find('i').addClass('fas fa-'+data.iconclass[0]);
                                         $(self).attr('aria-label', data.iconclass[1]);
                                         $('#color').prop('class', data.color);
-                                        $('#mensaje').text(data.mensaje);
+                                        $('.mensaje').text(data.mensaje);
                                         $('#myModal').modal('show');
                                     }).fail(function( data, textStatus, jqXHR ) {
                                         console.log('Error de la solicitud.');
@@ -125,12 +125,10 @@ Yii::$app->formatter->locale = 'es-ES';
                                 $(self).find('i').removeClass();
                                 $(self).find('i').addClass(data.iconclass[0]);
                                 $(self).attr('aria-label', data.iconclass[1]);
-                                $('#color').prop('class', data.color);
-                                $('#mensaje').text(data.mensaje);
-                                $('#myModal').modal('show');
+                                $('.mensaje').text(data.mensaje);
+                                $('#w4-success-0').removeAttr('style');
                             }).fail(function(data, textStatus, jqXHR) {
                                 console.log('Error de la solicitud.');
-                                console.log(data);
                             });",
                         ]);
                         ?> 
@@ -215,9 +213,11 @@ Yii::$app->formatter->locale = 'es-ES';
     <div class="modal-dialog ">
         <div id="color" class="modal-content">
             <div class="modal-body">
-                <p id="mensaje" >Bienvenido a ADVENTURE.</p>
+            <p id='mensaje' >Bienvenido a ADVENTURE.</p>
             </div>
         </div>
     </div>
 </div>
+
+
 
