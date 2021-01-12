@@ -63,7 +63,7 @@ $this->registerJs($js);
 <div class='register-form'>
     <?php $form = ActiveForm::begin([
         'id' => 'parsley',
-        'enableAjaxValidation' => true,
+        'enableAjaxValidation' => false,
         'layout' => 'horizontal',
         'fieldConfig' => [
             'horizontalCssClasses' => ['wrapper' => 'col-sm-8'],
