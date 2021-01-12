@@ -7,6 +7,7 @@ html,
 body {
    height: 100%;
    font-family: 'PT Sans';
+   
 }
 
 img{
@@ -16,6 +17,7 @@ img{
 
 .navbar-custom {
    background-color: #313131 !important;
+   z-index: 99999;
 }
 
 .navbar-custom .navbar-nav > li > a {
@@ -262,6 +264,7 @@ html {
 }
 
 @media screen and (max-width: 991px) {
+
    #select2 {
       display: none;
    }
@@ -274,6 +277,9 @@ html {
       display: none;
    }
 
+   .list-group-item-action h5, h4 {
+      font-size: 1rem;
+   }
    
  }
 
@@ -409,8 +415,17 @@ select2-results__option:hover a {
    }
 
    .sidenav {
-      top: 300px !important;
+      top: 100px !important;
    }
+
+   .blogs-site-index {
+      margin-top: 40%;
+   }
+
+   #img-sidebar {
+      max-width: 100px;
+   }
+   
 
    
  }
@@ -486,7 +501,7 @@ select2-results__option:hover a {
    background-color: #313131;
    overflow: hidden;
    transition: 0.5s;
-   margin-top: 4%;
+   top: 300px;
 }
  
  .sidenav a {
@@ -568,6 +583,7 @@ div[id*="success-0"] {
 
 /* NOTIFICACIONES */
 
+
 .list-group-item p {
    font-size: 0.7rem;
  }
@@ -643,7 +659,6 @@ div[id*="success-0"] {
    border-radius: 50%;
    width: 15px;
    height: 15px;
-   top: 0;
    font-size: 0.7em;
    color:#ffffff;
    text-align: center;
@@ -684,3 +699,59 @@ div[id*="success-0"] {
    width: 50px;
    height: 50px;
  }
+
+
+
+
+ /** BACKGROUND SITE INDEX**/
+
+
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+
+  .bg-1 { 
+      background: linear-gradient(-45deg, #1d1d1d, #2b4c58, #1d1d1d);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+      position: absolute; 
+      height: 31.3%;
+      top: 4%;
+      left: 0%; 
+      right: 0%;
+      color: #ffffff;
+      
+   }
+
+@media screen and (min-width: 991px) {
+
+   .blogs-site-index {
+      margin-top: 30%;
+   }
+
+   .countNotify {
+      top: 0;
+   }
+
+   .paises {
+      animation: gradient 15s ease infinite;
+      position: absolute;
+      background: url(//wa1.narvii.com/static/img/user-pins.svg?v=3);
+      background-repeat: no-repeat;
+      background-size: cover;
+      height: 342px;
+      width: 810px;
+   }
+
+ }
+

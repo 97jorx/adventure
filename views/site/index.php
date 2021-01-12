@@ -10,9 +10,26 @@ $this->registerCssFile('@web/css/cookie-consent.css');
 
 
 ?>
+<div class="bg-1 text-center">
+<div class="w3-display-middle w3-padding-large w3-border w3-wide w3-text-light-grey w3-center">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <div class='texto-paises mt-5'>
+            <h2>ÚNETE A TU GENTE</h2>
+            <h4>Conoce gente con ideas afines en todo el mundo.</h4>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class='paises'></div>
+        </div>
+     </div>
+    </div>
+  </div>
+</div>
 
 <?php if($count >= 4) : ?> 
-  <div class="container">
+  <div class="container blogs-site-index pt-5">
   <?php $index = 0; foreach($dataProvider->models as $model) : ?>
       <?php if($index == 0) : ?>
     <div class="row align-items-center my-5">
@@ -20,7 +37,7 @@ $this->registerCssFile('@web/css/cookie-consent.css');
         <div class="col-lg-7">
         <?php $fakeimg = "https://picsum.photos/400/400?random=".$model->id;  ?>
         <?= Html::a(Html::img((isset($model->imagen)) ? (Util::s3GetImage($model->imagen)) 
-        : ($fakeimg), ['class' => 'card-img-top-blog', 'style' => 'width:400px', 'alt' => 'blog-img']), ['blogs/index', 'actual' => $model->id],  ['class' => 'login']) ?>
+        : ($fakeimg), ['class' => 'card-img-top-blog', 'alt' => 'blog-img']), ['blogs/index', 'actual' => $model->id],  ['class' => 'login']) ?>
         </div>
         <div class="col-lg-5">
                 <h1 class="font-weight-light"><?= $model->denom  ?></h1>
@@ -55,8 +72,8 @@ $this->registerCssFile('@web/css/cookie-consent.css');
 
 <div class="container">
   <div class="jumbotron">
-      <h1>Congratulations!</h1>
-      <p class="lead">You have successfully created your Yii-powered application.</p>
+      <h1>ADVENTURE!</h1>
+      <p class="lead">Has entrado en la Adventura, diviertete con otros usuarios en esta plataforma.</p>
       <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
   </div>
   <div class="body-content">

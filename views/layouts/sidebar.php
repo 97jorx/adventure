@@ -61,7 +61,7 @@ $this->registerJs($js);
         <div class='img-container'>
             <?php $fakeimg = "https://picsum.photos/300/300?random=1";  ?>
             <?= Html::a(Html::img((isset(Yii::$app->user->identity->foto_perfil)) ?
-            (Util::s3GetImage(Yii::$app->user->identity->foto_perfil)) : ($fakeimg), ['class' => 'img'])) ?>
+            (Util::s3GetImage(Yii::$app->user->identity->foto_perfil)) : ($fakeimg), ['class' => 'img', 'id' => 'img-sidebar'])) ?>
         </div>
         <div class="masonry-title text-center" id="nav-title">
             <?= ucfirst(Yii::$app->user->identity->alias) ?>
