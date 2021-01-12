@@ -11,13 +11,13 @@ CREATE TABLE usuarios
      id           bigserial      PRIMARY KEY
    , username     varchar(25)    NOT NULL UNIQUE
    , alias        varchar(35)    NOT NULL UNIQUE
-   , nombre       varchar(255)   NOT NULL
-   , apellidos    varchar(255)   NOT NULL
+   , nombre       varchar(255)   
+   , apellidos    varchar(255)   
    , email        varchar(255)   NOT NULL UNIQUE
    , rol          varchar(30)    NOT NULL DEFAULT 'estandar'
    , estado_id    bigint         REFERENCES estados (id) DEFAULT 4
    , created_at   timestamp(0)   NOT NULL DEFAULT current_timestamp
-   , fecha_nac    timestamp(0)   NOT NULL
+   , fecha_nac    timestamp(0)   
    , contrasena   varchar(255)   NOT NULL
    , auth_key     varchar(255)
    , poblacion    varchar(255)
@@ -188,7 +188,7 @@ VALUES (
          'adventure@gmail.com', 'administrador', '1978-06-22',
           crypt('admin', gen_salt('bf', 10)), 
          'Sanlúcar de Barrameda', 'Cádiz' ,'España', 
-         'foto.jpg', 'Soy un administrador de Adventure'
+         'admin.png', 'Soy un administrador de Adventure'
         );
 
 INSERT INTO usuarios (username, nombre, alias, apellidos, email, rol, fecha_nac, contrasena)

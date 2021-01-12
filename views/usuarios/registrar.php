@@ -63,7 +63,8 @@ $this->registerJs($js);
 <div class='register-form'>
     <?php $form = ActiveForm::begin([
         'id' => 'parsley',
-        'enableAjaxValidation' => false,
+        'enableAjaxValidation' => true,
+        'enableClientValidation' => true,
         'layout' => 'horizontal',
         'fieldConfig' => [
             'horizontalCssClasses' => ['wrapper' => 'col-sm-8'],
@@ -83,15 +84,6 @@ $this->registerJs($js);
             'placeholder' => 'Nick name',
          ])->label(Icon::show('user', ['class' => 'icon-label'])) ?>    
 
-        <?= $form->field($model, 'nombre')->textInput([
-            'type' => 'text',
-            'placeholder' => 'Nombre',
-        ])->label(false) ?>
-        <?= $form->field($model, 'apellidos')->textInput([
-            'type' => 'text',
-            'data-parsley-error-message' => 'Los apellidos deben estar en Mayúscula y separados por un espacio.',    
-            'placeholder' => 'Apellidos',
-        ])->label(false) ?>
     </div>
 
     <div class='password-group'>
@@ -111,21 +103,7 @@ $this->registerJs($js);
             ])->label(false) ?>
       </div>
 
-        <?= $form->field($model, 'fecha_nac')->widget(DatePicker::class,[
-            'name' => 'Fecha nacimiento',
-            'language' => 'es-ES',
-            'options' => [],
-            'dateFormat' => 'dd/M/yyyy',
-            'options' => [
-                'changeMonth' => true,
-                'changeYear' => true,
-                'yearRange' => '1996:2099',
-                'buttonImageOnly' => true,
-                'class' => 'form-control',
-                'placeholder' => 'Fecha de nacimiento',
-                'autocomplete'=>'off',
-                ],
-        ])->label(Icon::show('calendar', ['class' => 'icon-label'])) ?>
+        
         <?= $form->field($model, 'email')->textInput([
             'id' => 'email', 
             'type' => 'email', 
